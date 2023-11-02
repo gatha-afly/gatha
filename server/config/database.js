@@ -7,11 +7,7 @@ const connectToMongoDB = async () => {
   // Connecting to the database
   mongoose
     .connect(
-      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`,
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
+      `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/${process.env.DB_NAME}`
     )
     .then(() => {
       console.log("Database connected! :smiley:");
