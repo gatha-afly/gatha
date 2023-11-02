@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import connectToMongoDB from "./config/database.js";
+import userRouter from "./routes/userRoutes.js";
 
 dotenv.config();
 
@@ -9,8 +10,10 @@ const app = express();
 
 // Define the PORT variable
 const PORT = process.env.PORT || 3001;
+
 app.set("port", PORT);
 
+app.use(express.json());
 //Initializing the corsOptions
 app.use(
   cors({
@@ -19,7 +22,9 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.json());
+
+app.use("/api/users", userRouter);
+//app.use("/api/messages", messageRouter);
 
 // Server is listening on the specified port
 connectToMongoDB().then(() => {
