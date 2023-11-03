@@ -1,4 +1,4 @@
-import statusCodes from "http-status-codes";
+import { StatusCodes } from "http-status-codes";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
@@ -19,11 +19,11 @@ export const createUser = async (req, res) => {
       password: hashedPassword,
     });
     return res
-      .status(statusCodes.OK)
+      .status(StatusCodes.OK)
       .json({ message: "Successfully created", data: newUser });
   } catch (error) {
     return res
-      .status(statusCodes.INTERNAL_SERVER_ERROR)
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: "User creation failed", details: error.message });
   }
 };
