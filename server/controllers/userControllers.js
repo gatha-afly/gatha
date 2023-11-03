@@ -2,7 +2,13 @@ import statusCodes from "http-status-codes";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
-const createUser = async (req, res) => {
+/**
+ * Handler for create user
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const createUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 12);
   try {
@@ -21,4 +27,3 @@ const createUser = async (req, res) => {
       .json({ error: "User creation failed", details: error.message });
   }
 };
-export { createUser };

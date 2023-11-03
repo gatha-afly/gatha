@@ -1,6 +1,9 @@
+//External packages Imports
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
+//Internal Imports
 import connectToMongoDB from "./config/database.js";
 import userRouter from "./routes/userRoutes.js";
 
@@ -23,6 +26,7 @@ app.use(
   })
 );
 
+//Registering Routes
 app.use("/api/users", userRouter);
 //app.use("/api/messages", messageRouter);
 
