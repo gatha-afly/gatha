@@ -1,4 +1,4 @@
-import express from "express";
+import statusCodes from "http-status-codes";
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
@@ -13,11 +13,11 @@ const createUser = async (req, res) => {
       password: hashedPassword,
     });
     return res
-      .status(200)
+      .status(statusCodes.OK)
       .json({ message: "Successfully created", data: newUser });
   } catch (error) {
     return res
-      .status(500)
+      .status(statusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: "User creation failed", details: error.message });
   }
 };
