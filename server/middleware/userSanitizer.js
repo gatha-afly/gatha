@@ -16,7 +16,7 @@ export const validateUserRules = [
   body("email")
     .trim()
     .isEmail()
-    .normalizeEmail({ gmail_remove_subaddress: true })
+    .normalizeEmail()
     .custom(async (value) => checkUserExistence(value)),
 
   //Sanitize and validate the user password
