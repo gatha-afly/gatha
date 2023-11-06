@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 
 /**
- * Helper fpr uppercase the first letter
+ * Helper for uppercase the first letter
  * @param {*} word
  * @returns
  */
