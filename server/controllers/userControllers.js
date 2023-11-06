@@ -3,11 +3,12 @@ import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
 /**
- * Handler for create user
+ * Handler for creating user
  * @param {*} req
  * @param {*} res
  * @returns
  */
+
 export const createUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   const hashedPassword = await bcrypt.hash(password, 12);
