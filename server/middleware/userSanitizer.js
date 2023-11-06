@@ -16,7 +16,6 @@ export const validateUserRules = [
   body("email")
     .trim()
     .isEmail()
-    .normalizeEmail()
     .custom(async (value) => checkUserExistence(value)),
 
   //Sanitize and validate the user password

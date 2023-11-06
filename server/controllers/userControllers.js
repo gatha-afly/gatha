@@ -4,7 +4,7 @@ import User from "../models/User.js";
 import { generateJwt } from "../helpers/jwt.js";
 
 /**
- * Handler for create user
+ * Handler for creating user
  * @param {*} req
  * @param {*} res
  * @returns
@@ -38,6 +38,16 @@ export const createUser = async (req, res) => {
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: "Something went wrong", details: error.message });
   }
+};
+
+/**
+ * Handler for deleting user
+ * @param {*} req
+ * @param {*} res
+ */
+export const deleteUser = async (req, res) => {
+  try {
+  } catch (error) {}
 };
 
 /**
