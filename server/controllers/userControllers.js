@@ -85,10 +85,19 @@ export const loginUser = async (req, res) => {
         secure: false, // Set to true in production with HTTPS
       });
 
+      // Check if the user is deactivated == true
+      if (user.deactivate.isDeactivated) {
+        // Set isDeactivated to false in the database
+        user.deactivate.isDeactivated = false;
+
+        // Save the update
+        await user.save();
+      }
       // Return a successful response
-      return res
-        .status(StatusCodes.OK)
-        .json({ message: "Login successful. Welcome, ", user: user });
+      return res.status(StatusCodes.OK).json({
+        message: `Login successful. Welcome, ${user.name}`,
+        user: user,
+      });
     } else {
       return res
         .status(StatusCodes.UNAUTHORIZED)
