@@ -14,6 +14,7 @@ const userSchema = new Schema(
       imgType: { type: String },
       imgSize: { type: Number },
     },
+    isAdmin: { type: Boolean, default: false },
     deactivate: {
       isDeactivated: { type: Boolean, default: false },
       deactivateDate: { type: Date, default: Date.now },

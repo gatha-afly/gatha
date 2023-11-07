@@ -12,6 +12,9 @@ export const validateUserRules = [
     .isAlpha()
     .customSanitizer((value) => uppercaseFirstLetter(value)),
 
+  //Sanitizes and validate the username
+  body("username").trim().isAlphanumeric(),
+
   //Sanitize and validate the user email
   body("email")
     .trim()

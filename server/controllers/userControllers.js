@@ -11,7 +11,7 @@ import { generateJwt } from "../helpers/jwt.js";
  */
 
 export const createUser = async (req, res) => {
-  const { firstName, lastName, email, password } = req.body;
+  const { firstName, lastName, username, email, password } = req.body;
   //Hash the user's Password
   const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -19,6 +19,7 @@ export const createUser = async (req, res) => {
     const newUser = await User.create({
       firstName,
       lastName,
+      username,
       email,
       password: hashedPassword,
     });
