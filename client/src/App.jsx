@@ -1,12 +1,8 @@
-import './App.css'
-
+import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import UnderConstructionPage from "./pages/UnderConstructionPage/UnderConstructionPage.jsx";
 function App() {
-
-  return (
-    <>
-
-    </>
-  )
+  return <UnderConstructionPage />;
 }
 
-export default App
+export default App;

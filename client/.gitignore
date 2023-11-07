@@ -1,3 +1,23 @@
+
+# Project variables
+.env.development
+.env.production
+
+# Dependencies, build & dist folders
+node_modules/
+build/
+dist/
+
+# Dev tools
+.eslintrc.json
+.prettierrc
+vite.config.js
+.vscode/
+
+# Local Netlify folder
+.netlify
+
+# TODO: DISCUSS THOSE BELOW
 # Logs
 logs
 *.log
@@ -7,7 +27,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
 dist
 dist-ssr
 *.local
