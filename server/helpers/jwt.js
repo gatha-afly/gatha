@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 /**
- * Handler for Genetaring JWT token
+ * Handler for generating JWT token
  * @param {*} userId
  * @returns
  */

@@ -9,6 +9,7 @@ import { generateJwt } from "../helpers/jwt.js";
  * @param {*} res
  * @returns
  */
+
 export const createUser = async (req, res) => {
   const { firstName, lastName, email, password } = req.body;
   //Hash the user's Password
