@@ -1,0 +1,79 @@
+:root {
+  --color-error: #ef946c;
+  --color-signal: #559cad;
+  --color-success: #749c75;
+  --color-dark: #000;
+  --color-body: #f8f7ff
+  --color-main: #ffffff;
+  --color-dark: #454372;
+  --color-structure-elements: #999999
+  ;
+}
+
+::selection {
+  background-color: var(--color-signal);
+  color: var(--color-main);
+}
+
+:focus {
+  outline: 0.2rem solid var(--color-success);
+  padding: 0.1 rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Ubuntu", sans-serif;
+  color: var(--color-dark);
+  line-height: 1.6;
+  height: 100vh;
+  background-color: var(--color-body);
+  font-size: 1.6rem;
+}
+
+main {
+    padding-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color: var(--color-main);
+    height: 80vh;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+  }
+  
+  h3 {
+    font-size: 1.7rem;
+  }
+
+  p,
+li {
+  font-size: 1.6rem;
+}
+
+
+  ul {
+    list-style: none;
+  }
+
+  button,
+select,
+input {
+  font-family: "Ubuntu", sans-serif;
+}
