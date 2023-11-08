@@ -1,0 +1,27 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#send-container {
+  display: flex;
+  gap: 5px;
+}
+#message-input {
+  height: 30px;
+  width: 350px;
+  border-radius: 5px;
+  outline: none;
+}
+#send-button {
+  font-size: 16px;
+  background-color: orangered;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  padding: 0 10px;
+}
