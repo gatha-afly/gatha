@@ -1,34 +1,17 @@
 //External packages Imports
 import { Server } from "socket.io";
 import http from "http";
-import express from "express";
-import cors from "cors";
 import dotenv from "dotenv";
-import path from "path";
 
 //Internal Imports
 import connectToMongoDB from "./config/database.js";
 import userRouter from "./routes/userRoutes.js";
+import app from "./app.js";
 
 dotenv.config();
 
 //Define the PORT variable
 const PORT = process.env.PORT || 3001;
-
-//Middlewares
-const app = express();
-app.set("port", PORT);
-app.use(express.json());
-app.use(express.static(path.resolve("./public")));
-
-//Initializing the corsOptions
-app.use(
-  cors({
-    origin: "http://localhost:3000",
-    methods: ["HEAD", "GET", "POST", "PATCH", "DELETE", "PUT"],
-    credentials: true,
-  })
-);
 
 //Create a HTTP server
 const httpServer = http.createServer(app);
@@ -39,8 +22,6 @@ io.on("connection", (socket) => {
   console.log("A user connected");
 
   socket.on("message", (message) => {
-    // Save the message in the database and broadcast it to other connected users
-    // You can use Mongoose models for message storage.
     io.emit("message", message);
   });
 
