@@ -8,6 +8,7 @@ import path from "path"; // Import path for file paths
 import connectToMongoDB from "./config/database.js";
 import userRouter from "./routes/userRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
+import groupRouter from "./routes/groupRoutes.js";
 import app from "./app.js";
 
 dotenv.config();
@@ -40,7 +41,8 @@ io.on("connection", (socket) => {
 
 // Registering Routes
 app.use("/api/users", userRouter);
-app.use("/api/message", messageRouter);
+app.use("/api/messages", messageRouter);
+app.use("/api/groups", groupRouter);
 
 // Server is listening on the specified port
 connectToMongoDB().then(() => {
