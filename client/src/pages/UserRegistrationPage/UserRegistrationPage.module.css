@@ -1,0 +1,12 @@
+.label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.matching {
+  background-color: var(--color-success);
+}
+
+.not-matching {
+  background-color: var(--color-error);
+}
