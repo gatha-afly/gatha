@@ -9,3 +9,7 @@
   position: fixed;
   position: static;
 }
+
+.header a {
+  text-decoration: none;
+}

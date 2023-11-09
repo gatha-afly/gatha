@@ -1,0 +1,16 @@
+.button {
+  background-color: var(--color-signal);
+  font-family: "Ubuntu", sans-serif;
+  color: var(--color-main);
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  margin-top: 1rem;
+  width: 15rem;
+}
+
+.button:hover {
+  background-color: var(--color-success);
+  box-shadow: 0 0 0.5rem var(--color-success);
+}

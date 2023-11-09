@@ -6,6 +6,10 @@ import Footer from "./common/Footer/Footer";
 import PageNotFoundPage from "./pages/PageNotFoundPage/PageNotFoundPage";
 import UserRegistrationPage from "./pages/UserRegistrationPage/UserRegistrationPage";
 import UserLoginPage from "./pages/UserLoginPage/UserLoginPage";
+import AddUserPage from "./pages/AddUserPage/AddUserPage";
+import CreateGroupPage from "./pages/CreateGroupPage/CreateGroupPage";
+import MainPage from "./pages/MainPage/MainPage";
+import JoinGroupPage from "./pages/JoinGroupPage/JoinGroupPage";
 
 function App() {
   return (
@@ -16,6 +20,10 @@ function App() {
         <Route path='*' element={<PageNotFoundPage />} />
         <Route path='/user-registration' element={<UserRegistrationPage />} />
         <Route path='/user-login' element={<UserLoginPage />} />
+        <Route path='/add-user' element={<AddUserPage />} />
+        <Route path='/create-group' element={<CreateGroupPage />} />
+        <Route path='/join-group' element={<JoinGroupPage />} />
+        <Route path='/main' element={<MainPage />} />
       </Routes>
       <Footer />
     </BrowserRouter>

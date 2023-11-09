@@ -4,9 +4,8 @@ import styles from "./Header.module.css";
 const Header = () => {
   return (
     <header className={styles.header}>
-      <Link to='/'>main</Link>
+      <Link to='/'>Home</Link>
       <p>This is the header.</p>
-
       <Link to='/user-login'>Login</Link>
     </header>
   );
