@@ -6,6 +6,11 @@ import userAPI from "../api/userAPI";
 const UserProvider = ({ children }) => {
   const [error, setError] = useState("");
 
+  /**
+   * Handler for Regisering Users
+   * @param {*} data
+   * @returns
+   */
   const registerUser = async (data) => {
     try {
       //Empty the error state
@@ -15,6 +20,14 @@ const UserProvider = ({ children }) => {
       console.log(response);
     } catch (err) {
       console.log(err.response.status);
+
+      if (err.response && err.response.status === 400) {
+        setError("A user with this email already exists");
+      } else {
+        setError("An unknown error occurred while logging in");
+      }
+
+      return Promise.reject(err);
     }
   };
   return (

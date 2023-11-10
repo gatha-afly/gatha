@@ -10,22 +10,24 @@ import AddUserPage from "./pages/AddUserPage/AddUserPage";
 import CreateGroupPage from "./pages/CreateGroupPage/CreateGroupPage";
 import MainPage from "./pages/MainPage/MainPage";
 import JoinGroupPage from "./pages/JoinGroupPage/JoinGroupPage";
-
+import UserProvider from "./provider/UserProvider";
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route index element={<HomePage />} />
-        <Route path='*' element={<PageNotFoundPage />} />
-        <Route path='/user-registration' element={<UserRegistrationPage />} />
-        <Route path='/user-login' element={<UserLoginPage />} />
-        <Route path='/add-user' element={<AddUserPage />} />
-        <Route path='/create-group' element={<CreateGroupPage />} />
-        <Route path='/join-group' element={<JoinGroupPage />} />
-        <Route path='/main' element={<MainPage />} />
-      </Routes>
-      <Footer />
+      <UserProvider>
+        <Header />
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path="*" element={<PageNotFoundPage />} />
+          <Route path="/user-registration" element={<UserRegistrationPage />} />
+          <Route path="/user-login" element={<UserLoginPage />} />
+          <Route path="/add-user" element={<AddUserPage />} />
+          <Route path="/create-group" element={<CreateGroupPage />} />
+          <Route path="/join-group" element={<JoinGroupPage />} />
+          <Route path="/main" element={<MainPage />} />
+        </Routes>
+        <Footer />
+      </UserProvider>
     </BrowserRouter>
   );
 }

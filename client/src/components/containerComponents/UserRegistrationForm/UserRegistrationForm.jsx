@@ -11,11 +11,9 @@ import styles from "./UserRegistrationForm.module.css";
  */
 const UserRegistrationForm = () => {
   const { registerUser, error } = useUserContext();
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
-
-  const [passwordMismatch, setPasswordMismatch] = useState(false);
-  const [error, setError] = useState(null);
 
   // Autofocus first input field on mount
   useEffect(() => {
@@ -36,33 +34,23 @@ const UserRegistrationForm = () => {
       password: formData.get("password"),
     };
 
-    //Checks
+    // Check if password matches with confirm password
+    const confirmedPassword = formData.get("confirm-password");
+    if (data.password !== confirmedPassword) {
+      setPasswordMismatch(true);
+      return;
+    } else {
+      setPasswordMismatch(false);
+    }
 
     try {
-      // Send user registration request to the server
-      await axios.post(`${apiUrl}/users/register`, {
-        firstName,
-        lastName,
-        username,
-        email,
-        password,
-      });
+      //Pass the data object to registerUser
+      await registerUser(data);
 
       // Navigate to the login page on successful registration
       navigate("/user-login");
     } catch (error) {
-      // Handle errors from the server
-      if (error.response && error.response.data && error.response.data.errors) {
-        // Validation errors from server
-        const serverErrors = error.response.data.errors;
-
-        // Render the first error message
-        setError(serverErrors[0].msg);
-      } else {
-        // Handle other types of errors
-        console.error("Error creating user:", error);
-        setError("Error creating user. Please try again.");
-      }
+      console.log(error);
     }
   };
 
@@ -74,8 +62,6 @@ const UserRegistrationForm = () => {
           <input
             type="text"
             name="firstName"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
             ref={inputRef} // Ref for autofocus
             required
           />
@@ -85,67 +71,42 @@ const UserRegistrationForm = () => {
       <div className={styles.input}>
         <label className={styles.label}>
           Last Name:
-          <input
-            type="text"
-            name="lastName"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
+          <input type="text" name="lastName" required />
         </label>
       </div>
 
       <div className={styles.input}>
         <label className={styles.label}>
           Username:
-          <input
-            type="text"
-            name="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+          <input type="text" name="username" required />
         </label>
       </div>
 
       <div className={styles.input}>
         <label className={styles.label}>
           Email:
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <input type="email" name="email" required />
         </label>
       </div>
 
       <div className={styles.input}>
         <label className={styles.label}>
           Password:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <input type="password" name="password" required />
         </label>
       </div>
 
       <div className={styles.input}>
         <label className={styles.label}>
           Confirm Password:
-          <input
-            type="password"
-            name="passwordCheck"
-            value={passwordCheck}
-            onChange={(e) => setPasswordCheck(e.target.value)}
-            required
-          />
+          <input type="password" name="confirm-password" required />
         </label>
       </div>
+      {/* If the password doesn't match throw an error */}
+      {passwordMismatch && (
+        <p className={styles.errorMessage}>Passwords do not match.</p>
+      )}
+
       {/* Conditionally render error message */}
       {error && <p className={styles.errorMessage}>{error}</p>}
       {/* Submit button */}
