@@ -10,7 +10,7 @@ import styles from "./UserRegistrationForm.module.css";
  * and register.
  */
 const UserRegistrationForm = () => {
-  const { registerUser, error } = useUserContext();
+  const { registerUser, error, setError } = useUserContext();
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
@@ -46,6 +46,7 @@ const UserRegistrationForm = () => {
     try {
       //Pass the data object to registerUser
       await registerUser(data);
+      setError("");
 
       // Navigate to the login page on successful registration
       navigate("/user-login");

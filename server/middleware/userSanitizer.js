@@ -9,7 +9,7 @@ export const validateUserRules = [
 
   body(["firstName", "lastName"])
     .trim()
-    .isAlpha()
+    .isAlpha("en-GB", { ignore: "" }) //ignores the sapces
     .customSanitizer((value) => uppercaseFirstLetter(value)),
 
   //Sanitizes and validate the username
