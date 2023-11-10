@@ -1,5 +1,8 @@
 import express from "express";
-import { createGroup } from "../controllers/groupControllers.js";
+import {
+  createGroup,
+  addGroupMember,
+} from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/userAuthorization.js";
 import { validator } from "../middleware/validator.js";
 import { validateGroupRules } from "../middleware/groupSanitizer.js";
@@ -14,5 +17,7 @@ router.post(
   validator,
   createGroup
 );
+
+router.patch("/add-member/:groupId", addGroupMember);
 
 export default router;

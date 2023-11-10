@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const groupSchema = new Schema({
   name: { type: String, required: true, unique: true },
-  description: { type: String },
+  description: { type: String, required: true },
   avatar: {
     imgName: { type: String },
     imgPath: { type: String },
