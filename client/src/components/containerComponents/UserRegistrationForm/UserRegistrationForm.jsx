@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import useUserContext from "../../../context/useUserContext";
 import styles from "./UserRegistrationForm.module.css";
 
 /**
@@ -10,17 +10,11 @@ import styles from "./UserRegistrationForm.module.css";
  * and register.
  */
 const UserRegistrationForm = () => {
-  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+  const { registerUser, error } = useUserContext();
   const navigate = useNavigate();
   const inputRef = useRef(null);
 
-  // State variables for form fields and error handling
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
   const [error, setError] = useState(null);
 
   // Autofocus first input field on mount
@@ -32,11 +26,17 @@ const UserRegistrationForm = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if entered passwords match
-    if (password !== passwordCheck) {
-      setError("Passwords do not match.");
-      return;
-    }
+    const formData = new FormData(e.target);
+
+    const data = {
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      email: formData.get("email"),
+      username: formData.get("username"),
+      password: formData.get("password"),
+    };
+
+    //Checks
 
     try {
       // Send user registration request to the server
@@ -72,8 +72,8 @@ const UserRegistrationForm = () => {
         <label className={styles.label}>
           First Name:
           <input
-            type='text'
-            name='firstName'
+            type="text"
+            name="firstName"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             ref={inputRef} // Ref for autofocus
@@ -86,8 +86,8 @@ const UserRegistrationForm = () => {
         <label className={styles.label}>
           Last Name:
           <input
-            type='text'
-            name='lastName'
+            type="text"
+            name="lastName"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
@@ -99,8 +99,8 @@ const UserRegistrationForm = () => {
         <label className={styles.label}>
           Username:
           <input
-            type='text'
-            name='username'
+            type="text"
+            name="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
@@ -112,8 +112,8 @@ const UserRegistrationForm = () => {
         <label className={styles.label}>
           Email:
           <input
-            type='email'
-            name='email'
+            type="email"
+            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -125,8 +125,8 @@ const UserRegistrationForm = () => {
         <label className={styles.label}>
           Password:
           <input
-            type='password'
-            name='password'
+            type="password"
+            name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
@@ -138,8 +138,8 @@ const UserRegistrationForm = () => {
         <label className={styles.label}>
           Confirm Password:
           <input
-            type='password'
-            name='passwordCheck'
+            type="password"
+            name="passwordCheck"
             value={passwordCheck}
             onChange={(e) => setPasswordCheck(e.target.value)}
             required
@@ -149,7 +149,7 @@ const UserRegistrationForm = () => {
       {/* Conditionally render error message */}
       {error && <p className={styles.errorMessage}>{error}</p>}
       {/* Submit button */}
-      <button type='submit'>Register</button>
+      <button type="submit">Register</button>
     </form>
   );
 };
