@@ -1,0 +1,47 @@
+{
+  // Indicates that this ESLint configuration is the root configuration for the project
+  "root": true,
+
+  // Specifies the environments in which the code will run
+  "env": {
+    "browser": true, // Allows browser-specific global variables
+    "es2020": true // Enables ES2020 global variables and features
+  },
+
+  // Extends various ESLint configurations to inherit their rules
+  "extends": [
+    "eslint:recommended", // ESLint's recommended rules
+    "plugin:react/recommended", // Recommended rules for React
+    "plugin:react/jsx-runtime", // Provides JSX runtime rules
+    "plugin:react-hooks/recommended", // Recommended rules for React Hooks
+    "react-app" // Configuration used by Create React App
+  ],
+
+  // Ignores specific files and directories from linting
+  "ignorePatterns": ["dist", ".eslintrc.json"],
+
+  // Specifies the ECMAScript version and module system
+  "parserOptions": {
+    "ecmaVersion": "latest", // Uses the latest ECMAScript version
+    "sourceType": "module" // Assumes the use of ES6 modules
+  },
+
+  // Configuration settings for specific tools
+  "settings": {
+    "react": {
+      "version": "18.2" // Specifies the React version for better linting
+    }
+  },
+
+  // Specifies the ESLint plugins to use
+  "plugins": ["react-refresh"],
+
+  // Configures specific linting rules
+  "rules": {
+    // Allows constant exports for React components when using React Refresh
+    "react-refresh/only-export-components": [
+      "warn",
+      { "allowConstantExport": true }
+    ]
+  }
+}
