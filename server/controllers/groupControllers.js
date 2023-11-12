@@ -49,24 +49,15 @@ export const createGroup = async (req, res) => {
  * @param {*} res
  * @returns
  */
+
 export const addGroupMember = async (req, res) => {
   try {
     const { groupId } = req.params;
     const { username } = req.body;
 
-    // Find the group by groupId and populate members and admin
-    const group = await Group.findById(groupId)
-      .populate("members", "username firstName lastName")
-      .populate("admin", "username firstName lastName");
-
-    if (!group) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "Group not found with the provided groupId" });
-    }
-
     // Find the user by username
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username: username });
+    console.log(user);
 
     if (!user) {
       return res
@@ -74,28 +65,27 @@ export const addGroupMember = async (req, res) => {
         .json({ error: "User not found with the provided username" });
     }
 
-    // Check if the user is already a member of the group
-    if (group.members.some((member) => member.username === username)) {
+    // Update the group by adding the user to the members array
+    const updatedGroup = await Group.findByIdAndUpdate(
+      groupId,
+      { set: { members: user._id } }, // $addToSet ensures uniqueness in the members array
+      { new: true } // Return the modified document
+    )
+      .populate("members", "username firstName lastName")
+      .populate("admin", "username firstName lastName");
+
+    if (!updatedGroup) {
       return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "User is already a member of the group" });
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "Group not found with the provided groupId" });
     }
 
-    // Add the user to the group's members array
-    group.members.push(user);
-    await group.save();
-
-    if (group) {
-      res
-        .status(StatusCodes.OK)
-        .json({ message: "User added to the group successfully", group });
-    } else {
-      // Handle the case where `group` is undefined
-      res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({ error: "Internal server error" });
-    }
+    res.status(StatusCodes.OK).json({
+      message: "User added to the group successfully",
+      group: updatedGroup,
+    });
   } catch (error) {
+    console.error(error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ error: "Internal server error" });
