@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import useUserContext from "../../../context/useUserContext";
+import userAPI from "../../../api/userAPI";
 import styles from "./UserRegistrationForm.module.css";
 
 /**
@@ -10,10 +10,10 @@ import styles from "./UserRegistrationForm.module.css";
  * and register.
  */
 const UserRegistrationForm = () => {
-  const { registerUser, error, setError } = useUserContext();
   const [passwordMismatch, setPasswordMismatch] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
+  const [error, setError] = useState(null);
 
   // Autofocus first input field on mount
   useEffect(() => {
@@ -45,13 +45,22 @@ const UserRegistrationForm = () => {
 
     try {
       //Pass the data object to registerUser
-      await registerUser(data);
-      setError("");
-
+      await userAPI.post("/users/register", data);
       // Navigate to the login page on successful registration
       navigate("/user-login");
     } catch (error) {
-      console.log(error);
+      // Handle errors from the server
+      if (error.response && error.response.data && error.response.data.errors) {
+        // Validation errors from server
+        const serverErrors = error.response.data.errors;
+
+        // Render the first error message
+        setError(serverErrors[0].msg);
+      } else {
+        // Handle other types of errors
+        console.error("Error creating user:", error);
+        setError("Error creating user. Please try again.");
+      }
     }
   };
 
