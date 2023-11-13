@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import React from "react";
-import { useParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 /**
@@ -13,15 +13,14 @@ import { Helmet } from "react-helmet-async";
  * @param {string} props.title -
  * @param {string} props.description
  * @param {string} props.image - Meta tags image absolute URL
- * @param {string} props.path - Additional path segments to append to the default URL.
  * @param {string} props.author
  *
  * @returns {JSX.Element} The HelmetMetaTags component.
  */
-function HelmetMetaTagsNetlify({ title, description, image, path, author }) {
+function HelmetMetaTagsNetlify({ title, description, image, author }) {
   // Define default values
-  const defaultDescription = "Gatha";
-  const defaultTitle = "Gatha - get together";
+  const defaultDescription = "gatha";
+  const defaultTitle = "gatha - get together";
   const defaultImage = "https://gatha.netlify.app/metaTagDefaultImg.jpeg";
   const defaultUrl = "https://gatha.netlify.app/";
   const defaultAuthor = "Abdulwase Naeemi, Felix Schmidt & Yesim Demir";
@@ -39,7 +38,7 @@ function HelmetMetaTagsNetlify({ title, description, image, path, author }) {
       <meta property='og:title' content={pageTitle} />
       <meta property='og:description' content={pageDescription} />
       <meta property='og:image' content={pageImage} />
-      <meta property='og:url' content={pageUrl} />
+      <meta property='og:url' content={defaultUrl} />
       <meta property='og:type' content='website' />
       <meta name='twitter:title' content={pageTitle} />
       <meta name='twitter:description' content={pageDescription} />

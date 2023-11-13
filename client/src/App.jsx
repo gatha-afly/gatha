@@ -10,24 +10,25 @@ import AddUserPage from "./pages/AddUserPage/AddUserPage";
 import CreateGroupPage from "./pages/CreateGroupPage/CreateGroupPage";
 import MainPage from "./pages/MainPage/MainPage";
 import JoinGroupPage from "./pages/JoinGroupPage/JoinGroupPage";
-import InviteUserPage from "./pages/InviteUserPage/InviteUserPage";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   return (
     <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route index element={<HomePage />} />
-        <Route path='*' element={<PageNotFoundPage />} />
-        <Route path='/user-registration' element={<UserRegistrationPage />} />
-        <Route path='/user-login' element={<UserLoginPage />} />
-        <Route path='/main' element={<MainPage />} />
-        <Route path='/add-user' element={<AddUserPage />} />
-        <Route path='/create-group' element={<CreateGroupPage />} />
-        <Route path='/join-group' element={<JoinGroupPage />} />
-        <Route path='/invite-user' element={<InviteUserPage />} />
-      </Routes>
-      <Footer />
+      <HelmetProvider>
+        <Header />
+        <Routes>
+          <Route index element={<HomePage />} />
+          <Route path='*' element={<PageNotFoundPage />} />
+          <Route path='/user-registration' element={<UserRegistrationPage />} />
+          <Route path='/user-login' element={<UserLoginPage />} />
+          <Route path='/main' element={<MainPage />} />
+          <Route path='/add-user' element={<AddUserPage />} />
+          <Route path='/create-group' element={<CreateGroupPage />} />
+          <Route path='/join-group' element={<JoinGroupPage />} />
+        </Routes>
+        <Footer />
+      </HelmetProvider>
     </BrowserRouter>
   );
 }
