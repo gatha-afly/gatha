@@ -1,16 +1,18 @@
 import express from "express";
 import {
   createGroup,
-  addGroupMember,
+  addMemberToGroup,
 } from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/userAuthorization.js";
 import { validator } from "../middleware/validator.js";
 import { validateGroupRules } from "../middleware/groupSanitizer.js";
+import { isGroupAdminMiddleware } from "../middleware/isGroupAdminMiddleware.js";
 
 const router = express.Router();
 
 // Protected endpoint
 router.use(authorizeUser);
+
 router.post(
   "/create-group/:userId",
   validateGroupRules,
@@ -18,6 +20,12 @@ router.post(
   createGroup
 );
 
-router.patch("/add-member/:groupId", addGroupMember);
+// Protected endpoint with admin rights
+
+router.patch(
+  "/add-member/:groupId/:userId",
+  isGroupAdminMiddleware,
+  addMemberToGroup
+);
 
 export default router;

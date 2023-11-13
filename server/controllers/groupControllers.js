@@ -50,44 +50,50 @@ export const createGroup = async (req, res) => {
  * @returns
  */
 
-export const addGroupMember = async (req, res) => {
+export const addMemberToGroup = async (req, res) => {
   try {
     const { groupId } = req.params;
     const { username } = req.body;
 
     // Find the user by username
-    const user = await User.findOne({ username: username });
-    console.log(user);
-
-    if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "User not found with the provided username" });
+    const member = await User.findOne({ username });
+    if (!member) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "User not found with the provided username",
+      });
     }
 
     // Update the group by adding the user to the members array
     const updatedGroup = await Group.findByIdAndUpdate(
       groupId,
-      { set: { members: user._id } }, // $addToSet ensures uniqueness in the members array
-      { new: true } // Return the modified document
+      {
+        $push: {
+          members: member._id,
+        },
+      },
+      // Return the modified document
+      { new: true }
     )
-      .populate("members", "username firstName lastName")
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
       .populate("admin", "username firstName lastName");
 
     if (!updatedGroup) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "Group not found with the provided groupId" });
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "Group not found with the provided groupId",
+      });
     }
 
     res.status(StatusCodes.OK).json({
       message: "User added to the group successfully",
-      group: updatedGroup,
+      updatedGroup,
     });
   } catch (error) {
     console.error(error);
-    res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Internal server error" });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal server error",
+    });
   }
 };
