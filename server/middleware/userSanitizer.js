@@ -1,7 +1,8 @@
 import { body } from "express-validator";
 import {
   uppercaseFirstLetter,
-  checkUserExistence,
+  checkUserExistenceByEmail,
+  checkUserExistenceByUsername,
 } from "../helpers/userHelper.js";
 
 export const validateUserRules = [
@@ -13,13 +14,17 @@ export const validateUserRules = [
     .customSanitizer((value) => uppercaseFirstLetter(value)),
 
   //Sanitizes and validate the username
-  body("username").trim().isAlphanumeric(),
+  body("username")
+    .trim()
+    .isAlphanumeric()
+    //Custom Validator to check if a username already existed
+    .custom(async (value) => checkUserExistenceByUsername(value)),
 
   //Sanitize and validate the user email
   body("email")
     .trim()
     .isEmail()
-    .custom(async (value) => checkUserExistence(value)),
+    .custom(async (value) => checkUserExistenceByEmail(value)),
 
   //Sanitize and validate the user password
   body("password")
