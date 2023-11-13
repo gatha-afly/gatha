@@ -7,7 +7,7 @@ const MainPage = () => {
     <main className={styles.container}>
       <PiratePxPageRender COUNT_IDENTIFIER={"main"} />
       <h1>gatha - get together</h1>
-      <p>To get started, either create a join a group</p>
+      <p>To get started, either create or join a group</p>
       <NavigateButton route={"create-group"} buttonText={"create a group"} />
       <NavigateButton route={"join-group"} buttonText={"join a group"} />
     </main>
