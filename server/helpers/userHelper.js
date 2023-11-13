@@ -22,7 +22,7 @@ export const checkUserExistenceByEmail = async (value) => {
 };
 
 export const checkUserExistenceByUsername = async (value) => {
-  const existedUsername = await User.findOne({ username: username });
+  const existedUsername = await User.findOne({ username: value });
 
   if (existedUsername) {
     throw new Error("A user already exists with this username");

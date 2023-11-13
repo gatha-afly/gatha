@@ -11,7 +11,8 @@ export const validateUserRules = [
   body(["firstName", "lastName"])
     .trim()
     .isAlpha("en-GB", { ignore: "" }) //ignores the sapces
-    .customSanitizer((value) => uppercaseFirstLetter(value)),
+    .customSanitizer((value) => uppercaseFirstLetter(value))
+    .withMessage("The firstname and lastname shouldn't contain numbers"),
 
   //Sanitizes and validate the username
   body("username")
