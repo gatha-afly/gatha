@@ -119,10 +119,12 @@ export const getGroupMembers = async (req, res) => {
   try {
     const { groupId } = req.params;
 
-    const group = await Group.findById(groupId).populate({
-      path: "members",
-      select: "username firstName lastName",
-    });
+    const group = await Group.findById(groupId)
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
+      .populate("admin", "username firstName lastName");
 
     if (!group) {
       return res
@@ -130,16 +132,45 @@ export const getGroupMembers = async (req, res) => {
         .json({ message: "Group not found" });
     }
 
-    const groupMembers = group.members;
-    const groupName = group.name;
-    const groupAdmin = group.admin;
+    const { members, name, admin } = group;
+
+    const groupAdmin = {
+      username: admin.username,
+      firstName: admin.firstName,
+      lastName: admin.lastName,
+    };
 
     return res
       .status(StatusCodes.OK)
-      .json({ groupId, groupName, groupAdmin, groupMembers });
+      .json({ groupId, groupName: name, groupAdmin, groupMembers: members });
   } catch (error) {
-    // Handle the error appropriately, for example:
     console.error(error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Internal server error" });
+  }
+};
+
+/**
+ * Handler for geting all the groups
+ * @param {*} req
+ * @param {*} res
+ */
+export const getAllGroups = async (req, res) => {
+  try {
+    const groups = await Group.find({});
+
+    if (!groups || groups.length === 0) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "There are no groups" });
+    }
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "List of all groups", groups });
+  } catch (error) {
+    console.error(error); // Log the error for debugging purposes
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Internal server error" });
