@@ -1,5 +1,8 @@
 import { body } from "express-validator";
-import { uppercaseFirstLetter } from "../helpers/userHelper.js";
+import {
+  checkUserExistenceByUsername,
+  uppercaseFirstLetter,
+} from "../helpers/userHelper.js";
 import { checkGroupExistence } from "../helpers/groupHelper.js";
 
 export const validateGroupRules = [

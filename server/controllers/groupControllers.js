@@ -63,6 +63,14 @@ export const addMemberToGroup = async (req, res) => {
       });
     }
 
+    // Check if the user is already a member of the group
+    const isMember = await Group.exists({ _id: groupId, members: member._id });
+    if (isMember) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: "User is already a member of the group",
+      });
+    }
+
     // Update the group by adding the user to the members array
     const updatedGroup = await Group.findByIdAndUpdate(
       groupId,
