@@ -64,10 +64,13 @@ export const addMemberToGroup = async (req, res) => {
     }
 
     // Check if the user is already a member of the group
-    const isMember = await Group.exists({ _id: groupId, members: member._id });
-    if (isMember) {
+    const existingGroup = await Group.findOne({
+      _id: groupId,
+      members: member._id,
+    });
+    if (existingGroup) {
       return res.status(StatusCodes.BAD_REQUEST).json({
-        error: "User is already a member of the group",
+        error: `User is already a member of the group '${existingGroup.name}'`,
       });
     }
 
@@ -105,3 +108,42 @@ export const addMemberToGroup = async (req, res) => {
     });
   }
 };
+
+/**
+ * Handler for displaying all group members using gorupId
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const getGroupMembers = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+
+    const group = await Group.findById(groupId).populate({
+      path: "members",
+      select: "username firstName lastName",
+    });
+
+    if (!group) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "Group not found" });
+    }
+
+    const groupMembers = group.members;
+    const groupName = group.name;
+    const groupAdmin = group.admin;
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ groupId, groupName, groupAdmin, groupMembers });
+  } catch (error) {
+    // Handle the error appropriately, for example:
+    console.error(error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Internal server error" });
+  }
+};
+
+export const removeGroupMembers = async (req, res) => {};
