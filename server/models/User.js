@@ -8,13 +8,13 @@ const userSchema = new Schema(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+
     avatar: {
       imgName: { type: String },
       imgPath: { type: String },
       imgType: { type: String },
       imgSize: { type: Number },
     },
-    isAdmin: { type: Boolean, default: false },
     deactivate: {
       isDeactivated: { type: Boolean, default: false },
       deactivateDate: { type: Date, default: Date.now },
