@@ -108,7 +108,7 @@ export const loginUser = async (req, res) => {
     } else {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ error: "Incorrect email or password. Please try again!" });
+        .json({ error: "Your password is incorrect" });
     }
   } catch (error) {
     return res

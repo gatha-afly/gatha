@@ -6,6 +6,7 @@ const UserLoginForm = () => {
   const { loginUser, error } = useUserContext();
   const navigate = useNavigate();
 
+  //Handler for user login
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -40,6 +41,8 @@ const UserLoginForm = () => {
         required
         className="login-input"
       />
+
+      {error ? <p>{error}</p> : null}
       <button className="login-button">Login</button>
     </form>
   );

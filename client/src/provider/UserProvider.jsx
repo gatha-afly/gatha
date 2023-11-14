@@ -29,9 +29,11 @@ const UserProvider = ({ children }) => {
       console.log(err.response.status);
 
       if (err.response && err.response.status === 401) {
-        setError("Either your email or password is incorrect");
+        setError("Your password is incorrect");
       } else if (err.response && err.response.status === 403) {
         setError("You don't have permission to log in");
+      } else if (err.response && err.response.status === 404) {
+        setError("User not found. please register an account");
       } else {
         setError("An unknown error occurred while logging in");
       }
