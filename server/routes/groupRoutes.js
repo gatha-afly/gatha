@@ -5,6 +5,7 @@ import {
   getGroupMembers,
   getAllGroups,
   deleteGroupById,
+  checkCode,
 } from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/userAuthorization.js";
 import { validator } from "../middleware/validator.js";
@@ -25,6 +26,7 @@ router.post(
 
 router.get("/get-members/:groupId", getGroupMembers);
 router.get("/get-groups", getAllGroups);
+router.get("/check-code/:code", checkCode);
 
 // Protected endpoint with admin rights
 router.patch(

@@ -164,7 +164,36 @@ export const getGroupMembers = async (req, res) => {
 };
 
 /**
- * Handler for geting all the groups
+ * Handler for checking if a group with the provided code exists. If so group name is returned.
+ * @param {*} req
+ * @param {*} res
+ */
+export const checkCode = async (req, res) => {
+  try {
+    const { code } = req.params;
+
+    const group = await Group.findOne({ code });
+
+    if (group) {
+      return res.status(StatusCodes.OK).json({
+        message: "Group with the provided code exists.",
+        groupName: group.name,
+      });
+    } else {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "Group not found." });
+    }
+  } catch (error) {
+    console.error("Error checking code:", error);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Internal server error" });
+  }
+};
+
+/**
+ * Handler for getting all the groups
  * @param {*} req
  * @param {*} res
  */
@@ -189,7 +218,7 @@ export const getAllGroups = async (req, res) => {
 };
 
 /**
- * Handler for deleting groups using gorupId
+ * Handler for deleting groups using groupId
  * @param {*} req
  * @param {*} res
  */
