@@ -7,11 +7,19 @@ const UserLogout = () => {
   const { logoutUser } = useUserContext();
 
   useEffect(() => {
-    navigate("/");
+    const handleLogout = async () => {
+      try {
+        await logoutUser();
+        navigate("/");
+      } catch (error) {
+        console.error("Logout failed:", error);
+      }
+    };
 
-    logoutUser();
-  }, []);
-  return <></>;
+    handleLogout();
+  }, [navigate, logoutUser]);
+
+  return null;
 };
 
 export default UserLogout;
