@@ -22,6 +22,7 @@ const UserProvider = ({ children }) => {
       // Store the user data in localStorage
       localStorage.setItem("user", JSON.stringify(userData));
       console.log("no errors found");
+      console.log(user);
     } catch (err) {
       console.log("errors found");
       setLoggedIn(false);
@@ -40,7 +41,9 @@ const UserProvider = ({ children }) => {
   };
 
   return (
-    <userContext.Provider value={{ error, setError }}>
+    <userContext.Provider
+      value={{ error, setError, loggedIn, loginUser, user }}
+    >
       {children}
     </userContext.Provider>
   );

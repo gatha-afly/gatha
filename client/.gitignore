@@ -1,4 +1,3 @@
-
 # Project variables
 .env.development
 .env.production
@@ -9,7 +8,6 @@ build/
 dist/
 
 # Dev tools
-.eslintrc.json
 .prettierrc
 vite.config.js
 .vscode/
@@ -17,7 +15,6 @@ vite.config.js
 # Local Netlify folder
 .netlify
 
-# TODO: DISCUSS THOSE BELOW
 # Logs
 logs
 *.log
@@ -26,7 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
 dist
 dist-ssr
 *.local

@@ -1,17 +1,17 @@
-form {
+.login-form {
   margin-top: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-input {
+.login-input {
   height: 2.6rem;
   padding: 0.6rem;
 }
-button {
+.login-button {
   min-height: 2.6rem;
-  background-color: orangered;
+  background-color: #559cad;
   color: white;
   font-size: 1.5rem;
   font-weight: bold;

@@ -13,10 +13,18 @@ export const uppercaseFirstLetter = (word) => {
  * Helper to check if the user with the provided email exists
  * @param {*} value
  */
-export const checkUserExistence = async (value) => {
+export const checkUserExistenceByEmail = async (value) => {
   const existedUser = await User.findOne({ email: value });
 
   if (existedUser) {
     throw new Error("A user already exists with this email address");
+  }
+};
+
+export const checkUserExistenceByUsername = async (value) => {
+  const existedUsername = await User.findOne({ username: value });
+
+  if (existedUsername) {
+    throw new Error("A user already exists with this username");
   }
 };
