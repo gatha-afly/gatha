@@ -21,6 +21,11 @@ export const createGroup = async (req, res) => {
         .json({ error: "User not found with the provided ID" });
     }
 
+    // Generate globally unique humanly readable code for the group
+
+    let groupCode;
+    let isUnique = false;
+
     // Create a new group and associate it with the user
     const newGroup = await Group.create({
       userId,

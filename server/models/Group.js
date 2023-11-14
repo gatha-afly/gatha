@@ -3,6 +3,7 @@ import { Schema, model } from "mongoose";
 const groupSchema = new Schema({
   name: { type: String, required: true, unique: true },
   description: { type: String, required: true },
+  code: { type: String, required: true },
   avatar: {
     imgName: { type: String },
     imgPath: { type: String },
