@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./UserLoginForm.css";
 import useUserContext from "../../../context/useUserContext";
@@ -6,7 +7,12 @@ const UserLoginForm = () => {
   const { loginUser, error } = useUserContext();
   const navigate = useNavigate();
 
-  //Handler for user login
+  const [passwordVisible, setPasswordVisible] = useState(false);
+
+  const handleTogglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -35,15 +41,28 @@ const UserLoginForm = () => {
         className="login-input"
       />
       <input
-        type="password"
+        type={passwordVisible ? "text" : "password"}
         placeholder="Password"
         name="password"
         required
         className="login-input"
       />
+      <div className="show-password">
+        <input
+          className="checkbox"
+          type="checkbox"
+          id="passwordVisibility"
+          checked={passwordVisible}
+          onChange={handleTogglePasswordVisibility}
+        />
 
-      {error ? <p>{error}</p> : null}
-      <button className="login-button">Login</button>
+        <label htmlFor="passwordVisibility"> Show Password</label>
+      </div>
+
+      {error && <p>{error}</p>}
+      <button type="submit" className="login-button">
+        Login
+      </button>
     </form>
   );
 };
