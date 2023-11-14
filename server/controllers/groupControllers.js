@@ -102,7 +102,6 @@ export const addMemberToGroup = async (req, res) => {
       updatedGroup,
     });
   } catch (error) {
-    console.error(error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: "Internal server error",
     });
@@ -144,7 +143,6 @@ export const getGroupMembers = async (req, res) => {
       .status(StatusCodes.OK)
       .json({ groupId, groupName: name, groupAdmin, groupMembers: members });
   } catch (error) {
-    console.error(error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Internal server error" });
@@ -170,7 +168,32 @@ export const getAllGroups = async (req, res) => {
       .status(StatusCodes.OK)
       .json({ message: "List of all groups", groups });
   } catch (error) {
-    console.error(error); // Log the error for debugging purposes
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Internal server error" });
+  }
+};
+
+/**
+ * Handler for deleting groups using gorupId
+ * @param {*} req
+ * @param {*} res
+ */
+export const deleteGroupById = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    const deletedGroup = await Group.findByIdAndDelete(groupId);
+
+    if (!deletedGroup) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "The group not found with provided ID" });
+    }
+    return res.status(StatusCodes.OK).json({
+      message: "The group has been successfully deleted",
+      deletedGroup,
+    });
+  } catch (error) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Internal server error" });

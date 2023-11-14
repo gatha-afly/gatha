@@ -4,6 +4,7 @@ import {
   addMemberToGroup,
   getGroupMembers,
   getAllGroups,
+  deleteGroupById,
 } from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/userAuthorization.js";
 import { validator } from "../middleware/validator.js";
@@ -30,6 +31,11 @@ router.patch(
   "/add-member/:groupId/:userId",
   isGroupAdminMiddleware,
   addMemberToGroup
+);
+router.delete(
+  "/delete/:groupId/:userId",
+  isGroupAdminMiddleware,
+  deleteGroupById
 );
 
 export default router;
