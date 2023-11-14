@@ -1,0 +1,21 @@
+.login-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-input {
+  height: 2.6rem;
+  padding: 0.6rem;
+}
+.login-button {
+  min-height: 2.6rem;
+  background-color: #559cad;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  margin-bottom: 1rem;
+}
