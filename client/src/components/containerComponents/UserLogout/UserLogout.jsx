@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import useUserContext from "../../../context/useUserContext";
 import { useEffect } from "react";
+import useUserContext from "../../../context/useUserContext";
 
 const UserLogout = () => {
   const navigate = useNavigate();

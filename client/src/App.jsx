@@ -1,5 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
+
+/* Componenets */
 import Header from "./common/Header/Header";
 import HomePage from "./pages/HomePage/HomePage";
 import Footer from "./common/Footer/Footer";
@@ -13,6 +15,7 @@ import MainPage from "./pages/MainPage/MainPage";
 import JoinGroupPage from "./pages/JoinGroupPage/JoinGroupPage";
 import UserProvider from "./provider/UserProvider";
 import { HelmetProvider } from "react-helmet-async";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 
 function App() {
   return (
@@ -21,6 +24,7 @@ function App() {
         <UserProvider>
           <Header />
           <Routes>
+            {/* Unprotected Routes */}
             <Route index element={<HomePage />} />
             <Route path="*" element={<PageNotFoundPage />} />
             <Route
@@ -29,10 +33,14 @@ function App() {
             />
             <Route path="/user-login" element={<UserLoginPage />} />
             <Route path="/user-logout" element={<UserLogoutPage />} />
-            <Route path="/main" element={<MainPage />} />
-            <Route path="/add-user" element={<AddUserPage />} />
-            <Route path="/create-group" element={<CreateGroupPage />} />
-            <Route path="/join-group" element={<JoinGroupPage />} />
+
+            {/* Protect Routes */}
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/main" element={<MainPage />} />
+              <Route path="/add-user" element={<AddUserPage />} />
+              <Route path="/create-group" element={<CreateGroupPage />} />
+              <Route path="/join-group" element={<JoinGroupPage />} />
+            </Route>
           </Routes>
           <Footer />
         </UserProvider>
