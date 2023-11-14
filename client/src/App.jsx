@@ -6,6 +6,7 @@ import Footer from "./common/Footer/Footer";
 import PageNotFoundPage from "./pages/PageNotFoundPage/PageNotFoundPage";
 import UserRegistrationPage from "./pages/UserRegistrationPage/UserRegistrationPage";
 import UserLoginPage from "./pages/UserLoginPage/UserLoginPage";
+import UserLogoutPage from "./pages/UserLogoutPage/UserLogoutPage";
 import AddUserPage from "./pages/AddUserPage/AddUserPage";
 import CreateGroupPage from "./pages/CreateGroupPage/CreateGroupPage";
 import MainPage from "./pages/MainPage/MainPage";
@@ -27,6 +28,7 @@ function App() {
               element={<UserRegistrationPage />}
             />
             <Route path="/user-login" element={<UserLoginPage />} />
+            <Route path="/user-logout" element={<UserLogoutPage />} />
             <Route path="/main" element={<MainPage />} />
             <Route path="/add-user" element={<AddUserPage />} />
             <Route path="/create-group" element={<CreateGroupPage />} />

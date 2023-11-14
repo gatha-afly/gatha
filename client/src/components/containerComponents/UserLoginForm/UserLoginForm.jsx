@@ -19,7 +19,7 @@ const UserLoginForm = () => {
 
     try {
       await loginUser(data);
-      navigate("/");
+      navigate("/main");
     } catch (error) {
       console.log(error);
     }

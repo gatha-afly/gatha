@@ -9,9 +9,14 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(storedUser);
   const [error, setError] = useState("");
 
+  /**
+   * Handler for login user
+   * @param {*} data
+   * @returns
+   */
   const loginUser = async (data) => {
     try {
-      setError("");
+      setError(""); //Clears the error
       const response = await userAPI.post("/users/login", data);
 
       const userData = response.data.user;
@@ -42,9 +47,25 @@ const UserProvider = ({ children }) => {
     }
   };
 
+  /**
+   * Handler for user logout
+   */
+  const logoutUser = async () => {
+    try {
+      await userAPI.get("/users/logout");
+      setLoggedIn(false);
+
+      //Remove user data from localStorage after logout
+      localStorage.removeItem("user");
+    } catch (err) {
+      setError("An error occurred while logging out.");
+      console.error(err.message);
+    }
+  };
+
   return (
     <userContext.Provider
-      value={{ error, setError, loggedIn, loginUser, user }}
+      value={{ error, setError, loggedIn, loginUser, user, logoutUser }}
     >
       {children}
     </userContext.Provider>
