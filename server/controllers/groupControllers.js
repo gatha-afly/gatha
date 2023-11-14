@@ -1,5 +1,4 @@
 import { StatusCodes } from "http-status-codes";
-import { customAlphabet } from "nanoid";
 
 import { isCodeUnique } from "../helpers/groupHelper.js";
 import { nanoid } from "../helpers/groupHelper.js";
@@ -164,7 +163,7 @@ export const getGroupMembers = async (req, res) => {
 };
 
 /**
- * Handler for checking if a group with the provided code exists. If so group name is returned.
+ * Handler for checking if a group with the provided code exists.
  * @param {*} req
  * @param {*} res
  */
