@@ -299,6 +299,10 @@ export const joinGreoup = async (req, res) => {
     const { userId } = req.params;
     const { code } = req.body;
 
-    con;
+    const existingGroup = await Group.findOne({ code });
+
+    if (!existingGroup) {
+      return res.status(StatusCodes.NOT_FOUND).json({});
+    }
   } catch (error) {}
 };
