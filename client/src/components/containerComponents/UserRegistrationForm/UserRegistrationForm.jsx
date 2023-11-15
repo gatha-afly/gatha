@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import userAPI from "../../../api/userAPI";
 import styles from "./UserRegistrationForm.module.css";
 
 /**
@@ -10,17 +10,9 @@ import styles from "./UserRegistrationForm.module.css";
  * and register.
  */
 const UserRegistrationForm = () => {
-  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+  const [passwordMismatch, setPasswordMismatch] = useState(false);
   const navigate = useNavigate();
   const inputRef = useRef(null);
-
-  // State variables for form fields and error handling
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
   const [error, setError] = useState(null);
 
   // Autofocus first input field on mount
@@ -32,22 +24,28 @@ const UserRegistrationForm = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if entered passwords match
-    if (password !== passwordCheck) {
-      setError("Passwords do not match.");
+    const formData = new FormData(e.target);
+
+    const data = {
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      email: formData.get("email"),
+      username: formData.get("username"),
+      password: formData.get("password"),
+    };
+
+    // Check if password matches with confirm password
+    const confirmedPassword = formData.get("confirm-password");
+    if (data.password !== confirmedPassword) {
+      setPasswordMismatch(true);
       return;
+    } else {
+      setPasswordMismatch(false);
     }
 
     try {
-      // Send user registration request to the server
-      await axios.post(`${apiUrl}/users/register`, {
-        firstName,
-        lastName,
-        username,
-        email,
-        password,
-      });
-
+      //Pass the data object to registerUser
+      await userAPI.post("/users/register", data);
       // Navigate to the login page on successful registration
       navigate("/user-login");
     } catch (error) {
@@ -72,10 +70,8 @@ const UserRegistrationForm = () => {
         <label className={styles.label}>
           First Name:
           <input
-            type='text'
-            name='firstName'
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
+            type="text"
+            name="firstName"
             ref={inputRef} // Ref for autofocus
             required
           />
@@ -85,71 +81,46 @@ const UserRegistrationForm = () => {
       <div className={styles.input}>
         <label className={styles.label}>
           Last Name:
-          <input
-            type='text'
-            name='lastName'
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            required
-          />
+          <input type="text" name="lastName" required />
         </label>
       </div>
 
       <div className={styles.input}>
         <label className={styles.label}>
           Username:
-          <input
-            type='text'
-            name='username'
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+          <input type="text" name="username" required />
         </label>
       </div>
 
       <div className={styles.input}>
         <label className={styles.label}>
           Email:
-          <input
-            type='email'
-            name='email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <input type="email" name="email" required />
         </label>
       </div>
 
       <div className={styles.input}>
         <label className={styles.label}>
           Password:
-          <input
-            type='password'
-            name='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <input type="password" name="password" required />
         </label>
       </div>
 
       <div className={styles.input}>
         <label className={styles.label}>
           Confirm Password:
-          <input
-            type='password'
-            name='passwordCheck'
-            value={passwordCheck}
-            onChange={(e) => setPasswordCheck(e.target.value)}
-            required
-          />
+          <input type="password" name="confirm-password" required />
         </label>
       </div>
+      {/* If the password doesn't match throw an error */}
+      {passwordMismatch && (
+        <p className={styles.errorMessage}>Passwords do not match.</p>
+      )}
+
       {/* Conditionally render error message */}
       {error && <p className={styles.errorMessage}>{error}</p>}
       {/* Submit button */}
-      <button type='submit'>Register</button>
+      <button type="submit">Register</button>
     </form>
   );
 };

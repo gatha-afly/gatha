@@ -1,4 +1,7 @@
 import { StatusCodes } from "http-status-codes";
+
+import { isCodeUnique } from "../helpers/groupHelper.js";
+import { nanoid } from "../helpers/groupHelper.js";
 import Group from "../models/Group.js";
 import User from "../models/User.js";
 
@@ -21,9 +24,19 @@ export const createGroup = async (req, res) => {
         .json({ error: "User not found with the provided ID" });
     }
 
+    // Generate globally unique humanly readable code for the group
+    let code;
+    let isUnique = false;
+
+    while (!isUnique) {
+      code = nanoid(8);
+      isUnique = await isCodeUnique(code);
+    }
+
     // Create a new group and associate it with the user
     const newGroup = await Group.create({
       userId,
+      code,
       name,
       description,
       admin: userId, // Set the admin field to the user's ID
@@ -204,6 +217,35 @@ export const getGroupMembers = async (req, res) => {
       .status(StatusCodes.OK)
       .json({ groupId, groupName: name, groupAdmin, groupMembers: members });
   } catch (error) {
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Internal server error" });
+  }
+};
+
+/**
+ * Handler for checking if a group with the provided code exists.
+ * @param {*} req
+ * @param {*} res
+ */
+export const checkCode = async (req, res) => {
+  try {
+    const { code } = req.params;
+
+    const group = await Group.findOne({ code });
+
+    if (group) {
+      return res.status(StatusCodes.OK).json({
+        message: "Group with the provided code exists.",
+        groupName: group.name,
+      });
+    } else {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ message: "Group not found." });
+    }
+  } catch (error) {
+    console.error("Error checking code:", error);
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Internal server error" });
