@@ -140,16 +140,20 @@ export const removeMemberFromGroup = async (req, res) => {
         error: "User not found with the provided username",
       });
     }
-    // Check if the user to be removed is a member of the group
-    const isMember = req.group.members.includes(memberToRemove._id);
-    if (!isMember) {
+
+    // Check if the user is already a member of the group
+    const existingGroup = await Group.findOne({
+      _id: groupId,
+      members: memberToRemove._id,
+    });
+    if (!existingGroup) {
       return res.status(StatusCodes.BAD_REQUEST).json({
-        error: "The specified user is not a member of the group.",
+        error: `User is not a member of the group or the group does not exist`,
       });
     }
 
     // Update the group by removing the user from the members array
-    const updatedGroup = await Group.findByIdAndDelete(
+    const updatedGroup = await Group.findByIdAndUpdate(
       groupId,
       {
         $pull: {

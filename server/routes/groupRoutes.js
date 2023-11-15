@@ -35,7 +35,7 @@ router.patch(
   isGroupAdminMiddleware,
   addMemberToGroup
 );
-router.delete(
+router.patch(
   "/remove-member/:groupId/:userId",
   isGroupAdminMiddleware,
   removeMemberFromGroup
