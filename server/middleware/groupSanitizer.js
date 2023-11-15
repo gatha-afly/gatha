@@ -8,11 +8,4 @@ export const validateGroupRules = [
     .trim()
     .isAlpha("en-GB", { ignore: " " }) //ignores the spaces
     .customSanitizer((value) => uppercaseFirstLetter(value)),
-
-  //Sanitize and validate group code
-  // body("code").custom(async (value) => {
-  //   if (!(await isCodeUnique(value))) {
-  //     throw new Error("Group code must be unique.");
-  //   }
-  // }),
 ];
