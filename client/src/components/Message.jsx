@@ -33,17 +33,17 @@ const Message = () => {
   };
 
   return (
-    <div className="message-container">
-      <form className="message-form" onSubmit={handleSubmit}>
+    <div className='message-container'>
+      <form className='message-form' onSubmit={handleSubmit}>
         <input
-          className="input-message"
-          type="text"
+          className='input-message'
+          type='text'
           value={messageText}
           onChange={(e) => setMessageText(e.target.value)}
         />
-        <button type="submit">Send</button>
+        <button type='submit'>Send</button>
       </form>
-      {error && <p className="error">{error}</p>}
+      {error && <p className='error'>{error}</p>}
     </div>
   );
 };

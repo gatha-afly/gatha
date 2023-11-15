@@ -1,13 +1,16 @@
 import axios from "axios";
 
-const baseUrl = import.meta.env.VITE_REACT_APP_API_URL;
+// Set baseURL
+const baseURL = import.meta.env.VITE_REACT_APP_API_URL;
 
+// Create axios instance
 const userAPI = axios.create({
-  baseURL: baseUrl,
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },
   withCredentials: true,
+  timeout: 5000,
 });
 
 // Intercepts requests
@@ -23,12 +26,12 @@ userAPI.interceptors.request.use(
 
 // Intercepts responses
 userAPI.interceptors.response.use(
-  (config) => {
+  (response) => {
     console.log("A response has been received");
-    return config;
+    return response;
   },
   (error) => {
-    console.log("Error response has been received", error.response);
+    console.error("Error response has been received", error.response);
     if (error.response.status === 401) {
       console.log("We hit 401, token is not valid anymore");
     }

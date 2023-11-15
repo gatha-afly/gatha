@@ -1,3 +1,30 @@
+.registrationForm {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checkbox {
+  height: 1.4rem;
+  width: 1.4rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+
+.showPassword {
+  display: flex;
+  align-items: center;
+}
+
+.showPasswordLabel {
+  cursor: pointer;
+}
+
+.checkbox:focus {
+  outline: none;
+}
+
 .errorMessage {
   color: var(--color-error);
 }

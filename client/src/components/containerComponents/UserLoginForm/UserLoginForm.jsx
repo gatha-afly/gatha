@@ -1,66 +1,77 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./UserLoginForm.css";
+import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
+import styles from "./UserLoginForm.module.css"; // Import CSS Module
+
 import useUserContext from "../../../context/useUserContext";
 
 const UserLoginForm = () => {
+  // Access user context and navigation functions
   const { loginUser, error } = useUserContext();
   const navigate = useNavigate();
 
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  // Use custom hook for managing password visibility
+  const { passwordVisible, togglePasswordVisibility } = usePasswordVisibility();
 
-  const handleTogglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
+  // Handle form submission
   const handleLogin = async (e) => {
     e.preventDefault();
 
+    // Extract form data
     const formData = new FormData(e.target);
-
     const data = {
       email: formData.get("email"),
       password: formData.get("password"),
     };
 
     try {
+      // Attempt user login
       await loginUser(data);
+      // Navigate to the main page on successful login
       navigate("/main");
     } catch (error) {
+      // Handle login errors and update error state for user feedback
       console.log(error);
     }
   };
 
   return (
-    <form className="login-form" onSubmit={handleLogin}>
+    <form className={styles.loginForm} onSubmit={handleLogin}>
+      {/* Email input */}
       <input
-        type="text"
-        placeholder="Email"
-        name="email"
+        type='text'
+        placeholder='Email'
+        name='email'
         required
-        className="login-input"
+        className={styles.loginInput}
       />
+      {/* Password input */}
       <input
         type={passwordVisible ? "text" : "password"}
-        placeholder="Password"
-        name="password"
+        placeholder='Password'
+        name='password'
         required
-        className="login-input"
+        className={styles.loginInput}
       />
-      <div className="show-password">
+      {/* Show password checkbox */}
+      <div className={styles.showPassword}>
         <input
-          className="checkbox"
-          type="checkbox"
-          id="passwordVisibility"
+          className={styles.checkbox}
+          type='checkbox'
+          id='passwordVisibility'
           checked={passwordVisible}
-          onChange={handleTogglePasswordVisibility}
+          onChange={togglePasswordVisibility}
         />
-
-        <label htmlFor="passwordVisibility"> Show Password</label>
+        <label
+          className={styles.showPasswordLabel}
+          htmlFor='passwordVisibility'>
+          Show password
+        </label>
       </div>
+      {/* Display error message if present */}
+      {error && <p className={styles.errorMessage}>{error}</p>}
+      {/* Login button */}
 
-      {error && <p>{error}</p>}
-      <button type="submit" className="login-button">
+      <button type='submit' className={styles.loginButton}>
         Login
       </button>
     </form>

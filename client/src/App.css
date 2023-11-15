@@ -3,6 +3,7 @@
   --color-signal: #559cad;
   --color-success: #749c75;
   --color-dark: #000;
+  --color-light: white;
   --color-body: #f8f7ff
   --color-main: #ffffff;
   --color-dark: #454372;
@@ -72,8 +73,26 @@ li {
     list-style: none;
   }
 
-  button,
+button,
 select,
 input {
   font-family: "Ubuntu", sans-serif;
+}
+
+button{
+    min-height: 2.4rem;
+    background-color: var(--color-signal);
+    color: var(--color-light);
+    font-size: 1.5rem;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    margin-bottom: 1rem;
+    cursor: pointer;
+ }
+
+ input {
+  height: 2.4rem;
+  padding: 0.5rem;
+  font-size: 1.5rem;
 }

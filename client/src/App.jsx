@@ -24,22 +24,22 @@ function App() {
         <UserProvider>
           <Header />
           <Routes>
-            {/* Unprotected Routes */}
+            {/* Unprotected routes */}
             <Route index element={<HomePage />} />
-            <Route path="*" element={<PageNotFoundPage />} />
+            <Route path='*' element={<PageNotFoundPage />} />
             <Route
-              path="/user-registration"
+              path='/user-registration'
               element={<UserRegistrationPage />}
             />
-            <Route path="/user-login" element={<UserLoginPage />} />
-            <Route path="/user-logout" element={<UserLogoutPage />} />
+            <Route path='/user-login' element={<UserLoginPage />} />
+            <Route path='/user-logout' element={<UserLogoutPage />} />
 
-            {/* Protect Routes */}
+            {/* Protected routes */}
             <Route element={<ProtectedRoutes />}>
-              <Route path="/main" element={<MainPage />} />
-              <Route path="/add-user" element={<AddUserPage />} />
-              <Route path="/create-group" element={<CreateGroupPage />} />
-              <Route path="/join-group" element={<JoinGroupPage />} />
+              <Route path='/main' element={<MainPage />} />
+              <Route path='/add-user' element={<AddUserPage />} />
+              <Route path='/create-group' element={<CreateGroupPage />} />
+              <Route path='/join-group' element={<JoinGroupPage />} />
             </Route>
           </Routes>
           <Footer />
