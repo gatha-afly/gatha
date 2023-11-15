@@ -3,18 +3,6 @@ import { logDevError } from "./developmentEnvironmentHelper.js";
 import { customAlphabet } from "nanoid";
 
 /**
- * Handler to check if a group name with provided group name already exists
- * @param {*} value
- */
-export const checkGroupExistence = async (value) => {
-  const existedGroup = await Group.findOne({ name: value });
-
-  if (existedGroup) {
-    throw new Error("A a group exists with this group name");
-  }
-};
-
-/**
  * Defines a custom alphabet for code generation, excluding numbers and uppercase letters that are easily confused.
  */
 export const nanoid = customAlphabet("ACDEFGHIJKLMNOPQRSTUVWXYZ346789");
