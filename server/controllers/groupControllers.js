@@ -1,7 +1,4 @@
 import { StatusCodes } from "http-status-codes";
-
-import { isCodeUnique } from "../helpers/groupHelper.js";
-import { nanoid } from "../helpers/groupHelper.js";
 import Group from "../models/Group.js";
 import User from "../models/User.js";
 
@@ -24,19 +21,9 @@ export const createGroup = async (req, res) => {
         .json({ error: "User not found with the provided ID" });
     }
 
-    // Generate globally unique humanly readable code for the group
-    let code;
-    let isUnique = false;
-
-    while (!isUnique) {
-      code = nanoid(8);
-      isUnique = await isCodeUnique(code);
-    }
-
     // Create a new group and associate it with the user
     const newGroup = await Group.create({
       userId,
-      code,
       name,
       description,
       admin: userId, // Set the admin field to the user's ID
@@ -314,6 +301,6 @@ export const joinGreoup = async (req, res) => {
     const { userId } = req.params;
     const { code } = req.body;
 
-    con
+    con;
   } catch (error) {}
 };
