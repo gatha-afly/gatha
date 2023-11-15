@@ -294,8 +294,6 @@ export const deleteGroupById = async (req, res) => {
   }
 };
 
-export const removeGroupMembers = async (req, res) => {};
-
 export const joinGreoup = async (req, res) => {
   try {
     const { userId } = req.params;
