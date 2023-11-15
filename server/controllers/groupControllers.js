@@ -57,7 +57,7 @@ export const createGroup = async (req, res) => {
 };
 
 /**
- * Handler for add group members using the groupid and username
+ * Handler for add group members using the groupId and username
  * @param {*} req
  * @param {*} res
  * @returns
@@ -112,6 +112,71 @@ export const addMemberToGroup = async (req, res) => {
 
     res.status(StatusCodes.OK).json({
       message: "User added to the group successfully",
+      updatedGroup,
+    });
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal server error",
+    });
+  }
+};
+
+/**
+ * Handler for removing group members using the groupId and adminId
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+
+export const removeMemberFromGroup = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    const { username } = req.body;
+
+    // Find the user to remove by username
+    const memberToRemove = await User.findOne({ username });
+    if (!memberToRemove) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "User not found with the provided username",
+      });
+    }
+
+    // Check if the user is already a member of the group
+    const existingGroup = await Group.findOne({
+      _id: groupId,
+      members: memberToRemove._id,
+    });
+    if (!existingGroup) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: `User is not a member of the group or the group does not exist`,
+      });
+    }
+
+    // Update the group by removing the user from the members array
+    const updatedGroup = await Group.findByIdAndUpdate(
+      groupId,
+      {
+        $pull: {
+          members: memberToRemove._id,
+        },
+      },
+      // Return the modified document
+      { new: true }
+    )
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
+      .populate("admin", "username firstName lastName");
+
+    if (!updatedGroup) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "Group not found with the provided groupId",
+      });
+    }
+
+    res.status(StatusCodes.OK).json({
+      message: "User removed from the group successfully",
       updatedGroup,
     });
   } catch (error) {

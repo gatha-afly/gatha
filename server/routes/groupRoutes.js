@@ -2,6 +2,7 @@ import express from "express";
 import {
   createGroup,
   addMemberToGroup,
+  removeMemberFromGroup,
   getGroupMembers,
   getAllGroups,
   deleteGroupById,
@@ -33,6 +34,11 @@ router.patch(
   "/add-member/:groupId/:userId",
   isGroupAdminMiddleware,
   addMemberToGroup
+);
+router.patch(
+  "/remove-member/:groupId/:userId",
+  isGroupAdminMiddleware,
+  removeMemberFromGroup
 );
 router.delete(
   "/delete/:groupId/:userId",
