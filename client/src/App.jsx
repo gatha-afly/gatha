@@ -35,7 +35,7 @@ function App() {
             {/* Protected routes */}
             <Route element={<ProtectedRoutes />}>
               <Route path='/main' element={<MainPage />} />
-              <Route path='/add-user' element={<AddUserPage />} />
+              <Route path='/add-user/:code' element={<AddUserPage />} />
               <Route path='/create-group' element={<CreateGroupPage />} />
               <Route path='/join-group' element={<JoinGroupPage />} />
             </Route>

@@ -41,23 +41,27 @@ const CreateGroup = () => {
 
     try {
       // Attempt to register the user with the provided data
-      // await userAPI.post(`/groups/create-group/${userId}`, data);
-      await userAPI.post(`/groups/create-group/${userId}`, data);
+      const response = await userAPI.post(
+        `/groups/create-group/${userId}`,
+        data
+      );
 
-      //TODO: Navigate to add users page on successful registration
-      //   navigate("/main");
+      // Access group code returned from the server
+      const code = response.data.newGroup.code;
+
+      // Navigate to add users page on successful registration
+      navigate(`/add-user/${code}`);
     } catch (error) {
       handleServerErrors(error, setError);
-      // handleOtherErrors(
-      //   error,
-      //   setError,
-      //   "Error creating group.",
-      //   "create-group"
-      // );
+      handleOtherErrors(
+        error,
+        setError,
+        "Error creating group.",
+        "create-group"
+      );
     }
   };
 
-  // Return the JSX for the component
   return (
     <form className={styles.groupCreationForm} onSubmit={handleFormSubmit}>
       {/* Input fields for group information */}
@@ -76,13 +80,13 @@ const CreateGroup = () => {
           type='text'
           name='description'
           placeholder='Group description'
-          rows={5} // Specify the number of visible lines
+          rows={5}
         />
       </div>
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type='submit'>Register</button>
+      <button type='submit'>create</button>
     </form>
   );
 };

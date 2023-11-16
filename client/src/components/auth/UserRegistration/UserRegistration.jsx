@@ -69,7 +69,6 @@ const UserRegistration = () => {
     }
   };
 
-  // Return the JSX for the component
   return (
     <form className={styles.registrationForm} onSubmit={handleFormSubmit}>
       {/* Input fields for user information */}
