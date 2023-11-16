@@ -13,6 +13,7 @@ import styles from "./CreateGroup.module.css";
  * Create group form, allowing users to input group information and register.
  */
 const CreateGroup = () => {
+  // Extract userId from UserContext
   const { userId } = useUserContext().user;
   // Navigation hook for redirecting
   const navigate = useNavigate();
@@ -45,12 +46,10 @@ const CreateGroup = () => {
         `/groups/create-group/${userId}`,
         data
       );
-
-      // Access group code returned from the server
-      const code = response.data.newGroup.code;
-
+      // Access groupId returned from the server
+      const groupId = response.data.newGroup._id;
       // Navigate to add users page on successful registration
-      navigate(`/add-user/${code}`);
+      navigate(`/add-user/${groupId}`);
     } catch (error) {
       handleServerErrors(error, setError);
       handleOtherErrors(
