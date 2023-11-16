@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import userAPI from "../../../api/userAPI";
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
+import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./UserRegistration.module.css";
 
 /**
@@ -138,8 +139,7 @@ const UserRegistration = () => {
       )}
 
       {/* Conditionally render error message received from the server */}
-      {error && <p className={styles.errorMessage}>{error}</p>}
-
+      <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
       <button type='submit'>Register</button>
     </form>

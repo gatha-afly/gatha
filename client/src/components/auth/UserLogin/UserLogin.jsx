@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
-import styles from "./UserLogin.module.css"; // Import CSS Module
-
+import styles from "./UserLogin.module.css";
 import useUserContext from "../../../context/useUserContext";
+import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 
 const UserLogin = () => {
   // Access user context and navigation functions
@@ -68,7 +68,7 @@ const UserLogin = () => {
         </label>
       </div>
       {/* Display error message if present */}
-      {error && <p className={styles.errorMessage}>{error}</p>}
+      <ErrorDisplay error={error} />
       {/* Login button */}
 
       <button type='submit' className={styles.loginButton}>
