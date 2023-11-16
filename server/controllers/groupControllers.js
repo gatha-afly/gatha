@@ -1,7 +1,4 @@
 import { StatusCodes } from "http-status-codes";
-
-import { isCodeUnique } from "../helpers/groupHelper.js";
-import { nanoid } from "../helpers/groupHelper.js";
 import Group from "../models/Group.js";
 import User from "../models/User.js";
 
@@ -24,19 +21,9 @@ export const createGroup = async (req, res) => {
         .json({ error: "User not found with the provided ID" });
     }
 
-    // Generate globally unique humanly readable code for the group
-    let code;
-    let isUnique = false;
-
-    while (!isUnique) {
-      code = nanoid(8);
-      isUnique = await isCodeUnique(code);
-    }
-
     // Create a new group and associate it with the user
     const newGroup = await Group.create({
       userId,
-      code,
       name,
       description,
       admin: userId, // Set the admin field to the user's ID
@@ -228,35 +215,6 @@ export const getGroupMembers = async (req, res) => {
 };
 
 /**
- * Handler for checking if a group with the provided code exists.
- * @param {*} req
- * @param {*} res
- */
-export const checkCode = async (req, res) => {
-  try {
-    const { code } = req.params;
-
-    const group = await Group.findOne({ code });
-
-    if (group) {
-      return res.status(StatusCodes.OK).json({
-        message: "Group with the provided code exists.",
-        groupName: group.name,
-      });
-    } else {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Group not found." });
-    }
-  } catch (error) {
-    console.error("Error checking code:", error);
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal server error" });
-  }
-};
-
-/**
  * Handler for getting all the groups
  * @param {*} req
  * @param {*} res
@@ -307,4 +265,56 @@ export const deleteGroupById = async (req, res) => {
   }
 };
 
-export const removeGroupMembers = async (req, res) => {};
+/**
+ * Handler for joining a group with provided gorup code
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const joinGroup = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { code } = req.body;
+
+    // Check if the provided userId is not already a member of the group
+    const existingGroup = await Group.findOne({ code, members: userId });
+
+    if (existingGroup) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "You are already a member of the group with the provided code",
+      });
+    }
+
+    // Update the group by adding the user to the members array
+    const updatedGroup = await Group.findOneAndUpdate(
+      { code },
+      {
+        $addToSet: {
+          members: userId,
+        },
+      },
+      { new: true }
+    )
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
+      .populate("admin", "username firstName lastName");
+
+    if (!updatedGroup) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "Group not found with the provided code",
+      });
+    }
+
+    res.status(StatusCodes.OK).json({
+      message: "You have been added to the group successfully",
+      updatedGroup,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal server error",
+    });
+  }
+};
