@@ -1,7 +1,10 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import userAPI from "../../../api/userAPI";
-import { handleServerErrors } from "../../../utils/errorUtils";
+import {
+  handleOtherErrors,
+  handleServerErrors,
+} from "../../../utils/errorUtils";
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
 import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./UserRegistration.module.css";
@@ -62,18 +65,11 @@ const UserRegistration = () => {
       navigate("/user-login");
     } catch (error) {
       handleServerErrors(error, setError);
-      // Handle other types of errors
-      if (
-        !error.response ||
-        !error.response.data ||
-        !error.response.data.errors
-      ) {
-        console.error("Error creating user:", error);
-        setError("Error creating user. Please try again.");
-      }
+      handleOtherErrors(error, setError, "Error creating user.", "create-user");
     }
   };
 
+  // Return the JSX for the component
   return (
     <form className={styles.registrationForm} onSubmit={handleFormSubmit}>
       {/* Input fields for user information */}
