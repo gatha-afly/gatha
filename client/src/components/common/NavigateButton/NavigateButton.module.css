@@ -1,7 +1,7 @@
 .button {
   background-color: var(--color-signal);
   font-family: "Ubuntu", sans-serif;
-  color: var(--color-main);
+  color: var(--color-light);
   border: none;
   font-size: 1.6rem;
   cursor: pointer;

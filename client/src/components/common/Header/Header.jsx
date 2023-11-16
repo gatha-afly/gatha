@@ -8,7 +8,6 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <Link to='/'>Home</Link>
-      <p>This is the header.</p>
 
       {/* Conditionally rendering the user initials info after successful login */}
       {loggedIn ? (

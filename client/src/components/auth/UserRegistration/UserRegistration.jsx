@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import userAPI from "../../../api/userAPI";
+import { handleServerErrors } from "../../../utils/errorUtils";
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
 import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./UserRegistration.module.css";
@@ -60,15 +61,13 @@ const UserRegistration = () => {
       // Navigate to the login page on successful registration
       navigate("/user-login");
     } catch (error) {
-      // Handle errors from the server
-      if (error.response && error.response.data && error.response.data.errors) {
-        // Validation errors from server
-        const serverErrors = error.response.data.errors;
-
-        // Render the first error message
-        setError(serverErrors[0].msg);
-      } else {
-        // Handle other types of errors
+      handleServerErrors(error, setError);
+      // Handle other types of errors
+      if (
+        !error.response ||
+        !error.response.data ||
+        !error.response.data.errors
+      ) {
         console.error("Error creating user:", error);
         setError("Error creating user. Please try again.");
       }
