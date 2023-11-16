@@ -1,7 +1,21 @@
 import { StatusCodes } from "http-status-codes";
+import mongoose from "mongoose";
 import Group from "../models/Group.js";
-import User from "../models/User.js";
+
+//Imports all helpers from groupHelper
 import * as groupHelper from "../helpers/groupHelper.js";
+
+groupHelper.findUserById;
+// import {
+//   findUserByUsername,
+//   findUserById,
+//   handleUserNotFound,
+//   handleUserAlreadyGroupMember,
+//   handleUserNotGroupMember,
+//   updateGroupMembers,
+//   handleGroupNotFound,
+//   handleInternalError,
+// } from "../helpers/groupHelper.js";
 
 /***
  * Handler for creating group using userId
@@ -15,11 +29,10 @@ export const createGroup = async (req, res) => {
     const { name, description } = req.body;
 
     // Find the user by userId
-    const user = await User.findById(userId);
+    const user = await findUserById(userId);
     if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "User not found with the provided ID" });
+      console.log("User not found");
+      return handleUserNotFound(res, "UserId");
     }
 
     // Create a new group and associate it with the user
@@ -27,7 +40,7 @@ export const createGroup = async (req, res) => {
       userId,
       name,
       description,
-      admin: userId, // Set the admin field to the user's ID
+      admin: userId, // Set userId as group admin
     });
 
     // Populate the user details for the admin
@@ -38,9 +51,11 @@ export const createGroup = async (req, res) => {
       newGroup,
     });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Something went wrong", details: error.message });
+    console.log(error);
+    if (error instanceof mongoose.Error.CastError) {
+      return handleUserNotFound(res, "userId");
+    }
+    return handleInternalError(res);
   }
 };
 
@@ -57,15 +72,15 @@ export const addMemberToGroup = async (req, res) => {
     const { username } = req.body;
 
     // Find the user by username
-    const member = await groupHelper.findUserByUsername(username);
-    if (!member) {
-      return groupHelper.handleUserNotFound(res);
+    const newMember = await groupHelper.findUser(username);
+    if (!newMember) {
+      return groupHelper.handleGroupNotFound(res);
     }
 
     // Check if the user is already a member of the group
     const existingGroup = await Group.findOne({
       _id: groupId,
-      members: member._id,
+      members: newMember._id,
     });
 
     //Throws an error if user is already a member of a group
@@ -74,36 +89,18 @@ export const addMemberToGroup = async (req, res) => {
     }
 
     // Update the group by adding the user to the members array
-    const updatedGroup = await Group.findByIdAndUpdate(
+    const updatedGroup = await groupHelper.updateGroupMembers(
       groupId,
-      {
-        $push: {
-          members: member._id,
-        },
-      },
-      // Return the modified document
-      { new: true }
-    )
-      .populate({
-        path: "members",
-        select: "username firstName lastName",
-      })
-      .populate("admin", "username firstName lastName");
-
-    if (!updatedGroup) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Group not found with the provided groupId",
-      });
-    }
+      newMember._id,
+      "$push"
+    );
 
     res.status(StatusCodes.OK).json({
       message: "User added to the group successfully",
       updatedGroup,
     });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      error: "Internal server error",
-    });
+    groupHelper.handleInternalError(res);
   }
 };
 
@@ -120,11 +117,9 @@ export const removeMemberFromGroup = async (req, res) => {
     const { username } = req.body;
 
     // Find the user to remove by username
-    const memberToRemove = await User.findOne({ username });
+    const memberToRemove = await groupHelper.findUser(username);
     if (!memberToRemove) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "User not found with the provided username",
-      });
+      return groupHelper.handleUserNotFound(res);
     }
 
     // Check if the user is already a member of the group
@@ -132,43 +127,25 @@ export const removeMemberFromGroup = async (req, res) => {
       _id: groupId,
       members: memberToRemove._id,
     });
+
+    //Throws an error if user is not a member of group
     if (!existingGroup) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        error: `User is not a member of the group or the group does not exist`,
-      });
+      return groupHelper.handleUserNotGroupMember(res, existingGroup.name);
     }
 
     // Update the group by removing the user from the members array
-    const updatedGroup = await Group.findByIdAndUpdate(
+    const updatedGroup = await groupHelper.updateGroupMembers(
       groupId,
-      {
-        $pull: {
-          members: memberToRemove._id,
-        },
-      },
-      // Return the modified document
-      { new: true }
-    )
-      .populate({
-        path: "members",
-        select: "username firstName lastName",
-      })
-      .populate("admin", "username firstName lastName");
-
-    if (!updatedGroup) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Group not found with the provided groupId",
-      });
-    }
+      memberToRemove._id,
+      "$pull"
+    );
 
     res.status(StatusCodes.OK).json({
       message: "User removed from the group successfully",
       updatedGroup,
     });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      error: "Internal server error",
-    });
+    groupHelper.handleInternalError(res);
   }
 };
 
@@ -190,9 +167,7 @@ export const getGroupMembers = async (req, res) => {
       .populate("admin", "username firstName lastName");
 
     if (!group) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Group not found" });
+      return groupHelper.handleGroupNotFound(res);
     }
 
     const { members, name, admin } = group;
@@ -207,9 +182,7 @@ export const getGroupMembers = async (req, res) => {
       .status(StatusCodes.OK)
       .json({ groupId, groupName: name, groupAdmin, groupMembers: members });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal server error" });
+    groupHelper.handleInternalError(res);
   }
 };
 
@@ -222,19 +195,16 @@ export const getAllGroups = async (req, res) => {
   try {
     const groups = await Group.find({});
 
-    if (!groups || groups.length === 0) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "There are no groups" });
+    //Throws an error if there are not groups in database
+    if (!groups) {
+      return groupHelper.handleGroupNotFound(res);
     }
 
     return res
       .status(StatusCodes.OK)
       .json({ message: "List of all groups", groups });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal server error" });
+    groupHelper.handleInternalError(res);
   }
 };
 
@@ -249,18 +219,14 @@ export const deleteGroupById = async (req, res) => {
     const deletedGroup = await Group.findByIdAndDelete(groupId);
 
     if (!deletedGroup) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "The group not found with provided ID" });
+      return groupHelper.handleGroupNotFound(res);
     }
     return res.status(StatusCodes.OK).json({
       message: "The group has been successfully deleted",
       deletedGroup,
     });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal server error" });
+    groupHelper.handleInternalError(res);
   }
 };
 
@@ -329,11 +295,9 @@ export const leaveGroup = async (req, res) => {
     const { groupId, userId } = req.params;
 
     // Check if a user with the provided ID exists in the database
-    const member = await User.findById(userId);
+    const member = await HelperToFindUser(userId);
     if (!member) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "The user was not found" });
+      return handleUserNotFound(res);
     }
 
     // Check if the user is already a member of the group
