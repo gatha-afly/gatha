@@ -26,6 +26,7 @@ export const createGroup = async (req, res) => {
       userId,
       name,
       admin: userId, // Set userId as group admin
+      members: userId,
     };
 
     // Conditionally set the description field
