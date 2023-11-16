@@ -5,18 +5,6 @@ import Group from "../models/Group.js";
 //Imports all helpers from groupHelper
 import * as groupHelper from "../helpers/groupHelper.js";
 
-groupHelper.findUserById;
-// import {
-//   findUserByUsername,
-//   findUserById,
-//   handleUserNotFound,
-//   handleUserAlreadyGroupMember,
-//   handleUserNotGroupMember,
-//   updateGroupMembers,
-//   handleGroupNotFound,
-//   handleInternalError,
-// } from "../helpers/groupHelper.js";
-
 /***
  * Handler for creating group using userId
  * @param {*} req
@@ -29,10 +17,10 @@ export const createGroup = async (req, res) => {
     const { name, description } = req.body;
 
     // Find the user by userId
-    const user = await findUserById(userId);
+    const user = await groupHelper.findUserById(userId);
     if (!user) {
       console.log("User not found");
-      return handleUserNotFound(res, "UserId");
+      return groupHelper.handleUserNotFound(res, "UserId");
     }
 
     // Create a new group and associate it with the user
@@ -53,9 +41,9 @@ export const createGroup = async (req, res) => {
   } catch (error) {
     console.log(error);
     if (error instanceof mongoose.Error.CastError) {
-      return handleUserNotFound(res, "userId");
+      return groupHelper.handleUserNotFound(res, "userId");
     }
-    return handleInternalError(res);
+    return groupHelper.handleInternalError(res);
   }
 };
 
@@ -72,9 +60,9 @@ export const addMemberToGroup = async (req, res) => {
     const { username } = req.body;
 
     // Find the user by username
-    const newMember = await groupHelper.findUser(username);
+    const newMember = await groupHelper.findUserByUsername(username);
     if (!newMember) {
-      return groupHelper.handleGroupNotFound(res);
+      return groupHelper.handleUserNotFound(res, "username");
     }
 
     // Check if the user is already a member of the group
@@ -100,7 +88,7 @@ export const addMemberToGroup = async (req, res) => {
       updatedGroup,
     });
   } catch (error) {
-    groupHelper.handleInternalError(res);
+    return groupHelper.handleInternalError(res);
   }
 };
 
@@ -116,20 +104,25 @@ export const removeMemberFromGroup = async (req, res) => {
     const { groupId } = req.params;
     const { username } = req.body;
 
-    // Find the user to remove by username
-    const memberToRemove = await groupHelper.findUser(username);
-    if (!memberToRemove) {
-      return groupHelper.handleUserNotFound(res);
+    // Check if the provided group ID exists
+    const existingGroup = await Group.findById(groupId);
+    if (!existingGroup) {
+      return groupHelper.handleGroupNotFound(res, groupId);
     }
 
-    // Check if the user is already a member of the group
-    const existingGroup = await Group.findOne({
+    // Check if the provided username exists
+    const memberToRemove = await groupHelper.findUserByUsername(username);
+    if (!memberToRemove) {
+      return groupHelper.handleUserNotFound(res, "username");
+    }
+
+    // Check if the user is a member of the group
+    const isMember = await Group.exists({
       _id: groupId,
-      members: memberToRemove._id,
+      members: { $in: [memberToRemove._id] },
     });
 
-    //Throws an error if user is not a member of group
-    if (!existingGroup) {
+    if (!isMember) {
       return groupHelper.handleUserNotGroupMember(res, existingGroup.name);
     }
 
@@ -145,7 +138,7 @@ export const removeMemberFromGroup = async (req, res) => {
       updatedGroup,
     });
   } catch (error) {
-    groupHelper.handleInternalError(res);
+    return groupHelper.handleInternalError(res);
   }
 };
 

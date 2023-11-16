@@ -4,108 +4,101 @@ import User from "../models/User.js";
 import { logDevError } from "./developmentEnvironmentHelper.js";
 
 /**
- * Helper to find user by username from database
- * @param {*} username
- * @returns
+ * Find a user by username from the database.
+ * @param {string} username - The username to search for.
+ * @returns {Promise<Object|null>} - The user object or null if not found.
  */
-export const findUserByUsername = async (username) => {
-  return await User.findOne({ username });
-};
+export const findUserByUsername = async (username) =>
+  User.findOne({ username });
 
 /**
- * Helper to find user by userId from database
- * @param {*} userId
- * @returns
+ * Find a user by userId from the database.
+ * @param {string} userId - The user ID to search for.
+ * @returns {Promise<Object|null>} - The user object or null if not found.
  */
-export const findUserById = async (userId) => {
-  return await User.findById(userId);
-};
+export const findUserById = async (userId) => User.findById(userId);
 
 /**
- * Helper for throwing an error if the user not found in database
- * @param {*} res
- * @returns
+ * Handle the case when a user is not found in the database.
+ * @param {Object} res - The response object.
+ * @param {string} message - Additional message for the error.
  */
 export const handleUserNotFound = (res, message) => {
-  return res.status(StatusCodes.NOT_FOUND).json({
+  res.status(StatusCodes.NOT_FOUND).json({
     error: `User not found with provided ${message}`,
   });
 };
 
 /**
- * Helper for handling group not found error
- * @param {*} res
- * @returns
+ * Handle the case when a group is not found in the database.
+ * @param {Object} res - The response object.
  */
 export const handleGroupNotFound = (res) => {
-  return res.status(StatusCodes.NOT_FOUND).json({
+  res.status(StatusCodes.NOT_FOUND).json({
     error: "Group not found with the provided groupId",
   });
 };
 
 /**
- * Helper for handling internal errors
- * @param {*} res
- * @returns
+ * Handle internal server errors.
+ * @param {Object} res - The response object.
  */
 export const handleInternalError = (res) => {
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     error: "Internal server error",
   });
 };
 
 /**
- * Helper for throwing an error if user already a member of a group
- * @param {*} res
- * @param {*} groupName
- * @returns
+ * Handle the case when a user is already a member of a group.
+ * @param {Object} res - The response object.
+ * @param {string} groupName - The name of the group.
  */
 export const handleUserAlreadyGroupMember = (res, groupName) => {
-  return res.status(StatusCodes.BAD_REQUEST).json({
+  res.status(StatusCodes.BAD_REQUEST).json({
     error: `User is already a member of the group '${groupName}'`,
   });
 };
 
 /**
- * Helper for throwing an error if a user is not a member of a group
- * @param {*} res
- * @param {*} groupName
- * @returns
+ * Handle the case when a user is not a member of a group.
+ * @param {Object} res - The response object.
+ * @param {string} groupName - The name of the group.
  */
 export const handleUserNotGroupMember = (res, groupName) => {
-  return res.status(StatusCodes.BAD_REQUEST).json({
+  res.status(StatusCodes.BAD_REQUEST).json({
     error: `User is not a member of the group '${groupName}'`,
   });
 };
 
 /**
- * Helper for updating group memebers
- * @param {*} groupId
- * @param {*} memberId
- * @param {*} operation
- * @returns
+ * Update group members in the database.
+ * @param {string} groupId - The ID of the group.
+ * @param {string} memberId - The ID of the member to add or remove.
+ * @param {string} operation - The operation to perform ('$push' or '$pull').
+ * @returns {Promise<Object|null>} - The updated group object.
  */
 export const updateGroupMembers = async (groupId, memberId, operation) => {
-  return await Group.findByIdAndUpdate(
-    groupId,
-    {
-      [operation]: {
-        members: memberId,
-      },
-    },
-    { new: true }
-  )
-    .populate({
-      path: "members",
-      select: "username firstName lastName",
-    })
-    .populate("admin", "username firstName lastName");
+  try {
+    return await Group.findByIdAndUpdate(
+      groupId,
+      { [operation]: { members: memberId } },
+      { new: true }
+    )
+      .populate({ path: "members", select: "username firstName lastName" })
+      .populate("admin", "username firstName lastName");
+  } catch (error) {
+    logDevError("Error updating group members:", error);
+    throw new Error(
+      "An error occurred while updating group members. Please try again later."
+    );
+  }
 };
 
 /**
- * Halper to check if the group code is unique
- * @param {*} code
- * @returns
+ * Check if a group code is unique in the database.
+ * @param {string} code - The group code to check.
+ * @returns {Promise<boolean>} - True if the code is unique, false otherwise.
  */
 export const isCodeUnique = async (code) => {
   try {
