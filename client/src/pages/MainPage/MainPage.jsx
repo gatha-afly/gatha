@@ -1,7 +1,7 @@
 import styles from "./MainPage.module.css";
-import PiratePxPageRender from "../../components/reusableComponents/PiratePxPageRender/PiratePxPageRender";
-import NavigateButton from "../../components/reusableComponents/NavigateButton/NavigateButton";
-import HelmetMetaTagsNetlify from "../../components/reusableComponents/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import NavigateButton from "../../components/common/NavigateButton/NavigateButton";
+import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 
 const MainPage = () => {
   return (

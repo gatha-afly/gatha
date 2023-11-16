@@ -1,4 +1,4 @@
-import UserLogout from "../../components/containerComponents/UserLogout/UserLogout";
+import UserLogout from "../../components/auth/UserLogout/UserLogout";
 
 const UserLogoutPage = () => {
   return <UserLogout />;

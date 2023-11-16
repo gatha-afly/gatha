@@ -1,10 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import "./App.css";
-
-/* Componenets */
-import Header from "./common/Header/Header";
+import Header from "./components/common/Header/Header";
+import Footer from "./components/common/Footer/Footer";
 import HomePage from "./pages/HomePage/HomePage";
-import Footer from "./common/Footer/Footer";
 import PageNotFoundPage from "./pages/PageNotFoundPage/PageNotFoundPage";
 import UserRegistrationPage from "./pages/UserRegistrationPage/UserRegistrationPage";
 import UserLoginPage from "./pages/UserLoginPage/UserLoginPage";
@@ -14,7 +13,6 @@ import CreateGroupPage from "./pages/CreateGroupPage/CreateGroupPage";
 import MainPage from "./pages/MainPage/MainPage";
 import JoinGroupPage from "./pages/JoinGroupPage/JoinGroupPage";
 import UserProvider from "./provider/UserProvider";
-import { HelmetProvider } from "react-helmet-async";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 
 function App() {

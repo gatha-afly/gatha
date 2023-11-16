@@ -1,7 +1,7 @@
 import styles from "./HomePage.module.css";
-import PiratePxPageRender from "../../components/reusableComponents/PiratePxPageRender/PiratePxPageRender";
-import NavigateButton from "../../components/reusableComponents/NavigateButton/NavigateButton";
-import HelmetMetaTagsNetlify from "../../components/reusableComponents/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
+import NavigateButton from "../../components/common/NavigateButton/NavigateButton";
 
 const HomePage = () => {
   return (
@@ -9,7 +9,7 @@ const HomePage = () => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"homepage"} />
       {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title="gatha - get together" />
+      <HelmetMetaTagsNetlify title='gatha - get together' />
       <h1>gatha - get together</h1>
       <p>This is the homepage.</p>
       <NavigateButton route={"user-registration"} buttonText={"Register"} />

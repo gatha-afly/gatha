@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import useUserContext from "../../context/useUserContext";
+import useUserContext from "../../../context/useUserContext";
 
 const Header = () => {
   const { loggedIn, user } = useUserContext();

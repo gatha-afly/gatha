@@ -1,6 +1,6 @@
 import styles from "./AddUserPage.module.css";
-import PiratePxPageRender from "../../components/reusableComponents/PiratePxPageRender/PiratePxPageRender";
-import HelmetMetaTagsNetlify from "../../components/reusableComponents/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 
 const AddUserPage = () => {
   return (

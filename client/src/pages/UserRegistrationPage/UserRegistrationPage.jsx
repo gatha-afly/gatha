@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import UserRegistrationForm from "../../components/containerComponents/UserRegistrationForm/UserRegistrationForm";
-import HelmetMetaTagsNetlify from "../../components/reusableComponents/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
-import PiratePxPageRender from "../../components/reusableComponents/PiratePxPageRender/PiratePxPageRender";
+import UserRegistration from "../../components/auth/UserRegistration/UserRegistration";
+import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import styles from "./UserRegistrationPage.module.css";
 
 const UserRegistrationPage = () => {
@@ -12,9 +12,9 @@ const UserRegistrationPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - user registration' />
       <h1>User registration</h1>
-      <UserRegistrationForm />
+      <UserRegistration />
       <p>
-        Already signed up? <Link to="/user-login">Login</Link>
+        Already signed up? <Link to='/user-login'>Login</Link>
       </p>
     </main>
   );

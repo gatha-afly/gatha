@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import HelmetMetaTagsNetlify from "../../components/reusableComponents/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
-import PiratePxPageRender from "../../components/reusableComponents/PiratePxPageRender/PiratePxPageRender";
+import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import styles from "./PageNotFoundPage.module.css";
 
 const PageNotFoundPage = () => {

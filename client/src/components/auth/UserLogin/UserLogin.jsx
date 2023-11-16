@@ -1,10 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
-import styles from "./UserLoginForm.module.css"; // Import CSS Module
+import styles from "./UserLogin.module.css"; // Import CSS Module
 
 import useUserContext from "../../../context/useUserContext";
 
-const UserLoginForm = () => {
+const UserLogin = () => {
   // Access user context and navigation functions
   const { loginUser, error } = useUserContext();
   const navigate = useNavigate();
@@ -78,4 +78,4 @@ const UserLoginForm = () => {
   );
 };
 
-export default UserLoginForm;
+export default UserLogin;

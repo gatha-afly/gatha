@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import userAPI from "../../../api/userAPI";
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
-import styles from "./UserRegistrationForm.module.css";
+import styles from "./UserRegistration.module.css";
 
 /**
  * UserRegistrationForm Component
@@ -10,7 +10,7 @@ import styles from "./UserRegistrationForm.module.css";
  * Registration form, allowing users to input their information
  * and register.
  */
-const UserRegistrationForm = () => {
+const UserRegistration = () => {
   // Navigation hook for redirecting
   const navigate = useNavigate();
   // Ref for autofocus
@@ -146,4 +146,4 @@ const UserRegistrationForm = () => {
   );
 };
 
-export default UserRegistrationForm;
+export default UserRegistration;
