@@ -215,35 +215,6 @@ export const getGroupMembers = async (req, res) => {
 };
 
 /**
- * Handler for checking if a group with the provided code exists.
- * @param {*} req
- * @param {*} res
- */
-export const checkCode = async (req, res) => {
-  try {
-    const { code } = req.params;
-
-    const group = await Group.findOne({ code });
-
-    if (group) {
-      return res.status(StatusCodes.OK).json({
-        message: "Group with the provided code exists.",
-        groupName: group.name,
-      });
-    } else {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Group not found." });
-    }
-  } catch (error) {
-    console.error("Error checking code:", error);
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal server error" });
-  }
-};
-
-/**
  * Handler for getting all the groups
  * @param {*} req
  * @param {*} res
@@ -305,7 +276,7 @@ export const joinGroup = async (req, res) => {
     const { userId } = req.params;
     const { code } = req.body;
 
-    // Check if the provided userId is not already a member of the group with the provided code
+    // Check if the provided userId is not already a member of the group
     const existingGroup = await Group.findOne({ code, members: userId });
 
     if (existingGroup) {
