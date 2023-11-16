@@ -48,12 +48,12 @@ const CreateGroup = () => {
       //   navigate("/main");
     } catch (error) {
       handleServerErrors(error, setError);
-      handleOtherErrors(
-        error,
-        setError,
-        "Error creating group.",
-        "create-group"
-      );
+      // handleOtherErrors(
+      //   error,
+      //   setError,
+      //   "Error creating group.",
+      //   "create-group"
+      // );
     }
   };
 
@@ -72,11 +72,11 @@ const CreateGroup = () => {
       </div>
 
       <div>
-        <input
+        <textarea
           type='text'
           name='description'
           placeholder='Group description'
-          required
+          rows={5} // Specify the number of visible lines
         />
       </div>
       {/* Conditionally render error message received from the server */}

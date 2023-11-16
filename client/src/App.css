@@ -75,7 +75,8 @@ li {
 
 button,
 select,
-input {
+input, 
+textarea {
   font-family: "Ubuntu", sans-serif;
 }
 
@@ -91,8 +92,13 @@ button{
     cursor: pointer;
  }
 
- input {
-  height: 2.4rem;
+ input, textarea {
   padding: 0.5rem;
   font-size: 1.5rem;
 }
+
+input {
+  height: 2.4rem;
+
+}
+
