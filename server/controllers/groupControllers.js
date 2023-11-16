@@ -266,7 +266,7 @@ export const deleteGroupById = async (req, res) => {
 };
 
 /**
- * Handler for joining a group with provided gorup code
+ * Handler for joining a group with provided group code
  * @param {*} req
  * @param {*} res
  * @returns

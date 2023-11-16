@@ -5,12 +5,17 @@
  */
 export const handleServerErrors = (error, setError) => {
   // Handle errors from the server
-  if (error.response && error.response.data && error.response.data.errors) {
-    // Validation errors from server
-    const serverErrors = error.response.data.errors;
-
-    // Set the first error message only
-    setError(serverErrors.length > 0 ? serverErrors[0].msg : null);
+  if (error.response && error.response.data) {
+    // Check if there are multiple errors
+    if (error.response.data.errors) {
+      const serverErrors = error.response.data.errors;
+      // Set the first error message only
+      setError(serverErrors.length > 0 ? serverErrors[0].msg : null);
+    }
+    // Check if there is a single error only
+    else if (error.response.data.error) {
+      setError(error.response.data.error);
+    }
   }
 };
 
@@ -28,7 +33,12 @@ export const handleOtherErrors = (
   errorType = "other"
 ) => {
   // Handle other types of errors
-  if (!error.response || !error.response.data || !error.response.data.errors) {
+  if (
+    !error.response ||
+    !error.response.data ||
+    !error.response.data.errors ||
+    !error.response.data.error
+  ) {
     console.error(`${errorType} error:`, error);
     setError(`${customErrorMessage} Please try again later.`);
   }

@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
 import userAPI from "../../../../api/userAPI";
 import {
   handleOtherErrors,
@@ -9,16 +8,13 @@ import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./AddUserToGroup.module.css";
 
 /**
- * Create group form, allowing users to input group information and register.
+ * Component for admin users to add other users to a group
  */
-const AddUserToGroup = () => {
-  // extract groupId and userId from URL
-  const { groupId, userId } = useParams();
-  console.log("groupId:", groupId);
-  console.log("userId:", userId);
+const AddUserToGroup = ({ groupId, userId, onRefresh }) => {
   // Ref for autofocus
   const inputRef = useRef(null);
-  // State for errors
+  // State for username & errors
+  const [username, setUsername] = useState("");
   const [error, setError] = useState(null);
 
   // Autofocus first input field on mount
@@ -41,10 +37,14 @@ const AddUserToGroup = () => {
     try {
       // Attempt to register the user with the provided data
       await userAPI.patch(`/groups/add-member/${groupId}/${userId}`, data);
-      console.log("success");
+      // Clear and autofocus username field on successful patch
+      setUsername("");
+      inputRef.current.focus();
+      // Call refresh function
+      onRefresh();
     } catch (error) {
-      handleServerErrors(error, setError);
       handleOtherErrors(error, setError, "Error adding user.", "add-user");
+      handleServerErrors(error, setError);
     }
   };
 
@@ -56,6 +56,8 @@ const AddUserToGroup = () => {
           name='username'
           placeholder='username'
           ref={inputRef} // Ref for autofocus
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
       </div>

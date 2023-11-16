@@ -54,13 +54,13 @@ const CreateGroup = () => {
       // Navigate to add users page on successful registration
       navigate(`/add-user/${groupId}/${userId}/`);
     } catch (error) {
-      handleServerErrors(error, setError);
       handleOtherErrors(
         error,
         setError,
         "Error creating group.",
         "create-group"
       );
+      handleServerErrors(error, setError);
     }
   };
 
