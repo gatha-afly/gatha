@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import useUserContext from "../../../context/useUserContext";
+import UsernameInitials from "../UsernameInitials/UsernameInitials";
 
 const Header = () => {
   const { loggedIn, user } = useUserContext();
@@ -9,8 +10,10 @@ const Header = () => {
       <Link to='/'>Home</Link>
       <p>This is the header.</p>
 
-      {/* Conditionally rendering the user info after successful login */}
-      {loggedIn ? <p>Welcome, {`${user.firstName} ${user.lastName}`}</p> : null}
+      {/* Conditionally rendering the user initials info after successful login */}
+      {loggedIn ? (
+        <UsernameInitials firstName={user.firstName} lastName={user.lastName} />
+      ) : null}
 
       {/* Conditionally render login and logout button */}
       {loggedIn ? (
