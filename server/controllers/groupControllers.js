@@ -294,15 +294,56 @@ export const deleteGroupById = async (req, res) => {
   }
 };
 
-export const joinGreoup = async (req, res) => {
+/**
+ * Handler for joining a group with provided gorup code
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const joinGroup = async (req, res) => {
   try {
     const { userId } = req.params;
     const { code } = req.body;
 
-    const existingGroup = await Group.findOne({ code });
+    // Check if the provided userId is not already a member of the group with the provided code
+    const existingGroup = await Group.findOne({ code, members: userId });
 
-    if (!existingGroup) {
-      return res.status(StatusCodes.NOT_FOUND).json({});
+    if (existingGroup) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "You are already a member of the group with the provided code",
+      });
     }
-  } catch (error) {}
+
+    // Update the group by adding the user to the members array
+    const updatedGroup = await Group.findOneAndUpdate(
+      { code },
+      {
+        $addToSet: {
+          members: userId,
+        },
+      },
+      { new: true }
+    )
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
+      .populate("admin", "username firstName lastName");
+
+    if (!updatedGroup) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "Group not found with the provided code",
+      });
+    }
+
+    res.status(StatusCodes.OK).json({
+      message: "You have been added to the group successfully",
+      updatedGroup,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal server error",
+    });
+  }
 };
