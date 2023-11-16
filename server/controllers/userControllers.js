@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import { generateJwt } from "../helpers/jwt.js";
+import * as errorHandlerUtils from "../utils/errorHandler.js";
 
 /**
  * Handler for creating user
@@ -36,20 +37,8 @@ export const createUser = async (req, res) => {
       .status(StatusCodes.OK)
       .json({ message: "User successfully created", data: newUser });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Something went wrong", details: error.message });
+    return errorHandlerUtils.handleInternalError(res);
   }
-};
-
-/**
- * Handler for deleting user
- * @param {*} req
- * @param {*} res
- */
-export const deleteUser = async (req, res) => {
-  try {
-  } catch (error) {}
 };
 
 /**
@@ -112,9 +101,7 @@ export const loginUser = async (req, res) => {
         .json({ error: "Your password is incorrect" });
     }
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Something went wrong", details: error.message });
+    return errorHandlerUtils.handleInternalError(res);
   }
 };
 
@@ -125,9 +112,13 @@ export const loginUser = async (req, res) => {
  * @returns
  */
 export const logoutUser = async (req, res) => {
-  res.clearCookie("userToken", {
-    httpOnly: true,
-    secure: false,
-  });
-  return res.status(StatusCodes.OK).json({ message: "User logged out!" });
+  try {
+    res.clearCookie("userToken", {
+      httpOnly: true,
+      secure: false,
+    });
+    return res.status(StatusCodes.OK).json({ message: "User logged out!" });
+  } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
 };

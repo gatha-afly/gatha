@@ -1,8 +1,10 @@
 import { StatusCodes } from "http-status-codes";
+import mongoose from "mongoose";
 import Group from "../models/Group.js";
-import User from "../models/User.js";
+import * as responseHandlerUtils from "../utils/responseHandler.js";
+import * as errorHandlerUtils from "../utils/errorHandler.js";
 
-/**
+/***
  * Handler for creating group using userId
  * @param {*} req
  * @param {*} res
@@ -14,20 +16,25 @@ export const createGroup = async (req, res) => {
     const { name, description } = req.body;
 
     // Find the user by userId
-    const user = await User.findById(userId);
+    const user = await responseHandlerUtils.findUserById(userId);
     if (!user) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "User not found with the provided ID" });
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
     }
 
     // Create a new group and associate it with the user
-    const newGroup = await Group.create({
+    const groupData = {
       userId,
       name,
-      description,
-      admin: userId, // Set the admin field to the user's ID
-    });
+      admin: userId, // Set userId as group admin
+      members: userId,
+    };
+
+    // Conditionally set the description field
+    if (description) {
+      groupData.description = description;
+    }
+
+    const newGroup = await Group.create(groupData);
 
     // Populate the user details for the admin
     await newGroup.populate("admin", "username firstName lastName");
@@ -37,9 +44,11 @@ export const createGroup = async (req, res) => {
       newGroup,
     });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Something went wrong", details: error.message });
+    console.error(error);
+    if (error instanceof mongoose.Error.CastError) {
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
+    }
+    return errorHandlerUtils.handleInternalError(res);
   }
 };
 
@@ -56,55 +65,38 @@ export const addMemberToGroup = async (req, res) => {
     const { username } = req.body;
 
     // Find the user by username
-    const member = await User.findOne({ username });
-    if (!member) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "User not found with the provided username",
-      });
+    const newMember = await responseHandlerUtils.findUserByUsername(username);
+    if (!newMember) {
+      return errorHandlerUtils.handleUserNotFound(res, "username");
     }
 
     // Check if the user is already a member of the group
     const existingGroup = await Group.findOne({
       _id: groupId,
-      members: member._id,
+      members: newMember._id,
     });
+
+    //Throws an error if user is already a member of a group
     if (existingGroup) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        error: `User is already a member of the group '${existingGroup.name}'`,
-      });
+      return errorHandlerUtils.handleUserAlreadyGroupMember(
+        res,
+        existingGroup.name
+      );
     }
 
     // Update the group by adding the user to the members array
-    const updatedGroup = await Group.findByIdAndUpdate(
+    const updatedGroup = await responseHandlerUtils.updateGroupMembers(
       groupId,
-      {
-        $push: {
-          members: member._id,
-        },
-      },
-      // Return the modified document
-      { new: true }
-    )
-      .populate({
-        path: "members",
-        select: "username firstName lastName",
-      })
-      .populate("admin", "username firstName lastName");
-
-    if (!updatedGroup) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Group not found with the provided groupId",
-      });
-    }
+      newMember._id,
+      "$push"
+    );
 
     res.status(StatusCodes.OK).json({
       message: "User added to the group successfully",
       updatedGroup,
     });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      error: "Internal server error",
-    });
+    return errorHandlerUtils.handleInternalError(res);
   }
 };
 
@@ -120,56 +112,46 @@ export const removeMemberFromGroup = async (req, res) => {
     const { groupId } = req.params;
     const { username } = req.body;
 
-    // Find the user to remove by username
-    const memberToRemove = await User.findOne({ username });
-    if (!memberToRemove) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "User not found with the provided username",
-      });
+    // Check if the provided group ID exists
+    const existingGroup = await Group.findById(groupId);
+    if (!existingGroup) {
+      return errorHandlerUtils.handleGroupNotFound(res, groupId);
     }
 
-    // Check if the user is already a member of the group
-    const existingGroup = await Group.findOne({
+    // Check if the provided username exists
+    const memberToRemove = await responseHandlerUtils.findUserByUsername(
+      username
+    );
+    if (!memberToRemove) {
+      return errorHandlerUtils.handleUserNotFound(res, "username");
+    }
+
+    // Check if the user is a member of the group
+    const isMember = await Group.exists({
       _id: groupId,
-      members: memberToRemove._id,
+      members: { $in: [memberToRemove._id] },
     });
-    if (!existingGroup) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        error: `User is not a member of the group or the group does not exist`,
-      });
+
+    if (!isMember) {
+      return errorHandlerUtils.handleUserNotGroupMember(
+        res,
+        existingGroup.name
+      );
     }
 
     // Update the group by removing the user from the members array
-    const updatedGroup = await Group.findByIdAndUpdate(
+    const updatedGroup = await responseHandlerUtils.updateGroupMembers(
       groupId,
-      {
-        $pull: {
-          members: memberToRemove._id,
-        },
-      },
-      // Return the modified document
-      { new: true }
-    )
-      .populate({
-        path: "members",
-        select: "username firstName lastName",
-      })
-      .populate("admin", "username firstName lastName");
-
-    if (!updatedGroup) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Group not found with the provided groupId",
-      });
-    }
+      memberToRemove._id,
+      "$pull"
+    );
 
     res.status(StatusCodes.OK).json({
       message: "User removed from the group successfully",
       updatedGroup,
     });
   } catch (error) {
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      error: "Internal server error",
-    });
+    return errorHandlerUtils.handleInternalError(res);
   }
 };
 
@@ -191,9 +173,7 @@ export const getGroupMembers = async (req, res) => {
       .populate("admin", "username firstName lastName");
 
     if (!group) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ message: "Group not found" });
+      return errorHandlerUtils.handleGroupNotFound(res);
     }
 
     const { members, name, admin } = group;
@@ -204,13 +184,14 @@ export const getGroupMembers = async (req, res) => {
       lastName: admin.lastName,
     };
 
-    return res
-      .status(StatusCodes.OK)
-      .json({ groupId, groupName: name, groupAdmin, groupMembers: members });
+    return res.status(StatusCodes.OK).json({
+      groupId,
+      groupName: name,
+      groupAdmin,
+      groupMembers: members,
+    });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal server error" });
+    return errorHandlerUtils.handleInternalError(res);
   }
 };
 
@@ -223,19 +204,16 @@ export const getAllGroups = async (req, res) => {
   try {
     const groups = await Group.find({});
 
-    if (!groups || groups.length === 0) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "There are no groups" });
+    //Throws an error if there are not groups in database
+    if (!groups) {
+      return errorHandlerUtils.handleGroupNotFound(res);
     }
 
     return res
       .status(StatusCodes.OK)
       .json({ message: "List of all groups", groups });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal server error" });
+    return errorHandlerUtils.handleInternalError(res);
   }
 };
 
@@ -250,18 +228,14 @@ export const deleteGroupById = async (req, res) => {
     const deletedGroup = await Group.findByIdAndDelete(groupId);
 
     if (!deletedGroup) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "The group not found with provided ID" });
+      return errorHandlerUtils.handleGroupNotFound(res);
     }
     return res.status(StatusCodes.OK).json({
       message: "The group has been successfully deleted",
       deletedGroup,
     });
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Internal server error" });
+    return errorHandlerUtils.handleInternalError(res);
   }
 };
 
@@ -276,46 +250,42 @@ export const joinGroup = async (req, res) => {
     const { userId } = req.params;
     const { code } = req.body;
 
-    // Check if the provided userId is not already a member of the group
-    const existingGroup = await Group.findOne({ code, members: userId });
+    // Find the group based on the provided code to get the groupId
+    const group = await Group.findOne({ code });
 
-    if (existingGroup) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "You are already a member of the group with the provided code",
-      });
-    }
-
-    // Update the group by adding the user to the members array
-    const updatedGroup = await Group.findOneAndUpdate(
-      { code },
-      {
-        $addToSet: {
-          members: userId,
-        },
-      },
-      { new: true }
-    )
-      .populate({
-        path: "members",
-        select: "username firstName lastName",
-      })
-      .populate("admin", "username firstName lastName");
-
-    if (!updatedGroup) {
+    if (!group) {
       return res.status(StatusCodes.NOT_FOUND).json({
         error: "Group not found with the provided code",
       });
     }
+
+    // Check if the provided userId is not already a member of the group
+    const existingGroup = await Group.findOne({
+      _id: group._id,
+      members: userId,
+    });
+
+    if (existingGroup) {
+      return errorHandlerUtils.handleUserAlreadyGroupMember(
+        res,
+        existingGroup.name
+      );
+    }
+
+    // Update the group by adding the user to the members array
+    const updatedGroup = await responseHandlerUtils.updateGroupMembers(
+      { _id: group._id }, // Update based on group ID
+      userId,
+      "$addToSet"
+    );
 
     res.status(StatusCodes.OK).json({
       message: "You have been added to the group successfully",
       updatedGroup,
     });
   } catch (error) {
-    console.error(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      error: "Internal server error",
-    });
+    console.log(error);
+    return errorHandlerUtils.handleInternalError(res);
   }
 };
 
@@ -330,11 +300,9 @@ export const leaveGroup = async (req, res) => {
     const { groupId, userId } = req.params;
 
     // Check if a user with the provided ID exists in the database
-    const member = await User.findById(userId);
+    const member = await responseHandlerUtils.findUserById(userId);
     if (!member) {
-      return res
-        .status(StatusCodes.NOT_FOUND)
-        .json({ error: "The user was not found" });
+      return errorHandlerUtils.handleUserNotFound(res, "userId");
     }
 
     // Check if the user is already a member of the group
@@ -342,42 +310,23 @@ export const leaveGroup = async (req, res) => {
       _id: groupId,
       members: member,
     });
+
     if (!existingGroup) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        error: `User is not a member of the group or the group does not exist`,
-      });
+      return errorHandlerUtils.handleGroupNotFound(res);
     }
 
     // Update the group by removing the user from the members array
-    const updatedGroup = await Group.findByIdAndUpdate(
-      groupId,
-      {
-        $pull: {
-          members: userId,
-        },
-      },
-      { new: true }
-    )
-      .populate({
-        path: "members",
-        select: "username firstName lastName",
-      })
-      .populate("admin", "username firstName lastName");
-
-    if (!updatedGroup) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Group not found with the provided groupId",
-      });
-    }
+    const updatedGroup = await responseHandlerUtils.updateGroupMembers(
+      { _id: groupId },
+      userId,
+      "$pull"
+    );
 
     res.status(StatusCodes.OK).json({
       message: "You have left the group successfully",
       updatedGroup,
     });
   } catch (error) {
-    console.error(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      error: "Internal server error",
-    });
+    return errorHandlerUtils.handleInternalError(res);
   }
 };

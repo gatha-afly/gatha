@@ -2,7 +2,7 @@ import Group from "../models/Group.js";
 import { logDevError } from "./developmentEnvironmentHelper.js";
 
 /**
- * Halper to check if the group code is unique
+ * Handler to check if a group code is unique
  * @param {*} code
  * @returns
  */

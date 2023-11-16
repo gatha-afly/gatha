@@ -4,7 +4,7 @@ import { isCodeUnique } from "../helpers/groupHelper.js";
 
 const groupSchema = new Schema({
   name: { type: String, required: true },
-  description: { type: String, required: true },
+  description: { type: String },
 
   //Virtual to generate Random group code
   code: {
