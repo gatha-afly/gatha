@@ -318,3 +318,55 @@ export const joinGroup = async (req, res) => {
     });
   }
 };
+
+/**
+ * Leave a group
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const leaveGroup = async (req, res) => {
+  try {
+    const { groupId, userId } = req.params;
+
+    // Check if a user with the provided ID exists in the database
+    const member = await User.findById(userId);
+    if (!member) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "The user was not found" });
+    }
+
+    // Update the group by removing the user from the members array
+    const updatedGroup = await Group.findByIdAndUpdate(
+      groupId,
+      {
+        $pull: {
+          members: userId,
+        },
+      },
+      { new: true }
+    )
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
+      .populate("admin", "username firstName lastName");
+
+    if (!updatedGroup) {
+      return res.status(StatusCodes.NOT_FOUND).json({
+        error: "Group not found with the provided groupId",
+      });
+    }
+
+    res.status(StatusCodes.OK).json({
+      message: "You have left the group successfully",
+      updatedGroup,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal server error",
+    });
+  }
+};
