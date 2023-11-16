@@ -1,7 +1,7 @@
 import styles from "./CreateGroupPage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
-import CreateGroup from "../../components/features/CreateGroup/CreateGroup";
+import CreateGroup from "../../components/features/CreateGroup/CreateGroup/CreateGroup";
 
 const CreateGroupPage = () => {
   return (

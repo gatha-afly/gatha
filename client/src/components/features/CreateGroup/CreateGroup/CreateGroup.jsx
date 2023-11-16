@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import userAPI from "../../../api/userAPI";
-import useUserContext from "../../../context/useUserContext";
+import userAPI from "../../../../api/userAPI";
+import useUserContext from "../../../../context/useUserContext";
 import {
   handleOtherErrors,
   handleServerErrors,
-} from "../../../utils/errorUtils";
-import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
+} from "../../../../utils/errorUtils";
+import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./CreateGroup.module.css";
 
 /**
@@ -48,8 +48,11 @@ const CreateGroup = () => {
       );
       // Access groupId returned from the server
       const groupId = response.data.newGroup._id;
+
+      console.log(response);
+
       // Navigate to add users page on successful registration
-      navigate(`/add-user/${groupId}`);
+      navigate(`/add-user/${groupId}/${userId}/`);
     } catch (error) {
       handleServerErrors(error, setError);
       handleOtherErrors(

@@ -1,8 +1,9 @@
-import styles from "./AddUserPage.module.css";
+import styles from "./AddUserUponGroupCreationPage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
+import AddUserToGroup from "../../components/features/CreateGroup/AddUserToGroup/AddUserToGroup";
 
-const AddUserPage = () => {
+const AddUserUponGroupCreationPage = () => {
   return (
     <main className={styles.container}>
       {/* Track page renders */}
@@ -10,8 +11,9 @@ const AddUserPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - invite user' />
       <h1>Add user</h1>
+      <AddUserToGroup />
     </main>
   );
 };
 
-export default AddUserPage;
+export default AddUserUponGroupCreationPage;
