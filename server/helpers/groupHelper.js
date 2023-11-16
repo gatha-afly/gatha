@@ -10,7 +10,7 @@ export const checkGroupExistence = async (value) => {
   const existedGroup = await Group.findOne({ name: value });
 
   if (existedGroup) {
-    throw new Error("A a group exists with this group name");
+    throw new Error("A group with this name already exists.");
   }
 };
 

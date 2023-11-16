@@ -103,6 +103,7 @@ export const loginUser = async (req, res) => {
           lastName: user.lastName,
           username: user.username,
           email: user.email,
+          userId: user._id,
         },
       });
     } else {
