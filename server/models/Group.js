@@ -1,9 +1,28 @@
 import { Schema, model } from "mongoose";
+import { customAlphabet } from "nanoid";
+import { isCodeUnique } from "../helpers/groupHelper.js";
 
 const groupSchema = new Schema({
-  name: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
   description: { type: String, required: true },
-  code: { type: String, required: true },
+
+  //Virtual to generate Random group code
+  code: {
+    type: String,
+    default: function () {
+      const generateCustomNanoid = customAlphabet(
+        "ACDEFGHIJKLMNOPQRSTUVWXYZ346789"
+      );
+      let code;
+
+      do {
+        code = generateCustomNanoid(8);
+      } while (!isCodeUnique(code));
+
+      return code;
+    },
+    unique: true,
+  },
   avatar: {
     imgName: { type: String },
     imgPath: { type: String },

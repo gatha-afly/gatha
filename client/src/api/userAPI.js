@@ -31,9 +31,10 @@ userAPI.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.error("Error response has been received", error.response);
-    if (error.response.status === 401) {
-      console.log("We hit 401, token is not valid anymore");
+    console.log("Error response has been received", error.response);
+    if (error.response.status === 403) {
+      console.log("We hit 403, token is not valid anymore");
+      window.location = "/user-logout";
     }
     return Promise.reject(error);
   }
