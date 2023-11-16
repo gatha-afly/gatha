@@ -15,6 +15,7 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(storedUser);
   const [error, setError] = useState("");
 
+  console.log(user);
   /**
    * Handles user login.
    * @param {Object} data - The user login data.
@@ -75,7 +76,8 @@ const UserProvider = ({ children }) => {
   // Provide user context to component tree
   return (
     <userContext.Provider
-      value={{ error, setError, loggedIn, loginUser, user, logoutUser }}>
+      value={{ error, setError, loggedIn, loginUser, user, logoutUser }}
+    >
       {children}
     </userContext.Provider>
   );

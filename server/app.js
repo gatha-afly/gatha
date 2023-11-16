@@ -13,6 +13,7 @@ app.set("port", PORT);
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.resolve("./public")));
+app.use("/uploads", express.static("./uploads"));
 
 // Initializing the corsOptions
 app.use(

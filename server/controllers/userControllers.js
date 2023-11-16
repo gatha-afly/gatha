@@ -2,6 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import { generateJwt } from "../helpers/jwt.js";
+import * as responseHandlerUtils from "../utils/responseHandler.js";
 import * as errorHandlerUtils from "../utils/errorHandler.js";
 
 /**
@@ -93,6 +94,7 @@ export const loginUser = async (req, res) => {
           username: user.username,
           email: user.email,
           userId: user._id,
+          avatar: user.avatar,
         },
       });
     } else {
@@ -101,6 +103,49 @@ export const loginUser = async (req, res) => {
         .json({ error: "Your password is incorrect" });
     }
   } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ * Handler for uploading user profile
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const updateProfilePicture = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await responseHandlerUtils.findUserById(userId);
+    if (!user) {
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
+    }
+
+    const profileImage = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          "avatar.imagName": req.file.filename,
+          "avatar.imgPath": req.file.path,
+          "avatar.imagType": req.file.mimetype,
+          "avatar.imgSize": req.file.size,
+        },
+      },
+      { new: true }
+    );
+    if (!profileImage) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "User not found" });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      message: "Your profile image has been uploaded",
+      profileImage,
+    });
+  } catch (error) {
+    console.log(error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
