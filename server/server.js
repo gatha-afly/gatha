@@ -9,6 +9,7 @@ import connectToMongoDB from "./config/database.js";
 import userRouter from "./routes/userRoutes.js";
 import messageRouter from "./routes/messageRoutes.js";
 import groupRouter from "./routes/groupRoutes.js";
+import healthRouter from "./routes/healthRoutes.js";
 import app from "./app.js";
 
 dotenv.config();
@@ -43,6 +44,7 @@ io.on("connection", (socket) => {
 app.use("/api/users", userRouter);
 app.use("/api/messages", messageRouter);
 app.use("/api/groups", groupRouter);
+app.use("/api/health", healthRouter);
 
 // Server is listening on the specified port
 connectToMongoDB().then(() => {
