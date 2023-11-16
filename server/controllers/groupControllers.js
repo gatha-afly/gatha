@@ -337,6 +337,17 @@ export const leaveGroup = async (req, res) => {
         .json({ error: "The user was not found" });
     }
 
+    // Check if the user is already a member of the group
+    const existingGroup = await Group.findOne({
+      _id: groupId,
+      members: member,
+    });
+    if (!existingGroup) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: `User is not a member of the group or the group does not exist`,
+      });
+    }
+
     // Update the group by removing the user from the members array
     const updatedGroup = await Group.findByIdAndUpdate(
       groupId,
