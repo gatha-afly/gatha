@@ -1,8 +1,9 @@
 import { StatusCodes } from "http-status-codes";
 import Group from "../models/Group.js";
 import User from "../models/User.js";
+import * as groupHelper from "../helpers/groupHelper.js";
 
-/**
+/***
  * Handler for creating group using userId
  * @param {*} req
  * @param {*} res
@@ -56,11 +57,9 @@ export const addMemberToGroup = async (req, res) => {
     const { username } = req.body;
 
     // Find the user by username
-    const member = await User.findOne({ username });
+    const member = await groupHelper.findUserByUsername(username);
     if (!member) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "User not found with the provided username",
-      });
+      return groupHelper.handleUserNotFound(res);
     }
 
     // Check if the user is already a member of the group
@@ -68,10 +67,10 @@ export const addMemberToGroup = async (req, res) => {
       _id: groupId,
       members: member._id,
     });
+
+    //Throws an error if user is already a member of a group
     if (existingGroup) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        error: `User is already a member of the group '${existingGroup.name}'`,
-      });
+      return groupHelper.handleUserAlreadyGroupMember(res, existingGroup.name);
     }
 
     // Update the group by adding the user to the members array
