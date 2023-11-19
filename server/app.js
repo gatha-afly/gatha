@@ -1,5 +1,4 @@
 import express from "express";
-import path from "path";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
@@ -12,8 +11,6 @@ const PORT = process.env.PORT || 3001;
 app.set("port", PORT);
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.resolve("./public")));
-app.use("/uploads", express.static("./uploads"));
 
 // Initializing the corsOptions
 app.use(
