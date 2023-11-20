@@ -22,7 +22,7 @@ function HelmetMetaTagsNetlify({ title, description, image, author }) {
   const defaultDescription =
     "Simple private group chat application that allows users to create and join a group, send and receive text messages, images and gifs and have the ability to view the whole group history.";
   const defaultTitle = "gatha - get together";
-  const defaultImage = "https://gatha.netlify.app/metaTagDefaultImg.jpeg";
+  const defaultImage = "https://gatha.netlify.app/metatagdefaultimg.jpeg";
   const defaultUrl = "https://gatha.netlify.app/";
   const defaultAuthor = "Abdulwase Naeemi, Felix Schmidt & Yesim Demir";
 

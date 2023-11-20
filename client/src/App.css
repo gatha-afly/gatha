@@ -5,7 +5,7 @@
   --color-body: #fffffe;
   --color-main: #f7e8d3;
   --color-light-dark: #333;
-  --color-structure-elements: #44185a;
+  --color-structure-elements: #632382;
   --color-structure-elements-light: #eccdff;
   --color-hover: #822eaa;
 }
@@ -94,6 +94,7 @@ button {
 button:hover {
   background-color: var(--color-hover);
   box-shadow: 0 0 0.5rem var(--color-structure-elements);
+  cursor: pointer;
 }
 
 input,

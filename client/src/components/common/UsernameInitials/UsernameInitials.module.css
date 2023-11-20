@@ -7,12 +7,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0.3rem solid var(--color-body);
+  border: 0.3rem solid var(--color-main);
   border-radius: 50%;
 }
 
 .initials {
   font-size: 1.7rem;
-  color: var(--color-body);
+  color: var(--color-main);
   font-weight: bold;
 }
