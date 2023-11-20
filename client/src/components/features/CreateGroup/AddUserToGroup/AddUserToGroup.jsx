@@ -52,9 +52,9 @@ const AddUserToGroup = ({ groupId, userId, onRefresh }) => {
     <form className={styles.addUserForm} onSubmit={handleFormSubmit}>
       <div>
         <input
-          type='text'
-          name='username'
-          placeholder='username'
+          type="text"
+          name="username"
+          placeholder="username"
           ref={inputRef} // Ref for autofocus
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -64,7 +64,7 @@ const AddUserToGroup = ({ groupId, userId, onRefresh }) => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type='submit'>add</button>
+      <button type="submit">add</button>
     </form>
   );
 };

@@ -17,6 +17,22 @@ export const findUserByUsername = async (username) =>
   User.findOne({ username });
 
 /**
+ * Utility helper to find if a user if already a member of a group
+ * @param {*} groupId
+ * @param {*} userId
+ * @returns
+ */
+export const isUserAlreadyMember = async (groupId, userId) => {
+  // Find the group by ID and check if the user is a member
+  const existingGroup = await Group.findOne({
+    _id: groupId,
+    members: userId,
+  });
+
+  return existingGroup !== null;
+};
+
+/**
  * Utility helper to update the group
  * @param {*} groupId
  * @param {*} memberId
@@ -32,6 +48,27 @@ export const updateGroupMembers = async (groupId, memberId, operation) => {
     )
       .populate({ path: "members", select: "username firstName lastName" })
       .populate("admin", "username firstName lastName");
+  } catch (error) {
+    throw new Error(
+      "An error occurred while updating group members. Please try again later."
+    );
+  }
+};
+
+/**
+ * Utility helper to update the user groups
+ * @param {*} groupId
+ * @param {*} userId
+ * @param {*} operation
+ * @returns
+ */
+export const updateUserGroups = async (groupId, userId, operation) => {
+  try {
+    return await User.findByIdAndUpdate(
+      userId,
+      { [operation]: { groups: groupId } },
+      { new: true }
+    );
   } catch (error) {
     throw new Error(
       "An error occurred while updating group members. Please try again later."

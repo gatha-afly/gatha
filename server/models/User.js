@@ -32,6 +32,7 @@ const userSchema = new Schema(
         },
       },
     },
+    groups: [{ type: Schema.Types.ObjectId, ref: "Group" }],
   },
   { timestamps: true }
 );
