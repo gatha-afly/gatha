@@ -28,6 +28,7 @@ const UserProvider = ({ children }) => {
 
       // Extract user data from response
       const userData = response.data.user;
+      console.log(userData);
 
       // Update state and localStorage on successful login
       setUser(userData);

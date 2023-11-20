@@ -2,8 +2,11 @@ import styles from "./MainPage.module.css";
 import NavigateButton from "../../components/common/NavigateButton/NavigateButton";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
+import useUserContext from "../../context/useUserContext";
 
 const MainPage = () => {
+  const { user } = useUserContext();
+  console.log(user);
   return (
     <main className={styles.container}>
       {/* Track page renders */}

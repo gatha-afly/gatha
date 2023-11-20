@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import UsernameInitials from "../UsernameInitials/UsernameInitials";
 import styles from "./HamburgerMenu.module.css";
 
-/** * Responsive hamburger menu displaying the initials if a user as icon.
+/** * Responsive hamburger menu displaying the initials of a user as initals icon.
  * @param {Object} props - The properties of the component.
  * @param {string} props.firstName - The first name of the user for displaying initials.
  * @param {string} props.lastName - The last name of the user for displaying initials.
@@ -13,7 +13,7 @@ const HamburgerMenu = ({ firstName, lastName }) => {
   // State to track the menu's open/closed status
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Toogle the menu's open/closed status
+  // Toggle the menu's open/closed status
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };

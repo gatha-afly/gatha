@@ -1,0 +1,21 @@
+.button {
+  border: none;
+  font-size: 1.6rem;
+  border-radius: 10px;
+}
+
+/* Align the button within its container */
+.leftAligned {
+  display: flex;
+  justify-content: left;
+}
+
+.rightAligned {
+  display: flex;
+  justify-content: right;
+}
+
+.centerAligned {
+  display: flex;
+  justify-content: center;
+}
