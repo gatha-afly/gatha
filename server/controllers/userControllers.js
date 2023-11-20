@@ -51,9 +51,11 @@ export const createUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     // Find a user with the provided email and populate the 'groups' field
-    const user = await User.findOne({ email: req.body.email }).populate(
-      "groups"
-    );
+    // Find a user with the provided email and populate only 'groupId' and 'name' in the 'groups' field
+    const user = await User.findOne({ email: req.body.email }).populate({
+      path: "groups",
+      select: "groupId name",
+    });
 
     // Logging for debugging
     console.log("User:", user);
