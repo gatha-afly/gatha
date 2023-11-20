@@ -1,20 +1,13 @@
-.initialsContainer {
-}
-
 .circle {
-  width: 4rem;
-  height: 4rem;
   border-radius: 50%;
-  background-color: var(--color-light);
+  background-color: var(--color-structure-elements);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 0.3rem solid var(--color-signal);
   border-radius: 50%;
 }
 
 .initials {
-  font-size: 1.8rem;
-  color: var(--color-signal);
+  color: var(--color-main);
   font-weight: bold;
 }

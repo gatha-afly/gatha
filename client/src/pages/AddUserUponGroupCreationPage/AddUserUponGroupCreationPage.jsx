@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import styles from "./AddUserUponGroupCreationPage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
-import AddUserToGroup from "../../components/features/CreateGroup/AddUserToGroup/AddUserToGroup";
 import { useParams } from "react-router-dom";
-import RenderGroupMemberList from "../../components/features/CreateGroup/RenderGroupMemberList/RenderGroupMemberList";
 import useGetGroupMembers from "../../hooks/useGetGroupMembers";
 import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
+import AddUserToGroup from "../../components/features/AddUserToGroup/AddUserToGroup";
+import RenderGroupMemberList from "../../components/features/RenderGroupMemberList/RenderGroupMemberList";
 
 const AddUserUponGroupCreationPage = () => {
   const { groupId, userId } = useParams();
