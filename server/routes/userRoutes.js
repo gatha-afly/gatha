@@ -17,6 +17,4 @@ router.get("/logout", logoutUser);
 
 //Protect Routes
 router.use(authorizeUser);
-
-
 export default router;

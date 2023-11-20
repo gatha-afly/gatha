@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import { generateJwt } from "../helpers/jwt.js";
 import * as errorHandlerUtils from "../utils/errorHandler.js";
+import * as responseHandlerUtils from "../utils/responseHandler.js";
 
 /**
  * Handler for creating user
@@ -50,8 +51,9 @@ export const createUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   try {
     // Find a user with the provided email and populate the 'groups' field
-    const user = await User.findOne({ email: req.body.email })
-    .populate("groups");
+    const user = await User.findOne({ email: req.body.email }).populate(
+      "groups"
+    );
 
     // Logging for debugging
     console.log("User:", user);
@@ -101,7 +103,7 @@ export const loginUser = async (req, res) => {
           username: user.username,
           email: user.email,
           userId: user._id,
-          groups: userGroups,
+          groups: userGroups, // Use the populated groups
         },
       });
     } else {
@@ -114,6 +116,7 @@ export const loginUser = async (req, res) => {
     return errorHandlerUtils.handleInternalError(res);
   }
 };
+
 /**
  * Handler for user logout
  * @param {*} req

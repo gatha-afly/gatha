@@ -54,3 +54,24 @@ export const updateGroupMembers = async (groupId, memberId, operation) => {
     );
   }
 };
+
+/**
+ * Utility helper to update the user groups
+ * @param {*} groupId
+ * @param {*} userId
+ * @param {*} operation
+ * @returns
+ */
+export const updateUserGroups = async (groupId, userId, operation) => {
+  try {
+    return await User.findByIdAndUpdate(
+      userId,
+      { [operation]: { groups: groupId } },
+      { new: true }
+    ).populate({ path: "groups", select: "_id name description" });
+  } catch (error) {
+    throw new Error(
+      "An error occurred while updating group members. Please try again later."
+    );
+  }
+};

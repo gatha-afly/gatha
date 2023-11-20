@@ -92,6 +92,13 @@ export const addMemberToGroup = async (req, res) => {
       "$push"
     );
 
+    // Adding the users to groups array
+    await responseHandlerUtils.updateUserGroups(
+      groupId,
+      newMember._id,
+      "$push"
+    );
+
     res.status(StatusCodes.OK).json({
       message: "User added to the group successfully",
       updatedGroup,
@@ -276,6 +283,9 @@ export const joinGroup = async (req, res) => {
       userId,
       "$addToSet"
     );
+
+    // Adding the users to groups array
+    await responseHandlerUtils.updateUserGroups(group._id, userId, "$push");
 
     res.status(StatusCodes.OK).json({
       message: "You have been added to the group successfully",
