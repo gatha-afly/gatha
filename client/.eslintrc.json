@@ -42,6 +42,9 @@
     "react-refresh/only-export-components": [
       "warn",
       { "allowConstantExport": true }
-    ]
+    ],
+
+    // Disable prop-type validation
+    "react/prop-types": "off"
   }
 }
