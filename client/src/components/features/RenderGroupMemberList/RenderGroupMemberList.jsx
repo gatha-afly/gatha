@@ -1,3 +1,5 @@
+import styles from "./RenderGroupMemberList.module.css";
+
 /**
  * Component to render the list of group members.
  * @param {Array} groupMembers - Array of group members.
@@ -9,7 +11,7 @@ const RenderGroupMemberList = ({ groupMembers }) => {
   );
 
   return (
-    <div>
+    <div className={styles.renderMembers}>
       <h3>Members:</h3>
       {/* Check if there are members*/}
       {formattedMembers.length > 0 ? (

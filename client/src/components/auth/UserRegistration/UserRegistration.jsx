@@ -76,14 +76,14 @@ const UserRegistration = () => {
         <input
           type='text'
           name='firstName'
-          placeholder='First Name'
+          placeholder='First name'
           ref={inputRef} // Ref for autofocus
           required
         />
       </div>
 
       <div>
-        <input type='text' name='lastName' placeholder='Last Name' required />
+        <input type='text' name='lastName' placeholder='Last name' required />
       </div>
 
       <div>
@@ -107,7 +107,7 @@ const UserRegistration = () => {
         <input
           type={passwordVisible ? "text" : "password"}
           name='confirm-password'
-          placeholder='Confirm Password'
+          placeholder='Confirm password'
           required
         />
       </div>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import userAPI from "../../../../api/userAPI";
 import {
   handleOtherErrors,
   handleServerErrors,
-} from "../../../../utils/errorUtils";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
+} from "../../../utils/errorUtils";
+import userAPI from "../../../api/userAPI";
 import styles from "./AddUserToGroup.module.css";
+import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 
 /**
  * Component for admin users to add other users to a group

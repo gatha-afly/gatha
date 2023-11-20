@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import userAPI from "../../../../api/userAPI";
-import useUserContext from "../../../../context/useUserContext";
 import {
   handleOtherErrors,
   handleServerErrors,
-} from "../../../../utils/errorUtils";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
+} from "../../../utils/errorUtils";
+import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
+import useUserContext from "../../../context/useUserContext";
 import styles from "./CreateGroup.module.css";
+import userAPI from "../../../api/userAPI";
 
 /**
  * Create group form, allowing users to input group information and register.
