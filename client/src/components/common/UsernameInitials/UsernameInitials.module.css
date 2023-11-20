@@ -11,3 +11,14 @@
   color: var(--color-main);
   font-weight: bold;
 }
+
+.circle:hover {
+  background-color: var(--color-hover);
+  transition: background-color 0.2s;
+}
+
+.initials:hover {
+  color: var(--color-main);
+  background-color: var(--color-hover);
+  transition: background-color 0.2s;
+}
