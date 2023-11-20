@@ -7,7 +7,7 @@ const Header = () => {
   const { loggedIn, user } = useUserContext();
   return (
     <header className={styles.header}>
-      <Link to='/'>Home</Link>
+      <Link to="/">Home</Link>
 
       {/* Conditionally rendering the user initials info after successful login */}
       {loggedIn ? (
@@ -16,9 +16,12 @@ const Header = () => {
 
       {/* Conditionally render login and logout button */}
       {loggedIn ? (
-        <Link to='/user-logout'>Logout</Link>
+        <>
+          <Link to="/message">Message</Link>
+          <Link to="/user-logout">Logout</Link>
+        </>
       ) : (
-        <Link to='/user-login'>Login</Link>
+        <Link to="/user-login">Login</Link>
       )}
     </header>
   );
