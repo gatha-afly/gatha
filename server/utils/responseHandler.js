@@ -17,6 +17,22 @@ export const findUserByUsername = async (username) =>
   User.findOne({ username });
 
 /**
+ * Utility helper to find if a user if already a member of a group
+ * @param {*} groupId
+ * @param {*} userId
+ * @returns
+ */
+export const isUserAlreadyMember = async (groupId, userId) => {
+  // Find the group by ID and check if the user is a member
+  const existingGroup = await Group.findOne({
+    _id: groupId,
+    members: userId,
+  });
+
+  return existingGroup !== null;
+};
+
+/**
  * Utility helper to update the group
  * @param {*} groupId
  * @param {*} memberId

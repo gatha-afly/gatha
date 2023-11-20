@@ -49,14 +49,27 @@ export const createUser = async (req, res) => {
  */
 export const loginUser = async (req, res) => {
   try {
-    // Find a user with the provided email
-    const user = await User.findOne({ email: req.body.email });
+    // Find a user with the provided email and populate the 'groups' field
+    const user = await User.findOne({ email: req.body.email })
+    .populate("groups");
+
+    // Logging for debugging
+    console.log("User:", user);
 
     // Check if the user doesn't exist
     if (!user) {
       return res.status(StatusCodes.NOT_FOUND).json({
         error: "User not found. Please register an account.",
       });
+    }
+
+    // Check if the deactivate field is present and is deactivated == true
+    if (user.deactivate && user.deactivate.isDeactivated) {
+      // Set isDeactivated to false in the database
+      user.deactivate.isDeactivated = false;
+
+      // Save the update
+      await user.save();
     }
 
     // Compare the provided password with the hashed password in the database
@@ -76,14 +89,9 @@ export const loginUser = async (req, res) => {
         secure: false, // Set to true in production with HTTPS
       });
 
-      // Check if the user is deactivated == true
-      if (user.deactivate.isDeactivated) {
-        // Set isDeactivated to false in the database
-        user.deactivate.isDeactivated = false;
+      // Retrieve user groups from the populated 'groups' field
+      const userGroups = user.groups || [];
 
-        // Save the update
-        await user.save();
-      }
       // Return a successful response
       return res.status(StatusCodes.OK).json({
         message: `Login successful. Welcome, ${user.firstName} ${user.lastName}`,
@@ -93,6 +101,7 @@ export const loginUser = async (req, res) => {
           username: user.username,
           email: user.email,
           userId: user._id,
+          groups: userGroups,
         },
       });
     } else {
@@ -101,10 +110,10 @@ export const loginUser = async (req, res) => {
         .json({ error: "Your password is incorrect" });
     }
   } catch (error) {
+    console.error(error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
-
 /**
  * Handler for user logout
  * @param {*} req

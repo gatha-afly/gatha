@@ -71,16 +71,17 @@ export const addMemberToGroup = async (req, res) => {
     }
 
     // Check if the user is already a member of the group
-    const existingGroup = await Group.findOne({
-      _id: groupId,
-      members: newMember._id,
-    });
+    const userAlreadyMember = await responseHandlerUtils.isUserAlreadyMember(
+      groupId,
+      newMember._id
+    );
 
-    //Throws an error if user is already a member of a group
-    if (existingGroup) {
+    // Throws an error if the user is already a member of a group
+    if (userAlreadyMember) {
       return errorHandlerUtils.handleUserAlreadyGroupMember(
         res,
-        existingGroup.name
+        // Assuming you want to show the username in the error message
+        newMember.username
       );
     }
 
@@ -99,7 +100,6 @@ export const addMemberToGroup = async (req, res) => {
     return errorHandlerUtils.handleInternalError(res);
   }
 };
-
 /**
  * Handler for removing group members using the groupId and adminId
  * @param {*} req
@@ -127,15 +127,16 @@ export const removeMemberFromGroup = async (req, res) => {
     }
 
     // Check if the user is a member of the group
-    const isMember = await Group.exists({
-      _id: groupId,
-      members: { $in: [memberToRemove._id] },
-    });
+    const isMember = await responseHandlerUtils.isUserAlreadyMember(
+      groupId,
+      memberToRemove._id
+    );
 
     if (!isMember) {
       return errorHandlerUtils.handleUserNotGroupMember(
         res,
-        existingGroup.name
+        // Assuming you want to show the username in the error message
+        memberToRemove.username
       );
     }
 
@@ -260,16 +261,13 @@ export const joinGroup = async (req, res) => {
     }
 
     // Check if the provided userId is not already a member of the group
-    const existingGroup = await Group.findOne({
-      _id: group._id,
-      members: userId,
-    });
+    const userAlreadyMember = await responseHandlerUtils.isUserAlreadyMember(
+      group._id,
+      userId
+    );
 
-    if (existingGroup) {
-      return errorHandlerUtils.handleUserAlreadyGroupMember(
-        res,
-        existingGroup.name
-      );
+    if (userAlreadyMember) {
+      return errorHandlerUtils.handleUserAlreadyGroupMember(res, group.name);
     }
 
     // Update the group by adding the user to the members array
@@ -305,19 +303,19 @@ export const leaveGroup = async (req, res) => {
       return errorHandlerUtils.handleUserNotFound(res, "userId");
     }
 
-    // Check if the user is already a member of the group
-    const existingGroup = await Group.findOne({
-      _id: groupId,
-      members: member,
-    });
+    // Check if the provided userId is a member of the group
+    const isMember = await responseHandlerUtils.isUserAlreadyMember(
+      groupId,
+      userId
+    );
 
-    if (!existingGroup) {
-      return errorHandlerUtils.handleGroupNotFound(res);
+    if (!isMember) {
+      return errorHandlerUtils.handleUserNotGroupMember(res, groupId);
     }
 
     // Update the group by removing the user from the members array
     const updatedGroup = await responseHandlerUtils.updateGroupMembers(
-      { _id: groupId },
+      groupId,
       userId,
       "$pull"
     );
