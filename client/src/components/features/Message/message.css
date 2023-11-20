@@ -1,8 +1,10 @@
 .message-container {
+  margin-top: 2rem;
   align-items: center;
   flex-direction: column;
   height: 80vh;
   display: flex;
+  gap: 1rem;
 }
 
 .chat-heading {

@@ -4,11 +4,7 @@ import cookieParser from "cookie-parser";
 
 const app = express();
 
-//Define the PORT variable
-const PORT = process.env.PORT || 3001;
-
 // Middlewares
-app.set("port", PORT);
 app.use(express.json());
 app.use(cookieParser());
 
