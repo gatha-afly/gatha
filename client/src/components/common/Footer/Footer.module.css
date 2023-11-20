@@ -7,7 +7,7 @@
   left: 0;
   width: 100%;
   background-color: var(--color-structure-elements);
-  color: var(--color-body);
+  color: var(--color-main);
   z-index: 999;
   position: static;
   height: 10vh;

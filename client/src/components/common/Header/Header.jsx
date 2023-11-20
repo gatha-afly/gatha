@@ -11,7 +11,12 @@ const Header = () => {
       <Logo width={10} />
       {/* Conditionally rendering the user initials info after successful login */}
       {loggedIn ? (
-        <UsernameInitials firstName={user.firstName} lastName={user.lastName} />
+        <UsernameInitials
+          firstName={user.firstName}
+          lastName={user.lastName}
+          radius={5}
+          fontSize={2}
+        />
       ) : null}
 
       {/* Conditionally render login and logout button */}

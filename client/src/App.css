@@ -101,6 +101,9 @@ input,
 textarea {
   padding: 0.5rem;
   font-size: 1.5rem;
+  background-color: var(--color-body);
+  border: 2px solid var(--color-structure-elements-light);
+  border-radius: 5px;
 }
 
 input {
