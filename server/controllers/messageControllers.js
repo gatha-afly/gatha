@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import Message from "../models/Message.js";
+import { io } from "../socket.io.js";
 
 /**
  * Handler for creating new messages
@@ -16,6 +17,9 @@ export const createMessage = async (req, res) => {
       senderId,
       message,
     });
+
+    //Emit the new messge to all conntected clients in the same chat room
+    io.emit(`chat: ${chatId}`, newMessage);
 
     return res.status(StatusCodes.CREATED).json({ message: newMessage });
   } catch (error) {

@@ -8,6 +8,7 @@ import messageRouter from "./routes/messageRoutes.js";
 import groupRouter from "./routes/groupRoutes.js";
 import healthRouter from "./routes/healthRoutes.js";
 import chatRouter from "./routes/chatRoutes.js";
+import { httpServer } from "./socket.io.js";
 import app from "./app.js";
 
 dotenv.config();
@@ -24,7 +25,7 @@ app.use("/api/health", healthRouter);
 
 // Server is listening on the specified port
 connectToMongoDB().then(() => {
-  app.listen(PORT, () => {
+  httpServer.listen(PORT, () => {
     console.log("Server is listening on port", PORT);
   });
 });

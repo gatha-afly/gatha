@@ -13,9 +13,6 @@ const ChatProvider = ({ children }) => {
     const getUserChats = async () => {
       if (user?._id) {
         const response = await userAPI.get(`/chats/${user?._id}`);
-
-        if (response.error) {
-        }
       }
     };
 
