@@ -1,23 +1,22 @@
 :root {
   --color-error: #ef946c;
-  --color-signal: #559cad;
   --color-success: #749c75;
-  --color-dark: #000;
-  --color-light: white;
-  --color-body: #f8f7ff
-  --color-main: #ffffff;
-  --color-dark: #454372;
-  --color-structure-elements: #999999
-  ;
+  --color-dark: #20201d;
+  --color-body: #fffffe;
+  --color-main: #f7e8d3;
+  --color-light-dark: #333;
+  --color-structure-elements: #44185a;
+  --color-structure-elements-light: #eccdff;
+  --color-hover: #822eaa;
 }
 
 ::selection {
-  background-color: var(--color-signal);
-  color: var(--color-main);
+  background-color: var(--color-structure-elements);
+  color: var(--color-body);
 }
 
 :focus {
-  outline: 0.2rem solid var(--color-success);
+  outline: 0.2rem solid var(--color-hover);
   padding: 0.1 rem;
 }
 
@@ -33,7 +32,7 @@ html {
 }
 
 body {
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Nunito", sans-serif;
   color: var(--color-dark);
   line-height: 1.6;
   height: 100vh;
@@ -42,63 +41,67 @@ body {
 }
 
 main {
-    padding-top: 4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: var(--color-main);
-    height: 80vh;
-  }
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: var(--color-main);
+  color: var(--color-dark);
+  height: 80vh;
+}
 
-  h1 {
-    font-size: 2rem;
-  }
-  
-  h2 {
-    font-size: 1.6rem;
-  }
-  
-  h3 {
-    font-size: 1.7rem;
-  }
+h1 {
+  font-size: 2rem;
+}
 
-  p,
+h2 {
+  font-size: 1.6rem;
+}
+
+h3 {
+  font-size: 1.7rem;
+}
+
+p,
 li {
   font-size: 1.6rem;
 }
 
-
-  ul {
-    list-style: none;
-  }
+ul {
+  list-style: none;
+}
 
 button,
 select,
-input, 
+input,
 textarea {
-  font-family: "Ubuntu", sans-serif;
+  font-family: "Nunito", sans-serif;
 }
 
-button{
-    min-height: 2.4rem;
-    background-color: var(--color-signal);
-    color: var(--color-light);
-    font-size: 1.5rem;
-    font-weight: bold;
-    outline: none;
-    border: none;
-    margin-bottom: 1rem;
-    cursor: pointer;
- }
+button {
+  min-height: 2.4rem;
+  background-color: var(--color-structure-elements);
+  color: var(--color-body);
+  font-size: 1.5rem;
+  font-weight: bold;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  width: 20rem;
+}
 
- input, textarea {
+button:hover {
+  background-color: var(--color-hover);
+  box-shadow: 0 0 0.5rem var(--color-structure-elements);
+}
+
+input,
+textarea {
   padding: 0.5rem;
   font-size: 1.5rem;
 }
 
 input {
   height: 2.4rem;
-
 }
-

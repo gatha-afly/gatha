@@ -6,10 +6,13 @@
   padding-right: 1rem;
   height: 10vh;
   background-color: var(--color-structure-elements);
+  color: var(--color-body);
+
   position: fixed;
   position: static;
 }
 
 .header a {
   text-decoration: none;
+  color: var(--color-body);
 }

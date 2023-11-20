@@ -1,12 +1,7 @@
 .addUserForm {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 25rem;
-}
-
-.addUserForm button {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+  width: 20rem;
 }
