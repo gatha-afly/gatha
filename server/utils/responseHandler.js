@@ -68,7 +68,8 @@ export const updateUserGroups = async (groupId, userId, operation) => {
       userId,
       { [operation]: { groups: groupId } },
       { new: true }
-    );
+      // When the user object is returned it should exclude the password
+    ).select("-password");
   } catch (error) {
     throw new Error(
       "An error occurred while updating group members. Please try again later."

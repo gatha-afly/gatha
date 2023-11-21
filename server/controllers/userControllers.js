@@ -57,9 +57,6 @@ export const loginUser = async (req, res) => {
       select: "groupId name",
     });
 
-    // Logging for debugging
-    console.log("User:", user);
-
     // Check if the user doesn't exist
     if (!user) {
       return res.status(StatusCodes.NOT_FOUND).json({

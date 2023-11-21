@@ -11,7 +11,7 @@ import styles from "./SearchGroupAndJoin.module.css";
 
 const SearchGroupAndJoin = () => {
   // Get user data form userContext
-  const { user } = useUserContext();
+  const { user, updateUserData } = useUserContext();
   const userId = user.userId;
   // State for errors
   const [error, setError] = useState(null);
@@ -39,7 +39,15 @@ const SearchGroupAndJoin = () => {
 
     try {
       // Attempt to join the group with the provided code
-      await userAPI.patch(`/groups/join-group/${userId}`, data);
+      const response = await userAPI.patch(
+        `/groups/join-group/${userId}`,
+        data
+      );
+
+      //If successful updates states and also the localStorage
+      const newUserData = response.data.user;
+      updateUserData(newUserData);
+
       // If successful navigate to main
       navigate(`/main`);
     } catch (error) {
@@ -52,9 +60,9 @@ const SearchGroupAndJoin = () => {
     <form className={styles.joinGroupForm} onSubmit={handleFormSubmit}>
       <div>
         <input
-          type='text'
-          name='code'
-          placeholder='code'
+          type="text"
+          name="code"
+          placeholder="code"
           ref={inputRef} // Ref for autofocus
           required
         />
@@ -62,7 +70,7 @@ const SearchGroupAndJoin = () => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type='submit'>join</button>
+      <button type="submit">join</button>
     </form>
   );
 };

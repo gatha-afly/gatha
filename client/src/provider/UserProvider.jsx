@@ -73,10 +73,33 @@ const UserProvider = ({ children }) => {
       console.error(err.message);
     }
   };
+
+  /**
+   * Updates user data and localstorage
+   * @param {*} newUserData
+   */
+  const updateUserData = (newUserData) => {
+    // Use the functional form of setUser to ensure the latest state value
+    setUser((prevUser) => {
+      const updatedUser = newUserData ? { ...prevUser, ...newUserData } : null;
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return updatedUser;
+    });
+  };
+
   // Provide user context to component tree
   return (
     <userContext.Provider
-      value={{ error, setError, loggedIn, loginUser, user, logoutUser }}>
+      value={{
+        error,
+        setError,
+        loggedIn,
+        loginUser,
+        user,
+        logoutUser,
+        updateUserData,
+      }}
+    >
       {children}
     </userContext.Provider>
   );
