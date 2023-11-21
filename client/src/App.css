@@ -163,13 +163,26 @@ scrollbar-thumb {
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   header {
-    height: 8vh;
+    height: 7svh;
   }
   main {
-    height: 87vh;
+    height: 89svh;
   }
   footer {
-    height: 5vh;
+    height: 4svh;
+  }
+}
+
+/* Tablet landscape mode*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  header {
+    height: 9svh;
+  }
+  main {
+    height: 86svh;
+  }
+  footer {
+    height: 5svh;
   }
 }
 
