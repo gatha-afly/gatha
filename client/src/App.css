@@ -128,28 +128,65 @@ scrollbar-thumb {
 
 /* Mobile*/
 @media only screen and (max-width: 767px) {
+  header {
+    height: 8vh;
+  }
   main {
-    height: 88vh;
+    height: 87vh;
+  }
+  footer {
+    height: 5vh;
+  }
+}
+
+/* Mobile landscape mode*/
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  header {
+    height: 18vh;
+  }
+  main {
+    height: 74vh;
+  }
+  footer {
+    height: 8vh;
   }
 }
 
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
+  header {
+    height: 8vh;
+  }
   main {
     height: 87vh;
+  }
+  footer {
+    height: 5vh;
   }
 }
 
 /* Laptop*/
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  header {
+    height: 9vh;
+  }
   main {
     height: 86vh;
+  }
+  footer {
+    height: 5vh;
   }
 }
 
 /* Larger Screens */
 @media only screen and (min-width: 1441px) {
+  header {
+    height: 10vh;
+  }
   main {
     height: 85vh;
+  }
+  footer {
+    height: 5vh;
   }
 }

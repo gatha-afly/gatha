@@ -22,31 +22,3 @@
   outline: 0.2rem solid var(--color-main);
   border-radius: 1rem;
 }
-
-/* Mobile*/
-@media only screen and (max-width: 767px) {
-  .header {
-    height: 7vh;
-  }
-}
-
-/* Tablet*/
-@media only screen and (min-width: 768px) and (max-width: 1024px) {
-}
-.header {
-  height: 8vh;
-}
-
-/* Laptop*/
-@media only screen and (min-width: 1025px) and (max-width: 1440px) {
-}
-.header {
-  height: 9vh;
-}
-
-/* Larger Screens */
-@media only screen and (min-width: 1441px) {
-}
-.header {
-  height: 10vh;
-}
