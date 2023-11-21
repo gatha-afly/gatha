@@ -11,7 +11,7 @@
 .menuItems {
   position: absolute;
   right: 0;
-  width: 10rem;
+  width: 14rem;
   background-color: var(--color-hover);
   padding: 0.5rem;
   border-radius: 10px;

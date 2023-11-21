@@ -126,3 +126,19 @@ scrollbar-thumb {
   background-color: var(--color-structure-elements-light);
   border-radius: 1rem;
 }
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+}
+
+/* Tablet*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+}
+
+/* Laptop*/
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+}
+
+/* Larger Screens */
+@media only screen and (min-width: 1441px) {
+}

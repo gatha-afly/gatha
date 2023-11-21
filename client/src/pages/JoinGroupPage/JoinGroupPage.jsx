@@ -13,6 +13,9 @@ const JoinGroupPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - join group' />
       <h1>Join a group</h1>
+      <p className={styles.explanation}>
+        If you've been shared a code to join a group, simply enter it here:
+      </p>
       <SearchGroupAndJoin />
       <NavigateBackForth
         route={"main"}

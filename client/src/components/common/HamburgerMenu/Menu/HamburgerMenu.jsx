@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import UsernameInitials from "../UsernameInitials/UsernameInitials";
+import HamburgerUsernameInitials from "../HamburgerUsernameInitials/HamburgerUsernameInitials";
 import styles from "./HamburgerMenu.module.css";
 
 /** * Responsive hamburger menu displaying the initials of a user icon.
@@ -31,18 +31,15 @@ const HamburgerMenu = ({ firstName, lastName }) => {
         // Show menu when cursor hovers initials
         onMouseEnter={toggleMenu}>
         {/* Display user initials */}
-        <UsernameInitials
-          firstName={firstName}
-          lastName={lastName}
-          radius={6}
-          fontSize={2}
-        />
+        <HamburgerUsernameInitials firstName={firstName} lastName={lastName} />
       </div>
 
       {menuOpen && (
         <div className={styles.menuItems} onClick={toggleMenu}>
           <Link to='/main'>gatha</Link>
           <Link to='/user-profile'>profile</Link>
+          <Link to='/join-group'>join group</Link>
+          <Link to='/create-group'>create group</Link>
           <Link to='/user-logout'>logout</Link>
         </div>
       )}

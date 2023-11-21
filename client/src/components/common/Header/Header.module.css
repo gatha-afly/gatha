@@ -4,7 +4,6 @@
   align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
-  height: 10vh;
   background-color: var(--color-structure-elements);
   color: var(--color-body);
   position: fixed;
@@ -16,10 +15,39 @@
   color: var(--color-main);
   font-weight: bold;
   font-size: 1.8rem;
+  padding: 0.5rem;
 }
 
 .header a:focus,
 .header .logo:focus {
   outline: 0.2rem solid var(--color-main);
   border-radius: 1rem;
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  .header {
+    height: 7vh;
+  }
+}
+
+/* Tablet*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+}
+.header {
+  height: 8vh;
+}
+
+/* Laptop*/
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+}
+.header {
+  height: 9vh;
+}
+
+/* Larger Screens */
+@media only screen and (min-width: 1441px) {
+}
+.header {
+  height: 10vh;
 }

@@ -9,5 +9,32 @@
   background-color: var(--color-structure-elements);
   color: var(--color-main);
   z-index: 999;
-  height: 10vh;
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  .footer {
+    height: 5vh;
+  }
+}
+
+/* Tablet*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+}
+.footer {
+  height: 5vh;
+}
+
+/* Laptop*/
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+}
+.footer {
+  height: 5vh;
+}
+
+/* Larger Screens */
+@media only screen and (min-width: 1441px) {
+}
+.footer {
+  height: 5vh;
 }
