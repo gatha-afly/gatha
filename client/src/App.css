@@ -72,6 +72,14 @@ li {
   font-size: 1.6rem;
 }
 
+a {
+  color: var(--color-structure-elements);
+}
+
+a:hover {
+  color: var(--color-hover);
+}
+
 ul {
   list-style: none;
 }
@@ -129,26 +137,26 @@ scrollbar-thumb {
 /* Mobile*/
 @media only screen and (max-width: 767px) {
   header {
-    height: 8vh;
+    height: 9svh;
   }
   main {
-    height: 87vh;
+    height: 86svh;
   }
   footer {
-    height: 5vh;
+    height: 5svh;
   }
 }
 
 /* Mobile landscape mode*/
 @media only screen and (max-width: 767px) and (orientation: landscape) {
   header {
-    height: 18vh;
+    height: 20svh;
   }
   main {
-    height: 74vh;
+    height: 71svh;
   }
   footer {
-    height: 8vh;
+    height: 9svh;
   }
 }
 
@@ -195,7 +203,7 @@ scrollbar-thumb {
   }
 }
 
-@media only screen and (min-width: 2000px){
+@media only screen and (min-width: 2000px) {
   header {
     height: 7vh;
   }
@@ -209,5 +217,4 @@ scrollbar-thumb {
     width: 50%;
     margin: 0 auto;
   }
-}
 }

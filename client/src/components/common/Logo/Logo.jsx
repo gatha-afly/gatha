@@ -1,5 +1,5 @@
 import React from "react";
-import logoImage from "../../../../public/small-logo-w-background-wo-slogan.png";
+import logoImage from "../../../small-logo-w-background-wo-slogan.png";
 import { Link } from "react-router-dom";
 import styles from "./Logo.module.css";
 
