@@ -198,7 +198,7 @@ scrollbar-thumb {
     height: 5vh;
   }
   body {
-    width: 70%;
+    width: 1024px;
     margin: 0 auto;
   }
 }
@@ -214,7 +214,7 @@ scrollbar-thumb {
     height: 3vh;
   }
   body {
-    width: 50%;
+    width: 1024px;
     margin: 0 auto;
   }
 }
