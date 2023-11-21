@@ -1,0 +1,86 @@
+.circle {
+  border-radius: 50%;
+  background-color: var(--color-structure-elements);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.initials {
+  color: var(--color-main);
+  font-weight: bold;
+}
+
+.circle:hover {
+  background-color: var(--color-hover);
+  transition: background-color 0.2s;
+}
+
+.initials:hover {
+  color: var(--color-main);
+  background-color: var(--color-hover);
+  transition: background-color 0.2s;
+}
+
+.circle {
+  border: 0.5rem solid var(--color-main);
+  height: 5rem;
+  width: 5rem;
+}
+
+.initials {
+  font-size: 1rem;
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  .circle {
+    border: 0.5rem solid var(--color-main);
+    height: 4.5rem;
+    width: 4.5rem;
+  }
+
+  .initials {
+    font-size: 1.8rem;
+  }
+}
+
+/* Tablet*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .circle {
+    border: 0.5rem solid var(--color-main);
+    height: 5rem;
+    width: 5rem;
+  }
+
+  .initials {
+    font-size: 2rem;
+  }
+}
+
+/* Laptop*/
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  .circle {
+    border: 0.5rem solid var(--color-main);
+    height: 5rem;
+    width: 5rem;
+  }
+
+  .initials {
+    font-size: 2rem;
+  }
+}
+
+/* Larger Screens */
+@media only screen and (min-width: 1441px) {
+  .circle {
+    border: 0.6rem solid var(--color-main);
+    height: 6rem;
+    width: 6rem;
+  }
+
+  .initials {
+    font-size: 2.4rem;
+  }
+}

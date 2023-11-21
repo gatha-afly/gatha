@@ -4,8 +4,8 @@
 }
 
 .spinner {
-  -webkit-animation: rotate-center 0.9s ease-in-out infinite both;
-  animation: rotate-center 0.9s ease-in-out infinite both;
+  -webkit-animation: rotate-center 1.1s ease-in-out infinite both;
+  animation: rotate-center 1.1s ease-in-out infinite both;
 }
 
 @keyframes rotate-center {

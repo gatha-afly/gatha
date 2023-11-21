@@ -269,7 +269,7 @@ export const joinGroup = async (req, res) => {
 
     if (!group) {
       return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Group not found with the provided code",
+        error: "No group found with the provided code",
       });
     }
 

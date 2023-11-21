@@ -2,8 +2,8 @@ import styles from "./JoinGroupPage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import SearchGroupAndJoin from "../../components/features/SearchGroupAndJoin/SearchGroupAndJoin";
-import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import NavigateBackForth from "../../components/common/NavigateBackForth/NavigateBackForth";
+import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 
 const JoinGroupPage = () => {
   return (
@@ -13,6 +13,9 @@ const JoinGroupPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - join group' />
       <h1>Join a group</h1>
+      <p className={styles.explanation}>
+        If you've been shared a code to join a group, simply enter it here:
+      </p>
       <SearchGroupAndJoin />
       <NavigateBackForth
         route={"main"}
