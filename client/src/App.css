@@ -50,7 +50,6 @@ main {
   text-align: center;
   background-color: var(--color-main);
   color: var(--color-dark);
-  height: 80vh;
   z-index: 999;
   overflow-y: auto;
   overflow-x: hidden;
@@ -129,16 +128,28 @@ scrollbar-thumb {
 
 /* Mobile*/
 @media only screen and (max-width: 767px) {
+  main {
+    height: 88vh;
+  }
 }
 
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
+  main {
+    height: 87vh;
+  }
 }
 
 /* Laptop*/
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  main {
+    height: 86vh;
+  }
 }
 
 /* Larger Screens */
 @media only screen and (min-width: 1441px) {
+  main {
+    height: 85vh;
+  }
 }

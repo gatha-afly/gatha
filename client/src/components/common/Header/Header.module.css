@@ -6,7 +6,6 @@
   padding-right: 1rem;
   background-color: var(--color-structure-elements);
   color: var(--color-body);
-  position: fixed;
   position: static;
 }
 
