@@ -17,7 +17,7 @@
 
 :focus {
   outline: 0.2rem solid var(--color-hover);
-  padding: 0.1 rem;
+  border-radius: 0.5rem;
 }
 
 * {
@@ -38,6 +38,8 @@ body {
   height: 100vh;
   background-color: var(--color-body);
   font-size: 1.6rem;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 main {
@@ -48,7 +50,9 @@ main {
   text-align: center;
   background-color: var(--color-main);
   color: var(--color-dark);
-  height: 80vh;
+  z-index: 999;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -66,6 +70,14 @@ h3 {
 p,
 li {
   font-size: 1.6rem;
+}
+
+a {
+  color: var(--color-structure-elements);
+}
+
+a:hover {
+  color: var(--color-hover);
 }
 
 ul {
@@ -95,6 +107,7 @@ button:hover {
   background-color: var(--color-hover);
   box-shadow: 0 0 0.5rem var(--color-structure-elements);
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 input,
@@ -108,4 +121,113 @@ textarea {
 
 input {
   height: 2.4rem;
+}
+
+::-webkit-scrollbar,
+scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-thumb,
+scrollbar-thumb {
+  background-color: var(--color-structure-elements-light);
+  border-radius: 1rem;
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  header {
+    height: 9svh;
+  }
+  main {
+    height: 86svh;
+  }
+  footer {
+    height: 5svh;
+  }
+}
+
+/* Mobile landscape mode*/
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  header {
+    height: 20svh;
+  }
+  main {
+    height: 71svh;
+  }
+  footer {
+    height: 9svh;
+  }
+}
+
+/* Tablet*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  header {
+    height: 7svh;
+  }
+  main {
+    height: 89svh;
+  }
+  footer {
+    height: 4svh;
+  }
+}
+
+/* Tablet landscape mode*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  header {
+    height: 9svh;
+  }
+  main {
+    height: 86svh;
+  }
+  footer {
+    height: 5svh;
+  }
+}
+
+/* Laptop*/
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  header {
+    height: 9vh;
+  }
+  main {
+    height: 86vh;
+  }
+  footer {
+    height: 5vh;
+  }
+}
+
+/* Larger Screens */
+@media only screen and (min-width: 1441px) and (max-width: 1920px) {
+  header {
+    height: 10vh;
+  }
+  main {
+    height: 85vh;
+  }
+  footer {
+    height: 5vh;
+  }
+  body {
+    width: 1440px;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (min-width: 1921px) {
+  header {
+    height: 5vh;
+  }
+  main {
+    height: 60vh;
+  }
+  footer {
+    height: 2.5vh;
+  }
+  body {
+    width: 1440px;
+    margin: 0 auto;
+  }
 }

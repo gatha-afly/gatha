@@ -13,14 +13,15 @@ import userAPI from "../../../api/userAPI";
  * Create group form, allowing users to input group information and register.
  */
 const CreateGroup = () => {
-  // Extract userId from UserContext
-  const { userId } = useUserContext().user;
+  // Get user data form userContext
+  const { user, updateUserData } = useUserContext();
+  const userId = user.userId;
+  // State for errors
+  const [error, setError] = useState(null);
   // Navigation hook for redirecting
   const navigate = useNavigate();
   // Ref for autofocus
   const inputRef = useRef(null);
-  // State for errors
-  const [error, setError] = useState(null);
 
   // Autofocus first input field on mount
   useEffect(() => {
@@ -48,8 +49,11 @@ const CreateGroup = () => {
       );
       // Access groupId returned from the server
       const groupId = response.data.newGroup._id;
-
       console.log(response);
+
+      // Update state and localStorage
+      const newUserData = response.data.updatedUser;
+      updateUserData(newUserData);
 
       // Navigate to add users page on successful registration
       navigate(`/add-user/${groupId}/${userId}/`);

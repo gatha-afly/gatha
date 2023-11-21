@@ -11,7 +11,7 @@ import styles from "./SearchGroupAndJoin.module.css";
 
 const SearchGroupAndJoin = () => {
   // Get user data form userContext
-  const { user } = useUserContext();
+  const { user, updateUserData } = useUserContext();
   const userId = user.userId;
   // State for errors
   const [error, setError] = useState(null);
@@ -39,7 +39,15 @@ const SearchGroupAndJoin = () => {
 
     try {
       // Attempt to join the group with the provided code
-      await userAPI.patch(`/groups/join-group/${userId}`, data);
+      const response = await userAPI.patch(
+        `/groups/join-group/${userId}`,
+        data
+      );
+
+      // Update state and localStorage
+      const newUserData = response.data.user;
+      updateUserData(newUserData);
+
       // If successful navigate to main
       navigate(`/main`);
     } catch (error) {

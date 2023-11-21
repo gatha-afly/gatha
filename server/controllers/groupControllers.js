@@ -39,9 +39,15 @@ export const createGroup = async (req, res) => {
     // Populate the user details for the admin
     await newGroup.populate("admin", "username firstName lastName");
 
+    const updatedUser = await responseHandlerUtils.updateUserGroups(
+      newGroup._id,
+      userId,
+      "$push"
+    );
     return res.status(StatusCodes.CREATED).json({
       message: "New group has been created",
       newGroup,
+      updatedUser,
     });
   } catch (error) {
     console.error(error);
@@ -154,6 +160,12 @@ export const removeMemberFromGroup = async (req, res) => {
       "$pull"
     );
 
+    // Update the array of groups in user object
+    await responseHandlerUtils.updateUserGroups(
+      groupId,
+      memberToRemove._id,
+      "$pull"
+    );
     res.status(StatusCodes.OK).json({
       message: "User removed from the group successfully",
       updatedGroup,
@@ -263,7 +275,7 @@ export const joinGroup = async (req, res) => {
 
     if (!group) {
       return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Group not found with the provided code",
+        error: "No group found with the provided code",
       });
     }
 
@@ -278,18 +290,24 @@ export const joinGroup = async (req, res) => {
     }
 
     // Update the group by adding the user to the members array
+    // Update the group by adding the user to the members array
     const updatedGroup = await responseHandlerUtils.updateGroupMembers(
-      { _id: group._id }, // Update based on group ID
+      group._id, // Update based on group ID
       userId,
       "$addToSet"
     );
 
     // Adding the users to groups array
-    await responseHandlerUtils.updateUserGroups(group._id, userId, "$push");
+    const updatedUser = await responseHandlerUtils.updateUserGroups(
+      group._id,
+      userId,
+      "$push"
+    );
 
     res.status(StatusCodes.OK).json({
       message: "You have been added to the group successfully",
-      updatedGroup,
+      currently_joined_group: updatedGroup,
+      user: updatedUser,
     });
   } catch (error) {
     console.log(error);

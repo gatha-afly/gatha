@@ -8,6 +8,8 @@ import useGetGroupMembers from "../../hooks/useGetGroupMembers";
 import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
 import AddUserToGroup from "../../components/features/AddUserToGroup/AddUserToGroup";
 import RenderGroupMemberList from "../../components/features/RenderGroupMemberList/RenderGroupMemberList";
+import NavigateBackForth from "../../components/common/NavigateBackForth/NavigateBackForth";
+import { faRightLong } from "@fortawesome/free-solid-svg-icons";
 
 const AddUserUponGroupCreationPage = () => {
   const { groupId, userId } = useParams();
@@ -34,6 +36,11 @@ const AddUserUponGroupCreationPage = () => {
         groupId={groupId}
         userId={userId}
         onRefresh={handleRefresh}
+      />
+      <NavigateBackForth
+        route={"main"}
+        buttonText={faRightLong}
+        alignment={"right"}
       />
       <ErrorDisplay error={error} />
       <RenderGroupMemberList groupMembers={groupMembers} />

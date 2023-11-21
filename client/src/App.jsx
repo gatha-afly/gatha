@@ -14,6 +14,7 @@ import JoinGroupPage from "./pages/JoinGroupPage/JoinGroupPage";
 import UserProvider from "./provider/UserProvider";
 import ProtectedRoutes from "./utils/ProtectedRoutes";
 import AddUserUponGroupCreationPage from "./pages/AddUserUponGroupCreationPage/AddUserUponGroupCreationPage";
+import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
 import MessagePage from "./pages/MessagePage/MessagePage";
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
               />
               <Route path="/create-group" element={<CreateGroupPage />} />
               <Route path="/join-group" element={<JoinGroupPage />} />
+              <Route path="/user-profile" element={<UserProfilePage />} />
               <Route path="/message" element={<MessagePage />} />
             </Route>
           </Routes>

@@ -1,32 +1,24 @@
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import useUserContext from "../../../context/useUserContext";
-import UsernameInitials from "../UsernameInitials/UsernameInitials";
 import Logo from "../Logo/Logo";
+import HamburgerMenu from "../HamburgerMenu/Menu/HamburgerMenu";
 
 const Header = () => {
   const { loggedIn, user } = useUserContext();
   return (
     <header className={styles.header}>
-      <Logo width={10} />
-      {/* Conditionally rendering the user initials info after successful login */}
-      {loggedIn ? (
-        <UsernameInitials
-          firstName={user.firstName}
-          lastName={user.lastName}
-          radius={5}
-          fontSize={2}
-        />
-      ) : null}
-
+      <Logo width={10} className={styles.logo} />
       {/* Conditionally render login and logout button */}
       {loggedIn ? (
         <>
           <Link to="/message">Message</Link>
-          <Link to="/user-logout">Logout</Link>
+          <HamburgerMenu firstName={user.firstName} lastName={user.lastName} />
         </>
       ) : (
-        <Link to="/user-login">Login</Link>
+        <Link to="/user-login" classname={styles.Login}>
+          Login
+        </Link>
       )}
     </header>
   );
