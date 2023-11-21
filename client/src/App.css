@@ -179,7 +179,7 @@ scrollbar-thumb {
 }
 
 /* Larger Screens */
-@media only screen and (min-width: 1441px) {
+@media only screen and (min-width: 1441px) and (max-width: 1999px) {
   header {
     height: 10vh;
   }
@@ -189,4 +189,25 @@ scrollbar-thumb {
   footer {
     height: 5vh;
   }
+  body {
+    width: 70%;
+    margin: 0 auto;
+  }
+}
+
+@media only screen and (min-width: 2000px){
+  header {
+    height: 7vh;
+  }
+  main {
+    height: 90vh;
+  }
+  footer {
+    height: 3vh;
+  }
+  body {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
 }
