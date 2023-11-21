@@ -17,3 +17,9 @@
   font-weight: bold;
   font-size: 1.8rem;
 }
+
+.header a:focus,
+.header .logo:focus {
+  outline: 0.2rem solid var(--color-main);
+  border-radius: 1rem;
+}

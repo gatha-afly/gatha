@@ -9,6 +9,5 @@
   background-color: var(--color-structure-elements);
   color: var(--color-main);
   z-index: 999;
-  position: static;
   height: 10vh;
 }

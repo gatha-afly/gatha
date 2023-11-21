@@ -17,7 +17,7 @@
 
 :focus {
   outline: 0.2rem solid var(--color-hover);
-  padding: 0.1 rem;
+  border-radius: 0.5rem;
 }
 
 * {
@@ -38,6 +38,8 @@ body {
   height: 100vh;
   background-color: var(--color-body);
   font-size: 1.6rem;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
 main {
@@ -49,6 +51,9 @@ main {
   background-color: var(--color-main);
   color: var(--color-dark);
   height: 80vh;
+  z-index: 999;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 h1 {
@@ -109,4 +114,15 @@ textarea {
 
 input {
   height: 2.4rem;
+}
+
+::-webkit-scrollbar,
+scrollbar {
+  width: 1rem;
+}
+
+::-webkit-scrollbar-thumb,
+scrollbar-thumb {
+  background-color: var(--color-structure-elements-light);
+  border-radius: 1rem;
 }

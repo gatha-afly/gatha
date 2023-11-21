@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import UsernameInitials from "../UsernameInitials/UsernameInitials";
 import styles from "./HamburgerMenu.module.css";
 
-/** * Responsive hamburger menu displaying the initials of a user as initals icon.
+/** * Responsive hamburger menu displaying the initials of a user icon.
  * @param {Object} props - The properties of the component.
  * @param {string} props.firstName - The first name of the user for displaying initials.
  * @param {string} props.lastName - The last name of the user for displaying initials.
@@ -18,11 +18,18 @@ const HamburgerMenu = ({ firstName, lastName }) => {
     setMenuOpen(!menuOpen);
   };
 
+  // Close the menu
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
-    <div className={styles.hamburgerMenu}>
+    // Close menu when cursor leaves menu
+    <div className={styles.hamburgerMenu} onMouseLeave={closeMenu}>
       <div
         className={`${styles.menuIcon} ${menuOpen ? styles.open : ""}`}
-        onClick={toggleMenu}>
+        // Show menu when cursor hovers initials
+        onMouseEnter={toggleMenu}>
         {/* Display user initials */}
         <UsernameInitials
           firstName={firstName}

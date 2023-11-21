@@ -8,12 +8,14 @@ const Header = () => {
   const { loggedIn, user } = useUserContext();
   return (
     <header className={styles.header}>
-      <Logo width={10} />
+      <Logo width={10} className={styles.logo} />
       {/* Conditionally render login and logout button */}
       {loggedIn ? (
         <HamburgerMenu firstName={user.firstName} lastName={user.lastName} />
       ) : (
-        <Link to='/user-login'>Login</Link>
+        <Link to='/user-login' classname={styles.Login}>
+          Login
+        </Link>
       )}
     </header>
   );
