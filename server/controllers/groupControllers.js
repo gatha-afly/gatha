@@ -160,6 +160,12 @@ export const removeMemberFromGroup = async (req, res) => {
       "$pull"
     );
 
+    // Update the array of groups in user object
+    await responseHandlerUtils.updateUserGroups(
+      groupId,
+      memberToRemove._id,
+      "$pull"
+    );
     res.status(StatusCodes.OK).json({
       message: "User removed from the group successfully",
       updatedGroup,
