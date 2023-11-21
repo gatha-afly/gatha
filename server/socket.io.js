@@ -1,6 +1,7 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
 import app from "./app.js";
+import setupSocketIO from "./routes/messageRoutes.js";
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
@@ -10,16 +11,6 @@ const io = new Server(httpServer, {
   },
 });
 
-io.on("connection", (socket) => {
-  console.log(`User Connected: ${socket.id}`);
-
-  socket.on("join_room", (data) => {
-    socket.join(data);
-  });
-
-  socket.on("send_message", (data) => {
-    socket.to(data.room).emit("receive_message", data);
-  });
-});
-
+//Set up Socket.io routes using the router
+setupSocketIO(io);
 export { httpServer, io };

@@ -1,12 +1,26 @@
-import express from "express";
 import {
-  createMessage,
-  getMessages,
+  getInitialMessages,
+  sendMessage,
 } from "../controllers/messageControllers.js";
 
-const router = express.Router();
+// Set up Socket.IO event handlers for a new connection
+const setupSocketIO = (io) => {
+  io.on("connection", (socket) => {
+    console.log(`User Connected: ${socket.id}`);
 
-router.post("/create-message", createMessage);
-router.get("/get-message/:chatId", getMessages);
+    // Send the initial set of messages to the new connection
+    getInitialMessages(socket);
 
-export default router;
+    // Listen for incoming messages and broadcast them to all clients
+    socket.on("message", async (msg) => {
+      sendMessage(io, msg);
+    });
+
+    // Handle disconnection events
+    socket.on("disconnect", () => {
+      console.log("User disconnected");
+    });
+  });
+};
+
+export default setupSocketIO;

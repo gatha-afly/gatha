@@ -1,50 +1,27 @@
-import { StatusCodes } from "http-status-codes";
+// controller.js
 import Message from "../models/Message.js";
-import { io } from "../socket.io.js";
-
 /**
- * Handler for creating new messages
- * @param {*} req
- * @param {*} res
- * @returns
+ * Handler for broadcasting messages
+ * @param {*} socket
  */
-export const createMessage = async (req, res) => {
+export const getInitialMessages = async (socket) => {
   try {
-    const { chatId, senderId, message } = req.body;
-
-    const newMessage = await Message.create({
-      chatId,
-      senderId,
-      message,
-    });
-
-    //Emit the new messge to all conntected clients in the same chat room
-    io.emit(`chat: ${chatId}`, newMessage);
-
-    return res.status(StatusCodes.CREATED).json({ message: newMessage });
+    // Fetch the latest messages and emit them to the new socket connection
+    const messages = await Message.find().sort({ createdAt: -1 }).limit(10);
+    socket.emit("init", messages.reverse());
   } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Something went wrong", details: error.message });
+    console.error(error);
   }
 };
 
 /**
- * Handler for getting messages using chatId
- * @param {*} req
- * @param {*} res
- * @returns
+ * Hanlder sending message
+ * @param {*} io
+ * @param {*} msg
  */
-export const getMessages = async (req, res) => {
-  try {
-    const { chatId } = req.params;
-
-    const messages = await Message.find({ chatId });
-
-    return res.status(StatusCodes.OK).json(messages);
-  } catch (error) {
-    return res
-      .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ error: "Something went wrong", details: error.message });
-  }
+export const sendMessage = async (io, msg) => {
+  // Create a new message, save it to the database, and broadcast it to all connected clients
+  const newMessage = new Message({ text: msg });
+  await newMessage.save();
+  io.emit("message", newMessage);
 };
