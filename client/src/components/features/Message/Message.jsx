@@ -5,52 +5,45 @@ import { useEffect, useState } from "react";
 const socket = io.connect("http://localhost:3001");
 
 function Message() {
-  // Room State
-  const [room, setRoom] = useState("");
-
-  // Messages States
-  const [message, setMessage] = useState("");
-  const [messageReceived, setMessageReceived] = useState("");
-
-  const joinRoom = () => {
-    if (room !== "") {
-      socket.emit("join_room", room);
-    }
-  };
-
-  const sendMessage = () => {
-    socket.emit("send_message", { message, room });
-  };
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
 
   useEffect(() => {
-    socket.on("receive_message", (data) => {
-      setMessageReceived(data.message);
+    socket.on("init", (loadedMessages) => {
+      setMessages(loadedMessages);
     });
 
-    // Cleanup the socket listener when component unmounts
-    return () => {
-      socket.off("receive_message");
-    };
-  }, [socket]);
+    socket.on("message", (newMessage) => {
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    });
+
+    return () => socket.off(); // Disconnect socket when component unmounts
+  }, []);
+
+  const sendMessage = () => {
+    if (input.trim()) {
+      socket.emit("message", input);
+      setInput("");
+    }
+  };
 
   return (
     <div className="message-container">
       <input
-        placeholder="Room Number..."
-        onChange={(event) => {
-          setRoom(event.target.value);
-        }}
-      />
-      <button onClick={joinRoom}> Join Room</button>
-      <input
         placeholder="Message..."
-        onChange={(event) => {
-          setMessage(event.target.value);
-        }}
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
       <button onClick={sendMessage}> Send Message</button>
       <h1> Message:</h1>
-      {messageReceived}
+      <ul>
+        {messages.map((msg, index) => (
+          <li key={index} className="list-group-item">
+            {msg.text} {msg.createdAt}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
