@@ -163,13 +163,26 @@ scrollbar-thumb {
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   header {
-    height: 8vh;
+    height: 7svh;
   }
   main {
-    height: 87vh;
+    height: 89svh;
   }
   footer {
-    height: 5vh;
+    height: 4svh;
+  }
+}
+
+/* Tablet landscape mode*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  header {
+    height: 9svh;
+  }
+  main {
+    height: 86svh;
+  }
+  footer {
+    height: 5svh;
   }
 }
 
@@ -187,7 +200,7 @@ scrollbar-thumb {
 }
 
 /* Larger Screens */
-@media only screen and (min-width: 1441px) and (max-width: 1999px) {
+@media only screen and (min-width: 1441px) and (max-width: 1920px) {
   header {
     height: 10vh;
   }
@@ -198,23 +211,23 @@ scrollbar-thumb {
     height: 5vh;
   }
   body {
-    width: 1024px;
+    width: 1440px;
     margin: 0 auto;
   }
 }
 
-@media only screen and (min-width: 2000px) {
+@media only screen and (min-width: 1921px) {
   header {
-    height: 7vh;
+    height: 5vh;
   }
   main {
-    height: 90vh;
+    height: 60vh;
   }
   footer {
-    height: 3vh;
+    height: 2.5vh;
   }
   body {
-    width: 1024px;
+    width: 1440px;
     margin: 0 auto;
   }
 }
