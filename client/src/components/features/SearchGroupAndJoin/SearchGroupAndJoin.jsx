@@ -44,7 +44,7 @@ const SearchGroupAndJoin = () => {
         data
       );
 
-      //If successful updates states and also the localStorage
+      // Update state and localStorage
       const newUserData = response.data.user;
       updateUserData(newUserData);
 
@@ -60,9 +60,9 @@ const SearchGroupAndJoin = () => {
     <form className={styles.joinGroupForm} onSubmit={handleFormSubmit}>
       <div>
         <input
-          type="text"
-          name="code"
-          placeholder="code"
+          type='text'
+          name='code'
+          placeholder='code'
           ref={inputRef} // Ref for autofocus
           required
         />
@@ -70,7 +70,7 @@ const SearchGroupAndJoin = () => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type="submit">join</button>
+      <button type='submit'>join</button>
     </form>
   );
 };
