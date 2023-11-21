@@ -40,10 +40,10 @@ const HamburgerMenu = ({ firstName, lastName }) => {
       </div>
 
       {menuOpen && (
-        <div className={styles.menuItems}>
-          <Link to='/user-logout'>Logout</Link>
-          <Link to='/user-logout'>Logout</Link>
-          <Link to='/user-logout'>Logout</Link>
+        <div className={styles.menuItems} onClick={toggleMenu}>
+          <Link to='/main'>gatha</Link>
+          <Link to='/user-profile'>profile</Link>
+          <Link to='/user-logout'>logout</Link>
         </div>
       )}
     </div>

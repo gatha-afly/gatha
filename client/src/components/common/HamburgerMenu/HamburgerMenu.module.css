@@ -32,3 +32,8 @@
   box-shadow: 0px 0px 0.5rem var(--color-hover);
   color: var(--color-structure-elements);
 }
+
+.menuItems a:active {
+  outline: 0.2rem solid var(--color-hover);
+  border-radius: 0px;
+}
