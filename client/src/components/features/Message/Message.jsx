@@ -1,29 +1,38 @@
 import "./message.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
+import useUserContext from "../../../context/useUserContext";
 
+// Establish a socket connection to the server
 const socket = io.connect("http://localhost:3001");
 
+// Message component
 function Message() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const { user } = useUserContext();
 
   useEffect(() => {
+    // Event listener for initial messages
     socket.on("init", (loadedMessages) => {
       setMessages(loadedMessages);
     });
 
+    // Event listener for new messages
     socket.on("message", (newMessage) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
-    return () => socket.off(); // Disconnect socket when component unmounts
+    // Clean up socket connection when the component unmounts
+    return () => socket.off();
   }, []);
 
+  // Function to send a new message
   const sendMessage = () => {
     if (input.trim()) {
-      socket.emit("message", input);
-      setInput("");
+      // Emit a message event with the text and sender ID
+      socket.emit("message", { text: input, senderId: user.id });
+      setInput(""); // Clear the input field after sending the message
     }
   };
 
@@ -35,12 +44,15 @@ function Message() {
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
-      <button onClick={sendMessage}> Send Message</button>
-      <h1> Message:</h1>
+      <button onClick={sendMessage}>Send Message</button>
+      <h1>Messages:</h1>
       <ul>
         {messages.map((msg, index) => (
           <li key={index} className="list-group-item">
             {msg.text} {msg.createdAt}
+            {msg.sender && msg.sender.username && (
+              <span> - Sent by: {msg.sender.username}</span>
+            )}
           </li>
         ))}
       </ul>

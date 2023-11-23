@@ -1,5 +1,6 @@
-// controller.js
 import Message from "../models/Message.js";
+import User from "../models/User.js";
+
 /**
  * Handler for broadcasting messages
  * @param {*} socket
@@ -7,7 +8,10 @@ import Message from "../models/Message.js";
 export const getInitialMessages = async (socket) => {
   try {
     // Fetch the latest messages and emit them to the new socket connection
-    const messages = await Message.find().sort({ createdAt: -1 }).limit(10);
+    const messages = await Message.find()
+      .sort({ createdAt: -1 })
+      .limit(10)
+      .populate("sender", "username");
     socket.emit("init", messages.reverse());
   } catch (error) {
     console.error(error);
@@ -19,9 +23,26 @@ export const getInitialMessages = async (socket) => {
  * @param {*} io
  * @param {*} msg
  */
-export const sendMessage = async (io, msg) => {
-  // Create a new message, save it to the database, and broadcast it to all connected clients
-  const newMessage = new Message({ text: msg });
-  await newMessage.save();
-  io.emit("message", newMessage);
+export const sendMessage = async (io, msg, senderId) => {
+  try {
+    // Check if senderId exists in the User schema
+    const senderExists = await User.exists({ _id: senderId });
+    if (!senderExists) {
+      console.error("Sender does not exist");
+      return;
+    }
+
+    const newMessage = new Message({
+      text: msg,
+      sender: senderId,
+    });
+
+    await newMessage.save();
+
+    // Populate the sender field before emitting the message
+    await newMessage.populate("sender", "username");
+    io.emit("message", newMessage);
+  } catch (error) {
+    console.error(error);
+  }
 };

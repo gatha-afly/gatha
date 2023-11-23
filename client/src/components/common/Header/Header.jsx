@@ -9,6 +9,7 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <Logo width={10} className={styles.logo} />
+
       {/* Conditionally render login and logout button */}
       {loggedIn ? (
         <>

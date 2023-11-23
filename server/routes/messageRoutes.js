@@ -12,8 +12,8 @@ const setupSocketIO = (io) => {
     getInitialMessages(socket);
 
     // Listen for incoming messages and broadcast them to all clients
-    socket.on("message", async (msg) => {
-      sendMessage(io, msg);
+    socket.on("message", async ({ text, senderId }) => {
+      sendMessage(io, text, senderId);
     });
 
     // Handle disconnection events
