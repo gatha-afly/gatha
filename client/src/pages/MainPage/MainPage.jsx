@@ -3,11 +3,23 @@ import NavigateButton from "../../components/common/NavigateButton/NavigateButto
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
-import GroupnameInitial from "../../components/common/GroupnameInitial/GroupnameInitial";
+import useGetGroupData from "../../hooks/useGetGroupData";
+import RenderBasicGroupInfo from "../../components/features/BasicGroupInfo/RenderBasicGroupInfo/RenderBasicGroupInfo";
 
 const MainPage = () => {
+  // Retrieve user information
   const { user } = useUserContext();
-  console.log(user);
+  const userId = user.userId;
+
+  // TODO: Just for testing: Retrieve groupId of latest joined group
+  const groupIds = user.groups.map((group) => group._id);
+  // console.log(userId, groupIds);
+  const groupId = groupIds[0];
+  console.log(groupId, userId);
+  const response = useGetGroupData(groupId, userId);
+  const { groupData } = response;
+  console.log(groupData);
+
   return (
     <main className={styles.container}>
       {/* Track page renders */}
@@ -31,7 +43,7 @@ const MainPage = () => {
             Logged in user is member of at least one group. Thus, chat
             application will be rendered here eventually.
           </p>
-          <GroupnameInitial groupname={"test"} />
+          <RenderBasicGroupInfo groupData={groupData} />
         </div>
       )}
     </main>

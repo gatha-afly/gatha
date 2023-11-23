@@ -27,13 +27,13 @@ const useGetGroupMembers = (groupId, refreshTrigger) => {
         setGroupAdmin(groupAdmin);
       } catch (error) {
         // Handle errors if any occur during the API call
+        handleServerErrors(error, setError);
         handleOtherErrors(
           error,
           setError,
           "Error fetching group members.",
           "get-group-members"
         );
-        handleServerErrors(error, setError);
       }
     };
 
