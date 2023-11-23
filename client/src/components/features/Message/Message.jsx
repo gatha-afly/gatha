@@ -5,7 +5,9 @@ import useDateFormatter from "../../../hooks/useDateFormatter";
 import useUserContext from "../../../context/useUserContext";
 
 // Establish a socket connection to the server
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("http://localhost:3001", {
+  withCredentials: true,
+});
 
 // Message component
 function Message() {
@@ -35,7 +37,7 @@ function Message() {
   const sendMessage = () => {
     if (input.trim()) {
       // Emit a message event with the text and sender ID
-      socket.emit("send_message", { text: input, senderId: user.id });
+      socket.emit("send_message", { text: input });
       setInput(""); // Clear the input field after sending the message
     }
   };
