@@ -54,7 +54,7 @@ export const loginUser = async (req, res) => {
     // Find a user with the provided email and populate only 'groupId' and 'name' in the 'groups' field
     const user = await User.findOne({ email: req.body.email }).populate({
       path: "groups",
-      select: "groupId name",
+      select: "groupId name code",
     });
 
     // Check if the user doesn't exist
