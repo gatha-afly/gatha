@@ -19,6 +19,7 @@
 .infos p {
   font-size: 1.4rem;
   padding-left: 0.2rem;
+  white-space: nowrap;
 }
 
 .initial {

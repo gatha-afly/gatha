@@ -5,6 +5,7 @@ import PiratePxPageRender from "../../components/common/PiratePxPageRender/Pirat
 import useUserContext from "../../context/useUserContext";
 import useGetGroupData from "../../hooks/useGetGroupData";
 import RenderBasicGroupInfo from "../../components/features/BasicGroupInfo/RenderBasicGroupInfo/RenderBasicGroupInfo";
+import { array } from "prop-types";
 
 const MainPage = () => {
   // Retrieve user information
@@ -14,7 +15,7 @@ const MainPage = () => {
   // TODO: Just for testing: Retrieve groupId of latest joined group
   const groupIds = user.groups.map((group) => group._id);
   // console.log(userId, groupIds);
-  const groupId = groupIds[0];
+  const groupId = groupIds[groupIds.length - 1];
   console.log(groupId, userId);
   const response = useGetGroupData(groupId, userId);
   const { groupData } = response;
@@ -40,8 +41,8 @@ const MainPage = () => {
       ) : (
         <div>
           <p>
-            Logged in user is member of at least one group. Thus, chat
-            application will be rendered here eventually.
+            Just to show user info component. Currently, info of latest added
+            group of the user is rendered:
           </p>
           <RenderBasicGroupInfo groupData={groupData} />
         </div>
