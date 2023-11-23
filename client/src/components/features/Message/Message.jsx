@@ -1,7 +1,7 @@
 import "./message.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
-import { format, isToday, isYesterday } from "date-fns";
+import useDateFormatter from "../../../hooks/useDateFormatter";
 import useUserContext from "../../../context/useUserContext";
 
 // Establish a socket connection to the server
@@ -12,6 +12,9 @@ function Message() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const { user } = useUserContext();
+
+  // Use the custom hook to format the date
+  const formatDate = useDateFormatter;
 
   useEffect(() => {
     // Event listener for initial messages
@@ -34,17 +37,6 @@ function Message() {
       // Emit a message event with the text and sender ID
       socket.emit("send_message", { text: input, senderId: user.id });
       setInput(""); // Clear the input field after sending the message
-    }
-  };
-
-  //Function to format the date
-  const formatDate = (date) => {
-    if (isToday(date)) {
-      return format(date, "h:mm a");
-    } else if (isYesterday(date)) {
-      return "Yesterday " + format(date, "h:mm a");
-    } else {
-      return format(date, "MM/dd/yyyy h:mm a");
     }
   };
 
