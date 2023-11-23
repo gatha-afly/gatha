@@ -8,11 +8,8 @@ import jwt from "jsonwebtoken";
 
 const setupSocketIO = (io) => {
   //Middleware connects
-
-  // Set up Socket.IO event handlers for a new connection
   io.use(function (socket, next) {
     const cookieFromHeaders = socket.handshake.headers.cookie;
-
     if (cookieFromHeaders) {
       const cookies = cookie.parse(socket.handshake.headers.cookie);
       jwt.verify(
