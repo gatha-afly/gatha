@@ -6,8 +6,8 @@
   border-radius: 1rem;
   background-color: var(--color-structure-elements-light);
   width: 25rem;
-  margin-left: 0.5rem;
   height: 5rem;
+  margin-bottom: 0.5rem;
 }
 
 .infos {

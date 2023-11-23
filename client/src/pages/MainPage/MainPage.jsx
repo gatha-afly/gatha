@@ -6,20 +6,13 @@ import useUserContext from "../../context/useUserContext";
 import useGetGroupData from "../../hooks/useGetGroupData";
 import RenderBasicGroupInfo from "../../components/features/BasicGroupInfo/RenderBasicGroupInfo/RenderBasicGroupInfo";
 import { array } from "prop-types";
+import GroupsList from "../../components/features/GroupsList/GroupsList";
 
 const MainPage = () => {
   // Retrieve user information
   const { user } = useUserContext();
-  const userId = user.userId;
 
-  // TODO: Just for testing: Retrieve groupId of latest joined group
   const groupIds = user.groups.map((group) => group._id);
-  // console.log(userId, groupIds);
-  const groupId = groupIds[groupIds.length - 1];
-  console.log(groupId, userId);
-  const response = useGetGroupData(groupId, userId);
-  const { groupData } = response;
-  console.log(groupData);
 
   return (
     <main className={styles.container}>
@@ -40,11 +33,7 @@ const MainPage = () => {
         </div>
       ) : (
         <div>
-          <p>
-            Just to show user info component. Currently, info of latest added
-            group of the user is rendered:
-          </p>
-          <RenderBasicGroupInfo groupData={groupData} />
+          <GroupsList user={user} />
         </div>
       )}
     </main>
