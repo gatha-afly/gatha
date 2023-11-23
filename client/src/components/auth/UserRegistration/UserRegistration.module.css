@@ -26,7 +26,3 @@
 .checkbox:focus {
   outline: none;
 }
-
-.errorMessage {
-  color: var(--color-error);
-}

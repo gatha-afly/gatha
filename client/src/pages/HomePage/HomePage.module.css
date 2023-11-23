@@ -1,1 +1,43 @@
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+}
 
+.infoContainer {
+  width: 30%;
+  text-align: center;
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  .container {
+    height: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  .infoContainer {
+    margin-left: 0rem;
+    width: 90%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* Mobile landscape mode*/
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  .container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+  .infoContainer {
+    width: 60%;
+  }
+}

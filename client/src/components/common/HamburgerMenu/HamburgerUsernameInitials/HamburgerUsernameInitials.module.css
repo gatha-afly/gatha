@@ -10,6 +10,7 @@
 .initials {
   color: var(--color-main);
   font-weight: bold;
+  font-family: "Source Sans 3", sans-serif;
 }
 
 .circle:hover {

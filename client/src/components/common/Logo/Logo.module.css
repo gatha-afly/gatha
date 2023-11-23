@@ -7,14 +7,14 @@
 /* Mobile*/
 @media only screen and (max-width: 767px) {
   .logo {
-    width: 7rem;
+    width: 6rem;
   }
 }
 
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   .logo {
-    width: 9rem;
+    width: 6rem;
   }
 }
 

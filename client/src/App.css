@@ -1,18 +1,14 @@
 :root {
-  --color-error: #ef946c;
+  --color-error: #dd2d4a;
   --color-success: #749c75;
-  --color-dark: #20201d;
-  --color-body: #fffffe;
+  --color-dark: #121416;
+  --color-body: #f7f4f3;
   --color-main: #f7e8d3;
-  --color-light-dark: #333;
+  --color-light-dark: #20201dff;
+  --color-shadow-dark: rgba(32, 32, 29, 0.1);
   --color-structure-elements: #632382;
   --color-structure-elements-light: #eccdff;
   --color-hover: #822eaa;
-}
-
-::selection {
-  background-color: var(--color-structure-elements);
-  color: var(--color-body);
 }
 
 :focus {
@@ -47,7 +43,6 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   background-color: var(--color-main);
   color: var(--color-dark);
   z-index: 999;
@@ -57,14 +52,24 @@ main {
 
 h1 {
   font-size: 2rem;
+  font-family: "Source Sans 3", sans-serif;
 }
 
 h2 {
   font-size: 1.6rem;
+  font-family: "Source Sans 3", sans-serif;
 }
 
 h3 {
   font-size: 1.7rem;
+  font-family: "Source Sans 3", sans-serif;
+}
+
+h4,
+h5,
+h6 {
+  font-size: 1.6rem;
+  font-family: "Source Sans 3", sans-serif;
 }
 
 p,
@@ -91,6 +96,29 @@ textarea {
   font-family: "Nunito", sans-serif;
 }
 
+h1::selection,
+h2::selection,
+h3::selection,
+h4::selection,
+h5::selection,
+h6::selection,
+label::selection,
+select::selection,
+input::selection,
+textarea::selection,
+button::selection,
+p::selection,
+a::selection,
+ul::selection {
+  background-color: var(--color-structure-elements);
+  color: var(--color-body);
+}
+
+button::selection {
+  background-color: var(--color-body);
+  color: var(--color-structure-elements);
+}
+
 button {
   min-height: 2.4rem;
   background-color: var(--color-structure-elements);
@@ -101,6 +129,7 @@ button {
   border: none;
   border-radius: 0.5rem;
   width: 20rem;
+  font-family: "Source Sans 3", sans-serif;
 }
 
 button:hover {
@@ -137,12 +166,17 @@ scrollbar-thumb {
 /* Mobile*/
 @media only screen and (max-width: 767px) {
   header {
+    /* fallback value for older browsers*/
+    height: 9vh;
     height: 9svh;
   }
   main {
+    padding-top: 0rem;
+    height: 76vh;
     height: 86svh;
   }
   footer {
+    height: 5vh;
     height: 5svh;
   }
 }
@@ -150,12 +184,17 @@ scrollbar-thumb {
 /* Mobile landscape mode*/
 @media only screen and (max-width: 767px) and (orientation: landscape) {
   header {
+    /* fallback value for older browsers*/
+    height: 20vh;
     height: 20svh;
   }
   main {
+    padding-top: 0rem;
+    height: 61vh;
     height: 71svh;
   }
   footer {
+    height: 9vh;
     height: 9svh;
   }
 }
@@ -163,12 +202,17 @@ scrollbar-thumb {
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   header {
+    /* fallback value for older browsers*/
+    height: 7vh;
     height: 7svh;
   }
   main {
+    padding-top: 0rem;
+    height: 79vh;
     height: 89svh;
   }
   footer {
+    height: 4vh;
     height: 4svh;
   }
 }
@@ -176,12 +220,17 @@ scrollbar-thumb {
 /* Tablet landscape mode*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
   header {
+    /* fallback value for older browsers*/
+    height: 9vh;
     height: 9svh;
   }
   main {
+    padding-top: 0rem;
+    height: 76vh;
     height: 86svh;
   }
   footer {
+    height: 5vh;
     height: 5svh;
   }
 }
@@ -192,6 +241,7 @@ scrollbar-thumb {
     height: 9vh;
   }
   main {
+    padding-top: 0rem;
     height: 86vh;
   }
   footer {
@@ -210,10 +260,6 @@ scrollbar-thumb {
   footer {
     height: 5vh;
   }
-  body {
-    width: 1440px;
-    margin: 0 auto;
-  }
 }
 
 @media only screen and (min-width: 1921px) {
@@ -227,7 +273,7 @@ scrollbar-thumb {
     height: 2.5vh;
   }
   body {
-    width: 1440px;
+    width: 1920px;
     margin: 0 auto;
   }
 }

@@ -1,0 +1,36 @@
+.container {
+  width: 30%;
+  display: flex;
+  justify-content: center;
+}
+
+.container img {
+  width: 100%;
+  border-radius: 2rem;
+  box-shadow: 0 0.3rem 0.5rem var(--color-shadow-dark);
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  .container {
+    align-items: flex-start;
+    justify-content: center;
+    width: 90%;
+  }
+  .container img {
+    width: 100%;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Mobile landscape mode*/
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  .container {
+    width: 25%;
+  }
+  .container img {
+    width: 100%;
+    border-radius: 1rem;
+  }
+}
