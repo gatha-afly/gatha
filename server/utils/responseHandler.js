@@ -73,7 +73,7 @@ export const updateUserGroups = async (groupId, userId, operation) => {
       .select("-password")
       .populate({
         path: "groups",
-        select: "groupId name code",
+        select: "groupId name",
       });
   } catch (error) {
     throw new Error(
