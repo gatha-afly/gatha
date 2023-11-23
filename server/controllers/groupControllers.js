@@ -347,33 +347,30 @@ export const getGroupData = async (req, res) => {
 
     const { members, name, description, admin, code } = group;
 
-    const groupAdmin = {
-      id: admin._id,
-      username: admin.username,
-      firstName: admin.firstName,
-      lastName: admin.lastName,
-    };
-    const isUserAdmin = user._id === admin._id;
-    console.log(isUserAdmin);
-    if (!isUserAdmin) {
-      return res.status(StatusCodes.OK).json({
-        groupId,
-        name,
-        description,
-        admin: groupAdmin,
-        members,
-      });
-    }
+    const { _id, username, firstName, lastName } = admin;
+    const groupAdmin = { id: _id, username, firstName, lastName };
 
-    return res.status(StatusCodes.OK).json({
+    //The return response if the user is not admin
+    const commonResponse = {
       groupId,
       name,
       description,
-      code,
       admin: groupAdmin,
       members,
+    };
+
+    // Convert both userId and group.admin._id to strings for comparison
+    if (String(userId) !== String(group.admin._id)) {
+      return res.status(StatusCodes.OK).json(commonResponse);
+    }
+
+    //Returns the gorup if the user id admin
+    return res.status(StatusCodes.OK).json({
+      group_code: code,
+      ...commonResponse,
     });
   } catch (error) {
-    return errorHandlerUtils.handleInternalError(res);
+    console.error(error);
+    return errorHandlerUtils.handleInternalError(res, error.message);
   }
 };
