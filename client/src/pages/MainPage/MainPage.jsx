@@ -3,6 +3,7 @@ import NavigateButton from "../../components/common/NavigateButton/NavigateButto
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
+import GroupnameInitial from "../../components/common/GroupnameInitial/GroupnameInitial";
 
 const MainPage = () => {
   const { user } = useUserContext();
@@ -12,7 +13,7 @@ const MainPage = () => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"main"} />
       {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title="gatha - main" />
+      <HelmetMetaTagsNetlify title='gatha - main' />
       <h1>gatha - get together</h1>
       {/*Render join or create group call to action if user is not member of a group */}
       {user.groups.length === 0 ? (
@@ -25,10 +26,13 @@ const MainPage = () => {
           <NavigateButton route={"join-group"} buttonText={"join a group"} />
         </div>
       ) : (
-        <p>
-          Logged in user is member of at least one group. Thus, chat application
-          will be rendered here eventually.
-        </p>
+        <div>
+          <p>
+            Logged in user is member of at least one group. Thus, chat
+            application will be rendered here eventually.
+          </p>
+          <GroupnameInitial groupname={"test"} />
+        </div>
       )}
     </main>
   );
