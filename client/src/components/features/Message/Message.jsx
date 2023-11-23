@@ -1,6 +1,7 @@
 import "./message.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
+import { format, isToday, isYesterday } from "date-fns";
 import useUserContext from "../../../context/useUserContext";
 
 // Establish a socket connection to the server
@@ -19,7 +20,7 @@ function Message() {
     });
 
     // Event listener for new messages
-    socket.on("message", (newMessage) => {
+    socket.on("receive_message", (newMessage) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
@@ -31,8 +32,19 @@ function Message() {
   const sendMessage = () => {
     if (input.trim()) {
       // Emit a message event with the text and sender ID
-      socket.emit("message", { text: input, senderId: user.id });
+      socket.emit("send_message", { text: input, senderId: user.id });
       setInput(""); // Clear the input field after sending the message
+    }
+  };
+
+  //Function to format the date
+  const formatDate = (date) => {
+    if (isToday(date)) {
+      return format(date, "h:mm a");
+    } else if (isYesterday(date)) {
+      return "Yesterday " + format(date, "h:mm a");
+    } else {
+      return format(date, "MM/dd/yyyy h:mm a");
     }
   };
 
@@ -49,7 +61,7 @@ function Message() {
       <ul>
         {messages.map((msg, index) => (
           <li key={index} className="list-group-item">
-            {msg.text} {msg.createdAt}
+            {msg.text} - {formatDate(new Date(msg.createdAt))}
             {msg.sender && msg.sender.username && (
               <span> - Sent by: {msg.sender.username}</span>
             )}

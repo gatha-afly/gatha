@@ -41,7 +41,7 @@ export const sendMessage = async (io, msg, senderId) => {
 
     // Populate the sender field before emitting the message
     await newMessage.populate("sender", "username");
-    io.emit("message", newMessage);
+    io.emit("receive_message", newMessage);
   } catch (error) {
     console.error(error);
   }
