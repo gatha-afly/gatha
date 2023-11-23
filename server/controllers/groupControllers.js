@@ -176,46 +176,6 @@ export const removeMemberFromGroup = async (req, res) => {
 };
 
 /**
- * Handler for displaying all group members using groupId
- * @param {*} req
- * @param {*} res
- * @returns
- */
-export const getGroupMembers = async (req, res) => {
-  try {
-    const { groupId } = req.params;
-
-    const group = await Group.findById(groupId)
-      .populate({
-        path: "members",
-        select: "username firstName lastName",
-      })
-      .populate("admin", "username firstName lastName");
-
-    if (!group) {
-      return errorHandlerUtils.handleGroupNotFound(res);
-    }
-
-    const { members, name, admin } = group;
-
-    const groupAdmin = {
-      username: admin.username,
-      firstName: admin.firstName,
-      lastName: admin.lastName,
-    };
-
-    return res.status(StatusCodes.OK).json({
-      groupId,
-      groupName: name,
-      groupAdmin,
-      groupMembers: members,
-    });
-  } catch (error) {
-    return errorHandlerUtils.handleInternalError(res);
-  }
-};
-
-/**
  * Handler for getting all the groups
  * @param {*} req
  * @param {*} res
@@ -351,6 +311,67 @@ export const leaveGroup = async (req, res) => {
     res.status(StatusCodes.OK).json({
       message: "You have left the group successfully",
       updatedGroup,
+    });
+  } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ *Handler for getting group details
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const getGroupData = async (req, res) => {
+  try {
+    const { groupId, userId } = req.params;
+
+    //Find the user by userId
+    const user = await responseHandlerUtils.findUserById(userId);
+    if (!user) {
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
+    }
+
+    //Find the group by groupId
+    const group = await Group.findById(groupId)
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
+      .populate("admin", "username firstName lastName");
+
+    if (!group) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+
+    const { members, name, description, admin, code } = group;
+
+    const groupAdmin = {
+      id: admin._id,
+      username: admin.username,
+      firstName: admin.firstName,
+      lastName: admin.lastName,
+    };
+    const isUserAdmin = user._id === admin._id;
+    console.log(isUserAdmin);
+    if (!isUserAdmin) {
+      return res.status(StatusCodes.OK).json({
+        groupId,
+        name,
+        description,
+        admin: groupAdmin,
+        members,
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      groupId,
+      name,
+      description,
+      code,
+      admin: groupAdmin,
+      members,
     });
   } catch (error) {
     return errorHandlerUtils.handleInternalError(res);
