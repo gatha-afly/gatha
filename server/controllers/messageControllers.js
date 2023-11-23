@@ -27,10 +27,10 @@ export const sendMessage = async (io, msg, senderId) => {
   try {
     // Check if senderId exists in the User schema
     const senderExists = await User.exists({ _id: senderId });
-    if (!senderExists) {
-      console.error("Sender does not exist");
-      return;
-    }
+    // if (!senderExists) {
+    //   console.error("Sender does not exist");
+    //   return;
+    // }
 
     const newMessage = new Message({
       text: msg,
