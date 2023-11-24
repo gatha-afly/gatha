@@ -13,7 +13,7 @@ export const authorizeUser = (req, res, next) => {
   if (!req.cookies.userToken) {
     return res
       .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: "UNAUTHORIZED ACCESS" });
+      .json({ message: "UNAUTHORIZED ACCESS - no cookie" });
   }
 
   // Verify if token is valid
@@ -28,12 +28,12 @@ export const authorizeUser = (req, res, next) => {
       // If the token is invalid, return an unauthorized response
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: "UNAUTHORIZED ACCESS" });
+        .json({ message: "UNAUTHORIZED ACCESS - invalid token" });
     }
   } catch (error) {
     // Handle errors during token verification
     return res
       .status(StatusCodes.UNAUTHORIZED)
-      .json({ message: "UNAUTHORIZED ACCESS" });
+      .json({ message: "UNAUTHORIZED ACCESS - token verification error" });
   }
 };
