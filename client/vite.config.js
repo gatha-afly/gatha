@@ -8,15 +8,11 @@ export default defineConfig({
     rollupOptions: {
       external: ["@fortawesome/free-solid-svg-icons"],
       output: {
-        manualChunks: {
-          "@fortawesome/free-solid-svg-icons": [
-            "@fortawesome/free-solid-svg-icons",
-          ],
-        },
+        manualChunks: {},
       },
     },
   },
   server: {
-    port: 3000,
+    port: 10000,
   },
 });
