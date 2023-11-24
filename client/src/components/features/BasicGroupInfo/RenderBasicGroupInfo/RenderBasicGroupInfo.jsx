@@ -7,7 +7,6 @@ import styles from "./RenderBasicGroupInfo.module.css";
  * Displays basic information about a group.
  * @param {Object} groupData - Data containing information about the group.
  */
-
 const RenderBasicGroupInfo = ({ userId, groupId }) => {
   const response = useGetGroupData(groupId, userId);
   const { groupData } = response;

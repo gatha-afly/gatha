@@ -3,16 +3,11 @@ import NavigateButton from "../../components/common/NavigateButton/NavigateButto
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
-import useGetGroupData from "../../hooks/useGetGroupData";
-import RenderBasicGroupInfo from "../../components/features/BasicGroupInfo/RenderBasicGroupInfo/RenderBasicGroupInfo";
-import { array } from "prop-types";
 import GroupsList from "../../components/features/GroupsList/GroupsList";
 
 const MainPage = () => {
   // Retrieve user information
   const { user } = useUserContext();
-
-  const groupIds = user.groups.map((group) => group._id);
 
   return (
     <main className={styles.container}>
