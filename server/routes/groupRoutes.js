@@ -8,6 +8,7 @@ import {
   joinGroup,
   leaveGroup,
   getGroupData,
+  getGroupMembers,
 } from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/userAuthorization.js";
 import { validator } from "../middleware/validator.js";
@@ -28,6 +29,7 @@ router.post(
 
 router.get("/get-groups", getAllGroups);
 router.get("/get-group-data/:groupId/:userId", getGroupData);
+router.get("/get-members/:groupId", getGroupMembers);
 router.patch("/join-group/:userId", joinGroup);
 router.patch("/leave-group/:groupId/:userId", leaveGroup);
 

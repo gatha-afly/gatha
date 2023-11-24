@@ -374,3 +374,43 @@ export const getGroupData = async (req, res) => {
     return errorHandlerUtils.handleInternalError(res, error.message);
   }
 };
+
+/**
+ * Handler for getting Group members by groupId
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const getGroupMembers = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+
+    const group = await Group.findById(groupId)
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
+      .populate("admin", "username firstName lastName");
+
+    if (!group) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+
+    const { members, name, admin } = group;
+
+    const groupAdmin = {
+      username: admin.username,
+      firstName: admin.firstName,
+      lastName: admin.lastName,
+    };
+
+    return res.status(StatusCodes.OK).json({
+      groupId,
+      groupName: name,
+      groupAdmin,
+      groupMembers: members,
+    });
+  } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
