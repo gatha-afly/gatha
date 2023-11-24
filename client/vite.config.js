@@ -7,6 +7,13 @@ export default defineConfig({
   build: {
     rollupOptions: {
       external: ["@fortawesome/free-solid-svg-icons"],
+      output: {
+        manualChunks: {
+          "@fortawesome/free-solid-svg-icons": [
+            "@fortawesome/free-solid-svg-icons",
+          ],
+        },
+      },
     },
   },
   server: {
