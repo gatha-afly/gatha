@@ -1,13 +1,13 @@
+// messageRouter.js
 import cookie from "cookie";
 import {
   getInitialMessages,
   sendMessage,
 } from "../controllers/messageControllers.js";
-
 import jwt from "jsonwebtoken";
+import Message from "../models/Message.js";
 
 const setupSocketIO = (io) => {
-  //Middleware connects
   io.use(function (socket, next) {
     const cookieFromHeaders = socket.handshake.headers.cookie;
     if (cookieFromHeaders) {
@@ -28,19 +28,22 @@ const setupSocketIO = (io) => {
 
   io.on("connection", (socket) => {
     console.log(`User Connected: ${socket.id}`);
-
     console.log(socket.user);
 
-    // Send the initial set of messages to the new connection
-    getInitialMessages(socket);
-
-    // Listen for incoming messages and broadcast them to all clients
-    socket.on("send_message", async ({ text }) => {
-      console.log(socket.user.id);
-      sendMessage(io, text, socket.user.id);
+    socket.on("join_room", (data) => {
+      socket.join(data);
     });
 
-    // Handle disconnection events
+    getInitialMessages(socket);
+
+    socket.on("send_message", async (data) => {
+      try {
+        await sendMessage(io, data.text, socket.user._id, data.room);
+      } catch (error) {
+        console.error(error);
+      }
+    });
+
     socket.on("disconnect", () => {
       console.log("User disconnected");
     });

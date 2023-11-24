@@ -16,8 +16,8 @@ const messageSchema = new Schema(
       gifType: { type: String },
       gifSize: { type: Number },
     },
-
     group: { type: Schema.Types.ObjectId, ref: "Group" },
+    room: { type: String },
   },
   { timestamps: true }
 );
