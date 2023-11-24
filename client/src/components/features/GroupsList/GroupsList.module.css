@@ -1,0 +1,7 @@
+.container {
+  height: 75vh;
+  overflow-y: scroll;
+  padding: 1rem;
+  border: 0.5rem solid var(--color-structure-elements);
+  border-radius: 10px;
+}

@@ -3,11 +3,11 @@ import {
   createGroup,
   addMemberToGroup,
   removeMemberFromGroup,
-  getGroupMembers,
   getAllGroups,
   deleteGroupById,
   joinGroup,
   leaveGroup,
+  getGroupData,
 } from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/userAuthorization.js";
 import { validator } from "../middleware/validator.js";
@@ -26,8 +26,8 @@ router.post(
   createGroup
 );
 
-router.get("/get-members/:groupId", getGroupMembers);
 router.get("/get-groups", getAllGroups);
+router.get("/get-group-data/:groupId/:userId", getGroupData);
 router.patch("/join-group/:userId", joinGroup);
 router.patch("/leave-group/:groupId/:userId", leaveGroup);
 

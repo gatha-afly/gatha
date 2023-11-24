@@ -176,46 +176,6 @@ export const removeMemberFromGroup = async (req, res) => {
 };
 
 /**
- * Handler for displaying all group members using groupId
- * @param {*} req
- * @param {*} res
- * @returns
- */
-export const getGroupMembers = async (req, res) => {
-  try {
-    const { groupId } = req.params;
-
-    const group = await Group.findById(groupId)
-      .populate({
-        path: "members",
-        select: "username firstName lastName",
-      })
-      .populate("admin", "username firstName lastName");
-
-    if (!group) {
-      return errorHandlerUtils.handleGroupNotFound(res);
-    }
-
-    const { members, name, admin } = group;
-
-    const groupAdmin = {
-      username: admin.username,
-      firstName: admin.firstName,
-      lastName: admin.lastName,
-    };
-
-    return res.status(StatusCodes.OK).json({
-      groupId,
-      groupName: name,
-      groupAdmin,
-      groupMembers: members,
-    });
-  } catch (error) {
-    return errorHandlerUtils.handleInternalError(res);
-  }
-};
-
-/**
  * Handler for getting all the groups
  * @param {*} req
  * @param {*} res
@@ -354,5 +314,63 @@ export const leaveGroup = async (req, res) => {
     });
   } catch (error) {
     return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ *Handler for getting group details
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const getGroupData = async (req, res) => {
+  try {
+    const { groupId, userId } = req.params;
+
+    //Find the user by userId
+    const user = await responseHandlerUtils.findUserById(userId);
+    if (!user) {
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
+    }
+
+    //Find the group by groupId
+    const group = await Group.findById(groupId)
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
+      .populate("admin", "username firstName lastName");
+
+    if (!group) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+
+    const { members, name, description, admin, code } = group;
+
+    const { _id, username, firstName, lastName } = admin;
+    const groupAdmin = { id: _id, username, firstName, lastName };
+
+    //The return response if the user is not admin
+    const commonResponse = {
+      groupId,
+      name,
+      description,
+      admin: groupAdmin,
+      members,
+    };
+
+    // Convert both userId and group.admin._id to strings for comparison
+    if (String(userId) !== String(group.admin._id)) {
+      return res.status(StatusCodes.OK).json(commonResponse);
+    }
+
+    //Returns the gorup if the user id admin
+    return res.status(StatusCodes.OK).json({
+      group_code: code,
+      ...commonResponse,
+    });
+  } catch (error) {
+    console.error(error);
+    return errorHandlerUtils.handleInternalError(res, error.message);
   }
 };

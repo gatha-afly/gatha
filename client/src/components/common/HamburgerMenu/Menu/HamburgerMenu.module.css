@@ -11,10 +11,11 @@
 .menuItems {
   position: absolute;
   right: 0;
-  width: 14rem;
+  width: 13rem;
   background-color: var(--color-hover);
   padding: 0.5rem;
   border-radius: 10px;
+  text-align: right;
 }
 
 .menuItems a {
@@ -25,6 +26,7 @@
   font-size: 1.8rem;
   color: var(--color-main);
   transition: background-color 0.2s;
+  font-family: "Source Sans 3", sans-serif;
 }
 
 .menuItems a:hover {

@@ -64,8 +64,8 @@ const UserRegistration = () => {
       // Navigate to the login page on successful registration
       navigate("/user-login");
     } catch (error) {
-      handleServerErrors(error, setError);
       handleOtherErrors(error, setError, "Error creating user.", "create-user");
+      handleServerErrors(error, setError);
     }
   };
 
