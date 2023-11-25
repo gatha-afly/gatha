@@ -12,10 +12,7 @@ const Header = () => {
 
       {/* Conditionally render login and logout button */}
       {loggedIn ? (
-        <>
-          <Link to="/message">Message</Link>
-          <HamburgerMenu firstName={user.firstName} lastName={user.lastName} />
-        </>
+        <HamburgerMenu firstName={user.firstName} lastName={user.lastName} />
       ) : (
         <Link to="/user-login" classname={styles.Login}>
           Login
