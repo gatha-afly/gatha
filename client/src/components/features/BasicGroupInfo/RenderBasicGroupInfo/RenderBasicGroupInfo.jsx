@@ -1,4 +1,4 @@
-import React from "react";
+import useUserContext from "../../../../context//useUserContext";
 import useGetGroupData from "../../../../hooks/useGetGroupData";
 import GroupnameInitial from "../../../common/GroupnameInitial/GroupnameInitial";
 import styles from "./RenderBasicGroupInfo.module.css";
@@ -9,14 +9,23 @@ import styles from "./RenderBasicGroupInfo.module.css";
  */
 
 const RenderBasicGroupInfo = ({ userId, groupId }) => {
-  const response = useGetGroupData(groupId, userId);
+  // Move the selected groupId the the context to resue it on other components
+  const { selectedGroupId, getGroupIdOnClick } = useUserContext();
+  const response = useGetGroupData(selectedGroupId || groupId, userId);
+
   const { groupData } = response;
   // Destructure groupData and provide default values
   const { data } = groupData || {};
   const { name, description } = data || {};
-  console.log(groupData);
+  console.log(selectedGroupId);
+
+  // Handle click on the group card
+  const handleClick = () => {
+    getGroupIdOnClick(groupId);
+  };
+
   return (
-    <div className={styles.groupInfoContainer}>
+    <div className={styles.groupInfoContainer} onClick={handleClick}>
       <div className={styles.initial}>
         <GroupnameInitial
           groupname={name}

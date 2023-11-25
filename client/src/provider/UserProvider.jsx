@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import userContext from "../context/userContext";
 import userAPI from "../api/userAPI";
@@ -14,8 +14,8 @@ const UserProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(!!storedUser);
   const [user, setUser] = useState(storedUser);
   const [error, setError] = useState("");
+  const [selectedGroupId, setSelectedGroupId] = useState(null);
 
-  console.log(user);
   /**
    * Handles user login.
    * @param {Object} data - The user login data.
@@ -88,6 +88,18 @@ const UserProvider = ({ children }) => {
     });
   };
 
+  /**
+   * Onclick returns the selectedGroupID
+   * @param {*} groupId
+   */
+  const getGroupIdOnClick = (groupId) => {
+    try {
+      setSelectedGroupId(groupId);
+    } catch (error) {
+      console.error("Error in getGroupIdOnClick:", error);
+    }
+  };
+
   // Provide user context to component tree
   return (
     <userContext.Provider
@@ -99,6 +111,9 @@ const UserProvider = ({ children }) => {
         user,
         logoutUser,
         updateUserData,
+        getGroupIdOnClick,
+        selectedGroupId,
+        setSelectedGroupId,
       }}
     >
       {children}
