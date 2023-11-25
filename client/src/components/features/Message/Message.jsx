@@ -13,14 +13,7 @@ function Message() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const { selectedGroup } = useUserContext();
-  const [room, setRoom] = useState("");
   const formatDate = useDateFormatter;
-
-  const joinRoom = () => {
-    if (room.trim() !== "") {
-      socket.emit("join_room", room);
-    }
-  };
 
   const sendMessage = () => {
     if (input.trim()) {
@@ -43,19 +36,13 @@ function Message() {
     });
 
     return () => socket.off();
-  }, [room]);
+  });
 
   console.log(selectedGroup);
   return (
     <div className="message-container">
       <h2>Welcome to, {selectedGroup.name} group</h2>
-      <input
-        placeholder="Room Number..."
-        onChange={(event) => {
-          setRoom(event.target.value);
-        }}
-      />
-      <button onClick={joinRoom}> Join Room</button>
+
       <input
         placeholder="Message..."
         value={input}
