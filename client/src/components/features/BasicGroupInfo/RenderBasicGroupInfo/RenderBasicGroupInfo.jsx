@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import useUserContext from "../../../../context//useUserContext";
 import useGetGroupData from "../../../../hooks/useGetGroupData";
 import GroupnameInitial from "../../../common/GroupnameInitial/GroupnameInitial";
@@ -9,19 +10,22 @@ import styles from "./RenderBasicGroupInfo.module.css";
  */
 
 const RenderBasicGroupInfo = ({ userId, groupId }) => {
-  // Move the selected groupId the the context to resue it on other components
-  const { selectedGroupId, getGroupIdOnClick } = useUserContext();
-  const response = useGetGroupData(selectedGroupId || groupId, userId);
+  const navigate = useNavigate();
+  // Move the selection gorupData on click to context to reuse it on other components
+  const { setSelectedGroup } = useUserContext();
+  const response = useGetGroupData(groupId, userId);
 
   const { groupData } = response;
   // Destructure groupData and provide default values
   const { data } = groupData || {};
   const { name, description } = data || {};
-  console.log(selectedGroupId);
 
   // Handle click on the group card
   const handleClick = () => {
-    getGroupIdOnClick(groupId);
+    if (groupData) {
+      setSelectedGroup(data);
+      navigate("/message");
+    }
   };
 
   return (

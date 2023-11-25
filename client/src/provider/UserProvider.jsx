@@ -14,7 +14,7 @@ const UserProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(!!storedUser);
   const [user, setUser] = useState(storedUser);
   const [error, setError] = useState("");
-  const [selectedGroupId, setSelectedGroupId] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState(null);
 
   /**
    * Handles user login.
@@ -88,18 +88,6 @@ const UserProvider = ({ children }) => {
     });
   };
 
-  /**
-   * Onclick returns the selectedGroupID
-   * @param {*} groupId
-   */
-  const getGroupIdOnClick = (groupId) => {
-    try {
-      setSelectedGroupId(groupId);
-    } catch (error) {
-      console.error("Error in getGroupIdOnClick:", error);
-    }
-  };
-
   // Provide user context to component tree
   return (
     <userContext.Provider
@@ -111,9 +99,8 @@ const UserProvider = ({ children }) => {
         user,
         logoutUser,
         updateUserData,
-        getGroupIdOnClick,
-        selectedGroupId,
-        setSelectedGroupId,
+        selectedGroup,
+        setSelectedGroup,
       }}
     >
       {children}

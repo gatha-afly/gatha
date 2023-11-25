@@ -12,7 +12,7 @@ const socket = io.connect("http://localhost:3001", {
 function Message() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-  const { user } = useUserContext();
+  const { selectedGroup } = useUserContext();
   const [room, setRoom] = useState("");
   const formatDate = useDateFormatter;
 
@@ -45,8 +45,10 @@ function Message() {
     return () => socket.off();
   }, [room]);
 
+  console.log(selectedGroup);
   return (
     <div className="message-container">
+      <h2>Welcome to, {selectedGroup.name} group</h2>
       <input
         placeholder="Room Number..."
         onChange={(event) => {
