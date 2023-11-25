@@ -12,7 +12,7 @@ import styles from "./RenderBasicGroupInfo.module.css";
 const RenderBasicGroupInfo = ({ userId, groupId }) => {
   const navigate = useNavigate();
   // Move the selection gorupData on click to context to reuse it on other components
-  const { setSelectedGroup } = useUserContext();
+  const { updateSelectedGroup } = useUserContext();
   const response = useGetGroupData(groupId, userId);
 
   const { groupData } = response;
@@ -23,7 +23,7 @@ const RenderBasicGroupInfo = ({ userId, groupId }) => {
   // Handle click on the group card
   const handleClick = () => {
     if (groupData) {
-      setSelectedGroup(data);
+      updateSelectedGroup(data);
       navigate("/message");
     }
   };

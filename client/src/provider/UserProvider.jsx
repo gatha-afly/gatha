@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import userContext from "../context/userContext";
 import userAPI from "../api/userAPI";
@@ -9,12 +9,13 @@ import userAPI from "../api/userAPI";
 const UserProvider = ({ children }) => {
   // Retrieve user data from localStorage
   const storedUser = JSON.parse(localStorage.getItem("user"));
+  const storedSelectedGroup = JSON.parse(localStorage.getItem("selectedGroup"));
 
   // State variables for user authentication
   const [loggedIn, setLoggedIn] = useState(!!storedUser);
   const [user, setUser] = useState(storedUser);
   const [error, setError] = useState("");
-  const [selectedGroup, setSelectedGroup] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState(storedSelectedGroup);
 
   /**
    * Handles user login.
@@ -88,6 +89,15 @@ const UserProvider = ({ children }) => {
     });
   };
 
+  /**
+   * Updates selectedGroup and stores it in local storage
+   * @param {*} newSelectedGroup
+   */
+  const updateSelectedGroup = (groupData) => {
+    setSelectedGroup(groupData);
+    localStorage.setItem("selectedGroup", JSON.stringify(groupData));
+  };
+
   // Provide user context to component tree
   return (
     <userContext.Provider
@@ -100,7 +110,7 @@ const UserProvider = ({ children }) => {
         logoutUser,
         updateUserData,
         selectedGroup,
-        setSelectedGroup,
+        updateSelectedGroup,
       }}
     >
       {children}
