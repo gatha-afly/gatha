@@ -70,6 +70,7 @@ const UserProvider = ({ children }) => {
       // Update state and remove user data from localStorage after logout
       setLoggedIn(false);
       localStorage.removeItem("user");
+      localStorage.removeItem("selectedGroup");
     } catch (err) {
       setError("An error occurred while logging out.");
       console.error(err.message);
