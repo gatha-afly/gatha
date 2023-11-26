@@ -121,6 +121,6 @@ const UserProvider = ({ children }) => {
 
 // Prop types validation
 UserProvider.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 export default UserProvider;

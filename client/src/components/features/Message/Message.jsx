@@ -17,7 +17,7 @@ function Message() {
 
   const sendMessage = () => {
     if (input.trim()) {
-      socket.emit("send_message", { text: input, room });
+      socket.emit("send_message", { text: input });
       setInput("");
     }
   };
@@ -38,7 +38,7 @@ function Message() {
     return () => socket.off();
   });
 
-  console.log(selectedGroup);
+  // console.log(selectedGroup);
   return (
     <div className="message-container">
       <h2>Welcome to, {selectedGroup.name} group</h2>

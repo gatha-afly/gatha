@@ -1,14 +1,15 @@
+// messageControllers.js
 import Message from "../models/Message.js";
 import User from "../models/User.js";
 
-export const getInitialMessages = async (socket) => {
+export const getInitialMessages = async (io, socket) => {
   try {
     const messages = await Message.find({ room: { $in: socket.rooms } })
       .sort({ createdAt: -1 })
       .limit(10)
       .populate("sender", "username");
 
-    socket.emit("init", messages.reverse());
+    io.to(socket.id).emit("init", messages.reverse()); // Emit to the specific socket
   } catch (error) {
     console.error(error);
   }

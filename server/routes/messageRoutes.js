@@ -30,11 +30,7 @@ const setupSocketIO = (io) => {
     console.log(`User Connected: ${socket.id}`);
     console.log(socket.user);
 
-    socket.on("join_room", (data) => {
-      socket.join(data);
-    });
-
-    getInitialMessages(socket);
+    getInitialMessages(io, socket); // Pass 'io' and 'socket' to getInitialMessages
 
     socket.on("send_message", async (data) => {
       try {
