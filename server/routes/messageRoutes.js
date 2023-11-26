@@ -6,17 +6,11 @@ const setupSocketIO = (io) => {
     // Log the connection of a user
     console.log(`User Connected: ${socket.id}`);
 
-    try {
-      // Get the initial messages and emit them to the connected client
-      const messages = await getMessages();
-      socket.emit("revieve_message", messages);
-    } catch (err) {
-      // Log any errors that occur during the operation
-      console.error(err);
-    }
+    // Get the initial messages and emit them to the connected client
+    getMessages(socket);
 
     // Listen for incoming messages from the client
-    socket.on("message", async (msg) => {
+    socket.on("send_message", async (msg) => {
       try {
         // Send the received message to the messageController for processing
         const message = await sendMessage(msg);
