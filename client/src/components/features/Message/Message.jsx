@@ -5,7 +5,10 @@ import { useEffect, useState } from "react";
 import useDateFormatter from "../../../hooks/useDateFormatter";
 import useUserContext from "../../../context/useUserContext";
 
-const socket = io.connect("http://localhost:3001");
+// Establish a socket connection to the server
+const socket = io.connect("http://localhost:3001", {
+  withCredentials: true,
+});
 
 function Message() {
   const [messages, setMessages] = useState([]);
