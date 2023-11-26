@@ -1,3 +1,5 @@
+import cookie from "cookie";
+import jwt from "jsonwebtoken";
 import {
   getInitialMessages,
   sendMessage,
@@ -5,6 +7,25 @@ import {
 
 // Function to set up Socket.IO
 const setupSocketIO = (io) => {
+  //Middleware connects
+  io.use(function (socket, next) {
+    const cookieFromHeaders = socket.handshake.headers.cookie;
+    if (cookieFromHeaders) {
+      const cookies = cookie.parse(socket.handshake.headers.cookie);
+      jwt.verify(
+        cookies.userToken,
+        process.env.SECRET_KEY,
+        function (err, user) {
+          if (err) return next(new Error("Authentication error"));
+          socket.user = user;
+          next();
+        }
+      );
+    } else {
+      next(new Error("Authentication error"));
+    }
+  });
+
   io.on("connection", async (socket) => {
     // Log the connection of a user
     console.log(`User Connected: ${socket.id}`);
