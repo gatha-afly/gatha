@@ -22,14 +22,14 @@ export const getInitialMessages = async (socket) => {
  * @param {*} text
  * @returns
  */
-export const sendMessage = async (text) => {
+export const sendMessage = async (io, msg) => {
   try {
     // Create a new message using the provided text
-    const message = new Message({ text });
+    const message = new Message({ text: msg });
     // Save the message to the database
     await message.save();
     // Return the saved message
-    return message;
+    io.emit("receive_message", message);
   } catch (err) {
     // Log and throw any errors that occur during the operation
     console.error(err);

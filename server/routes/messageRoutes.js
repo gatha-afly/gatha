@@ -35,15 +35,8 @@ const setupSocketIO = (io) => {
 
     // Listen for incoming messages from the client
     socket.on("send_message", async (msg) => {
-      try {
-        // Send the received message to the messageController for processing
-        const message = await sendMessage(msg);
-        // Broadcast the message to all connected clients
-        io.emit("message", message);
-      } catch (err) {
-        // Log any errors that occur during the operation
-        console.error(err);
-      }
+      // Send the received message to the messageController for processing
+      sendMessage(io, msg);
     });
 
     // Listen for disconnection events
