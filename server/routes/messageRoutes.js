@@ -1,4 +1,7 @@
-import { getMessages, sendMessage } from "../controllers/messageController.js";
+import {
+  getInitialMessages,
+  sendMessage,
+} from "../controllers/messageController.js";
 
 // Function to set up Socket.IO
 const setupSocketIO = (io) => {
@@ -7,7 +10,7 @@ const setupSocketIO = (io) => {
     console.log(`User Connected: ${socket.id}`);
 
     // Get the initial messages and emit them to the connected client
-    getMessages(socket);
+    getInitialMessages(socket);
 
     // Listen for incoming messages from the client
     socket.on("send_message", async (msg) => {
