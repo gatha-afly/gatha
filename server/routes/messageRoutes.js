@@ -1,7 +1,4 @@
-import {
-  getInitialMessages,
-  sendMessage,
-} from "../controllers/messageController.js";
+import { getMessages, sendMessage } from "../controllers/messageController.js";
 
 // Function to set up Socket.IO
 const setupSocketIO = (io) => {
@@ -11,8 +8,8 @@ const setupSocketIO = (io) => {
 
     try {
       // Get the initial messages and emit them to the connected client
-      const messages = await getInitialMessages();
-      socket.emit("init", messages);
+      const messages = await getMessages();
+      socket.emit("revieve_message", messages);
     } catch (err) {
       // Log any errors that occur during the operation
       console.error(err);

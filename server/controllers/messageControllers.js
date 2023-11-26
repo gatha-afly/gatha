@@ -4,7 +4,7 @@ import Message from "../models/Message.js";
  * Handler for getting the initial messages
  * @returns
  */
-export const getInitialMessages = async () => {
+export const getMessages = async () => {
   try {
     // Retrieve the latest 10 messages from the database
     const messages = await Message.find().sort({ createdAt: -1 }).limit(10);

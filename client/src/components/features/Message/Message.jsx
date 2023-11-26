@@ -14,7 +14,7 @@ function Message() {
   const formatDate = useDateFormatter;
 
   useEffect(() => {
-    socket.on("init", (loadedMessages) => {
+    socket.on("revieve_message", (loadedMessages) => {
       setMessages(loadedMessages);
     });
 
