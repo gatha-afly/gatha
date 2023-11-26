@@ -5,9 +5,7 @@ import { useEffect, useState } from "react";
 import useDateFormatter from "../../../hooks/useDateFormatter";
 import useUserContext from "../../../context/useUserContext";
 
-const socket = io.connect("http://localhost:3001", {
-  withCredentials: true,
-});
+const socket = io.connect("http://localhost:3001");
 
 function Message() {
   const [messages, setMessages] = useState([]);
@@ -15,29 +13,24 @@ function Message() {
   const { selectedGroup } = useUserContext();
   const formatDate = useDateFormatter;
 
-  const sendMessage = () => {
-    if (input.trim()) {
-      socket.emit("send_message", { text: input });
-      setInput("");
-    }
-  };
-
   useEffect(() => {
     socket.on("init", (loadedMessages) => {
       setMessages(loadedMessages);
     });
 
-    socket.on("receive_message", (newMessage) => {
+    socket.on("message", (newMessage) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
-    socket.on("error", (error) => {
-      console.error("Socket error:", error);
-    });
+    return () => socket.off(); // Disconnect socket when component unmounts
+  }, []);
 
-    return () => socket.off();
-  });
-
+  const sendMessage = () => {
+    if (input.trim()) {
+      socket.emit("message", input);
+      setInput("");
+    }
+  };
   // console.log(selectedGroup);
   return (
     <div className="message-container">

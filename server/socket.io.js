@@ -8,7 +8,6 @@ const io = new Server(httpServer, {
   cors: {
     origin: "http://localhost:3000",
     methods: ["HEAD", "GET", "POST", "PATCH", "DELETE", "PUT"],
-    credentials: true,
   },
 });
 
