@@ -4,6 +4,7 @@ import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
 import GroupsList from "../../components/features/GroupsList/GroupsList";
+import Messenger from "../../components/features/Messenger/Messenger";
 
 const MainPage = () => {
   // Retrieve user information
@@ -27,8 +28,9 @@ const MainPage = () => {
           <NavigateButton route={"join-group"} buttonText={"join a group"} />
         </div>
       ) : (
-        <div>
+        <div className={styles.messengerNotMobile}>
           <GroupsList user={user} />
+          <Messenger />
         </div>
       )}
     </main>

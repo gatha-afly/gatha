@@ -12,10 +12,10 @@ import CreateGroupPage from "./pages/CreateGroupPage/CreateGroupPage";
 import MainPage from "./pages/MainPage/MainPage";
 import JoinGroupPage from "./pages/JoinGroupPage/JoinGroupPage";
 import UserProvider from "./provider/UserProvider";
-import ProtectedRoutes from "./utils/ProtectedRoutes";
 import AddUserUponGroupCreationPage from "./pages/AddUserUponGroupCreationPage/AddUserUponGroupCreationPage";
 import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
-import MessagePage from "./pages/MessagePage/MessagePage";
+import ProtectedRoutes from "./components/auth/ProtectedRoutes/ProtectedRoutes";
+import MobileMessengerPage from "./pages/MobileMessengerPage/MobileMessengerPage";
 
 function App() {
   return (
@@ -26,25 +26,28 @@ function App() {
           <Routes>
             {/* Unprotected routes */}
             <Route index element={<HomePage />} />
-            <Route path="*" element={<PageNotFoundPage />} />
+            <Route path='*' element={<PageNotFoundPage />} />
             <Route
-              path="/user-registration"
+              path='/user-registration'
               element={<UserRegistrationPage />}
             />
-            <Route path="/user-login" element={<UserLoginPage />} />
-            <Route path="/user-logout" element={<UserLogoutPage />} />
+            <Route path='/user-login' element={<UserLoginPage />} />
+            <Route path='/user-logout' element={<UserLogoutPage />} />
 
             {/* Protected routes */}
             <Route element={<ProtectedRoutes />}>
-              <Route path="/main" element={<MainPage />} />
+              <Route path='/main' element={<MainPage />} />
               <Route
-                path="/add-user/:groupId/:userId"
+                path='/add-user/:groupId/:userId'
                 element={<AddUserUponGroupCreationPage />}
               />
-              <Route path="/create-group" element={<CreateGroupPage />} />
-              <Route path="/join-group" element={<JoinGroupPage />} />
-              <Route path="/user-profile" element={<UserProfilePage />} />
-              <Route path="/message" element={<MessagePage />} />
+              <Route path='/create-group' element={<CreateGroupPage />} />
+              <Route path='/join-group' element={<JoinGroupPage />} />
+              <Route path='/user-profile' element={<UserProfilePage />} />
+              <Route
+                path='/mobile-messenger'
+                element={<MobileMessengerPage />}
+              />
             </Route>
           </Routes>
           <Footer />

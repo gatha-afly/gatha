@@ -1,22 +1,18 @@
-// Message.js
-import "./message.css";
+import styles from "./Messenger.module.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
-import useDateFormatter from "../../../hooks/useDateFormatter";
 import useUserContext from "../../../context/useUserContext";
+import { dateFormatter } from "../../../utils/dateUtils";
 
 // Establish a socket connection to the server
 const socket = io.connect("http://localhost:3001", {
   withCredentials: true,
 });
 
-function Message() {
+function Messenger() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const { selectedGroup } = useUserContext();
-
-  // Use the custom hook to format the date
-  const formatDate = useDateFormatter;
 
   useEffect(() => {
     // Event listener for initial messages
@@ -43,29 +39,29 @@ function Message() {
   };
 
   return (
-    <div className="message-container">
-      <h2>Welcome to, {selectedGroup.name} group</h2>
+    <div className={styles.messageContainer}>
+      <h2>{selectedGroup.name} group</h2>
 
-      <input
-        placeholder="Message..."
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-      />
-      <button onClick={sendMessage}>Send Message</button>
-      <h1>Messages:</h1>
+      <h3>Messages:</h3>
       <ul>
         {messages.map((msg, index) => (
-          <li key={index} className="list-group-item">
-            {msg.text} - {formatDate(new Date(msg.createdAt))}
+          <li key={index} className={styles.listGroupItem}>
+            {msg.text} - {dateFormatter(new Date(msg.createdAt))}
             {msg.sender && msg.sender.username && (
               <span> - Sent by: {msg.sender.username}</span>
             )}
           </li>
         ))}
       </ul>
+      <input
+        placeholder='Message...'
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+      />
+      <button onClick={sendMessage}>send</button>
     </div>
   );
 }
 
-export default Message;
+export default Messenger;
