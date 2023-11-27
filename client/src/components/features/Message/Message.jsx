@@ -25,7 +25,10 @@ function Message() {
     });
 
     // Event listener for new messages
-    socket.on("receive_message", (newMessage) => {
+    socket.on("receive_message", ({ text: newMessage, groupId }) => {
+      console.log(groupId, selectedGroup.groupId);
+      if (groupId.toString() !== selectedGroup.groupId.toString()) return;
+      console.log(newMessage);
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
@@ -37,12 +40,16 @@ function Message() {
   const sendMessage = () => {
     if (input.trim()) {
       // Emit a message event with the text and sender ID
-      socket.emit("send_message", { text: input });
+      console.log("sending", input, "to group", selectedGroup.groupId);
+      socket.emit("send_message", {
+        text: input,
+        groupId: selectedGroup.groupId,
+      });
       setInput(""); // Clear the input field after sending the message
     }
   };
 
-  console.log(selectedGroup);
+  console.log(selectedGroup, selectedGroup.groupId);
 
   return (
     <div className="message-container">
