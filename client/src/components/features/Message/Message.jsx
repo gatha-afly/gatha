@@ -75,7 +75,7 @@ function Message() {
         {messages.map((msg, index) => (
           <li key={index} className="list-group-item">
             {msg.text} - {formatDate(new Date(msg.createdAt))}
-            {msg.sender && msg.sender.username && (
+            {msg.sender.username && (
               <span> - Sent by: {msg.sender.username}</span>
             )}
           </li>
