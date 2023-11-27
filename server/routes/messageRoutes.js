@@ -26,7 +26,7 @@ const setupSocketIO = (io) => {
     // Log the connection of a user
     console.log(`User Connected: ${socket.id}`);
 
-    getInitialMessages(socket);
+    getInitialMessages(socket, user.groups);
 
     // Listen for incoming messages from the client
     socket.on("send_message", async ({ text, groupId }) => {

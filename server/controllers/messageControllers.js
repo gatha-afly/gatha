@@ -7,10 +7,10 @@ import Group from "../models/Group.js";
  * Handler for getting the initial messages
  * @returns
  */
-export const getInitialMessages = async (socket) => {
+export const getInitialMessages = async (socket, groupId) => {
   try {
     // Fetch the latest messages and populate the sender field
-    const messages = await Message.find()
+    const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
       .limit(10)
       .populate("sender", "username");
