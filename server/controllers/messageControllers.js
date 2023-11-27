@@ -1,5 +1,6 @@
 import Message from "../models/Message.js";
 import User from "../models/User.js";
+import Group from "../models/Group.js";
 /**
  * Handler for getting the initial messages
  * @returns
@@ -25,15 +26,22 @@ export const getInitialMessages = async (socket) => {
 export const sendMessage = async (io, msg, senderId, groupId) => {
   try {
     // Check if senderId exists in the User schema
-    const senderExists = await User.exists({ _id: senderId });
-    // if (!senderExists) {
-    //   console.error("Sender does not exist");
-    //   return;
-    // }
+    const sender = await User.exists({ _id: senderId });
+    if (!sender) {
+      console.error("Sender does not exist");
+      return;
+    }
+
+    const group = await Group.findById(groupId);
+    if (!group) {
+      console.log("The group doesn't exist with provided groupId");
+      throw new Error("The group doesn't exist with provided groupId");
+    }
 
     const newMessage = new Message({
       text: msg,
-      sender: senderId,
+      sender: sender,
+      group: group,
     });
 
     await newMessage.save();

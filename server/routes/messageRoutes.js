@@ -4,28 +4,15 @@ import {
   getInitialMessages,
   sendMessage,
 } from "../controllers/messageControllers.js";
+
+import socketAuthMiddleware from "../middleware/socket/socketAuthMiddleware.js";
+import { isUserAlreadyGroupMember } from "../middleware/socket/isUserAlreadyGroupMember.js";
 import User from "../models/User.js";
 
 // Function to set up Socket.IO
 const setupSocketIO = (io) => {
   //Middleware connects
-  io.use(function (socket, next) {
-    const cookieFromHeaders = socket.handshake.headers.cookie;
-    if (cookieFromHeaders) {
-      const cookies = cookie.parse(socket.handshake.headers.cookie);
-      jwt.verify(
-        cookies.userToken,
-        process.env.SECRET_KEY,
-        function (err, user) {
-          if (err) return next(new Error("Authentication error"));
-          socket.user = user;
-          next();
-        }
-      );
-    } else {
-      next(new Error("Authentication error"));
-    }
-  });
+  io.use(socketAuthMiddleware, isUserAlreadyGroupMember);
 
   io.on("connection", async (socket) => {
     const user = await User.findById(socket.user.id);
@@ -45,7 +32,12 @@ const setupSocketIO = (io) => {
     socket.on("send_message", async ({ text, groupId }) => {
       console.log(socket.user.id);
       // Send the received message to the messageController for processing
-      sendMessage(io, text, socket.user.id, groupId); //Socket.user.id is the id of conntected user
+      try {
+        await sendMessage(io, text, socket.user.id, groupId); // Socket.user.id is the id of connected user
+      } catch (error) {
+        // Display the error to the client
+        socket.emit("error", { message: error.message });
+      }
     });
 
     // Listen for disconnection events

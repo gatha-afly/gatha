@@ -14,6 +14,7 @@ function Message() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const { selectedGroup } = useUserContext();
+  const [error, setError] = useState("");
 
   // Use the custom hook to format the date
   const formatDate = useDateFormatter;
@@ -32,9 +33,14 @@ function Message() {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
+    // Event listener for errors
+    socket.on("error", ({ message }) => {
+      setError(message);
+    });
+
     // Clean up socket connection when the component unmounts
     return () => socket.off();
-  }, []);
+  }, [selectedGroup.groupId]);
 
   // Function to send a new message
   const sendMessage = () => {
@@ -46,6 +52,7 @@ function Message() {
         groupId: selectedGroup.groupId,
       });
       setInput(""); // Clear the input field after sending the message
+      setError(""); // Clear previous errors
     }
   };
 
@@ -54,7 +61,6 @@ function Message() {
   return (
     <div className="message-container">
       <h2>Welcome to, {selectedGroup.name} group</h2>
-
       <input
         placeholder="Message..."
         value={input}
@@ -62,6 +68,8 @@ function Message() {
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
       <button onClick={sendMessage}>Send Message</button>
+      {error && <p style={{ color: "red" }}>{error}</p>}{" "}
+      {/* Display error message */}
       <h1>Messages:</h1>
       <ul>
         {messages.map((msg, index) => (
