@@ -1,5 +1,5 @@
 import Message from "../models/Message.js";
-
+import User from "../models/User.js";
 /**
  * Handler for getting the initial messages
  * @returns
@@ -24,6 +24,13 @@ export const getInitialMessages = async (socket) => {
  */
 export const sendMessage = async (io, msg, senderId) => {
   try {
+    // Check if senderId exists in the User schema
+    const senderExists = await User.exists({ _id: senderId });
+    // if (!senderExists) {
+    //   console.error("Sender does not exist");
+    //   return;
+    // }
+
     const newMessage = new Message({
       text: msg,
       sender: senderId,
@@ -31,10 +38,10 @@ export const sendMessage = async (io, msg, senderId) => {
 
     await newMessage.save();
 
+    // Populate the sender field before emitting the message
+    await newMessage.populate("sender", "username");
     io.emit("receive_message", newMessage);
-  } catch (err) {
-    // Log and throw any errors that occur during the operation
-    console.error(err);
-    throw err;
+  } catch (error) {
+    console.error(error);
   }
 };
