@@ -5,9 +5,9 @@ import {
   logoutUser,
   updateProfilePicture,
 } from "../controllers/userControllers.js";
-import { validator } from "../middleware/validator.js";
-import { validateUserRules } from "../middleware/userSanitizer.js";
-import { authorizeUser } from "../middleware/userAuthorization.js";
+import { validator } from "../middleware/express/validator.js";
+import { validateUserRules } from "../middleware/express/userSanitizer.js";
+import { authorizeUser } from "../middleware/express/userAuthorization.js";
 import upload from "../config/multer.js";
 
 const router = express.Router();

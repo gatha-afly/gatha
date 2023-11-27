@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { verifyJwt } from "../helpers/jwt.js";
+import { verifyJwt } from "../../helpers/jwt.js";
 
 /**
  * Handler for user authorization

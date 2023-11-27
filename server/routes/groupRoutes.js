@@ -10,10 +10,10 @@ import {
   getGroupData,
   getGroupMembers,
 } from "../controllers/groupControllers.js";
-import { authorizeUser } from "../middleware/userAuthorization.js";
-import { validator } from "../middleware/validator.js";
-import { validateGroupRules } from "../middleware/groupSanitizer.js";
-import { isGroupAdminMiddleware } from "../middleware/isGroupAdminMiddleware.js";
+import { authorizeUser } from "../middleware/express/userAuthorization.js";
+import { validator } from "../middleware/express/validator.js";
+import { validateGroupRules } from "../middleware/express/groupSanitizer.js";
+import { isGroupAdminMiddleware } from "../middleware/express/isGroupAdminMiddleware.js";
 
 const router = express.Router();
 

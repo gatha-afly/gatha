@@ -1,5 +1,5 @@
 import { body } from "express-validator";
-import { uppercaseFirstLetter } from "../helpers/userHelper.js";
+import { uppercaseFirstLetter } from "../../helpers/userHelper.js";
 
 export const validateGroupRules = [
   //Sanitize and validate group name
