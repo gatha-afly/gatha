@@ -5,4 +5,11 @@
   border: 0.5rem solid var(--color-structure-elements);
   border-radius: 10px;
   margin-left: 1rem;
+  border-radius: 1rem;
+  background-color: var(--color-structure-elements-light);
 }
+
+.messages {
+}
+
+.messageContainer button {}

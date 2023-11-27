@@ -3,7 +3,11 @@
   justify-content: center;
   align-items: center;
   bottom: 0;
-  background-color: var(--color-structure-elements);
+  background-image: linear-gradient(
+    -180deg,
+    var(--color-structure-elements) 0%,
+    var(--color-hover) 100%
+  );
   color: var(--color-main);
   z-index: 999;
   position: static;

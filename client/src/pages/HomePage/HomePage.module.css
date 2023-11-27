@@ -1,3 +1,7 @@
+.main {
+  background-color: var(--color-landingpage);
+}
+
 .container {
   height: 100%;
   width: 100%;

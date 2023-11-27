@@ -1,6 +1,6 @@
 .hamburgerMenu {
   position: relative;
-  background-color: var(--color-structure-elements);
+  background-color: transparent;
 }
 
 .menuIcon {

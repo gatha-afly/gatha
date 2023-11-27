@@ -8,7 +8,7 @@ import ApplicationImage from "../../components/features/ApplicationImage/Applica
 
 const HomePage = () => {
   return (
-    <main>
+    <main className={styles.main}>
       {/* Navigate to main if user is already logged in thus registered */}
       <NavigateToMainIfUserIsLoggedIn />
       {/* Track page renders */}

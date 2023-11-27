@@ -3,6 +3,7 @@
   --color-success: #749c75;
   --color-dark: #121416;
   --color-body: #f7f4f3;
+  --color-landingpage: #fdfdfd;
   --color-main: #f7e8d3;
   --color-light-dark: #20201dff;
   --color-shadow-dark: rgba(32, 32, 29, 0.1);
@@ -121,7 +122,11 @@ button::selection {
 
 button {
   min-height: 2.4rem;
-  background-color: var(--color-structure-elements);
+  background-image: linear-gradient(
+    -180deg,
+    var(--color-structure-elements) 0%,
+    var(--color-hover) 100%
+  );
   color: var(--color-body);
   font-size: 1.5rem;
   font-weight: bold;

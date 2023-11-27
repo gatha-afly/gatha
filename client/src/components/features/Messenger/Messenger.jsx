@@ -41,15 +41,17 @@ function Messenger() {
   return (
     <div className={styles.messageContainer}>
       <h2>{selectedGroup.name} group</h2>
-
       <h3>Messages:</h3>
       <ul>
         {messages.map((msg, index) => (
-          <li key={index} className={styles.listGroupItem}>
-            {msg.text} - {dateFormatter(new Date(msg.createdAt))}
-            {msg.sender && msg.sender.username && (
-              <span> - Sent by: {msg.sender.username}</span>
-            )}
+          <li key={index} className={styles.messages}>
+            <div className={styles.sender}>{msg.sender.username}</div>
+            <div className={styles.text}>
+              {msg.text}{" "}
+              <div className={styles.date}>
+                {dateFormatter(new Date(msg.createdAt))}
+              </div>
+            </div>
           </li>
         ))}
       </ul>

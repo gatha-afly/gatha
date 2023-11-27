@@ -4,7 +4,11 @@
   align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
-  background-color: var(--color-structure-elements);
+  background-image: linear-gradient(
+    -180deg,
+    var(--color-structure-elements) 0%,
+    var(--color-hover) 100%
+  );
   color: var(--color-body);
   position: static;
 }
