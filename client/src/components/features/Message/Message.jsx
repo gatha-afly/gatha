@@ -14,27 +14,34 @@ function Message() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const { selectedGroup } = useUserContext();
+
+  // Use the custom hook to format the date
   const formatDate = useDateFormatter;
 
   useEffect(() => {
+    // Event listener for initial messages
     socket.on("init", (loadedMessages) => {
       setMessages(loadedMessages);
     });
 
-    socket.on("message", (newMessage) => {
+    // Event listener for new messages
+    socket.on("receive_message", (newMessage) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
     });
 
-    return () => socket.off(); // Disconnect socket when component unmounts
+    // Clean up socket connection when the component unmounts
+    return () => socket.off();
   }, []);
 
+  // Function to send a new message
   const sendMessage = () => {
     if (input.trim()) {
-      socket.emit("message", input);
-      setInput("");
+      // Emit a message event with the text and sender ID
+      socket.emit("send_message", { text: input });
+      setInput(""); // Clear the input field after sending the message
     }
   };
-  // console.log(selectedGroup);
+
   return (
     <div className="message-container">
       <h2>Welcome to, {selectedGroup.name} group</h2>

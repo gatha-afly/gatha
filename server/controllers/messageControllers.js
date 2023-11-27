@@ -6,8 +6,9 @@ import Message from "../models/Message.js";
  */
 export const getInitialMessages = async (socket) => {
   try {
-    // Retrieve the latest 10 messages from the database
+    // Fetch the latest messages and emit them to the new socket connection
     const messages = await Message.find().sort({ createdAt: -1 }).limit(10);
+
     // Reverse the order to have the oldest messages first
     socket.emit("init", messages.reverse());
   } catch (err) {
@@ -21,14 +22,16 @@ export const getInitialMessages = async (socket) => {
  * @param {*} text
  * @returns
  */
-export const sendMessage = async (io, msg) => {
+export const sendMessage = async (io, msg, senderId) => {
   try {
-    // Create a new message using the provided text
-    const message = new Message({ text: msg });
-    // Save the message to the database
-    await message.save();
-    // Return the saved message
-    io.emit("receive_message", message);
+    const newMessage = new Message({
+      text: msg,
+      sender: senderId,
+    });
+
+    await newMessage.save();
+
+    io.emit("receive_message", newMessage);
   } catch (err) {
     // Log and throw any errors that occur during the operation
     console.error(err);

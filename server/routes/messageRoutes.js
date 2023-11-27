@@ -30,18 +30,22 @@ const setupSocketIO = (io) => {
     // Log the connection of a user
     console.log(`User Connected: ${socket.id}`);
 
-    // Get the initial messages and emit them to the connected client
-    getInitialMessages(socket);
+    console.log(socket.user);
+
+    try {
+      getInitialMessages(socket);
+    } catch (error) {
+      console.log("Error happen while getting initial messages", error.message);
+    }
 
     // Listen for incoming messages from the client
-    socket.on("send_message", async (msg) => {
+    socket.on("send_message", async ({ text }) => {
       // Send the received message to the messageController for processing
-      sendMessage(io, msg);
+      sendMessage(io, text, socket.user._id);
     });
 
     // Listen for disconnection events
     socket.on("disconnect", () => {
-      // Log when a user disconnects
       console.log("User disconnected");
     });
   });
