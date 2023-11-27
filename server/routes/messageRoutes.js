@@ -1,9 +1,6 @@
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
-import {
-  getInitialMessages,
-  sendMessage,
-} from "../controllers/messageController.js";
+import {} from "../controllers/messageControllers.js";
 
 // Function to set up Socket.IO
 const setupSocketIO = (io) => {

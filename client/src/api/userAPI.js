@@ -1,7 +1,10 @@
 import axios from "axios";
 
 // Set baseURL
-const baseURL = import.meta.env.VITE_REACT_APP_API_URL;
+const baseURL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:3001/api"
+    : import.meta.env.VITE_REACT_APP_API_URL;
 
 // Create axios instance
 const userAPI = axios.create({
