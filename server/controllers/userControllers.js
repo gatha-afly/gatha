@@ -85,10 +85,20 @@ export const loginUser = async (req, res) => {
       const token = generateJwt(user._id);
 
       // Set the token as an HTTP-only cookie
-      res.cookie("userToken", token, {
-        httpOnly: true,
-        secure: false, // Set to true in production with HTTPS
-      });
+      // Production environment settings
+      if (process.env.NODE_ENV === "production") {
+        res.cookie("userToken", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "None",
+        });
+      } else {
+        // Development environment settings
+        res.cookie("userToken", token, {
+          httpOnly: true,
+          secure: false,
+        });
+      }
 
       // Retrieve user groups from the populated 'groups' field
       const userGroups = user.groups || [];

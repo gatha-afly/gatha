@@ -11,7 +11,11 @@ app.use(cookieParser());
 // Initializing the corsOptions
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://gatha-dev.netlify.app",
+      "https://gatha.netlify.app",
+    ],
     methods: ["HEAD", "GET", "POST", "PATCH", "DELETE", "PUT"],
     credentials: true,
   })

@@ -8,7 +8,6 @@ import styles from "./RenderBasicGroupInfo.module.css";
  * Displays basic information about a group.
  * @param {Object} groupData - Data containing information about the group.
  */
-
 const RenderBasicGroupInfo = ({ userId, groupId }) => {
   const navigate = useNavigate();
   // Move the selection gorupData on click to context to reuse it on other components
