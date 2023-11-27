@@ -22,7 +22,7 @@ export const getInitialMessages = async (socket) => {
  * @param {*} text
  * @returns
  */
-export const sendMessage = async (io, msg, senderId) => {
+export const sendMessage = async (io, msg, senderId, groupId) => {
   try {
     // Check if senderId exists in the User schema
     const senderExists = await User.exists({ _id: senderId });
@@ -40,7 +40,7 @@ export const sendMessage = async (io, msg, senderId) => {
 
     // Populate the sender field before emitting the message
     await newMessage.populate("sender", "username");
-    io.emit("receive_message", newMessage);
+    io.to(groupId).emit("receive_message", { text: newMessage, groupId });
   } catch (error) {
     console.error(error);
   }

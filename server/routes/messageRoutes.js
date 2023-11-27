@@ -4,6 +4,7 @@ import {
   getInitialMessages,
   sendMessage,
 } from "../controllers/messageControllers.js";
+import User from "../models/User.js";
 
 // Function to set up Socket.IO
 const setupSocketIO = (io) => {
@@ -27,16 +28,24 @@ const setupSocketIO = (io) => {
   });
 
   io.on("connection", async (socket) => {
+    const user = await User.findById(socket.user.id);
+
+    // user joins rooms with groupId
+    user.groups.forEach((groupId) => {
+      console.log("user", socket.user.id, "joined", groupId.toString());
+      socket.join(groupId.toString());
+    });
+
     // Log the connection of a user
     console.log(`User Connected: ${socket.id}`);
 
     getInitialMessages(socket);
 
     // Listen for incoming messages from the client
-    socket.on("send_message", async ({ text }) => {
+    socket.on("send_message", async ({ text, groupId }) => {
       console.log(socket.user.id);
       // Send the received message to the messageController for processing
-      sendMessage(io, text, socket.user.id); //Socket.user.id is the id of conntected user
+      sendMessage(io, text, socket.user.id, groupId); //Socket.user.id is the id of conntected user
     });
 
     // Listen for disconnection events
