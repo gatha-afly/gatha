@@ -425,9 +425,18 @@ export const getGroupMembers = async (req, res) => {
 export const editGroupById = async (req, res) => {
   try {
     const { groupId } = req.params;
-    const { name, description, avatar } = req.body;
-    const generatedCode = await generateUniqueGroupCode();
+    const { name, description, avatar, code } = req.body;
 
+    // Find the group by groupId
+    const groupToEdit = await Group.findById(groupId);
+    if (!groupToEdit) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+    const newCode = await generateUniqueGroupCode(newCode);
+    if (code) {
+      return newCode;
+    }
+    //Update the group by name, description, avatar or code
     const editedGroup = await Group.findByIdAndUpdate(
       groupId,
       {
@@ -435,7 +444,7 @@ export const editGroupById = async (req, res) => {
           name,
           description,
           avatar,
-          code: generatedCode,
+          code: newCode,
         },
       },
       { new: true }
