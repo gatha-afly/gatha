@@ -16,7 +16,6 @@ export const getInitialMessages = async (socket) => {
     throw err;
   }
 };
-
 /**
  * Handler for sending a new message
  * @param {*} text
