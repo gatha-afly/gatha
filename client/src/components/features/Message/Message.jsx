@@ -42,6 +42,8 @@ function Message() {
     }
   };
 
+  console.log(selectedGroup);
+
   return (
     <div className="message-container">
       <h2>Welcome to, {selectedGroup.name} group</h2>
