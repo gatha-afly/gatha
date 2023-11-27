@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import Group from "../models/Group.js";
 import * as responseHandlerUtils from "../utils/responseHandler.js";
 import * as errorHandlerUtils from "../utils/errorHandler.js";
+import generateUniqueGroupCode from "../helpers/groupCodeGenerator.js";
 
 /***
  * Handler for creating group using userId
@@ -409,6 +410,44 @@ export const getGroupMembers = async (req, res) => {
       groupName: name,
       groupAdmin,
       groupMembers: members,
+    });
+  } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ * Handler for editing groups using groupId
+ * @param {*} req
+ * @param {*} res
+ */
+
+export const editGroupById = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    const { name, description, avatar } = req.body;
+    const generatedCode = await generateUniqueGroupCode();
+
+    const editedGroup = await Group.findByIdAndUpdate(
+      groupId,
+      {
+        $set: {
+          name,
+          description,
+          avatar,
+          code: generatedCode,
+        },
+      },
+      { new: true }
+    );
+
+    if (!editedGroup) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+
+    return res.status(StatusCodes.OK).json({
+      message: "The group has been successfully edited",
+      editedGroup,
     });
   } catch (error) {
     return errorHandlerUtils.handleInternalError(res);

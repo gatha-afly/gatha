@@ -2,7 +2,7 @@
   --color-error: #dd2d4a;
   --color-success: #749c75;
   --color-dark: #121416;
-  --color-body: #f7f4f3;
+  --color-body: #fdfdfe;
   --color-main: #f7e8d3;
   --color-light-dark: #20201dff;
   --color-shadow-dark: rgba(32, 32, 29, 0.1);
@@ -43,7 +43,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--color-main);
+  background-color: var(--color-body);
   color: var(--color-dark);
   z-index: 999;
   overflow-y: auto;
@@ -123,6 +123,10 @@ button {
   min-height: 2.4rem;
   background-color: var(--color-structure-elements);
   color: var(--color-body);
+  box-shadow: 0 1rem 1.25rem 0 rgba(180, 70, 207, 0.4),
+    0 -0.25rem 1.5rem rgba(180, 70, 207, 1) inset,
+    0 0.75rem 0.5rem rgba(255, 255, 255, 0.4) inset,
+    0 0.25rem 0.5rem 0 rgba(110, 15, 155, 1) inset;
   font-size: 1.5rem;
   font-weight: bold;
   outline: none;

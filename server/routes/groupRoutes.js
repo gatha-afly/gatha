@@ -9,6 +9,7 @@ import {
   leaveGroup,
   getGroupData,
   getGroupMembers,
+  editGroupById,
 } from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/userAuthorization.js";
 import { validator } from "../middleware/validator.js";
@@ -48,6 +49,12 @@ router.delete(
   "/delete/:groupId/:userId",
   isGroupAdminMiddleware,
   deleteGroupById
+);
+router.patch(
+  "/edit-group/:groupId/:userId",
+  isGroupAdminMiddleware,
+  validateGroupRules,
+  editGroupById
 );
 
 export default router;
