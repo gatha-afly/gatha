@@ -3,8 +3,15 @@ import User from "../models/User.js";
 import Group from "../models/Group.js";
 import * as responseHandlerUtils from "../utils/responseHandler.js";
 
+/**
+ *Handler for gettting the intial message when a user joins or reconnects to a group
+ * @param {*} io
+ * @param {*} socket
+ * @param {*} groupId
+ */
 export const getInitialMessages = async (io, socket, groupId) => {
   try {
+    // Fetch the latest messages for the specified group and populate the sender field with usernames.
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
       .limit(10)
@@ -18,26 +25,38 @@ export const getInitialMessages = async (io, socket, groupId) => {
   }
 };
 
+/**
+ * Handler for sending a new message within a group
+ * @param {*} io
+ * @param {*} msg
+ * @param {*} senderId
+ * @param {*} groupId
+ * @returns
+ */
 export const sendMessage = async (io, msg, senderId, groupId) => {
   try {
+    // Check if the senderId exists in the User schema.
     const sender = await User.findById(senderId);
     if (!sender) {
       console.error("Sender does not exist");
       return;
     }
 
+    // Check if the group exists with the provided groupId.
     const group = await Group.findById(groupId);
     if (!group) {
       console.log("The group doesn't exist with the provided groupId");
       throw new Error("The group doesn't exist with the provided groupId");
     }
 
+    // Create a new message with the provided text, sender, and group
     const newMessage = new Message({
       text: msg,
       sender: sender,
       group: group,
     });
 
+    // Save the new message to the database
     await newMessage.save();
 
     // Save the new message in messages array of group collection
@@ -55,6 +74,12 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
   }
 };
 
+/**
+ * Handler for gettting all the group messages based on provided groupId
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 export const getAllGroupMessage = async (req, res) => {
   try {
     const { groupId } = req.params;
