@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import Group from "../models/Group.js";
+import Group from "../../models/Group.js";
 
 /**
  * Middleware to check if a user is an admin

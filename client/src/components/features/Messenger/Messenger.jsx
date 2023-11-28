@@ -1,8 +1,9 @@
-import styles from "./Messenger.module.css";
+// Message.js
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import useUserContext from "../../../context/useUserContext";
 import { dateFormatter } from "../../../utils/dateUtils";
+import styles from "./Messenger.module.css";
 
 // Establish a socket connection to the server
 const socket = io.connect("http://localhost:3001", {
@@ -40,28 +41,26 @@ function Messenger() {
 
   return (
     <div className={styles.messageContainer}>
-      {/* <h2>{selectedGroup.name} group</h2> */}
-      <h3>Messages:</h3>
-      <ul>
-        {messages.map((msg, index) => (
-          <li key={index} className={styles.messages}>
-            <div className={styles.sender}>{msg.sender.username}</div>
-            <div className={styles.text}>
-              {msg.text}{" "}
-              <div className={styles.date}>
-                {dateFormatter(new Date(msg.createdAt))}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {/* <h2>Welcome to, {selectedGroup.name} group</h2> */}
+
       <input
         placeholder='Message...'
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
-      <button onClick={sendMessage}>send</button>
+      <button onClick={sendMessage}>Send Message</button>
+      <h1>Messages:</h1>
+      <ul>
+        {messages.map((msg, index) => (
+          <li key={index} className={styles.messages}>
+            {msg.text} - {dateFormatter(new Date(msg.createdAt))}
+            {msg.sender && msg.sender.username && (
+              <span> - Sent by: {msg.sender.username}</span>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

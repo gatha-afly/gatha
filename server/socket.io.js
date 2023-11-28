@@ -1,7 +1,7 @@
 import { createServer } from "http";
 import { Server } from "socket.io";
 import app from "./app.js";
-import setupSocketIO from "./routes/messageRoutes.js";
+import setupSocketIO from "./config/setupSocketIO.js";
 
 const httpServer = createServer(app);
 const io = new Server(httpServer, {

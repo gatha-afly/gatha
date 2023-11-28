@@ -3,7 +3,7 @@ import {
   uppercaseFirstLetter,
   checkUserExistenceByEmail,
   checkUserExistenceByUsername,
-} from "../helpers/userHelper.js";
+} from "../../helpers/userHelper.js";
 
 export const validateUserRules = [
   //Sanitize and validate the firstname and lastname
