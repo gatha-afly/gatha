@@ -1,16 +1,23 @@
 .header {
+  position: static;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.loggedInHeader {
   background-image: linear-gradient(
     -180deg,
     var(--color-structure-elements) 0%,
     var(--color-hover) 100%
   );
   color: var(--color-body);
-  position: static;
+}
+
+.notLoggedInHeader {
+  background-color: var(--color-landingpage);
 }
 
 .header a {
@@ -22,18 +29,32 @@
   font-family: "Source Sans 3", sans-serif;
 }
 
-.header a:hover {
+.loggedInHeader a:hover {
   color: var(--color-body);
 }
 
-.header a::selection {
+.loggedInHeader a::selection {
   background-color: var(--color-body);
   color: var(--color-structure-elements);
 }
 
-.header a:focus,
-.header .logo:focus {
+.loggedInHeader a:focus,
+.loggedInHeader .logo:focus {
   outline: 0.2rem solid var(--color-main);
+  border-radius: 1rem;
+}
+
+.notLoggedInHeader a {
+  color: var(--color-structure-elements);
+}
+
+.notLoggedInHeader a:hover {
+  color: var(--color-hover);
+}
+
+.notLoggedInHeader a:focus,
+.notLoggedInHeader .logo:focus {
+  outline: 0.2rem solid var(--color-hover);
   border-radius: 1rem;
 }
 

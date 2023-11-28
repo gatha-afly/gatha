@@ -1,3 +1,7 @@
+.container {
+  background-color: var(--color-landingpage);
+}
+
 .label {
   display: block;
   margin-bottom: 10px;

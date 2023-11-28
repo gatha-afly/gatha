@@ -40,7 +40,7 @@ function Messenger() {
 
   return (
     <div className={styles.messageContainer}>
-      <h2>{selectedGroup.name} group</h2>
+      {/* <h2>{selectedGroup.name} group</h2> */}
       <h3>Messages:</h3>
       <ul>
         {messages.map((msg, index) => (
