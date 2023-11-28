@@ -21,7 +21,7 @@
 /* Laptop*/
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
   .logo {
-    width: 9rem;
+    width: 8rem;
   }
 }
 
