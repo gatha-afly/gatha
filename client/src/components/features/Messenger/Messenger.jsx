@@ -1,12 +1,13 @@
 import "./Messenger.module.css";
 import io from "socket.io-client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, react } from "react";
 import useUserContext from "../../../context/useUserContext";
 import userAPI from "../../../api/userAPI";
 import styles from "./Messenger.module.css";
 import { dateFormatter } from "../../../utils/dateUtils";
 
-const socket = io.connect("http://localhost:3001", {
+const socketUrl = import.meta.env.VITE_REACT_APP_SOCKET_URL;
+const socket = io.connect(socketUrl, {
   withCredentials: true,
 });
 
