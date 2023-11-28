@@ -8,7 +8,7 @@ import Messenger from "../../components/features/Messenger/Messenger";
 
 const MainPage = () => {
   // Retrieve user information
-  const { user, selectedGroup } = useUserContext();
+  const { user } = useUserContext();
 
   return (
     <main className={styles.container}>
@@ -30,9 +30,7 @@ const MainPage = () => {
       ) : (
         <div className={styles.messengerNotMobile}>
           <GroupsList user={user} />
-
-          {/*It only renders the Messenger component if a group is selected */}
-          {selectedGroup && <Messenger />}
+          <Messenger />
         </div>
       )}
     </main>
