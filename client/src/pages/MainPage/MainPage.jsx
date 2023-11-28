@@ -8,14 +8,14 @@ import Messenger from "../../components/features/Messenger/Messenger";
 
 const MainPage = () => {
   // Retrieve user information
-  const { user } = useUserContext();
+  const { user, selectedGroup } = useUserContext();
 
   return (
     <main className={styles.container}>
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"main"} />
       {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title='gatha - main' />
+      <HelmetMetaTagsNetlify title="gatha - main" />
       <h1>gatha - get together</h1>
       {/*Render join or create group call to action if user is not member of a group */}
       {user.groups.length === 0 ? (
@@ -30,7 +30,9 @@ const MainPage = () => {
       ) : (
         <div className={styles.messengerNotMobile}>
           <GroupsList user={user} />
-          <Messenger />
+
+          {/*         It only renders the Messenger component if a group is selected */}
+          {selectedGroup && <Messenger />}
         </div>
       )}
     </main>
