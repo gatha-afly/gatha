@@ -7,6 +7,7 @@
   --color-main: #f7e8d3;
   --color-light-dark: #20201dff;
   --color-shadow-dark: rgba(32, 32, 29, 0.1);
+  --color-text: #431859;
   --color-structure-elements: #632382;
   --color-structure-elements-light: #eccdff;
   --color-hover: #822eaa;
@@ -128,6 +129,7 @@ button {
     var(--color-hover) 100%
   );
   color: var(--color-body);
+  cursor: pointer;
   font-size: 1.5rem;
   font-weight: bold;
   outline: none;
@@ -135,6 +137,8 @@ button {
   border-radius: 0.5rem;
   width: 20rem;
   font-family: "Source Sans 3", sans-serif;
+  box-shadow: 0 -0.25rem 1rem rgba(180, 70, 207, 1) inset,
+    0 0.25rem 0.2rem 0 rgba(110, 15, 155, 1) inset;
 }
 
 button:hover {

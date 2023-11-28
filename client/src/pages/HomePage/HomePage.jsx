@@ -18,12 +18,13 @@ const HomePage = () => {
       <div className={styles.container}>
         <section className={styles.infoContainer}>
           <p>
-            <h1>gatha - get together</h1>
-            Gatha is your brand new chat application to connect to family,
-            friends, colleagues and more!
+            <h1>
+              {" "}
+              Gatha is your brand new chat application to connect to family,
+              friends, colleagues and more!
+            </h1>
           </p>
           <p>Create your personal account to get started!</p>
-
           <NavigateButton
             route={"user-registration"}
             buttonText={"Register now!"}
