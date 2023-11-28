@@ -31,7 +31,7 @@ const MainPage = () => {
         <div className={styles.messengerNotMobile}>
           <GroupsList user={user} />
 
-          {/*         It only renders the Messenger component if a group is selected */}
+          {/*It only renders the Messenger component if a group is selected */}
           {selectedGroup && <Messenger />}
         </div>
       )}
