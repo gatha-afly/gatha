@@ -15,7 +15,7 @@ const MainPage = () => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"main"} />
       {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title='gatha - main' />
+      <HelmetMetaTagsNetlify title="gatha - main" />
       <h1>gatha - get together</h1>
       {/*Render join or create group call to action if user is not member of a group */}
       {user.groups.length === 0 ? (
