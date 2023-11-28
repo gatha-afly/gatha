@@ -2,8 +2,6 @@ import styles from "./JoinGroupPage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import SearchGroupAndJoin from "../../components/features/SearchGroupAndJoin/SearchGroupAndJoin";
-import NavigateBackForth from "../../components/common/NavigateBackForth/NavigateBackForth";
-import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 
 const JoinGroupPage = () => {
   return (
@@ -17,11 +15,6 @@ const JoinGroupPage = () => {
         If you've been shared a code to join a group, simply enter it here:
       </p>
       <SearchGroupAndJoin />
-      <NavigateBackForth
-        route={"main"}
-        buttonText={faLeftLong}
-        alignment={"left"}
-      />
     </main>
   );
 };

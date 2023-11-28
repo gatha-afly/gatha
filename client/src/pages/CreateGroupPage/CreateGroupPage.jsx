@@ -2,8 +2,6 @@ import styles from "./CreateGroupPage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import CreateGroup from "../../components/features/CreateGroup/CreateGroup";
-import NavigateBackForth from "../../components/common/NavigateBackForth/NavigateBackForth";
-import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 
 const CreateGroupPage = () => {
   return (
@@ -14,11 +12,6 @@ const CreateGroupPage = () => {
       <HelmetMetaTagsNetlify title='gatha - create group' />
       <h1>Create group</h1>
       <CreateGroup />
-      <NavigateBackForth
-        route={"main"}
-        buttonText={faLeftLong}
-        alignment={"left"}
-      />
     </main>
   );
 };
