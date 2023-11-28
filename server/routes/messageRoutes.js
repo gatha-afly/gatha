@@ -34,7 +34,8 @@ const setupSocketIO = (io) => {
       console.log(socket.user.id);
       // Send the received message to the messageController for processing
       try {
-        await sendMessage(io, text, socket.user.id, groupId); // Socket.user.id is the id of connected user
+        // Socket.user.id is the id of connected user
+        await sendMessage(io, text, socket.user.id, groupId);
       } catch (error) {
         // Display the error to the client
         socket.emit("error", { message: error.message });
