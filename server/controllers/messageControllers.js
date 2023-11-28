@@ -60,6 +60,7 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
     // Save the new message to the database.
     await newMessage.save();
 
+    //save the new message in messages array of group collection
     await responseHandlerUtils.saveGroupMessage(groupId, newMessage);
 
     // Populate the sender field before emitting the message to the group.
