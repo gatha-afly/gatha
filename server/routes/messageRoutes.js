@@ -1,5 +1,3 @@
-import cookie from "cookie";
-import jwt from "jsonwebtoken";
 import {
   getInitialMessages,
   sendMessage,
@@ -23,10 +21,13 @@ const setupSocketIO = (io) => {
       socket.join(groupId.toString());
     });
 
+    // Call getInitialMessages once after user joins all groups
+    user.groups.forEach((groupId) => {
+      getInitialMessages(io, socket, groupId);
+    });
+
     // Log the connection of a user
     console.log(`User Connected: ${socket.id}`);
-
-    getInitialMessages(socket, user.groups);
 
     // Listen for incoming messages from the client
     socket.on("send_message", async ({ text, groupId }) => {

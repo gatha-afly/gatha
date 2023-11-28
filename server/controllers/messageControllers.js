@@ -7,7 +7,7 @@ import Group from "../models/Group.js";
  * Handler for getting the initial messages
  * @returns
  */
-export const getInitialMessages = async (socket, groupId) => {
+export const getInitialMessages = async (io, socket, groupId) => {
   try {
     // Fetch the latest messages and populate the sender field
     const messages = await Message.find({ group: groupId })
@@ -16,7 +16,7 @@ export const getInitialMessages = async (socket, groupId) => {
       .populate("sender", "username");
 
     // Reverse the order to have the oldest messages first
-    socket.emit("init", messages.reverse());
+    socket.to(groupId.toString()).emit("init", messages);
   } catch (err) {
     // Log and throw any errors that occur during the operation
     console.error(err);
@@ -32,7 +32,7 @@ export const getInitialMessages = async (socket, groupId) => {
 export const sendMessage = async (io, msg, senderId, groupId) => {
   try {
     // Check if senderId exists in the User schema
-    const sender = await User.exists({ _id: senderId });
+    const sender = await User.findById(senderId);
     if (!sender) {
       console.error("Sender does not exist");
       return;
@@ -54,7 +54,10 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
 
     // Populate the sender field before emitting the message
     await newMessage.populate("sender", "username");
-    io.to(groupId).emit("receive_message", { text: newMessage, groupId });
+    io.to(groupId.toString()).emit("receive_message", {
+      text: newMessage,
+      groupId: groupId.toString(),
+    });
   } catch (error) {
     console.error(error);
   }
