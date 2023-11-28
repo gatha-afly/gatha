@@ -1,0 +1,14 @@
+/* ReactIconNavigate.module.css */
+
+.iconContainer {
+}
+
+.customIcon {
+  cursor: pointer;
+  color: var(--color-structure-elements);
+  margin: 0.5rem;
+}
+
+.customIcon:hover {
+  color: var(--color-hover);
+}

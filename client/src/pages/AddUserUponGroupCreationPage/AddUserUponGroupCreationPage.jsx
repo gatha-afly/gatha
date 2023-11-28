@@ -8,6 +8,8 @@ import useGetGroupMembers from "../../hooks/useGetGroupMembers";
 import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
 import AddUserToGroup from "../../components/features/AddUserToGroup/AddUserToGroup";
 import RenderGroupMemberList from "../../components/features/RenderGroupMemberList/RenderGroupMemberList";
+import ReactIconNavigate from "../../components/common/ReactIconNavigate/ReactIconNavigate";
+import { FaArrowRight } from "react-icons/fa";
 
 const AddUserUponGroupCreationPage = () => {
   const { groupId, userId } = useParams();
@@ -36,6 +38,8 @@ const AddUserUponGroupCreationPage = () => {
         onRefresh={handleRefresh}
       />
       <ErrorDisplay error={error} />
+      <ReactIconNavigate route='/main' size={2.5} icon={FaArrowRight} />
+
       <RenderGroupMemberList groupMembers={groupMembers} />
     </main>
   );
