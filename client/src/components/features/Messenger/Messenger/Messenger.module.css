@@ -1,0 +1,25 @@
+.messengerContainer {
+  height: 75vh;
+  width: 50rem;
+  overflow-y: scroll;
+  padding: 0.5rem;
+  border: 0.2rem solid var(--color-structure-elements);
+  border-radius: 10px;
+  margin-left: 1rem;
+  border-radius: 1rem;
+  background-color: var(--color-body);
+  position: relative;
+}
+
+.groupBar {
+  height: 10%;
+}
+
+.messages {
+  height: 80%;
+  overflow-y: scroll;
+}
+
+.send {
+  height: 10%;
+}

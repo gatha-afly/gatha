@@ -1,0 +1,18 @@
+.container {
+  height: 75vh;
+  overflow-y: scroll;
+  padding: 0.5rem;
+  border: 0.2rem solid var(--color-structure-elements);
+  border-radius: 10px;
+  position: relative;
+  background-color: var(--color-body);
+}
+
+.groupContainer {
+  overflow-y: scroll;
+  height: 90%;
+}
+
+.groupBar {
+  border-top: 0.25rem solid var(--color-structure-elements);
+}

@@ -1,5 +1,6 @@
-import RenderBasicGroupInfo from "../BasicGroupInfo/RenderBasicGroupInfo/RenderBasicGroupInfo";
+import RenderBasicGroupInfo from "../../BasicGroupInfo/RenderBasicGroupInfo/RenderBasicGroupInfo";
 import styles from "./GroupsList.module.css";
+import GroupBar from "../GroupsBar/GroupsBar";
 
 /**
  * Renders a list of all the user's groups with basic information for each.
@@ -18,9 +19,18 @@ const GroupsList = ({ user }) => {
   return (
     <div className={styles.container}>
       {/* Render RenderBasicGroupInfo for each groupId in the array */}
-      {groupIds.map((groupId) => (
-        <RenderBasicGroupInfo key={groupId} userId={userId} groupId={groupId} />
-      ))}
+      <div className={styles.groupContainer}>
+        {groupIds.map((groupId) => (
+          <RenderBasicGroupInfo
+            key={groupId}
+            userId={userId}
+            groupId={groupId}
+          />
+        ))}
+      </div>
+      <div className={styles.groupBar}>
+        <GroupBar />
+      </div>
     </div>
   );
 };

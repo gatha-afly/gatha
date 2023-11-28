@@ -1,4 +1,4 @@
-import Messenger from "../../components/features/Messenger/Messenger";
+import Messenger from "../../components/features/Messenger/Messenger/Messenger";
 
 const MobileMessengerPage = () => {
   return <Messenger />;

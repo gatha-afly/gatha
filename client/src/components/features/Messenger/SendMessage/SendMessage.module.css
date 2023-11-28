@@ -1,0 +1,8 @@
+.sendMessageContainer button {
+  width: 4rem;
+}
+
+.sendMessageContainer input {
+  width: 30rem;
+  margin-right: 0.5rem;
+}

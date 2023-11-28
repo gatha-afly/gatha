@@ -39,7 +39,6 @@ const AddUserUponGroupCreationPage = () => {
       />
       <ErrorDisplay error={error} />
       <ReactIconNavigate route='/main' size={2.5} icon={FaArrowRight} />
-
       <RenderGroupMemberList groupMembers={groupMembers} />
     </main>
   );

@@ -3,8 +3,8 @@ import NavigateButton from "../../components/common/NavigateButton/NavigateButto
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
-import GroupsList from "../../components/features/GroupsList/GroupsList";
-import Messenger from "../../components/features/Messenger/Messenger";
+import Messenger from "../../components/features/Messenger/Messenger/Messenger";
+import GroupsList from "../../components/features/GroupsList/GroupsList/GroupsList";
 
 const MainPage = () => {
   // Retrieve user information
