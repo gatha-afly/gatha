@@ -1,11 +1,11 @@
-// Message.js
+import "./Messenger.module.css";
 import io from "socket.io-client";
 import { useEffect, useState } from "react";
 import useUserContext from "../../../context/useUserContext";
-import { dateFormatter } from "../../../utils/dateUtils";
+import userAPI from "../../../api/userAPI";
 import styles from "./Messenger.module.css";
+import { dateFormatter } from "../../../utils/dateUtils";
 
-// Establish a socket connection to the server
 const socket = io.connect("http://localhost:3001", {
   withCredentials: true,
 });
@@ -14,35 +14,52 @@ function Messenger() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const { selectedGroup } = useUserContext();
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    // Event listener for initial messages
+    const fetchMessages = async () => {
+      try {
+        const response = await userAPI.get(
+          `/messages/${selectedGroup.groupId}`
+        );
+        setMessages(response.data);
+      } catch (error) {
+        setError("Error occurred while fetching the group chat");
+      }
+    };
+    fetchMessages();
     socket.on("init", (loadedMessages) => {
       setMessages(loadedMessages);
     });
 
-    // Event listener for new messages
-    socket.on("receive_message", (newMessage) => {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
+    socket.on("receive_message", ({ text: newMessage, groupId }) => {
+      if (groupId.toString() === selectedGroup.groupId.toString()) {
+        setMessages((prevMessages) => [...prevMessages, newMessage]);
+      }
     });
 
-    // Clean up socket connection when the component unmounts
-    return () => socket.off();
-  }, []);
+    socket.on("error", ({ message }) => {
+      setError(message);
+    });
 
-  // Function to send a new message
+    return () => socket.off();
+  }, [selectedGroup.groupId]);
+
   const sendMessage = () => {
     if (input.trim()) {
-      // Emit a message event with the text and sender ID
-      socket.emit("send_message", { text: input });
-      setInput(""); // Clear the input field after sending the message
+      socket.emit("send_message", {
+        text: input,
+        groupId: selectedGroup.groupId,
+      });
+
+      setInput("");
+      setError("");
     }
   };
 
   return (
     <div className={styles.messageContainer}>
-      {/* <h2>Welcome to, {selectedGroup.name} group</h2> */}
-
+      <h2>Welcome to, {selectedGroup.name} group</h2>
       <input
         placeholder='Message...'
         value={input}
@@ -50,12 +67,13 @@ function Messenger() {
         onKeyDown={(e) => e.key === "Enter" && sendMessage()}
       />
       <button onClick={sendMessage}>Send Message</button>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <h1>Messages:</h1>
       <ul>
         {messages.map((msg, index) => (
           <li key={index} className={styles.messages}>
             {msg.text} - {dateFormatter(new Date(msg.createdAt))}
-            {msg.sender && msg.sender.username && (
+            {msg.sender?.username && (
               <span> - Sent by: {msg.sender.username}</span>
             )}
           </li>
