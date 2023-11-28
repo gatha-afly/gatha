@@ -64,7 +64,7 @@ function Message() {
 
     // Cleanup function to remove socket event listeners when the component unmounts
     return () => socket.off();
-  }, [selectedGroup.groupId, messages]);
+  }, [selectedGroup.groupId]);
 
   // Function to send a new message to the server
   const sendMessage = () => {
@@ -75,7 +75,7 @@ function Message() {
         groupId: selectedGroup.groupId,
       });
 
-      // Clear the input field and reset the error stat
+      // Clear the input field and reset the error state
       setInput("");
       setError("");
     }
