@@ -1,6 +1,7 @@
 import Message from "../models/Message.js";
 import User from "../models/User.js";
 import Group from "../models/Group.js";
+import * as responseHandlerUtils from "../utils/responseHandler.js";
 
 /**
  * Handler for getting the initial messages when a user joins or reconnects to a group.
@@ -58,6 +59,8 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
 
     // Save the new message to the database.
     await newMessage.save();
+
+    await responseHandlerUtils.saveGroupMessage(groupId, newMessage);
 
     // Populate the sender field before emitting the message to the group.
     await newMessage.populate("sender", "username");

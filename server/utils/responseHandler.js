@@ -75,9 +75,35 @@ export const updateUserGroups = async (groupId, userId, operation) => {
         path: "groups",
         select: "groupId name",
       });
-  } catch (error) {
-    throw new Error(
-      "An error occurred while updating group members. Please try again later."
+  } catch (error) {}
+};
+
+/**
+ * Utility handler for saving mesages in group collection
+ * @param {*} groupId
+ * @param {*} message
+ * @returns
+ */
+export const saveGroupMessage = async (groupId, newMember) => {
+  try {
+    const updatedGroup = await Group.findOneAndUpdate(
+      { _id: groupId },
+      {
+        $push: {
+          messages: newMember,
+        },
+      },
+      { new: true } // Return the updated document
     );
+
+    if (!updatedGroup) {
+      console.error(`Group not found with ID: ${groupId}`);
+      return null;
+    }
+
+    return updatedGroup;
+  } catch (error) {
+    console.error("Error saving group message:", error);
+    return null;
   }
 };
