@@ -9,17 +9,18 @@ import styles from "./Logo.module.css";
 /**
  * Clickable app logo image that navigates to the home page.
  * @param {boolean} withBackground - Specify whether to include the background in the image for small logos.
- * @param {boolean} largeLogoWithBackground - Specify whether to include the background in the image for large logos.
  */
 const Logo = ({ withBackground = true }) => {
   const screenWidth = window.innerWidth;
   let logoImage;
 
+  //Render image file with app slogan on bigger screens
   if (screenWidth >= 1025) {
     logoImage = withBackground
       ? logoImageWithSloganWithoutBackground
       : logoImageWithSloganWithBackground;
   } else {
+    //Render image file without app slogan on bigger screens
     logoImage = withBackground
       ? logoImageWithBackground
       : logoImageWithoutBackground;
