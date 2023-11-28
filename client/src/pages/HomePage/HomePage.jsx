@@ -24,12 +24,12 @@ const HomePage = () => {
               friends, colleagues and more!
             </h1>
           </p>
-          <p>Create your personal account to get started!</p>
+          <h2>Create your personal account to get started!</h2>
           <NavigateButton
             route={"user-registration"}
             buttonText={"Register now!"}
           />
-          <p>
+          <p className={styles.loginCTA}>
             Already registered? <Link to='/user-login'>Login</Link>
           </p>
         </section>

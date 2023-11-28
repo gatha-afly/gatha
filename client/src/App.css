@@ -58,7 +58,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-family: "Source Sans 3", sans-serif;
 }
 
@@ -261,10 +261,10 @@ scrollbar-thumb {
 /* Larger Screens */
 @media only screen and (min-width: 1441px) and (max-width: 1920px) {
   header {
-    height: 10vh;
+    height: 11vh;
   }
   main {
-    height: 85vh;
+    height: 84vh;
   }
   footer {
     height: 5vh;
@@ -273,10 +273,10 @@ scrollbar-thumb {
 
 @media only screen and (min-width: 1921px) {
   header {
-    height: 5vh;
+    height: 6vh;
   }
   main {
-    height: 60vh;
+    height: 59vh;
   }
   footer {
     height: 2.5vh;

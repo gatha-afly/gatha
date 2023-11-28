@@ -21,13 +21,13 @@
 /* Laptop*/
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
   .logo {
-    width: 8rem;
+    width: 9rem;
   }
 }
 
 /* Larger Screens */
 @media only screen and (min-width: 1441px) {
   .logo {
-    width: 11rem;
+    width: 12rem;
   }
 }

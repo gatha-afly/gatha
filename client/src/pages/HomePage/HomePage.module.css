@@ -16,6 +16,7 @@
 .infoContainer {
   width: 30%;
   text-align: center;
+  margin-right: 8rem;
 }
 
 /* Mobile*/
@@ -23,14 +24,18 @@
   .container {
     height: 100%;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: space-evenly;
   }
   .infoContainer {
     margin-left: 0rem;
     width: 90%;
     padding-left: 1rem;
     padding-right: 1rem;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1rem;
+    margin-right: 0rem;
+  }
+  .loginCTA {
+    display: none;
   }
 }
 

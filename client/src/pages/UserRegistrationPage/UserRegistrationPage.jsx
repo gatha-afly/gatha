@@ -14,7 +14,7 @@ const UserRegistrationPage = () => {
       <PiratePxPageRender COUNT_IDENTIFIER={"user-registration"} />
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - user registration' />
-      <h1>User registration</h1>
+      <h1>Registration</h1>
       <UserRegistration />
       <p>
         Already signed up? <Link to='/user-login'>Login</Link>
