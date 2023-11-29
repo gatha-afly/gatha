@@ -54,23 +54,11 @@ export const handleUserNotGroupMember = (res, groupName) => {
 };
 
 /**
- * Error handler to check if the previous group code is provided
- * @param {*} res
- * @param {*} message
- */
-export const handleCodeNotProvided = (res, message) => {
-  res.status(StatusCodes.BAD_REQUEST).json({
-    error: `Please provide the previous group code. ${message} `,
-  });
-};
-
-/**
  * Error handler to check if the previous group code matches
  * @param {*} res
- * @param {*} message
  */
-export const handleNoMatchingCode = (res, message) => {
+export const handleNoMatchingCode = (res) => {
   res.status(StatusCodes.BAD_REQUEST).json({
-    error: `Provided group code doesn't match to the existing one. ${message} `,
+    error: `Provided code doesn't match with the existing group code. Please try again.  `,
   });
 };

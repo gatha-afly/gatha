@@ -469,32 +469,30 @@ export const changeGroupCode = async (req, res) => {
     const { groupId } = req.params;
     const { existingCode } = req.body;
 
-    // Check if the existing code is provided
-    if (!existingCode) {
-      return errorHandlerUtils.handleCodeNotProvided;
-    }
-
-    // Check if the existing code matches the current group code
-    const group = await Group.findById(groupId);
-    if (group.code !== existingCode) {
-      return errorHandlerUtils.handleNoMatchingCode;
-    }
-
     // Generate a new unique group code
     const newCode = await generateUniqueGroupCode();
 
-    // Update the group with the new code
-    const updatedGroup = await Group.findByIdAndUpdate(
-      groupId,
-      { code: newCode },
-      { new: true }
-    );
-
-    return res.status(StatusCodes.OK).json({
-      message: "The group code has been successfully changed",
-      newCode,
-      updatedGroup,
-    });
+    // Find the group by ID and
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+    // Check if the existing code matches the current group code
+    if (group.code === existingCode) {
+      // Update the group code
+      const updatedGroup = await Group.findByIdAndUpdate(
+        groupId,
+        { code: newCode },
+        { new: true }
+      );
+      return res.status(StatusCodes.OK).json({
+        message: "The group code has been successfully changed",
+        newCode,
+        updatedGroup,
+      });
+    } else {
+      return errorHandlerUtils.handleNoMatchingCode(res);
+    }
   } catch (error) {
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: "Internal server error",
