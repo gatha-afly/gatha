@@ -106,21 +106,22 @@ export const deleteMessage = async (req, res) => {
     const { messageId, senderId } = req.params;
 
     // Use findByIdAndDelete to directly find and delete the message
-    const messageToDelete = await Message.findByIdAndDelete({
-      _id: messageId,
-      sender: senderId,
-    });
+    const isSender = await responseHandlerUtils.IsSenderOfMessage(
+      messageId,
+      senderId
+    );
 
-    if (!messageToDelete) {
+    if (!isSender) {
       // Message not found
-      return res.status(StatusCodes.NOT_FOUND).json({
-        message: "Message not found",
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "You are not authorized to delete this message",
       });
     }
 
+    await Message.findByIdAndDelete(messageId);
+
     return res.status(StatusCodes.OK).json({
       message: "The target message has been removed",
-      messageToDelete,
     });
   } catch (error) {
     // Log the error before handling it

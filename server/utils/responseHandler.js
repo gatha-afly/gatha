@@ -1,5 +1,6 @@
 import Group from "../models/Group.js";
 import User from "../models/User.js";
+import Message from "../models/Message.js";
 
 /**
  * Utility helper to find user by user ID
@@ -106,4 +107,17 @@ export const saveGroupMessage = async (groupId, newMember) => {
     console.error("Error saving group message:", error);
     return null;
   }
+};
+
+/**
+ * Utility handler for checking if a senderId is the sender of the message
+ * @param {*} messageId
+ * @param {*} senderId
+ * @returns
+ */
+export const IsSenderOfMessage = async (messageId, senderId) => {
+  return await Message.findOne({
+    _id: messageId,
+    sender: senderId,
+  });
 };
