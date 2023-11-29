@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Message from "../models/Message.js";
 import User from "../models/User.js";
 import Group from "../models/Group.js";
@@ -105,6 +106,13 @@ export const deleteMessage = async (req, res) => {
   try {
     const { messageId, senderId } = req.params;
 
+    // Validate senderId to ensure it is a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(senderId)) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: "Invalid senderId",
+      });
+    }
+
     // Use findByIdAndDelete to directly find and delete the message
     const isSender = await responseHandlerUtils.IsSenderOfMessage(
       messageId,
@@ -112,7 +120,6 @@ export const deleteMessage = async (req, res) => {
     );
 
     if (!isSender) {
-      // Message not found
       return res.status(StatusCodes.UNAUTHORIZED).json({
         error: "You are not authorized to delete this message",
       });
@@ -124,10 +131,6 @@ export const deleteMessage = async (req, res) => {
       message: "The target message has been removed",
     });
   } catch (error) {
-    // Log the error before handling it
-    console.error(error);
-
-    // Handle any internal errors
     return errorHandlerUtils.handleInternalError(res);
   }
 };
