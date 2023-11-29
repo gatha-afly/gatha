@@ -21,13 +21,14 @@ function SendMessage({ selectedGroup, socket }) {
   /**
    * Handles sending a message and related errors
    */
-  const sendMessage = () => {
+  const sendMessage = (e) => {
     if (input.trim()) {
       // Emit a "send_message" event to the server with the message text and group ID
       socket.emit("send_message", {
         text: input,
         groupId: selectedGroup?.groupId,
       });
+
       // Clear the input field and reset the error state
       setInput("");
       setError("");
@@ -41,12 +42,15 @@ function SendMessage({ selectedGroup, socket }) {
         <input
           name='message-input'
           type='text'
-          required
-          minLength='1'
           placeholder='Message'
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              sendMessage(e);
+            }
+          }}
         />
         {/* Render send message button */}
         <span className={styles.sendMessageButton}>

@@ -17,7 +17,7 @@ const GroupsList = ({ user }) => {
   const groupIds = user.groups.map((group) => group._id);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.groupsList}>
       {/* Render RenderBasicGroupInfo for each groupId in the array */}
       <div className={styles.groupContainer}>
         {groupIds.map((groupId) => (

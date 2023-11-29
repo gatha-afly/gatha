@@ -8,8 +8,9 @@ import styles from "./RenderBasicGroupInfo.module.css";
  * @param {Object} groupData - Data containing information about the group.
  */
 const RenderBasicGroupInfo = ({ userId, groupId }) => {
-  // Move the selection gorupData on click to context to reuse it on other components
+  // Get updateSelectedGroup from context
   const { updateSelectedGroup } = useUserContext();
+  // Fetch group information
   const response = useGetGroupData(groupId, userId);
 
   const { groupData } = response;

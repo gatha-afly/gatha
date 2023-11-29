@@ -78,7 +78,7 @@ const UserProvider = ({ children }) => {
   };
 
   /**
-   * Updates user data and localstorage
+   * Updates user data and localStorage
    * @param {*} newUserData
    */
   const updateUserData = (newUserData) => {
@@ -112,8 +112,7 @@ const UserProvider = ({ children }) => {
         updateUserData,
         selectedGroup,
         updateSelectedGroup,
-      }}
-    >
+      }}>
       {children}
     </userContext.Provider>
   );
