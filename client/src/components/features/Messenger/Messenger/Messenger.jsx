@@ -3,9 +3,9 @@ import "./Messenger.module.css";
 import io from "socket.io-client";
 import useUserContext from "../../../../context/useUserContext";
 import styles from "./Messenger.module.css";
-import GroupBar from "../MessengerGroupBar/MessengerGroupBar";
 import RenderMessages from "../RenderMessages/RenderMessages";
 import SendMessage from "../SendMessage/SendMessage";
+import GroupSettingBar from "../GroupSettingBar/GroupSettingBar";
 
 // Connecting to the socket.io server
 const socketUrl = import.meta.env.VITE_REACT_APP_SOCKET_URL;
@@ -22,7 +22,7 @@ function Messenger() {
       {selectedGroup ? (
         <>
           <div className={styles.groupBar}>
-            <GroupBar selectedGroup={selectedGroup} />
+            <GroupSettingBar selectedGroup={selectedGroup} />
           </div>
           <div className={styles.messages}>
             <RenderMessages selectedGroup={selectedGroup} socket={socket} />

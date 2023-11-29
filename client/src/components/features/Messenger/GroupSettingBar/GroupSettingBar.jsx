@@ -1,8 +1,8 @@
 // GroupBar.jsx
 import React from "react";
-import styles from "./MessengerGroupBar.module.css";
+import styles from "./GroupSettingBar.module.css";
 
-function MessengerGroupBar({ selectedGroup }) {
+function GroupSettingBar({ selectedGroup }) {
   return (
     <div className={styles.barContainer}>
       <h2>{selectedGroup.name}</h2>
@@ -10,4 +10,4 @@ function MessengerGroupBar({ selectedGroup }) {
   );
 }
 
-export default MessengerGroupBar;
+export default GroupSettingBar;
