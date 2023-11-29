@@ -1,4 +1,13 @@
 .barContainer {
   width: 100%;
   border-bottom: 0.25rem solid var(--color-structure-elements);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.groupName {
+  width: 25%;
+  color: var(--color-text);
 }

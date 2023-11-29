@@ -28,7 +28,7 @@ const AddUserUponGroupCreationPage = () => {
   return (
     <main className={styles.container}>
       {/* Track page renders */}
-      <PiratePxPageRender COUNT_IDENTIFIER={"add-user-upon-group-creation"} />
+      <PiratePxPageRender COUNT_IDENTIFIER={"add-user"} />
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - add user' />
       <h1>{groupName}</h1>
