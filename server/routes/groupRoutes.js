@@ -10,6 +10,7 @@ import {
   getGroupData,
   getGroupMembers,
   editGroupById,
+  changeGroupCode,
 } from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/userAuthorization.js";
 import { validator } from "../middleware/validator.js";
@@ -55,6 +56,11 @@ router.patch(
   isGroupAdminMiddleware,
   validateGroupRules,
   editGroupById
+);
+router.patch(
+  "/change-code/:groupId/:userId",
+  isGroupAdminMiddleware,
+  changeGroupCode
 );
 
 export default router;

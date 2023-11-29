@@ -425,17 +425,14 @@ export const getGroupMembers = async (req, res) => {
 export const editGroupById = async (req, res) => {
   try {
     const { groupId } = req.params;
-    const { name, description, avatar, code } = req.body;
+    const { name, description, avatar } = req.body;
 
     // Find the group by groupId
     const groupToEdit = await Group.findById(groupId);
     if (!groupToEdit) {
       return errorHandlerUtils.handleGroupNotFound(res);
     }
-    const newCode = await generateUniqueGroupCode(newCode);
-    if (code) {
-      return newCode;
-    }
+
     //Update the group by name, description, avatar or code
     const editedGroup = await Group.findByIdAndUpdate(
       groupId,
@@ -444,7 +441,6 @@ export const editGroupById = async (req, res) => {
           name,
           description,
           avatar,
-          code: newCode,
         },
       },
       { new: true }
@@ -460,5 +456,48 @@ export const editGroupById = async (req, res) => {
     });
   } catch (error) {
     return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ * Handler to change the group code
+ * @param {*} req
+ * @param {*} res
+ */
+export const changeGroupCode = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    const { existingCode } = req.body;
+
+    // Check if the existing code is provided
+    if (!existingCode) {
+      return errorHandlerUtils.handleCodeNotProvided;
+    }
+
+    // Check if the existing code matches the current group code
+    const group = await Group.findById(groupId);
+    if (group.code !== existingCode) {
+      return errorHandlerUtils.handleNoMatchingCode;
+    }
+
+    // Generate a new unique group code
+    const newCode = await generateUniqueGroupCode();
+
+    // Update the group with the new code
+    const updatedGroup = await Group.findByIdAndUpdate(
+      groupId,
+      { code: newCode },
+      { new: true }
+    );
+
+    return res.status(StatusCodes.OK).json({
+      message: "The group code has been successfully changed",
+      newCode,
+      updatedGroup,
+    });
+  } catch (error) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "Internal server error",
+    });
   }
 };
