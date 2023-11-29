@@ -2,6 +2,8 @@ import Message from "../models/Message.js";
 import User from "../models/User.js";
 import Group from "../models/Group.js";
 import * as responseHandlerUtils from "../utils/responseHandler.js";
+import * as errorHandlerUtils from "../utils/errorHandler.js";
+import { StatusCodes } from "http-status-codes";
 
 /**
  *Handler for gettting the intial message when a user joins or reconnects to a group
@@ -87,8 +89,47 @@ export const getAllGroupMessage = async (req, res) => {
       .sort({ createdAt: -1 })
       .populate("sender", "-password -groups"); //Exclude the password and groups
 
-    return res.status(200).json(messages.reverse());
+    return res.status(StatusCodes.OK).json(messages.reverse());
   } catch (error) {
-    return res.status(500).json({ error: "Error fetching messages" });
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ * Handler for deleting the messages by providing groupId and userId
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const deleteMessage = async (req, res) => {
+  try {
+    const { messageId, senderId } = req.params;
+
+    // Check if the user with the provided senderId exists in the database
+    const user = await responseHandlerUtils.findUserById(senderId);
+    if (!user) {
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
+    }
+
+    // Check if the message with the provided messageId and senderId exists
+    const messageToDelete = await Message.findOneAndDelete({
+      _id: messageId, // Assuming messageId is the MongoDB ObjectId of the message
+      senderId,
+    });
+
+    if (!messageToDelete) {
+      // Message not found
+      return res.status(StatusCodes.NOT_FOUND).json({
+        message: "Message not found",
+      });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      message: "The target message has been removed",
+      messageToDelete,
+    });
+  } catch (error) {
+    // Handle any internal errors
+    return errorHandlerUtils.handleInternalError(res);
   }
 };
