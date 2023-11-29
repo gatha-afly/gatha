@@ -8,6 +8,7 @@ const io = new Server(httpServer, {
   cors: {
     origin: [
       "http://localhost:3000",
+      "https://client-1anl.onrender.com",
       "https://gatha-dev.netlify.app",
       "https://gatha.netlify.app",
     ],
@@ -18,4 +19,5 @@ const io = new Server(httpServer, {
 
 // Set up Socket.io routes using the router
 setupSocketIO(io);
+//export
 export { httpServer, io };
