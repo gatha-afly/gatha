@@ -3,10 +3,10 @@
   padding: 0.5rem;
   border: 0.2rem solid var(--color-structure-elements);
   border-radius: 10px;
-  margin-left: 1rem;
   border-radius: 1rem;
   background-color: var(--color-body);
   position: relative;
+  margin-left: 0.5rem;
 }
 
 .groupBar {
@@ -22,10 +22,16 @@
   height: 10%;
 }
 
+.selectGroup {
+  display: flex;
+  justify-content: center;
+}
+
 /* Mobile*/
 @media only screen and (max-width: 767px) {
   .messengerContainer {
     /* fallback value for older browsers*/
+    margin-left: 0rem;
     height: 66vh;
     height: 76svh;
     width: 90vw;

@@ -33,7 +33,7 @@ function Messenger() {
           </div>
         </>
       ) : (
-        <p>Please select a group.</p>
+        <p className={styles.selectGroup}>Please select a group.</p>
       )}
     </div>
   );

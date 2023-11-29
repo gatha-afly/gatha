@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import useUserContext from "../../../../../context/useUserContext";
 import useGetGroupData from "../../../../../hooks/useGetGroupData";
 import GroupnameInitial from "../../../../common/GroupnameInitial/GroupnameInitial";
@@ -10,6 +11,9 @@ import styles from "./RenderBasicGroupInfo.module.css";
 const RenderBasicGroupInfo = ({ userId, groupId }) => {
   // Get updateSelectedGroup from context
   const { updateSelectedGroup } = useUserContext();
+  // Use useNavigate
+  const navigate = useNavigate();
+  const isMobile = window.innerWidth <= 768;
   // Fetch group information
   const response = useGetGroupData(groupId, userId);
 
@@ -18,10 +22,14 @@ const RenderBasicGroupInfo = ({ userId, groupId }) => {
   const { data } = groupData || {};
   const { name, description } = data || {};
 
-  // Handle click on the group card
   const handleClick = () => {
     if (groupData) {
-      updateSelectedGroup(data);
+      if (isMobile) {
+        updateSelectedGroup(data);
+        navigate("/messenger-mobile");
+      } else {
+        updateSelectedGroup(data);
+      }
     }
   };
 
