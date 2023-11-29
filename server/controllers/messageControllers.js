@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import Message from "../models/Message.js";
 import User from "../models/User.js";
 import Group from "../models/Group.js";
@@ -106,14 +105,7 @@ export const deleteMessage = async (req, res) => {
   try {
     const { messageId, senderId } = req.params;
 
-    // Validate senderId to ensure it is a valid ObjectId
-    if (!mongoose.Types.ObjectId.isValid(senderId)) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
-        error: "Invalid senderId",
-      });
-    }
-
-    // Use findByIdAndDelete to directly find and delete the message
+    // Checks the senderId is the actual sender of the message
     const isSender = await responseHandlerUtils.IsSenderOfMessage(
       messageId,
       senderId
@@ -131,6 +123,39 @@ export const deleteMessage = async (req, res) => {
       message: "The target message has been removed",
     });
   } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+export const editMessage = async (req, res) => {
+  try {
+    const { messageId, senderId } = req.params;
+    const { text } = req.body;
+
+    const isSender = await responseHandlerUtils.IsSenderOfMessage(
+      messageId,
+      senderId
+    );
+
+    if (!isSender) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "You are not authorized to delete this message",
+      });
+    }
+
+    const editedMessage = await Message.findByIdAndUpdate(
+      messageId,
+      {
+        text,
+      },
+      { new: true }
+    );
+
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "The message was edited successfully!", editedMessage });
+  } catch (error) {
+    console.error(error); // Log
     return errorHandlerUtils.handleInternalError(res);
   }
 };
