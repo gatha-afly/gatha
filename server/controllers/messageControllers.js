@@ -15,7 +15,7 @@ export const getInitialMessages = async (io, socket, groupId) => {
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
       .limit(10)
-      .populate("sender", "username");
+      .populate("sender", "-password -groups"); //Exclude the password and groups
 
     // Reverse the order to have the oldest messages first.
     io.to(socket.id).emit("init", messages.reverse());
@@ -36,7 +36,7 @@ export const getInitialMessages = async (io, socket, groupId) => {
 export const sendMessage = async (io, msg, senderId, groupId) => {
   try {
     // Check if the senderId exists in the User schema.
-    const sender = await User.findById(senderId);
+    const sender = await User.findById(senderId).select("-password -groups"); //Exclude password and groups
     if (!sender) {
       console.error("Sender does not exist");
       return;
@@ -63,7 +63,7 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
     await responseHandlerUtils.saveGroupMessage(groupId, newMessage);
 
     // Populate the sender field before emitting the message to the group.
-    await newMessage.populate("sender", "username");
+    await newMessage.populate("sender", "-password -groups"); //Exclude password and groups
 
     io.to(groupId.toString()).emit("receive_message", {
       text: newMessage,
@@ -87,7 +87,7 @@ export const getAllGroupMessage = async (req, res) => {
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
       .limit(10)
-      .populate("sender", "username");
+      .populate("sender", "-password -groups"); //Exclude the password and groups
 
     return res.status(200).json(messages.reverse());
   } catch (error) {

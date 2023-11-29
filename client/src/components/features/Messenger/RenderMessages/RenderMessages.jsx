@@ -64,8 +64,8 @@ function RenderMessages({ selectedGroup, socket }) {
             <li key={index} className={styles.message}>
               <div className={styles.sender}>
                 <UsernameInitials
-                  firstName='Test'
-                  lastName={"Test"}
+                  firstName={msg.sender.firstName}
+                  lastName={msg.sender.lastName}
                   radius={"2.6"}
                   fontSize={"1.1"}
                   borderWidth={"0.4"}
