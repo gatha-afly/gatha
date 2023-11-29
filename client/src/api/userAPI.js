@@ -44,4 +44,3 @@ userAPI.interceptors.response.use(
 );
 
 export default userAPI;
-/* Export */
