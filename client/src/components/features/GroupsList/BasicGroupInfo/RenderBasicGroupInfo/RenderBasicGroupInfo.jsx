@@ -1,6 +1,6 @@
-import useUserContext from "../../../../context//useUserContext";
-import useGetGroupData from "../../../../hooks/useGetGroupData";
-import GroupnameInitial from "../../../common/GroupnameInitial/GroupnameInitial";
+import useUserContext from "../../../../../context/useUserContext";
+import useGetGroupData from "../../../../../hooks/useGetGroupData";
+import GroupnameInitial from "../../../../common/GroupnameInitial/GroupnameInitial";
 import styles from "./RenderBasicGroupInfo.module.css";
 
 /**

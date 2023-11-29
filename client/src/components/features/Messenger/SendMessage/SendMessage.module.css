@@ -1,8 +1,14 @@
-.sendMessageContainer button {
-  width: 4rem;
+.sendMessageContainer input {
+  width: 100%;
+  margin-right: 0.5rem;
+  margin-left: 1rem;
 }
 
-.sendMessageContainer input {
-  width: 30rem;
-  margin-right: 0.5rem;
+.sendMessageLine {
+  display: flex;
+  flex-direction: row;
+}
+
+.sendMessageButton {
+  transform: translateY(-0.7rem);
 }

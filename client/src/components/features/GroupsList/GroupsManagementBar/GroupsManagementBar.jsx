@@ -1,12 +1,12 @@
 // GroupBar.jsx
 import React from "react";
-import styles from "./GroupsBar.module.css";
+import styles from "./GroupsManagementBar.module.css";
 import { FaPlusSquare } from "react-icons/fa";
 import { MdSearch } from "react-icons/md";
 
-import ReactIconNavigate from "./../../../common/ReactIconNavigate/ReactIconNavigate";
+import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
 
-function GroupsBar() {
+function GroupsManagementBar() {
   return (
     <div className={styles.groupBar}>
       <ReactIconNavigate route='/create-group' size={3} icon={FaPlusSquare} />
@@ -15,4 +15,4 @@ function GroupsBar() {
   );
 }
 
-export default GroupsBar;
+export default GroupsManagementBar;

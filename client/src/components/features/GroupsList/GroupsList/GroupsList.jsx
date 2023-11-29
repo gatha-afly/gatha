@@ -1,6 +1,6 @@
-import RenderBasicGroupInfo from "../../BasicGroupInfo/RenderBasicGroupInfo/RenderBasicGroupInfo";
 import styles from "./GroupsList.module.css";
-import GroupBar from "../GroupsBar/GroupsBar";
+import GroupsManagementBar from "../GroupsManagementBar/GroupsManagementBar";
+import RenderBasicGroupInfo from "../BasicGroupInfo/RenderBasicGroupInfo/RenderBasicGroupInfo";
 
 /**
  * Renders a list of all the user's groups with basic information for each.
@@ -29,7 +29,7 @@ const GroupsList = ({ user }) => {
         ))}
       </div>
       <div className={styles.groupBar}>
-        <GroupBar />
+        <GroupsManagementBar />
       </div>
     </div>
   );
