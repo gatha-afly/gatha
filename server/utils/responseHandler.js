@@ -1,5 +1,7 @@
+import mongoose from "mongoose";
 import Group from "../models/Group.js";
 import User from "../models/User.js";
+import Message from "../models/Message.js";
 
 /**
  * Utility helper to find user by user ID
@@ -106,4 +108,24 @@ export const saveGroupMessage = async (groupId, newMember) => {
     console.error("Error saving group message:", error);
     return null;
   }
+};
+
+/**
+ * Utility handler for checking if a senderId is the sender of the message
+ * @param {*} messageId
+ * @param {*} senderId
+ * @returns
+ */
+export const IsSenderOfMessage = async (messageId, senderId) => {
+  // Validate senderId to ensure it is a valid ObjectId
+  if (!mongoose.Types.ObjectId.isValid(senderId)) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      error: "Invalid senderId",
+    });
+  }
+
+  return await Message.findOne({
+    _id: messageId,
+    sender: senderId,
+  });
 };
