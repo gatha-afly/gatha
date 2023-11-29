@@ -1,6 +1,6 @@
 .message {
   width: 80%;
-  background-color: var(--color-main);
+  /* background-color: var(--color-main); */
   border-radius: 10px;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
@@ -16,4 +16,14 @@
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+}
+/* Style for sender's message */
+.senderMessage {
+  margin-left: 6rem;
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+}
+.receiverMessage {
+  background-color: #2196f3; /* Blue background */
+  color: red; /* White text */
 }

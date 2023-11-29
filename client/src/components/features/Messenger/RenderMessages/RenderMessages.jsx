@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./RenderMessages.module.css";
 import userAPI from "./../../../../api/userAPI";
 import { dateFormatter } from "./../../../../utils/dateUtils";
@@ -9,11 +9,10 @@ import useUserContext from "../../../../context/useUserContext";
 function RenderMessages({ selectedGroup, socket }) {
   // Retrieve user information
   const { user } = useUserContext();
-  const loggedInUsername = user.username;
+
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
 
-  console.log(messages);
   useEffect(() => {
     //Fetch the  messages of the selected group
     const fetchMessages = async () => {
@@ -61,7 +60,14 @@ function RenderMessages({ selectedGroup, socket }) {
       ) : (
         <ul className={styles.messagesContainer}>
           {messages.map((msg, index) => (
-            <li key={index} className={styles.message}>
+            <li
+              key={index}
+              className={`${styles.message} ${
+                msg.sender._id === user.userId
+                  ? styles.senderMessage
+                  : styles.receiverMessage
+              }`}
+            >
               <div className={styles.sender}>
                 <UsernameInitials
                   firstName={msg.sender.firstName}
