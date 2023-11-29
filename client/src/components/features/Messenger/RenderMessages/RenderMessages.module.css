@@ -1,6 +1,5 @@
 .message {
-  width: 80%;
-  background-color: var(--color-main);
+  width: 70%;
   border-radius: 10px;
   padding: 0.5rem;
   margin-bottom: 0.5rem;
@@ -14,6 +13,14 @@
 
 .sender {
   display: flex;
-  flex-direction: row;
   gap: 0.5rem;
+}
+
+.senderMessage {
+  background-color: var(--color-main);
+  transform: translateX(calc(100% - 61.5%));
+}
+
+.receiverMessage {
+  background-color: var(--color-structure-elements-light);
 }
