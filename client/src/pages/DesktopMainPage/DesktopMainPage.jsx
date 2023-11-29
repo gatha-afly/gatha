@@ -6,6 +6,9 @@ import useUserContext from "../../context/useUserContext";
 import Messenger from "../../components/features/Messenger/Messenger/Messenger";
 import GroupsList from "../../components/features/GroupsList/GroupsList/GroupsList";
 
+/**
+ * Desktop version of the main page including both the GroupsList and the Messenger
+ */
 const DesktopMainPage = () => {
   // Retrieve user information
   const { user } = useUserContext();
@@ -28,6 +31,7 @@ const DesktopMainPage = () => {
           <NavigateButton route={"join-group"} buttonText={"join a group"} />
         </div>
       ) : (
+        // Render groups list and messenger if the user is a member of a group
         <div className={styles.messengerNotMobile}>
           <GroupsList user={user} />
           <Messenger />

@@ -5,6 +5,9 @@ import PiratePxPageRender from "../../components/common/PiratePxPageRender/Pirat
 import useUserContext from "../../context/useUserContext";
 import GroupsList from "../../components/features/GroupsList/GroupsList/GroupsList";
 
+/**
+ * Mobile version of the main page rendering the GroupsList only that then navigates to the MobileMessengerPage
+ */
 const MobileMainPage = () => {
   // Retrieve user information
   const { user } = useUserContext();

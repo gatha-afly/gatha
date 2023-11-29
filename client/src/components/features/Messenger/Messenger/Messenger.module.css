@@ -1,5 +1,4 @@
 .messengerContainer {
-  overflow-y: scroll;
   padding: 0.5rem;
   border: 0.2rem solid var(--color-structure-elements);
   border-radius: 10px;
@@ -14,12 +13,12 @@
 }
 
 .messages {
-  height: 80%;
+  height: 78%;
   overflow-y: scroll;
 }
 
 .send {
-  height: 10%;
+  height: 8%;
 }
 
 .selectGroup {

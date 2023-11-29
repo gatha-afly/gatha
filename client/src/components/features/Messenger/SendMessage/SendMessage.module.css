@@ -5,8 +5,11 @@
 }
 
 .sendMessageLine {
+  border-top: 0.25rem solid var(--color-structure-elements);
+  margin-top: 1rem;
   display: flex;
   flex-direction: row;
+  padding: 0.5rem;
 }
 
 .sendMessageButton {
