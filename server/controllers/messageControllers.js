@@ -14,7 +14,6 @@ export const getInitialMessages = async (io, socket, groupId) => {
     // Fetch the latest messages for the specified group and populate the sender field with usernames.
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
-      .limit(10)
       .populate("sender", "-password -groups"); //Exclude the password and groups
 
     // Reverse the order to have the oldest messages first.
@@ -86,7 +85,6 @@ export const getAllGroupMessage = async (req, res) => {
 
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
-      .limit(10)
       .populate("sender", "-password -groups"); //Exclude the password and groups
 
     return res.status(200).json(messages.reverse());
