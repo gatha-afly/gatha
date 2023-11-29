@@ -105,16 +105,10 @@ export const deleteMessage = async (req, res) => {
   try {
     const { messageId, senderId } = req.params;
 
-    // Check if the user with the provided senderId exists in the database
-    const user = await responseHandlerUtils.findUserById(senderId);
-    if (!user) {
-      return errorHandlerUtils.handleUserNotFound(res, "user ID");
-    }
-
-    // Check if the message with the provided messageId and senderId exists
-    const messageToDelete = await Message.findOneAndDelete({
-      _id: messageId, // Assuming messageId is the MongoDB ObjectId of the message
-      senderId,
+    // Use findByIdAndDelete to directly find and delete the message
+    const messageToDelete = await Message.findByIdAndDelete({
+      _id: messageId,
+      sender: senderId,
     });
 
     if (!messageToDelete) {
@@ -129,6 +123,9 @@ export const deleteMessage = async (req, res) => {
       messageToDelete,
     });
   } catch (error) {
+    // Log the error before handling it
+    console.error(error);
+
     // Handle any internal errors
     return errorHandlerUtils.handleInternalError(res);
   }
