@@ -59,7 +59,6 @@ function SendMessage({ selectedGroup, socket }) {
       e.preventDefault();
       console.log("Message sent via Enter button");
       sendMessage(e);
-      setInput("");
     } else {
       socket.emit("typing", { groupId: selectedGroup?.groupId });
       typingTimeout = setTimeout(() => {

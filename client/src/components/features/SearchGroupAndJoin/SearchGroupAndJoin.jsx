@@ -9,6 +9,12 @@ import {
 import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SearchGroupAndJoin.module.css";
 
+/**
+ * Form that allows searching and joining a group via group code. Shows error message if code does not exist in database
+ *
+ * @component
+ * @returns {JSX.Element} Join group form
+ */
 const SearchGroupAndJoin = () => {
   // Get user data form userContext
   const { user, updateUserData } = useUserContext();
