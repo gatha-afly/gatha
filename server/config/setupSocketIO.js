@@ -27,9 +27,20 @@ const setupSocketIO = (io) => {
 
     console.log(`User Connected: ${socket.id}`);
 
+    // Notify other clients when a user is typing
+    socket.on("typing", ({ groupId }) => {
+      socket.to(groupId.toString()).emit("typing", { user: user.username });
+    });
+
     // Listen for incoming messages from the client
     socket.on("send_message", async ({ text, groupId }) => {
       console.log(socket.user.id);
+
+      // Notify other clients when a user stops typing
+      socket
+        .to(groupId.toString())
+        .emit("stop_typing", { user: user.username });
+
       // Send the received message to the messageController for processing
       try {
         // Socket.user.id is the id of connected user
