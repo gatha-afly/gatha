@@ -6,7 +6,7 @@
 
 .message {
   width: 70%;
-  border-radius: 10px;
+  border-radius: 1rem;
   padding: 0.5rem;
   margin-bottom: 1rem;
   margin-left: 1rem;
@@ -15,7 +15,8 @@
 
 .date {
   font-size: 1.1rem;
-  text-align: right;
+  font-weight: 300;
+  text-align: end;
 }
 
 .sender {

@@ -1,0 +1,10 @@
+.barContainer {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+}
+
+.groupCode {
+  color: var(--color-text);
+  white-space: nowrap;
+}

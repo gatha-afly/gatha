@@ -1,43 +1,82 @@
 // MessageInput.jsx
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SendMessage.module.css";
 import { IoMdSend } from "react-icons/io";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
+import useUserContext from "../../../../context/useUserContext";
 
-/**
- * SendMessage component for sending new messages in the selected group.
- *
- * @component
- * @param {Object} props - The component props.
- * @param {Object} props.selectedGroup - The selected group object.
- * @param {Object} props.socket - The socket object for communication.
- * @returns {React.Component} The rendered SendMessage component.
- */
 function SendMessage({ selectedGroup, socket }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
+  const { setIsTyping, setTypingUser } = useUserContext();
+  let typingTimeout;
 
-  /**
-   * Handles sending a message and related errors
-   */
+  useEffect(() => {
+    socket.on("typing", ({ user }) => {
+      console.log(`${user} is typing...`);
+      setTypingUser(user);
+      setIsTyping(true);
+    });
+
+    socket.on("stop_typing", ({ user }) => {
+      console.log(`${user} stopped typing.`);
+      setIsTyping(false);
+      setTypingUser("");
+    });
+
+    return () => {
+      socket.off("typing");
+      socket.off("stop_typing");
+    };
+  }, [socket, setIsTyping, setTypingUser]);
+
   const sendMessage = (e) => {
     if (input.trim()) {
-      // Emit a "send_message" event to the server with the message text and group ID
-      socket.emit("send_message", {
-        text: input,
-        groupId: selectedGroup?.groupId,
-      });
-
-      // Clear the input field and reset the error state
-      setInput("");
-      setError("");
+      socket.emit(
+        "send_message",
+        {
+          text: input,
+          groupId: selectedGroup?.groupId,
+        },
+        (acknowledgment) => {
+          if (acknowledgment.error) {
+            setError(acknowledgment.error);
+          } else {
+            console.log("Message sent via send icon");
+            setInput("");
+            setError("");
+            socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
+          }
+        }
+      );
     }
   };
 
+  const handleKeyDown = (e) => {
+    clearTimeout(typingTimeout);
+    if (e.key === "Enter") {
+      e.preventDefault();
+      console.log("Message sent via Enter button");
+      sendMessage(e);
+      setInput("");
+    } else {
+      socket.emit("typing", { groupId: selectedGroup?.groupId });
+      typingTimeout = setTimeout(() => {
+        socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
+      }, 1000);
+    }
+  };
+
+  // Clear input and set isTyping to false when selectedGroup changes
+  useEffect(() => {
+    setInput("");
+    setIsTyping(false);
+    setTypingUser("");
+  }, [selectedGroup, setIsTyping, setTypingUser]);
+
   return (
     <form className={styles.sendMessageContainer}>
-      {/* Render message input field, send message when enter key is pressed */}
       <div className={styles.sendMessageLine}>
         <input
           name='message-input'
@@ -45,20 +84,13 @@ function SendMessage({ selectedGroup, socket }) {
           placeholder='Message'
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              sendMessage(e);
-            }
-          }}
+          onKeyDown={handleKeyDown}
         />
-        {/* Render send message button */}
         <span className={styles.sendMessageButton}>
           <ReactIconNavigate onClick={sendMessage} size={3} icon={IoMdSend} />
         </span>
       </div>
-      {/* Display error message if present
-       */}
+
       <ErrorDisplay error={error} />
     </form>
   );

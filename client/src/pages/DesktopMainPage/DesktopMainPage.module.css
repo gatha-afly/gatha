@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .getStartedCta {
   display: flex;
   flex-direction: column;

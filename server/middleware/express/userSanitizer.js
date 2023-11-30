@@ -25,6 +25,8 @@ export const validateUserRules = [
   body("email")
     .trim()
     .isEmail()
+    .normalizeEmail() // Normalize email address
+    .customSanitizer((value) => value.toLowerCase()) // Convert the email to all lowercase
     .custom(async (value) => checkUserExistenceByEmail(value)),
 
   //Sanitize and validate the user password

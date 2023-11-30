@@ -3,6 +3,7 @@ import useUserContext from "../../../../../context/useUserContext";
 import useGetGroupData from "../../../../../hooks/useGetGroupData";
 import GroupnameInitial from "../../../../common/GroupnameInitial/GroupnameInitial";
 import styles from "./RenderBasicGroupInfo.module.css";
+import { isMobile } from "../../../../../utils/deviceUtils";
 
 /**
  * Displays basic information about a group.
@@ -13,7 +14,6 @@ const RenderBasicGroupInfo = ({ userId, groupId }) => {
   const { updateSelectedGroup } = useUserContext();
   // Use useNavigate
   const navigate = useNavigate();
-  const isMobile = window.innerWidth <= 768;
   // Fetch group information
   const response = useGetGroupData(groupId, userId);
 
@@ -26,6 +26,7 @@ const RenderBasicGroupInfo = ({ userId, groupId }) => {
     if (groupData) {
       if (isMobile) {
         updateSelectedGroup(data);
+        // Navigate to mobile messenger page if device is mobile
         navigate("/messenger-mobile");
       } else {
         updateSelectedGroup(data);

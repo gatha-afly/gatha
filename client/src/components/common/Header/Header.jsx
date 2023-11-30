@@ -20,7 +20,7 @@ const Header = () => {
         Render the Logo img without background if not logged in,
         and with background if logged in.
       */}
-      <Logo withBackground={!loggedIn} className={styles.logo} />
+      <Logo withBackground={loggedIn} className={styles.logo} />
       {/* Conditionally render login and logout button */}
       {loggedIn ? (
         <HamburgerMenu firstName={user.firstName} lastName={user.lastName} />

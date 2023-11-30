@@ -1,4 +1,5 @@
 import React from "react";
+import GroupAdminBar from "../../GroupAdminBar/GroupAdminBar";
 import styles from "./GroupSettingBar.module.css";
 
 /**
@@ -11,7 +12,11 @@ function GroupSettingBar({ selectedGroup }) {
   return (
     <div className={styles.barContainer}>
       {/* Render group name */}
-      <h2>{selectedGroup.name}</h2>
+      <h2 className={styles.groupName}>{selectedGroup.name}</h2>
+      {/* Render admin bar if user is admin */}
+      {selectedGroup.group_code && (
+        <GroupAdminBar selectedGroup={selectedGroup} />
+      )}
     </div>
   );
 }
