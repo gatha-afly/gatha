@@ -8,11 +8,13 @@ import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import useUserContext from "../../../context/useUserContext";
 import styles from "./CreateGroup.module.css";
 import userAPI from "../../../api/userAPI";
+import ReactIconNavigate from "../../common/ReactIconNavigate/ReactIconNavigate";
+import { HiMiniBackspace } from "react-icons/hi2";
 
 /**
  * Create group form, allowing users to input group information and register.
  */
-const CreateGroup = () => {
+const CreateGroup = ({ onDefaultViewClick }) => {
   // Get user data form userContext
   const { user, updateUserData } = useUserContext();
   const userId = user.userId;
@@ -93,6 +95,11 @@ const CreateGroup = () => {
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
       <button type='submit'>create</button>
+      <ReactIconNavigate
+        onClick={onDefaultViewClick}
+        size={3}
+        icon={HiMiniBackspace}
+      />
     </form>
   );
 };
