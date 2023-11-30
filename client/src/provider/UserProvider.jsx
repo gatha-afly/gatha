@@ -16,6 +16,8 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(storedUser);
   const [error, setError] = useState("");
   const [selectedGroup, setSelectedGroup] = useState(storedSelectedGroup);
+  const [isTyping, setIsTyping] = useState(false);
+  const [typingUser, setTypingUser] = useState("");
 
   /**
    * Handles user login.
@@ -112,7 +114,12 @@ const UserProvider = ({ children }) => {
         updateUserData,
         selectedGroup,
         updateSelectedGroup,
-      }}>
+        isTyping,
+        setIsTyping,
+        typingUser,
+        setTypingUser,
+      }}
+    >
       {children}
     </userContext.Provider>
   );

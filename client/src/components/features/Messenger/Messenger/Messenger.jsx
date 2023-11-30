@@ -14,7 +14,7 @@ const socket = io.connect(socketUrl, {
 });
 
 function Messenger() {
-  const { selectedGroup } = useUserContext();
+  const { selectedGroup, isTyping, typingUser } = useUserContext();
   console.log(selectedGroup);
 
   return (
@@ -27,6 +27,9 @@ function Messenger() {
           <div className={styles.messages}>
             <RenderMessages selectedGroup={selectedGroup} socket={socket} />
           </div>
+          {isTyping && (
+            <div className={styles.typingIndicator}>{typingUser} is typing</div>
+          )}
           <div className={styles.send}>
             {" "}
             <SendMessage selectedGroup={selectedGroup} socket={socket} />

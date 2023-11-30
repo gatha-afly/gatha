@@ -15,30 +15,3 @@
 .sendMessageButton {
   transform: translateY(-0.7rem);
 }
-
-/* Typing effect */
-
-.typingIndicator {
-  font-size: 2rem;
-  color: #999; /* Adjust the color as needed */
-  margin-top: 5px;
-}
-
-/*  animation for a smoother effect */
-@keyframes blink {
-  0% {
-    opacity: 0.2;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.2;
-  }
-}
-
-.typingIndicator::after {
-  content: "...";
-  display: inline-block;
-  animation: blink 1s infinite;
-}

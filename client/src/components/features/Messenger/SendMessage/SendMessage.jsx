@@ -4,6 +4,7 @@ import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SendMessage.module.css";
 import { IoMdSend } from "react-icons/io";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
+import useUserContext from "../../../../context/useUserContext";
 
 /**
  * SendMessage component for sending new messages in the selected group.
@@ -17,8 +18,8 @@ import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNaviga
 function SendMessage({ selectedGroup, socket }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
-  const [typingUser, setTypingUser] = useState("");
+
+  const { setIsTyping, setTypingUser } = useUserContext();
 
   useEffect(() => {
     // Listen for typing events from the server
@@ -42,7 +43,7 @@ function SendMessage({ selectedGroup, socket }) {
       socket.off("typing");
       socket.off("stop_typing");
     };
-  }, [socket]);
+  }, [socket, setIsTyping, setTypingUser]);
   /**
    * Handles sending a message and related errors
    */
@@ -85,9 +86,7 @@ function SendMessage({ selectedGroup, socket }) {
           <ReactIconNavigate onClick={sendMessage} size={3} icon={IoMdSend} />
         </span>
       </div>
-      {isTyping && (
-        <div className={styles.typingIndicator}>{typingUser} is typing...</div>
-      )}
+
       <ErrorDisplay error={error} />
     </form>
   );
