@@ -9,6 +9,7 @@ import UserRegistrationPage from "./pages/UserRegistrationPage/UserRegistrationP
 import UserLoginPage from "./pages/UserLoginPage/UserLoginPage";
 import UserLogoutPage from "./pages/UserLogoutPage/UserLogoutPage";
 import UserProvider from "./provider/UserProvider";
+import AddUserUponGroupCreationPage from "./pages/AddUserUponGroupCreationPage/AddUserUponGroupCreationPage";
 import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes/ProtectedRoutes";
 import MobileMessengerPage from "./pages/MobileMessengerPage/MobileMessengerPage";
@@ -43,6 +44,10 @@ function App() {
                     <DesktopMainPage />
                   )
                 }
+              />
+              <Route
+                path='/add-user/:groupId/:userId'
+                element={<AddUserUponGroupCreationPage />}
               />
               <Route path='/user-profile' element={<UserProfilePage />} />
               <Route
