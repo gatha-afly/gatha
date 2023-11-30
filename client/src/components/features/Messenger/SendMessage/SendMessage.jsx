@@ -6,68 +6,66 @@ import { IoMdSend } from "react-icons/io";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
 import useUserContext from "../../../../context/useUserContext";
 
-/**
- * SendMessage component for sending new messages in the selected group.
- *
- * @component
- * @param {Object} props - The component props.
- * @param {Object} props.selectedGroup - The selected group object.
- * @param {Object} props.socket - The socket object for communication.
- * @returns {React.Component} The rendered SendMessage component.
- */
 function SendMessage({ selectedGroup, socket }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
-
   const { setIsTyping, setTypingUser } = useUserContext();
+  let typingTimeout;
 
   useEffect(() => {
-    // Listen for typing events from the server
     socket.on("typing", ({ user }) => {
-      // Handle typing event, e.g., show a typing indicator
       console.log(`${user} is typing...`);
       setTypingUser(user);
       setIsTyping(true);
     });
 
-    // Listen for stop_typing events from the server
     socket.on("stop_typing", ({ user }) => {
-      // Handle stop_typing event, e.g., hide the typing indicator
       console.log(`${user} stopped typing.`);
       setIsTyping(false);
       setTypingUser("");
     });
 
-    // Clean up event listeners when the component unmounts
     return () => {
       socket.off("typing");
       socket.off("stop_typing");
     };
   }, [socket, setIsTyping, setTypingUser]);
-  /**
-   * Handles sending a message and related errors
-   */
+
   const sendMessage = (e) => {
     if (input.trim()) {
-      // Emit a "send_message" event to the server with the message text and group ID
-      socket.emit("send_message", {
-        text: input,
-        groupId: selectedGroup?.groupId,
-      });
-
-      // Clear the input field and reset the error state
-      setInput("");
-      setError("");
+      socket.emit(
+        "send_message",
+        {
+          text: input,
+          groupId: selectedGroup?.groupId,
+        },
+        (acknowledgment) => {
+          if (acknowledgment.error) {
+            setError(acknowledgment.error);
+          } else {
+            setInput("");
+            setError("");
+            // Clear the typing indicator when a message is sent
+            socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
+          }
+        }
+      );
     }
   };
 
   const handleKeyDown = (e) => {
-    if (e.key !== "Enter") {
-      // Emit a "typing" event when a key is pressed
-      socket.emit("typing", { groupId: selectedGroup?.groupId });
-    } else {
+    clearTimeout(typingTimeout);
+
+    if (e.key === "Enter") {
       e.preventDefault();
       sendMessage(e);
+      setInput("");
+    } else {
+      socket.emit("typing", { groupId: selectedGroup?.groupId });
+
+      typingTimeout = setTimeout(() => {
+        socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
+      }, 1000);
     }
   };
 
