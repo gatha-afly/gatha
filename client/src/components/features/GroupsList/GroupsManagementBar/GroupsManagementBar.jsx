@@ -9,9 +9,9 @@ import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNaviga
 function GroupsManagementBar({ onCreateGroupClick, onJoinGroupClick }) {
   return (
     <div className={styles.groupBar}>
-      <ReactIconNavigate route='/create-group' size={3} icon={GrGroup} />
+      <ReactIconNavigate onClick={onCreateGroupClick} size={3} icon={GrGroup} />
       <ReactIconNavigate
-        route='/join-group'
+        onClick={onJoinGroupClick}
         size={3}
         icon={AiOutlineUsergroupAdd}
       />

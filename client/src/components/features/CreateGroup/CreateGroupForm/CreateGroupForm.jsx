@@ -1,27 +1,22 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   handleOtherErrors,
   handleServerErrors,
-} from "../../../utils/errorUtils";
-import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
-import useUserContext from "../../../context/useUserContext";
-import styles from "./CreateGroup.module.css";
-import userAPI from "../../../api/userAPI";
-import ReactIconNavigate from "../../common/ReactIconNavigate/ReactIconNavigate";
-import { HiMiniBackspace } from "react-icons/hi2";
+} from "../../../../utils/errorUtils";
+import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
+import useUserContext from "../../../../context/useUserContext";
+import styles from "./CreateGroupForm.module.css";
+import userAPI from "../../../../api/userAPI";
 
 /**
  * Create group form, allowing users to input group information and register.
  */
-const CreateGroup = ({ onDefaultViewClick }) => {
+const CreateGroupForm = ({ onDefaultViewClick }) => {
   // Get user data form userContext
   const { user, updateUserData } = useUserContext();
   const userId = user.userId;
   // State for errors
   const [error, setError] = useState(null);
-  // Navigation hook for redirecting
-  const navigate = useNavigate();
   // Ref for autofocus
   const inputRef = useRef(null);
 
@@ -49,16 +44,10 @@ const CreateGroup = ({ onDefaultViewClick }) => {
         `/groups/create-group/${userId}`,
         data
       );
-      // Access groupId returned from the server
-      const groupId = response.data.newGroup._id;
-      console.log(response);
-
       // Update state and localStorage
       const newUserData = response.data.updatedUser;
       updateUserData(newUserData);
-
-      // Navigate to add users page on successful registration
-      navigate(`/add-user/${groupId}/${userId}/`);
+      onDefaultViewClick();
     } catch (error) {
       handleOtherErrors(
         error,
@@ -95,13 +84,8 @@ const CreateGroup = ({ onDefaultViewClick }) => {
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
       <button type='submit'>create</button>
-      <ReactIconNavigate
-        onClick={onDefaultViewClick}
-        size={3}
-        icon={HiMiniBackspace}
-      />
     </form>
   );
 };
 
-export default CreateGroup;
+export default CreateGroupForm;

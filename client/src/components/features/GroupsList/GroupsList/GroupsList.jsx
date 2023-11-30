@@ -2,8 +2,8 @@ import { useState } from "react";
 import styles from "./GroupsList.module.css";
 import GroupsManagementBar from "../GroupsManagementBar/GroupsManagementBar";
 import RenderBasicGroupInfo from "../BasicGroupInfo/RenderBasicGroupInfo/RenderBasicGroupInfo";
-import CreateGroup from "../../CreateGroup/CreateGroup";
-import JoinGroup from "../../SearchGroupAndJoin/JoinGroup/JoinGroup";
+import JoinGroup from "../../JoinGroup/JoinGroup/JoinGroup";
+import CreateGroup from "../../CreateGroup/CreateGroup/CreateGroup";
 
 /**
  * Renders a list of all the user's groups with basic information for each.
@@ -37,11 +37,7 @@ const GroupsList = ({ user }) => {
   const renderView = () => {
     switch (currentView) {
       case "createGroup":
-        return (
-          <section className='createGroup'>
-            <CreateGroup onDefaultViewClick={handleDefaultViewClick} />
-          </section>
-        );
+        return <CreateGroup onDefaultViewClick={handleDefaultViewClick} />;
       case "joinGroup":
         return <JoinGroup onDefaultViewClick={handleDefaultViewClick} />;
       default:

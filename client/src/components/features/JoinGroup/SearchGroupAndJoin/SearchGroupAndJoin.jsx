@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import userAPI from "../../../api/userAPI";
-import useUserContext from "../../../context/useUserContext";
+import userAPI from "../../../../api/userAPI";
+import useUserContext from "../../../../context/useUserContext";
 import {
   handleOtherErrors,
   handleServerErrors,
-} from "../../../utils/errorUtils";
-import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
+} from "../../../../utils/errorUtils";
+import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SearchGroupAndJoin.module.css";
 
 /**
@@ -15,14 +14,12 @@ import styles from "./SearchGroupAndJoin.module.css";
  * @component
  * @returns {JSX.Element} Join group form
  */
-const SearchGroupAndJoin = () => {
+const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
   // Get user data form userContext
   const { user, updateUserData } = useUserContext();
   const userId = user.userId;
   // State for errors
   const [error, setError] = useState(null);
-  // Navigation hook for redirecting
-  const navigate = useNavigate();
   // Ref for autofocus
   const inputRef = useRef(null);
 
@@ -53,9 +50,7 @@ const SearchGroupAndJoin = () => {
       // Update state and localStorage
       const newUserData = response.data.user;
       updateUserData(newUserData);
-
-      // If successful navigate to main
-      navigate(`/main`);
+      onDefaultViewClick();
     } catch (error) {
       handleOtherErrors(error, setError, "Error joining group", "join-group");
       handleServerErrors(error, setError);

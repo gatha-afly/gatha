@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import PiratePxPageRender from "../../../common/PiratePxPageRender/PiratePxPageRender";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
-import SearchGroupAndJoin from "../SearchGroupAndJoin";
+import SearchGroupAndJoin from "../SearchGroupAndJoin/SearchGroupAndJoin";
 import styles from "./JoinGroup.module.css";
 import { HiMiniBackspace } from "react-icons/hi2";
 

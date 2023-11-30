@@ -2,7 +2,7 @@
 import styles from "./JoinGroupPage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
-import SearchGroupAndJoin from "../../components/features/SearchGroupAndJoin/SearchGroupAndJoin";
+import SearchGroupAndJoin from "../../components/features/JoinGroup/SearchGroupAndJoin/SearchGroupAndJoin";
 import ReactIconNavigate from "../../components/common/ReactIconNavigate/ReactIconNavigate";
 import { FaArrowLeft } from "react-icons/fa";
 
