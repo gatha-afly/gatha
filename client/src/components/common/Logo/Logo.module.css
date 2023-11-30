@@ -14,20 +14,20 @@
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   .logo {
-    width: 6rem;
+    width: 9rem;
   }
 }
 
 /* Laptop*/
 @media only screen and (min-width: 1025px) and (max-width: 1440px) {
   .logo {
-    width: 9rem;
+    width: 12rem;
   }
 }
 
 /* Larger Screens */
 @media only screen and (min-width: 1441px) {
   .logo {
-    width: 12rem;
+    width: 19rem;
   }
 }
