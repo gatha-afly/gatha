@@ -43,9 +43,9 @@ function SendMessage({ selectedGroup, socket }) {
           if (acknowledgment.error) {
             setError(acknowledgment.error);
           } else {
+            console.log("Message sent via send icon");
             setInput("");
             setError("");
-            // Clear the typing indicator when a message is sent
             socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
           }
         }
@@ -55,27 +55,33 @@ function SendMessage({ selectedGroup, socket }) {
 
   const handleKeyDown = (e) => {
     clearTimeout(typingTimeout);
-
     if (e.key === "Enter") {
       e.preventDefault();
+      console.log("Message sent via Enter button");
       sendMessage(e);
       setInput("");
     } else {
       socket.emit("typing", { groupId: selectedGroup?.groupId });
-
       typingTimeout = setTimeout(() => {
         socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
       }, 1000);
     }
   };
 
+  // Clear input and set isTyping to false when selectedGroup changes
+  useEffect(() => {
+    setInput("");
+    setIsTyping(false);
+    setTypingUser("");
+  }, [selectedGroup, setIsTyping, setTypingUser]);
+
   return (
     <form className={styles.sendMessageContainer}>
       <div className={styles.sendMessageLine}>
         <input
-          name="message-input"
-          type="text"
-          placeholder="Message"
+          name='message-input'
+          type='text'
+          placeholder='Message'
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
