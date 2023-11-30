@@ -2,15 +2,20 @@ import styles from "./HomePage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import NavigateButton from "../../components/common/NavigateButton/NavigateButton";
-import NavigateToMainIfUserIsLoggedIn from "../../components/auth/NavigateToMainIfUserIsLoggedIn/NavigateToMainIfUserIsLoggedIn";
 import { Link } from "react-router-dom";
 import ApplicationImage from "../../components/features/ApplicationImage/ApplicationImage";
+import useNavigateToMainIfUserIsLoggedIn from "../../hooks/useNavigateToMainIfUserIsLoggedIn";
 
 const HomePage = () => {
+  // Don't render page for loggedIn users, navigate to main instead.
+  const checkComplete = useNavigateToMainIfUserIsLoggedIn();
+
+  if (!checkComplete) {
+    return;
+  }
+
   return (
     <main className={styles.main}>
-      {/* Navigate to main if user is already logged in thus registered */}
-      <NavigateToMainIfUserIsLoggedIn />
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"homepage"} />
       {/* Set page title and meta tags */}
