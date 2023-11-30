@@ -27,9 +27,12 @@ function Messenger() {
           <div className={styles.messages}>
             <RenderMessages selectedGroup={selectedGroup} socket={socket} />
           </div>
+
+          {/* Displays the typing effect */}
           {isTyping && (
             <div className={styles.typingIndicator}>{typingUser} is typing</div>
           )}
+
           <div className={styles.send}>
             {" "}
             <SendMessage selectedGroup={selectedGroup} socket={socket} />
