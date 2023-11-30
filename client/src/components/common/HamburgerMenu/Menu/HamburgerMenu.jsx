@@ -38,8 +38,6 @@ const HamburgerMenu = ({ firstName, lastName }) => {
         <div className={styles.menuItems} onClick={toggleMenu}>
           <Link to='/main'>gatha</Link>
           <Link to='/user-profile'>profile</Link>
-          <Link to='/join-group'>join group</Link>
-          <Link to='/create-group'>create group</Link>
           <Link to='/user-logout'>logout</Link>
         </div>
       )}
