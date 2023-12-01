@@ -1,6 +1,6 @@
 import React from "react";
-import GroupAdminBar from "../../GroupAdminBar/GroupAdminBar";
 import styles from "./GroupSettingBar.module.css";
+import GroupAdminBar from "../GroupAdminBar/GroupAdminBar";
 
 /**
  * Bar to host selected group related information and functionalities

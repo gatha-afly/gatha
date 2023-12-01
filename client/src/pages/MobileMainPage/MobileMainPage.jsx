@@ -3,7 +3,7 @@ import NavigateButton from "../../components/common/NavigateButton/NavigateButto
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
-import GroupsList from "../../components/features/GroupsList/GroupsList/GroupsList";
+import GroupsContainer from "../../components/features/Groups/GroupsContainer/GroupsContainer";
 
 /**
  * Mobile version of the main page rendering the GroupsList only that then navigates to the MobileMessengerPage
@@ -31,7 +31,7 @@ const MobileMainPage = () => {
         </div>
       ) : (
         <div className={styles.groupsList}>
-          <GroupsList user={user} />
+          <GroupsContainer user={user} />
         </div>
       )}
     </main>

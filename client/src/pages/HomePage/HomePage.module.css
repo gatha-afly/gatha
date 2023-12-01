@@ -19,6 +19,10 @@
   margin-right: 8rem;
 }
 
+.loginCTA {
+  margin-top: 5rem;
+}
+
 /* Mobile*/
 @media only screen and (max-width: 767px) {
   .container {

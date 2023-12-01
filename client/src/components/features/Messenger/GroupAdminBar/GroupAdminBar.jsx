@@ -1,8 +1,8 @@
 import React from "react";
 import styles from "./GroupAdminBar.module.css";
 import { IoPersonAddSharp } from "react-icons/io5";
-import ReactIconNavigate from "../../common/ReactIconNavigate/ReactIconNavigate";
-import useUserContext from "../../../context/useUserContext";
+import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
+import useUserContext from "../../../../context/useUserContext";
 
 /**
  * Bar to host selected group admin related information and functionalities

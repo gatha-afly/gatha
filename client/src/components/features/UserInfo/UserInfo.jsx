@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./RenderUserInfo.module.css";
 
-const RenderUserInfo = ({ user }) => {
+const UserInfo = ({ user }) => {
   return (
     <div className={styles.container}>
       <p>
@@ -19,4 +19,4 @@ const RenderUserInfo = ({ user }) => {
   );
 };
 
-export default RenderUserInfo;
+export default UserInfo;

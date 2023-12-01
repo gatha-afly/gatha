@@ -1,15 +1,15 @@
 import { useNavigate } from "react-router-dom";
-import useUserContext from "../../../../../context/useUserContext";
-import useGetGroupData from "../../../../../hooks/useGetGroupData";
-import GroupnameInitial from "../../../../common/GroupnameInitial/GroupnameInitial";
-import styles from "./RenderBasicGroupInfo.module.css";
-import { isMobile } from "../../../../../utils/deviceUtils";
+import useUserContext from "../../../../context/useUserContext";
+import useGetGroupData from "../../../../hooks/useGetGroupData";
+import GroupnameInitial from "../../../common/GroupnameInitial/GroupnameInitial";
+import styles from "./BasicGroupInfo.module.css";
+import { isMobile } from "../../../../utils/deviceUtils";
 
 /**
  * Displays basic information about a group.
  * @param {Object} groupData - Data containing information about the group.
  */
-const RenderBasicGroupInfo = ({ userId, groupId }) => {
+const BasicGroupInfo = ({ userId, groupId }) => {
   // Get updateSelectedGroup from context
   const { updateSelectedGroup } = useUserContext();
   // Use useNavigate
@@ -53,4 +53,4 @@ const RenderBasicGroupInfo = ({ userId, groupId }) => {
   );
 };
 
-export default RenderBasicGroupInfo;
+export default BasicGroupInfo;

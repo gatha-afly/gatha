@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import userAPI from "../../../../api/userAPI";
-import useUserContext from "../../../../context/useUserContext";
+import userAPI from "../../../../../api/userAPI";
+import useUserContext from "../../../../../context/useUserContext";
 import {
   handleOtherErrors,
   handleServerErrors,
-} from "../../../../utils/errorUtils";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
+} from "../../../../../utils/errorUtils";
+import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SearchGroupAndJoin.module.css";
 
 /**

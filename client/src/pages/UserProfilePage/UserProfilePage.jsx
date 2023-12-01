@@ -2,7 +2,6 @@ import styles from "./UserProfilePage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
-import RenderUserInfo from "../../components/features/RenderUserInfo/RenderUserInfo";
 
 const UserProfilePage = () => {
   const { user } = useUserContext();

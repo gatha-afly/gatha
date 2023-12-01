@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   handleOtherErrors,
   handleServerErrors,
-} from "../../../../utils/errorUtils";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
-import useUserContext from "../../../../context/useUserContext";
+} from "../../../../../utils/errorUtils";
+import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
+import useUserContext from "../../../../../context/useUserContext";
 import styles from "./CreateGroupForm.module.css";
-import userAPI from "../../../../api/userAPI";
+import userAPI from "../../../../../api/userAPI";
 
 /**
- * Create group form, allowing users to input group information and register.
+ * Create group form, allowing users to input group information and register a group.
  */
 const CreateGroupForm = ({ onDefaultViewClick }) => {
   // Get user data form userContext

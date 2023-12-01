@@ -6,8 +6,6 @@ import PiratePxPageRender from "../../components/common/PiratePxPageRender/Pirat
 import { useParams } from "react-router-dom";
 import useGetGroupMembers from "../../hooks/useGetGroupMembers";
 import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
-import AddUserToGroup from "../../components/features/AddUserToGroup/AddUserToGroup";
-import RenderGroupMemberList from "../../components/features/RenderGroupMemberList/RenderGroupMemberList";
 import ReactIconNavigate from "../../components/common/ReactIconNavigate/ReactIconNavigate";
 import { FaArrowRight } from "react-icons/fa";
 
@@ -32,11 +30,7 @@ const AddUserUponGroupCreationPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - add user' />
       <h1>{groupName}</h1>
-      <AddUserToGroup
-        groupId={groupId}
-        userId={userId}
-        onRefresh={handleRefresh}
-      />
+      <Ad groupId={groupId} userId={userId} onRefresh={handleRefresh} />
       <ErrorDisplay error={error} />
       <ReactIconNavigate route='/main' size={2.5} icon={FaArrowRight} />
       <RenderGroupMemberList groupMembers={groupMembers} />

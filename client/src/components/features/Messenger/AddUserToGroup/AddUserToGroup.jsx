@@ -2,10 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   handleOtherErrors,
   handleServerErrors,
-} from "../../../utils/errorUtils";
-import userAPI from "../../../api/userAPI";
+} from "../../../../utils/errorUtils";
+import userAPI from "../../../../api/userAPI";
 import styles from "./AddUserToGroup.module.css";
-import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
+import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 
 /**
  * Component for admin users to add other users to a group
@@ -52,9 +52,9 @@ const AddUserToGroup = ({ groupId, userId, onRefresh }) => {
     <form className={styles.addUserForm} onSubmit={handleFormSubmit}>
       <div>
         <input
-          type="text"
-          name="username"
-          placeholder="username"
+          type='text'
+          name='username'
+          placeholder='username'
           ref={inputRef} // Ref for autofocus
           value={username}
           onChange={(e) => setUsername(e.target.value)}
@@ -64,7 +64,7 @@ const AddUserToGroup = ({ groupId, userId, onRefresh }) => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type="submit">add user</button>
+      <button type='submit'>add user</button>
     </form>
   );
 };

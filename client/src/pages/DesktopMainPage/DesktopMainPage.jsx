@@ -4,7 +4,7 @@ import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
 import Messenger from "../../components/features/Messenger/Messenger/Messenger";
-import GroupsList from "../../components/features/GroupsList/GroupsList/GroupsList";
+import GroupsContainer from "../../components/features/Groups/GroupsContainer/GroupsContainer";
 
 /**
  * Desktop version of the main page including both the GroupsList and the Messenger
@@ -33,7 +33,7 @@ const DesktopMainPage = () => {
       ) : (
         // Render groups list and messenger if the user is a member of a group
         <div className={styles.messengerNotMobile}>
-          <GroupsList user={user} />
+          <GroupsContainer user={user} />
           <Messenger />
         </div>
       )}
