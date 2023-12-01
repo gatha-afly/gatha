@@ -1,9 +1,9 @@
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import ReactIconNavigate from "../../components/common/ReactIconNavigate/ReactIconNavigate";
-import Messenger from "../../components/features/Messenger/Messenger/Messenger";
 import styles from "./MobileMessengerPage.module.css";
 import { FaArrowLeft } from "react-icons/fa";
+import MessengerContainer from "../../components/features/Messenger/MessengerContainer/MessengerContainer";
 
 /**
  *
@@ -19,7 +19,7 @@ const MobileMessengerPage = () => {
       <HelmetMetaTagsNetlify title='gatha - messenger' />
       <h1>gatha - get together</h1>
       {/* Messenger component */}
-      <Messenger />
+      <MessengerContainer />
       {/* Navigation icon to go back to the main page */}
       <ReactIconNavigate route='/main' size={2.5} icon={FaArrowLeft} />
     </main>

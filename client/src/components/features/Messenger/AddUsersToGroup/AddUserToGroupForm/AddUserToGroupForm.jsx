@@ -2,15 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import {
   handleOtherErrors,
   handleServerErrors,
-} from "../../../../utils/errorUtils";
-import userAPI from "../../../../api/userAPI";
+} from "../../../../../utils/errorUtils";
+import userAPI from "../../../../../api/userAPI";
 import styles from "./AddUserToGroup.module.css";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
+import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 
 /**
- * Component for admin users to add other users to a group
+ * Form component for admin users to add other users to a group
  */
-const AddUserToGroup = ({ groupId, userId, onRefresh }) => {
+const AddUserToGroupForm = ({ groupId, userId, onRefresh }) => {
   // Ref for autofocus
   const inputRef = useRef(null);
   // State for username & errors
@@ -69,4 +69,4 @@ const AddUserToGroup = ({ groupId, userId, onRefresh }) => {
   );
 };
 
-export default AddUserToGroup;
+export default AddUserToGroupForm;

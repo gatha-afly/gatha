@@ -6,6 +6,7 @@ import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
 import useUserContext from "../../../../context/useUserContext";
 import ScrollContentToBottomContainer from "../../../common/ScrollContentToBottomContainer/ScrollContentToBottomContainer";
+import IsTypingEffect from "../IsTypingEffect/IsTypingEffect";
 
 function RenderMessages({ selectedGroup, socket }) {
   const { user } = useUserContext();
@@ -66,8 +67,7 @@ function RenderMessages({ selectedGroup, socket }) {
                   msg.sender._id === user.userId
                     ? styles.senderMessage
                     : styles.receiverMessage
-                }`}
-              >
+                }`}>
                 <div className={styles.sender}>
                   <UsernameInitials
                     firstName={msg.sender.firstName}
@@ -84,6 +84,7 @@ function RenderMessages({ selectedGroup, socket }) {
                 </div>
               </li>
             ))}
+            <IsTypingEffect />
           </ul>
         </ScrollContentToBottomContainer>
       )}

@@ -3,8 +3,8 @@ import NavigateButton from "../../components/common/NavigateButton/NavigateButto
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
-import Messenger from "../../components/features/Messenger/Messenger/Messenger";
 import GroupsContainer from "../../components/features/Groups/GroupsContainer/GroupsContainer";
+import MessengerContainer from "../../components/features/Messenger/MessengerContainer/MessengerContainer";
 
 /**
  * Desktop version of the main page including both the GroupsList and the Messenger
@@ -34,7 +34,7 @@ const DesktopMainPage = () => {
         // Render groups list and messenger if the user is a member of a group
         <div className={styles.messengerNotMobile}>
           <GroupsContainer user={user} />
-          <Messenger />
+          <MessengerContainer />
         </div>
       )}
     </main>

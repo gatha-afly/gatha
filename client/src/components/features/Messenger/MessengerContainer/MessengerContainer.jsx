@@ -6,7 +6,7 @@ import styles from "./Messenger.module.css";
 import RenderMessages from "../RenderMessages/RenderMessages";
 import SendMessage from "../SendMessage/SendMessage";
 import GroupSettingBar from "../GroupSettingBar/GroupSettingBar";
-import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
+import IsTypingEffect from "../IsTypingEffect/IsTypingEffect";
 
 // Connecting to the socket.io server
 const socketUrl = import.meta.env.VITE_REACT_APP_SOCKET_URL;
@@ -14,8 +14,8 @@ const socket = io.connect(socketUrl, {
   withCredentials: true,
 });
 
-function Messenger() {
-  const { selectedGroup, isTyping, typingUser } = useUserContext();
+function MessengerContainer() {
+  const { selectedGroup } = useUserContext();
   console.log(selectedGroup);
 
   return (
@@ -28,23 +28,6 @@ function Messenger() {
           <div className={styles.messages}>
             <RenderMessages selectedGroup={selectedGroup} socket={socket} />
           </div>
-
-          {/* Displays the typing effect */}
-          {isTyping && (
-            <div className={styles.typingIndicatorContainer}>
-              <UsernameInitials
-                firstName={typingUser.firstName}
-                lastName={typingUser.lastName}
-                radius={"2.5"}
-                fontSize={"1.1"}
-                borderWidth={"0.4"}
-              />
-              <div className={styles.typingIndicator}>
-                {typingUser.username} is typing
-              </div>
-            </div>
-          )}
-
           <div className={styles.send}>
             {" "}
             <SendMessage selectedGroup={selectedGroup} socket={socket} />
@@ -57,4 +40,4 @@ function Messenger() {
   );
 }
 
-export default Messenger;
+export default MessengerContainer;

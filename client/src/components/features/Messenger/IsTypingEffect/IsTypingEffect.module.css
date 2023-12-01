@@ -1,0 +1,10 @@
+.typingIndicatorContainer {
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+.typingIndicator {
+  color: var(--color-text);
+  font-weight: bold;
+}
