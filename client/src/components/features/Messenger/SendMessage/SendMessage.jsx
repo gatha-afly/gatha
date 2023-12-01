@@ -59,6 +59,7 @@ function SendMessage({ selectedGroup, socket }) {
       e.preventDefault();
       console.log("Message sent via Enter button");
       sendMessage(e);
+      setInput("");
     } else {
       socket.emit("typing", { groupId: selectedGroup?.groupId });
       typingTimeout = setTimeout(() => {
@@ -70,9 +71,7 @@ function SendMessage({ selectedGroup, socket }) {
   // Clear input and set isTyping to false when selectedGroup changes
   useEffect(() => {
     setInput("");
-    setIsTyping(false);
-    setTypingUser("");
-  }, [selectedGroup, setIsTyping, setTypingUser]);
+  }, [selectedGroup]);
 
   return (
     <form className={styles.sendMessageContainer}>

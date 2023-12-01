@@ -14,7 +14,7 @@ const GroupMemberList = ({ groupMembers }) => {
     <div className={styles.renderMembers}>
       <h3>Members:</h3>
       {/* Check if there are members*/}
-      {formattedMembers.length > 1 ? (
+      {formattedMembers.length >= 1 ? (
         <ul>
           {/* Map through formatted members and display in a list */}
           {formattedMembers.map((formattedMember, index) => (

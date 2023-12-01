@@ -15,6 +15,13 @@
   height: 90%;
 }
 
+.cta {
+  margin-top: 1rem;
+  color: var(--color-text);
+  font-weight: 900;
+  text-align: center;
+}
+
 .groupBar {
   border-top: 0.25rem solid var(--color-structure-elements);
   height: 5%;

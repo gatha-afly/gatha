@@ -5,8 +5,9 @@ import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPa
 import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 
 /**
-
- * Container for joining an existing group, including a search component for finding and joining a group using the group code.
+ * JoinGroupContainer Component
+ *
+ * Container for joining an existing group, including a search component for finding and joining a group using the code.
  *
  * @component
  * @param {Object} props - The properties passed to the component.

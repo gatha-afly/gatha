@@ -5,9 +5,11 @@
   padding-right: 1rem;
   display: flex;
   flex-direction: row;
+  white-space: nowrap;
 }
 
 .groupName {
-  width: 25%;
   color: var(--color-text);
+  width: 30%;
+  margin-right: 1rem;
 }

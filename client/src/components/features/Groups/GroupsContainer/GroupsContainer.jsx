@@ -1,9 +1,10 @@
 import { useState } from "react";
 import styles from "./GroupsContainer.module.css";
-import CreateGroup from "../CreateGroup/CreateGroupContainer/CreateGroupContainer";
 import JoinGroup from "../JoinGroup/JoinGroupContainer/JoinGroupContainer";
 import GroupsManagementBar from "../../Groups/GroupsManagementBar/GroupsManagementBar";
 import BasicGroupInfo from "../BasicGroupInfo/BasicGroupInfo";
+import CreateGroupContainer from "../CreateGroup/CreateGroupContainer/CreateGroupContainer";
+import { FaRegHandPointDown } from "react-icons/fa6";
 
 /**
  * Manages different views, rendering the group selection, create and join group part of the main application based on the current state.
@@ -37,7 +38,9 @@ const GroupsContainer = ({ user }) => {
     switch (currentView) {
       // Render CreateGroup component with a callback for the default view
       case "createGroup":
-        return <CreateGroup onDefaultViewClick={handleDefaultViewClick} />;
+        return (
+          <CreateGroupContainer onDefaultViewClick={handleDefaultViewClick} />
+        );
       case "joinGroup":
         // Render JoinGroup component with a callback for the default view
         return <JoinGroup onDefaultViewClick={handleDefaultViewClick} />;
@@ -46,14 +49,24 @@ const GroupsContainer = ({ user }) => {
         return (
           <>
             <div className={styles.groupsList}>
-              {/* Map through user's groups to display BasicGroupInfo */}
-              {user.groups.map((group) => (
-                <BasicGroupInfo
-                  key={group._id}
-                  userId={user.userId}
-                  groupId={group._id}
-                />
-              ))}
+              {user.groups.length > 0 ? (
+                // Map through user's groups to display BasicGroupInfo
+                user.groups.map((group) => (
+                  <BasicGroupInfo
+                    key={group._id}
+                    userId={user.userId}
+                    groupId={group._id}
+                  />
+                ))
+              ) : (
+                // Display message when there are no or only one group
+                <p className={styles.cta}>
+                  To get started, either create or join a group.
+                  <div>
+                    <FaRegHandPointDown />
+                  </div>
+                </p>
+              )}
             </div>
             <div className={styles.groupBar}>
               <GroupsManagementBar

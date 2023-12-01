@@ -4,7 +4,7 @@ import {
   handleServerErrors,
 } from "../../../../../utils/errorUtils";
 import userAPI from "../../../../../api/userAPI";
-import styles from "./AddUserToGroup.module.css";
+import styles from "./AddUserToGroupForm.module.css";
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 
 /**
