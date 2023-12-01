@@ -14,7 +14,7 @@ function GroupsManagementBar({ onCreateGroupClick, onJoinGroupClick }) {
         size={3}
         icon={AiOutlineUsergroupAdd}
       />
-      <ReactIconNavigate onClick={onJoinGroupClick} size={3} icon={LuLink} />
+      <ReactIconNavigate onClick={onJoinGroupClick} size={2.5} icon={LuLink} />
     </div>
   );
 }
