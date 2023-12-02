@@ -5,6 +5,7 @@ import {
 import socketAuthMiddleware from "../middleware/socket/socketAuthMiddleware.js";
 import { isUserAlreadyGroupMember } from "../middleware/socket/isUserAlreadyGroupMember.js";
 import User from "../models/User.js";
+import OnlineUsers from "../models/OnlineUsers.js";
 
 //Function to set up Socket.IO
 const setupSocketIO = (io) => {
@@ -13,6 +14,18 @@ const setupSocketIO = (io) => {
 
   io.on("connection", async (socket) => {
     const user = await User.findById(socket.user.id);
+
+    // Check if the user is already in the OnlineUsers database
+    const existingOnlineUser = await OnlineUsers.findOne({ userId: user.id });
+
+    // If the user is not already in the database, save them
+    if (!existingOnlineUser) {
+      const onlineUser = new OnlineUsers({
+        userId: user.id,
+        socketId: socket.id,
+      });
+      await onlineUser.save();
+    }
 
     // user joins rooms with groupId
     user.groups.forEach((groupId) => {
@@ -63,8 +76,11 @@ const setupSocketIO = (io) => {
     });
 
     // Listen for disconnection events
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
       console.log("User disconnected");
+
+      // Remove user information from the OnlineUsers database on disconnect
+      await OnlineUsers.findOneAndDelete({ userId: user.id });
     });
   });
 };

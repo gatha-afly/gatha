@@ -10,12 +10,15 @@ import { FaRegHandPointLeft } from "react-icons/fa6";
 
 // Connecting to the socket.io server
 const socketUrl = import.meta.env.VITE_REACT_APP_SOCKET_URL;
-const socket = io.connect(socketUrl, {
-  withCredentials: true,
-});
 
 function MessengerContainer() {
   const { selectedGroup } = useUserContext();
+
+  //Socket Connection
+  const socket = io.connect(socketUrl, {
+    withCredentials: true,
+  });
+
   console.log(selectedGroup);
 
   // State to track the current view

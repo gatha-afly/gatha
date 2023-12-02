@@ -71,6 +71,7 @@ const UserProvider = ({ children }) => {
 
       // Update state and remove user data from localStorage after logout
       setLoggedIn(false);
+
       localStorage.removeItem("user");
       localStorage.removeItem("selectedGroup");
     } catch (err) {
