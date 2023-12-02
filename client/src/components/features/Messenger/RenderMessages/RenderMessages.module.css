@@ -22,6 +22,7 @@
 .sender {
   display: flex;
   gap: 0.5rem;
+  /* border: 1px solid blue; */
 }
 
 .senderMessage {
@@ -32,4 +33,23 @@
 .receiverMessage {
   background-color: var(--color-structure-elements-light);
   align-self: flex-start;
+}
+
+/* user Status */
+.userStatus {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  font-size: 1.5rem;
+  gap: 0.5rem;
+}
+
+.online {
+  font-size: 1.6rem;
+  color: green;
+}
+.offline {
+  font-size: 1.6rem;
+  color: red;
 }

@@ -39,6 +39,9 @@ userAPI.interceptors.response.use(
       console.log("We hit 401, token is not valid anymore");
       window.location = "/user-logout";
     }
+    if (error.response.status === 404) {
+      return;
+    }
     return Promise.reject(error);
   }
 );

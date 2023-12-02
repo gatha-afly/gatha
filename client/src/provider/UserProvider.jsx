@@ -18,6 +18,31 @@ const UserProvider = ({ children }) => {
   const [selectedGroup, setSelectedGroup] = useState(storedSelectedGroup);
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState("");
+  const [isUserOnline, setIsUserOnline] = useState(false);
+
+  /**
+   * Handler for fetching online users
+   * @param {*} userId
+   * @returns
+   */
+  const fetchOnlineUsers = async (userId) => {
+    try {
+      if (loggedIn) {
+        const response = await userAPI.get(`/users/online/${userId}`);
+        console.log(response.data.status);
+        setIsUserOnline(true);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 404) {
+        console.log("User not found.");
+        // Handle the 404 error gracefully (e.g., show a message to the user).
+        return null; // Return null or any other value as needed.
+      } else {
+        console.log("An error occurred:", error.message);
+        return null;
+      }
+    }
+  };
 
   /**
    * Handles user login.
@@ -119,6 +144,8 @@ const UserProvider = ({ children }) => {
         setIsTyping,
         typingUser,
         setTypingUser,
+        fetchOnlineUsers,
+        isUserOnline,
       }}
     >
       {children}

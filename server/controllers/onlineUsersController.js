@@ -15,12 +15,14 @@ export const getOnlineUser = async (req, res) => {
     const onlineUser = await OnlineUsers.findOne({ userId });
 
     if (!onlineUser) {
-      return res.status(StatusCodes.NOT_FOUND).json({ status: "offline" });
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ status: "offline", message: "User not found" });
     }
 
     return res.status(StatusCodes.OK).json({ status: "online" });
   } catch (error) {
-    console.error("Error in getOnlineUser:", error);
+    // Handle other internal errors using the utility function
     return errorHandlerUtils.handleInternalError(res);
   }
 };
