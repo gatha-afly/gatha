@@ -31,7 +31,7 @@ function RenderMessages({ selectedGroup, socket }) {
 
     // Listen for new messages from the server
     const handleNewMessage = ({ text: newMessage, groupId }) => {
-      if (groupId.toString() === selectedGroup?.groupId.toString()) {
+      if (groupId === selectedGroup?.groupId) {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       }
     };
@@ -67,7 +67,8 @@ function RenderMessages({ selectedGroup, socket }) {
                   msg.sender._id === user.userId
                     ? styles.senderMessage
                     : styles.receiverMessage
-                }`}>
+                }`}
+              >
                 <div className={styles.sender}>
                   <UsernameInitials
                     firstName={msg.sender.firstName}
