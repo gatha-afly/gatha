@@ -5,8 +5,9 @@ import styles from "./SendMessage.module.css";
 import { IoMdSend } from "react-icons/io";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
 import useUserContext from "../../../../context/useUserContext";
+import socket from "../../../../api/socket";
 
-function SendMessage({ selectedGroup, socket }) {
+function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
   const { setIsTyping, setTypingUser } = useUserContext();
@@ -29,7 +30,7 @@ function SendMessage({ selectedGroup, socket }) {
       socket.off("typing");
       socket.off("stop_typing");
     };
-  }, [socket, setIsTyping, setTypingUser]);
+  }, [setIsTyping, setTypingUser]);
 
   const sendMessage = (e) => {
     if (input.trim()) {
@@ -77,9 +78,9 @@ function SendMessage({ selectedGroup, socket }) {
     <form className={styles.sendMessageContainer}>
       <div className={styles.sendMessageLine}>
         <input
-          name='message-input'
-          type='text'
-          placeholder='Message'
+          name="message-input"
+          type="text"
+          placeholder="Message"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}

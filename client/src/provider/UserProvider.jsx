@@ -1,5 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
-import { io } from "socket.io-client";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import userContext from "../context/userContext";
 import userAPI from "../api/userAPI";
@@ -11,7 +10,6 @@ const UserProvider = ({ children }) => {
   // Retrieve user data from localStorage
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedSelectedGroup = JSON.parse(localStorage.getItem("selectedGroup"));
-  const storedSocket = localStorage.getItem("socket");
 
   // State variables for user authentication
   const [loggedIn, setLoggedIn] = useState(!!storedUser);
@@ -20,33 +18,6 @@ const UserProvider = ({ children }) => {
   const [selectedGroup, setSelectedGroup] = useState(storedSelectedGroup);
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState("");
-  const [socket, setSocket] = useState(storedSocket);
-
-  // Function to connect the socket
-  const connectSocket = useCallback(() => {
-    const socketUrl = import.meta.env.VITE_REACT_APP_SOCKET_URL;
-    const newSocket = io.connect(socketUrl, {
-      withCredentials: true,
-    });
-
-    if (loggedIn) {
-      setSocket(newSocket);
-      localStorage.setItem("socket", newSocket);
-    }
-
-    // Cleanup socket on component unmount
-    return () => {
-      if (newSocket) {
-        newSocket.disconnect();
-      }
-    };
-  }, [loggedIn]);
-
-  // Connecting to the socket.io server on component mount
-  useEffect(() => {
-    const cleanupSocket = connectSocket();
-    return cleanupSocket;
-  }, [connectSocket]); // Dependency array includes the connectSocket function
 
   /**
    * Handles user login.
@@ -147,7 +118,6 @@ const UserProvider = ({ children }) => {
         setIsTyping,
         typingUser,
         setTypingUser,
-        socket,
       }}
     >
       {children}

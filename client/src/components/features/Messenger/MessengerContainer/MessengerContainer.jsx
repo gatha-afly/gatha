@@ -8,7 +8,7 @@ import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContaine
 import { FaRegHandPointLeft } from "react-icons/fa6";
 
 function MessengerContainer() {
-  const { selectedGroup, socket } = useUserContext();
+  const { selectedGroup } = useUserContext();
 
   console.log(selectedGroup);
 
@@ -50,10 +50,10 @@ function MessengerContainer() {
               />
             </div>
             <div className={styles.messages}>
-              <RenderMessages selectedGroup={selectedGroup} socket={socket} />
+              <RenderMessages selectedGroup={selectedGroup} />
             </div>
             <div className={styles.send}>
-              <SendMessage selectedGroup={selectedGroup} socket={socket} />
+              <SendMessage selectedGroup={selectedGroup} />
             </div>
           </>
         ) : (

@@ -7,8 +7,9 @@ import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials"
 import useUserContext from "../../../../context/useUserContext";
 import ScrollContentToBottomContainer from "../../../common/ScrollContentToBottomContainer/ScrollContentToBottomContainer";
 import IsTypingEffect from "../IsTypingEffect/IsTypingEffect";
+import socket from "../../../../api/socket";
 
-function RenderMessages({ selectedGroup, socket }) {
+function RenderMessages({ selectedGroup }) {
   const { user } = useUserContext();
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
@@ -52,7 +53,7 @@ function RenderMessages({ selectedGroup, socket }) {
       socket.off("receive_message", handleNewMessage);
       socket.off("error");
     };
-  }, [selectedGroup.groupId, socket]);
+  }, [selectedGroup.groupId]);
 
   return (
     <>
