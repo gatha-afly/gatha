@@ -4,6 +4,7 @@ import {
   loginUser,
   logoutUser,
   updateProfilePicture,
+  updateUserData,
 } from "../controllers/userControllers.js";
 import { validator } from "../middleware/express/validator.js";
 import { validateUserRules } from "../middleware/express/userSanitizer.js";
@@ -24,5 +25,7 @@ router.patch(
   upload.single("image"),
   updateProfilePicture
 );
+
+router.get("/update/:userId", updateUserData);
 
 export default router;
