@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { RiRadioButtonLine } from "react-icons/ri";
 import styles from "./RenderMessages.module.css";
 import userAPI from "./../../../../api/userAPI";
 import { dateFormatter } from "./../../../../utils/dateUtils";
@@ -30,7 +29,6 @@ function RenderMessages({ selectedGroup, socket }) {
 
     // Call fetchMessages function to initiate the data fetching
     fetchMessages();
-    // fetchOnlineUsers(user.userId);
 
     // Listen for new messages from the server
     const handleNewMessage = ({ text: newMessage, groupId }) => {
@@ -81,17 +79,6 @@ function RenderMessages({ selectedGroup, socket }) {
                     borderWidth={"0.4"}
                   />
                   <span className={styles.sender}>{msg.sender.username}</span>
-                  {/* <div className={styles.userStatus}>
-                    {isUserOnline ? (
-                      <>
-                        Online <RiRadioButtonLine className={styles.online} />
-                      </>
-                    ) : (
-                      <>
-                        Offline <RiRadioButtonLine className={styles.offline} />
-                      </>
-                    )}
-                  </div> */}
                 </div>
                 <div className={styles.message}>{msg.text}</div>
                 <div className={styles.date}>
