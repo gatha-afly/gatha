@@ -20,6 +20,9 @@ const UserProvider = ({ children }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState("");
 
+  /**
+   * useEffect connection and disconnected depending on userLogins
+   */
   useEffect(() => {
     if (loggedIn) {
       //Connect the socket after login
