@@ -11,6 +11,7 @@ const UserProvider = ({ children }) => {
   // Retrieve user data from localStorage
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const storedSelectedGroup = JSON.parse(localStorage.getItem("selectedGroup"));
+  const storedSocket = localStorage.getItem("socket");
 
   // State variables for user authentication
   const [loggedIn, setLoggedIn] = useState(!!storedUser);
@@ -20,7 +21,7 @@ const UserProvider = ({ children }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState("");
   const [isUserOnline, setIsUserOnline] = useState(false);
-  const [socket, setSocket] = useState(null);
+  const [socket, setSocket] = useState(storedSocket);
 
   // Function to connect the socket
   const connectSocket = useCallback(() => {
@@ -31,6 +32,7 @@ const UserProvider = ({ children }) => {
 
     if (loggedIn) {
       setSocket(newSocket);
+      localStorage.setItem("socket", newSocket);
     }
 
     // Cleanup socket on component unmount
@@ -52,24 +54,24 @@ const UserProvider = ({ children }) => {
    * @param {*} userId
    * @returns
    */
-  const fetchOnlineUsers = async (userId) => {
-    try {
-      if (loggedIn) {
-        const response = await userAPI.get(`/users/online/${userId}`);
-        console.log(response.data.status);
-        setIsUserOnline(true);
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 404) {
-        console.log("User not found.");
-        // Handle the 404 error gracefully (e.g., show a message to the user).
-        return null; // Return null or any other value as needed.
-      } else {
-        console.log("An error occurred:", error.message);
-        return null;
-      }
-    }
-  };
+  // const fetchOnlineUsers = async (userId) => {
+  //   try {
+  //     if (loggedIn) {
+  //       const response = await userAPI.get(`/users/online/${userId}`);
+  //       console.log(response.data.status);
+  //       setIsUserOnline(true);
+  //     }
+  //   } catch (error) {
+  //     if (error.response && error.response.status === 404) {
+  //       console.log("User not found.");
+  //       // Handle the 404 error gracefully (e.g., show a message to the user).
+  //       return null; // Return null or any other value as needed.
+  //     } else {
+  //       console.log("An error occurred:", error.message);
+  //       return null;
+  //     }
+  //   }
+  // };
 
   /**
    * Handles user login.
@@ -124,6 +126,7 @@ const UserProvider = ({ children }) => {
 
       localStorage.removeItem("user");
       localStorage.removeItem("selectedGroup");
+      localStorage.removeItem("socket");
     } catch (err) {
       setError("An error occurred while logging out.");
       console.error(err.message);
@@ -169,7 +172,6 @@ const UserProvider = ({ children }) => {
         setIsTyping,
         typingUser,
         setTypingUser,
-        fetchOnlineUsers,
         isUserOnline,
         socket,
       }}

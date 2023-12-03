@@ -10,7 +10,7 @@ import ScrollContentToBottomContainer from "../../../common/ScrollContentToBotto
 import IsTypingEffect from "../IsTypingEffect/IsTypingEffect";
 
 function RenderMessages({ selectedGroup, socket }) {
-  const { user, fetchOnlineUsers, isUserOnline } = useUserContext();
+  const { user } = useUserContext();
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
 
@@ -30,7 +30,7 @@ function RenderMessages({ selectedGroup, socket }) {
 
     // Call fetchMessages function to initiate the data fetching
     fetchMessages();
-    fetchOnlineUsers(user.userId);
+    // fetchOnlineUsers(user.userId);
 
     // Listen for new messages from the server
     const handleNewMessage = ({ text: newMessage, groupId }) => {
@@ -81,7 +81,7 @@ function RenderMessages({ selectedGroup, socket }) {
                     borderWidth={"0.4"}
                   />
                   <span className={styles.sender}>{msg.sender.username}</span>
-                  <div className={styles.userStatus}>
+                  {/* <div className={styles.userStatus}>
                     {isUserOnline ? (
                       <>
                         Online <RiRadioButtonLine className={styles.online} />
@@ -91,7 +91,7 @@ function RenderMessages({ selectedGroup, socket }) {
                         Offline <RiRadioButtonLine className={styles.offline} />
                       </>
                     )}
-                  </div>
+                  </div> */}
                 </div>
                 <div className={styles.message}>{msg.text}</div>
                 <div className={styles.date}>
