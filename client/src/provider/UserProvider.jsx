@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import userContext from "../context/userContext";
 import userAPI from "../api/userAPI";
+import socket from "../api/socket";
 
 /**
  * UserProvider component that providing user authentication context.
@@ -18,6 +19,16 @@ const UserProvider = ({ children }) => {
   const [selectedGroup, setSelectedGroup] = useState(storedSelectedGroup);
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState("");
+
+  useEffect(() => {
+    if (loggedIn) {
+      //Connect the socket after login
+      socket.connect();
+    } else {
+      //Disconnect the socket after logout
+      socket.disconnect();
+    }
+  }, [loggedIn]);
 
   /**
    * Handles user login.
@@ -36,6 +47,8 @@ const UserProvider = ({ children }) => {
       // Update state and localStorage on successful login
       setUser(userData);
       setLoggedIn(true);
+
+      //Store the user data on localstorage
       localStorage.setItem("user", JSON.stringify(userData));
     } catch (err) {
       console.log("errors found");
