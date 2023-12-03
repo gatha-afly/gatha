@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import useUserContext from "../../../../context/useUserContext";
 import styles from "./MessengerContainer.module.css";
 import RenderMessages from "../RenderMessages/RenderMessages";
@@ -8,16 +8,16 @@ import GroupSettingBar from "../GroupSettingBar/GroupSettingBar";
 import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
 import { FaRegHandPointLeft } from "react-icons/fa6";
 
-// Connecting to the socket.io server
-const socketUrl = import.meta.env.VITE_REACT_APP_SOCKET_URL;
+// // Connecting to the socket.io server
+// const socketUrl = import.meta.env.VITE_REACT_APP_SOCKET_URL;
 
 function MessengerContainer() {
-  const { selectedGroup } = useUserContext();
+  const { selectedGroup, socket } = useUserContext();
 
   //Socket Connection
-  const socket = io.connect(socketUrl, {
-    withCredentials: true,
-  });
+  // const socket = io.connect(socketUrl, {
+  //   withCredentials: true,
+  // });
 
   console.log(selectedGroup);
 

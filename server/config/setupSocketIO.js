@@ -29,7 +29,7 @@ const setupSocketIO = (io) => {
 
     // user joins rooms with groupId
     user.groups.forEach((groupId) => {
-      console.log("user", socket.user.id, "joined", groupId.toString());
+      // console.log("user", socket.user.id, "joined", groupId.toString());
       socket.join(groupId.toString());
     });
 
@@ -52,7 +52,7 @@ const setupSocketIO = (io) => {
 
     // Listen for incoming messages from the client
     socket.on("send_message", async ({ text, groupId }) => {
-      console.log(socket.user.id);
+      // console.log(socket.user.id);
 
       const userSendingMessage = {
         firstName: user.firstName,

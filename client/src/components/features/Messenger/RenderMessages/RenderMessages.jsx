@@ -23,6 +23,7 @@ function RenderMessages({ selectedGroup, socket }) {
         );
         setMessages(response.data);
       } catch (error) {
+        console.log(error);
         setError("An error occurred while fetching the group messages.");
       }
     };

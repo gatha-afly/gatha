@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { io } from "socket.io-client";
 import PropTypes from "prop-types";
 import userContext from "../context/userContext";
 import userAPI from "../api/userAPI";
@@ -19,6 +20,32 @@ const UserProvider = ({ children }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState("");
   const [isUserOnline, setIsUserOnline] = useState(false);
+  const [socket, setSocket] = useState(null);
+
+  // Function to connect the socket
+  const connectSocket = useCallback(() => {
+    const socketUrl = import.meta.env.VITE_REACT_APP_SOCKET_URL;
+    const newSocket = io.connect(socketUrl, {
+      withCredentials: true,
+    });
+
+    if (loggedIn) {
+      setSocket(newSocket);
+    }
+
+    // Cleanup socket on component unmount
+    return () => {
+      if (newSocket) {
+        newSocket.disconnect();
+      }
+    };
+  }, [loggedIn]);
+
+  // Connecting to the socket.io server on component mount
+  useEffect(() => {
+    const cleanupSocket = connectSocket();
+    return cleanupSocket;
+  }, [connectSocket]); // Dependency array includes the connectSocket function
 
   /**
    * Handler for fetching online users
@@ -57,13 +84,11 @@ const UserProvider = ({ children }) => {
 
       // Extract user data from response
       const userData = response.data.user;
-      console.log(userData);
 
       // Update state and localStorage on successful login
       setUser(userData);
       setLoggedIn(true);
       localStorage.setItem("user", JSON.stringify(userData));
-      console.log(user);
     } catch (err) {
       console.log("errors found");
       setLoggedIn(false);
@@ -146,6 +171,7 @@ const UserProvider = ({ children }) => {
         setTypingUser,
         fetchOnlineUsers,
         isUserOnline,
+        socket,
       }}
     >
       {children}

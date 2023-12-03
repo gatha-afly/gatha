@@ -19,7 +19,7 @@ export const authorizeUser = (req, res, next) => {
   // Verify if token is valid
   try {
     const isValid = verifyJwt(req.cookies.userToken);
-    console.log("isValid token", isValid);
+    // console.log("isValid token", isValid);
 
     if (isValid) {
       // If the token is valid, proceed to the next middleware or route
