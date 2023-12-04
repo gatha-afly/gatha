@@ -1,40 +1,41 @@
-import { useEffect, useCallback } from "react";
+import { useCallback, useState } from "react";
 import userAPI from "../api/userAPI";
 import useUserContext from "../context/useUserContext";
 
+/**
+ * Fetches user data and then updates user data in context and localStorage.
+ *
+ * @returns {Object} An object containing the `fetchUserUpdates` function,
+ * loading state, and error state.
+ */
 const useUpdateUserData = () => {
-  const { user, getDataFromHookAndUpdateUser } = useUserContext();
+  // Access user data and function
+  const { user, updateUser } = useUserContext();
 
+  // State to manage loading, error and user data
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch user data using useCallback to enable calling custom hook not only on top level
   const fetchUserUpdates = useCallback(async () => {
     try {
+      // Start loading
+      setLoading(true);
       const response = await userAPI.get(`users/update/${user.userId}`);
-      const userData = response.data.user;
-
-      getDataFromHookAndUpdateUser(userData);
+      const updatedUser = response.data.user;
+      // Update user data
+      updateUser(updatedUser);
+      console.log("User has been updated");
     } catch (error) {
       console.error("Error fetching user updates:", error);
-      throw error; // Rethrow the error if needed for the calling component
+      setError(error);
+    } finally {
+      // End loading, regardless of success or error
+      setLoading(false);
     }
-  }, [user.userId, getDataFromHookAndUpdateUser]);
+  }, [user.userId]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchUserUpdates();
-      } catch (error) {
-        // Handle errors if needed
-      }
-    };
-
-    fetchData();
-
-    return () => {
-      // Cleanup function to cancel the API call on component unmount
-      // This is important to avoid memory leaks
-    };
-  }, [fetchUserUpdates]);
-
-  return { fetchUserUpdates };
+  return { fetchUserUpdates, loading, error };
 };
 
 export default useUpdateUserData;

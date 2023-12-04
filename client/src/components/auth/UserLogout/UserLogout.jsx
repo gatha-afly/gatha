@@ -16,7 +16,7 @@ const UserLogout = () => {
     const handleLogout = async () => {
       try {
         await logoutUser();
-        navigate("/");
+        navigate("/user-login");
       } catch (error) {
         console.error("Logout failed:", error);
       }

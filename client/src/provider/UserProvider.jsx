@@ -5,7 +5,9 @@ import userAPI from "../api/userAPI";
 import socket from "../api/socket";
 
 /**
- * UserProvider component that providing user authentication context.
+ * UserProvider component that manages user authentication context, providing necessary state variables and functions for user authentication and socket connection.
+ *
+ * @param {Object} children - The React components rendered within the UserProvider.
  */
 const UserProvider = ({ children }) => {
   // Retrieve user data from localStorage
@@ -21,7 +23,7 @@ const UserProvider = ({ children }) => {
   const [typingUser, setTypingUser] = useState("");
 
   /**
-   * useEffect connection and disconnected depending on userLogins
+   * Manages socket connection and disconnection based on user authentication status, connects sockets
    */
   useEffect(() => {
     if (loggedIn) {
@@ -50,8 +52,6 @@ const UserProvider = ({ children }) => {
       // Update state and localStorage on successful login
       setUser(userData);
       setLoggedIn(true);
-
-      //Store the user data on localstorage
       localStorage.setItem("user", JSON.stringify(userData));
     } catch (err) {
       console.log("errors found");
@@ -94,15 +94,16 @@ const UserProvider = ({ children }) => {
       console.error(err.message);
     }
   };
-
   /**
-   * Updates user data and localStorage
-   * @param {*} newUserData
+   * Updates user data in context and localStorage
+   * @param {Object} newUserData - The updated user data
    */
-  const getDataFromHookAndUpdateUser = (newUserData) => {
+  const updateUser = (newUserData) => {
     // Use the functional form of setUser to ensure the latest state value
     setUser((prevUser) => {
+      // Merge the newUserData with the existing user data
       const updatedUser = newUserData ? { ...prevUser, ...newUserData } : null;
+      // Update the user data in localStorage
       localStorage.setItem("user", JSON.stringify(updatedUser));
       return updatedUser;
     });
@@ -127,15 +128,14 @@ const UserProvider = ({ children }) => {
         loginUser,
         user,
         logoutUser,
-        getDataFromHookAndUpdateUser,
+        updateUser,
         selectedGroup,
         updateSelectedGroup,
         isTyping,
         setIsTyping,
         typingUser,
         setTypingUser,
-      }}
-    >
+      }}>
       {children}
     </userContext.Provider>
   );

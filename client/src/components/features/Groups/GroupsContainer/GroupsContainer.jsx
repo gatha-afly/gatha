@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./GroupsContainer.module.css";
 import JoinGroup from "../JoinGroup/JoinGroupContainer/JoinGroupContainer";
 import GroupsManagementBar from "../../Groups/GroupsManagementBar/GroupsManagementBar";
 import BasicGroupInfo from "../BasicGroupInfo/BasicGroupInfo";
 import CreateGroupContainer from "../CreateGroup/CreateGroupContainer/CreateGroupContainer";
 import { FaRegHandPointDown } from "react-icons/fa6";
+import useUpdateUserData from "../../../../hooks/useUpdateUser";
+import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
+import useUserContext from "../../../../context/useUserContext";
 
 /**
  * Manages different views, rendering the group selection, create and join group part of the main application based on the current state.
@@ -14,8 +17,19 @@ import { FaRegHandPointDown } from "react-icons/fa6";
  */
 
 const GroupsContainer = ({ user }) => {
+  // Get selectedGroup from context
+  const { selectedGroup } = useUserContext();
+
+  // Get user updates, loading, and error from custom hook
+  const { fetchUserUpdates, error } = useUpdateUserData();
+
   // State to track the current view
   const [currentView, setCurrentView] = useState("default");
+
+  // Fetch and update user data when the component mounts and when the selected group changes
+  useEffect(() => {
+    fetchUserUpdates();
+  }, [fetchUserUpdates, selectedGroup]);
 
   // Function to switch the current view
   const switchView = (view) => {
@@ -79,7 +93,12 @@ const GroupsContainer = ({ user }) => {
     }
   };
 
-  return <div className={styles.groupsContainer}>{renderView()}</div>;
+  return (
+    <>
+      <ErrorDisplay error={error} />
+      <div className={styles.groupsContainer}>{renderView()}</div>
+    </>
+  );
 };
 
 export default GroupsContainer;

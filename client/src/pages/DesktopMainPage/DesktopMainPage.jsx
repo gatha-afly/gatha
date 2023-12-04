@@ -4,13 +4,24 @@ import PiratePxPageRender from "../../components/common/PiratePxPageRender/Pirat
 import useUserContext from "../../context/useUserContext";
 import GroupsContainer from "../../components/features/Groups/GroupsContainer/GroupsContainer";
 import MessengerContainer from "../../components/features/Messenger/MessengerContainer/MessengerContainer";
+import useUpdateUserData from "../../hooks/useUpdateUser";
+import { useEffect } from "react";
+import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
+import Spinner from "../../components/common/Spinner/Spinner";
 
 /**
  * Desktop version of the main page including both the GroupsList and the Messenger
  */
 const DesktopMainPage = () => {
-  // Retrieve user information
+  // Get user from context
   const { user } = useUserContext();
+  // Get user updates, loading, and error from custom hook
+  const { fetchUserUpdates, loading, error } = useUpdateUserData();
+
+  // Update user data on mount
+  useEffect(() => {
+    fetchUserUpdates();
+  }, [fetchUserUpdates]);
 
   return (
     <main className={styles.container}>
@@ -18,11 +29,19 @@ const DesktopMainPage = () => {
       <PiratePxPageRender COUNT_IDENTIFIER={"main"} />
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - main' />
-      <h1>gatha - get together</h1>
-      <div className={styles.messengerNotMobile}>
-        <GroupsContainer user={user} />
-        <MessengerContainer />
-      </div>
+      <ErrorDisplay error={error} />
+      {loading ? (
+        // Display Spinner while user data is fetched
+        <Spinner />
+      ) : (
+        <>
+          <h1>gatha - get together</h1>
+          <div className={styles.messengerNotMobile}>
+            <GroupsContainer user={user} />
+            <MessengerContainer />
+          </div>
+        </>
+      )}
     </main>
   );
 };

@@ -50,7 +50,6 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
 
       //Fetch and update user data
       fetchUserUpdates();
-
       onDefaultViewClick();
     } catch (error) {
       handleOtherErrors(error, setError, "Error joining group", "join-group");
@@ -62,9 +61,9 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
     <form className={styles.joinGroupForm} onSubmit={handleFormSubmit}>
       <div>
         <input
-          type="text"
-          name="code"
-          placeholder="code"
+          type='text'
+          name='code'
+          placeholder='code'
           ref={inputRef} // Ref for autofocus
           required
         />
@@ -72,7 +71,7 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type="submit">join</button>
+      <button type='submit'>join</button>
     </form>
   );
 };

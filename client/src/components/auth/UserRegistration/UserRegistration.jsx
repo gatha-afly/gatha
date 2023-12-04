@@ -60,7 +60,6 @@ const UserRegistration = () => {
     try {
       // Attempt to register the user with the provided data
       await userAPI.post("/users/register", data);
-
       // Navigate to the login page on successful registration
       navigate("/user-login");
     } catch (error) {
