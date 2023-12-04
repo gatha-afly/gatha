@@ -2,6 +2,7 @@ import styles from "./UserProfilePage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";
+import UserInfo from "../../components/features/UserInfo/UserInfo";
 
 const UserProfilePage = () => {
   const { user } = useUserContext();
@@ -13,7 +14,7 @@ const UserProfilePage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - user profile' />
       <h1>{user.username}</h1>
-      <RenderUserInfo user={user} />
+      <UserInfo user={user} />
     </main>
   );
 };

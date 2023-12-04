@@ -1,5 +1,4 @@
 import styles from "./DesktopMainPage.module.css";
-import NavigateButton from "../../components/common/NavigateButton/NavigateButton";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useUserContext from "../../context/useUserContext";

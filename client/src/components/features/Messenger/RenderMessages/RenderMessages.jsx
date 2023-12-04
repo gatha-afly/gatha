@@ -22,6 +22,7 @@ function RenderMessages({ selectedGroup }) {
           `/messages/${selectedGroup.groupId}`
         );
         setMessages(response.data);
+        console.log(response.data);
       } catch (error) {
         console.log(error);
         setError("An error occurred while fetching the group messages.");
@@ -69,8 +70,7 @@ function RenderMessages({ selectedGroup }) {
                   msg.sender._id === user.userId
                     ? styles.senderMessage
                     : styles.receiverMessage
-                }`}
-              >
+                }`}>
                 <div className={styles.sender}>
                   <UsernameInitials
                     firstName={msg.sender.firstName}
