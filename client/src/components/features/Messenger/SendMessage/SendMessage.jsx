@@ -4,9 +4,9 @@ import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SendMessage.module.css";
 import { IoMdSend } from "react-icons/io";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
-import useUserContext from "../../../../context/useUserContext";
 import socket from "../../../../api/socket";
 import { devLog } from "../../../../utils/errorUtils";
+import useUserContext from "../../../../hooks/useUserContext";
 
 function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");

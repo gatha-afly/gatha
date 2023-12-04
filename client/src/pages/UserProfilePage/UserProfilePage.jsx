@@ -5,8 +5,8 @@ import UserInfo from "../../components/features/UserInfo/UserInfo";
 import useUpdateUserData from "../../hooks/useUpdateUser";
 import { useEffect } from "react";
 import Spinner from "../../components/common/Spinner/Spinner";
-import useUserContext from "../../context/useUserContext";
 import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
+import useUserContext from "../../hooks/useUserContext";
 
 const UserProfilePage = () => {
   // Get user from context

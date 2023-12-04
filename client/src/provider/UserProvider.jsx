@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import userContext from "../context/userContext";
-import userAPI from "../api/userAPI";
+import { userAPI } from "../api/userAPI";
 import socket from "../api/socket";
 import { devLog, handleServerErrors } from "../utils/errorUtils";
-
+import UserContext from "../context/userContext";
 /**
  * UserProvider component that manages user authentication context, providing necessary state variables and functions for user authentication and socket connection.
  *
@@ -22,6 +20,15 @@ const UserProvider = ({ children }) => {
   const [selectedGroup, setSelectedGroup] = useState(storedSelectedGroup);
   const [isTyping, setIsTyping] = useState(false);
   const [typingUser, setTypingUser] = useState("");
+
+  /**
+   * Updates the 'loggedIn' state in the user context.   *
+   * @param {boolean} value - The new value for the 'loggedIn' state.
+   * @returns {void}
+   */
+  const handleLoggedInChange = (value) => {
+    setLoggedIn(value);
+  };
 
   /**
    * Manages socket connection and disconnection based on user authentication status, connects sockets
@@ -69,9 +76,6 @@ const UserProvider = ({ children }) => {
       } else {
         setError("An unknown error occurred. Please try again later.");
       }
-
-      // Reject the promise with the error
-      return Promise.reject(error);
     }
   };
 
@@ -86,7 +90,6 @@ const UserProvider = ({ children }) => {
 
       // Update state and remove user data from localStorage after logout
       setLoggedIn(false);
-
       localStorage.removeItem("user");
       localStorage.removeItem("selectedGroup");
       localStorage.removeItem("socket");
@@ -121,7 +124,7 @@ const UserProvider = ({ children }) => {
 
   // Provide user context to component tree
   return (
-    <userContext.Provider
+    <UserContext.Provider
       value={{
         error,
         setError,
@@ -136,14 +139,11 @@ const UserProvider = ({ children }) => {
         setIsTyping,
         typingUser,
         setTypingUser,
+        handleLoggedInChange,
       }}>
       {children}
-    </userContext.Provider>
+    </UserContext.Provider>
   );
 };
 
-// Prop types validation
-UserProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 export default UserProvider;

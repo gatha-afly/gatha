@@ -1,5 +1,5 @@
+import useUserContext from "../../../hooks/useUserContext";
 import styles from "./Footer.module.css";
-import useUserContext from "../../../context/useUserContext";
 
 const Footer = () => {
   const { loggedIn } = useUserContext();

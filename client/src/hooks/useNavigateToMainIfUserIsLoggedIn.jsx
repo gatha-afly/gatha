@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import userContext from "../context/userContext";
-import useUserContext from "../context/useUserContext";
+import useUserContext from "./useUserContext";
 /**
  * Custom hook that navigates to the main page if the user is already logged in.
  * @returns {boolean} - Indicates whether the check is complete.
  */
 const useNavigateToMainIfUserIsLoggedIn = () => {
   // Get loggedIn status from userContext
-  const { loggedIn } = useUserContext(userContext);
-
+  const { loggedIn } = useUserContext();
   // Navigation hook for redirecting
   const navigate = useNavigate();
   // Set checkComplete state

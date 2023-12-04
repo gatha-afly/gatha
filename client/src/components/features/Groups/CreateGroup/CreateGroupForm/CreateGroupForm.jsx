@@ -4,10 +4,10 @@ import {
   handleServerErrors,
 } from "../../../../../utils/errorUtils";
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
-import useUserContext from "../../../../../context/useUserContext";
 import styles from "./CreateGroupForm.module.css";
-import userAPI from "../../../../../api/userAPI";
+import { userAPI } from "../../../../../api/userAPI";
 import useUpdateUserData from "../../../../../hooks/useUpdateUser";
+import useUserContext from "../../../../../hooks/useUserContext";
 
 /**
  * Create group form, allowing users to input group information and register a group.

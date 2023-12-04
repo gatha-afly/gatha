@@ -3,7 +3,7 @@ import {
   handleOtherErrors,
   handleServerErrors,
 } from "../../../../../utils/errorUtils";
-import userAPI from "../../../../../api/userAPI";
+import { userAPI } from "../../../../../api/userAPI";
 import styles from "./AddUserToGroupForm.module.css";
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 

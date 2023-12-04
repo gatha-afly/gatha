@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import useUserContext from "../../../../../context/useUserContext";
 import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 import HelmetMetaTagsNetlify from "../../../../common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
@@ -9,6 +8,7 @@ import GroupMemberList from "../../GroupMemberList/GroupMemberList";
 import AddUserToGroupForm from "../AddUserToGroupForm/AddUserToGroupForm";
 import styles from "./AddUsersToGroupContainer.module.css";
 import { HiMiniBackspace } from "react-icons/hi2";
+import useUserContext from "../../../../../hooks/useUserContext";
 
 /**
  * Container for adding users to a group.

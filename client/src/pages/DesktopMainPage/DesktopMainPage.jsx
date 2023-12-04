@@ -1,12 +1,12 @@
 import styles from "./DesktopMainPage.module.css";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
-import useUserContext from "../../context/useUserContext";
 import GroupsContainer from "../../components/features/Groups/GroupsContainer/GroupsContainer";
 import MessengerContainer from "../../components/features/Messenger/MessengerContainer/MessengerContainer";
 import useUpdateUserData from "../../hooks/useUpdateUser";
 import { useEffect } from "react";
 import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
+import useUserContext from "../../hooks/useUserContext";
 
 /**
  * Desktop version of the main page including both the GroupsList and the Messenger
@@ -14,8 +14,8 @@ import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
 const DesktopMainPage = () => {
   // Get user from context
   const { user } = useUserContext();
-  // Get user updates, loading, and error from custom hook
-  const { fetchUserUpdates, error } = useUpdateUserData();
+  // Get user updates
+  const { fetchUserUpdates } = useUpdateUserData();
 
   // Update user data on mount
   useEffect(() => {
@@ -28,7 +28,6 @@ const DesktopMainPage = () => {
       <PiratePxPageRender COUNT_IDENTIFIER={"main"} />
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - main' />
-      <ErrorDisplay error={error} />
       <h1>gatha - get together</h1>
       <div className={styles.messengerNotMobile}>
         <GroupsContainer user={user} />

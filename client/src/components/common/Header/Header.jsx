@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
-import useUserContext from "../../../context/useUserContext";
 import Logo from "../Logo/Logo";
 import HamburgerMenu from "../HamburgerMenu/Menu/HamburgerMenu";
+import useUserContext from "../../../hooks/useUserContext";
 
 const Header = () => {
   const { loggedIn, user } = useUserContext();

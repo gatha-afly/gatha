@@ -11,6 +11,10 @@ const projectId = import.meta.env.VITE_PIRATEPX_PROJECT_ID;
  * @returns {JSX.Element} - transparent image.
  */
 const PiratePxPageRender = ({ COUNT_IDENTIFIER }) => {
+  // Don't render anything in development
+  if (process.env.NODE_ENV === "development") {
+    return null;
+  }
   return (
     <img
       className={styles.piratePx}

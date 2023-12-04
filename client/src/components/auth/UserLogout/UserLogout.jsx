@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import useUserContext from "../../../context/useUserContext";
+import useUserContext from "../../../hooks/useUserContext";
 
 /**
  * Functional component for handling user logout.

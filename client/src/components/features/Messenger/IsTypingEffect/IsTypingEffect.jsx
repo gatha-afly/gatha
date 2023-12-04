@@ -1,5 +1,5 @@
 import React from "react";
-import useUserContext from "../../../../context/useUserContext";
+import useUserContext from "../../../../hooks/useUserContext";
 import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
 import styles from "./IsTypingEffect.module.css";
 

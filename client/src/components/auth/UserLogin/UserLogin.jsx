@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
 import styles from "./UserLogin.module.css";
-import useUserContext from "../../../context/useUserContext";
 import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import { devLog } from "../../../utils/errorUtils";
+import useUserContext from "../../../hooks/useUserContext";
 
 const UserLogin = () => {
   // Access user context and navigation functions
@@ -30,6 +30,7 @@ const UserLogin = () => {
       // Navigate to the main page on successful login
       navigate("/main");
     } catch (error) {
+      console.log("test");
       // Handle login errors and update error state for user feedback
       devLog(error);
     }

@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import styles from "./RenderMessages.module.css";
-import userAPI from "./../../../../api/userAPI";
+import { userAPI } from "./../../../../api/userAPI";
 import { dateFormatter } from "./../../../../utils/dateUtils";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
-import useUserContext from "../../../../context/useUserContext";
 import ScrollContentToBottomContainer from "../../../common/ScrollContentToBottomContainer/ScrollContentToBottomContainer";
 import IsTypingEffect from "../IsTypingEffect/IsTypingEffect";
 import socket from "../../../../api/socket";
 import useUpdateUserData from "../../../../hooks/useUpdateUser";
 import Spinner from "../../../common/Spinner/Spinner";
 import { devLog } from "../../../../utils/errorUtils";
+import useUserContext from "../../../../hooks/useUserContext";
 
 function RenderMessages({ selectedGroup }) {
   // Get user from context

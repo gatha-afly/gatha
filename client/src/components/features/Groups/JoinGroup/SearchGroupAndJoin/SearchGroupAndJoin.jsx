@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import userAPI from "../../../../../api/userAPI";
-import useUserContext from "../../../../../context/useUserContext";
+import { userAPI } from "../../../../../api/userAPI";
 import {
   handleOtherErrors,
   handleServerErrors,
@@ -8,6 +7,7 @@ import {
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SearchGroupAndJoin.module.css";
 import useUpdateUserData from "../../../../../hooks/useUpdateUser";
+import useUserContext from "../../../../../hooks/useUserContext";
 
 /**
  * Form that allows searching and joining a group via group code. Shows error message if code does not exist in database

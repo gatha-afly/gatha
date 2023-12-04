@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from "react-router-dom";
-import useUserContext from "../../../context/useUserContext";
+import useUserContext from "../../../hooks/useUserContext";
 
 /**
  * Component for handling protected routes.

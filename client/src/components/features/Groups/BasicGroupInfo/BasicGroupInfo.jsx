@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import useUserContext from "../../../../context/useUserContext";
 import useGetGroupData from "../../../../hooks/useGetGroupData";
 import GroupnameInitial from "../../../common/GroupnameInitial/GroupnameInitial";
 import styles from "./BasicGroupInfo.module.css";
 import { isMobile } from "../../../../utils/deviceUtils";
+import useUserContext from "../../../../hooks/useUserContext";
 
 /**
  * Displays basic information about a group.

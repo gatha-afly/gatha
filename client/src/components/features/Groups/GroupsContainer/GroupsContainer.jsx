@@ -7,7 +7,7 @@ import CreateGroupContainer from "../CreateGroup/CreateGroupContainer/CreateGrou
 import { FaRegHandPointDown } from "react-icons/fa6";
 import useUpdateUserData from "../../../../hooks/useUpdateUser";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
-import useUserContext from "../../../../context/useUserContext";
+import useUserContext from "../../../../hooks/useUserContext";
 
 /**
  * Manages different views, rendering the group selection, create and join group part of the main application based on the current state.
@@ -21,7 +21,7 @@ const GroupsContainer = ({ user }) => {
   const { selectedGroup } = useUserContext();
 
   // Get user updates, loading, and error from custom hook
-  const { fetchUserUpdates, error } = useUpdateUserData();
+  const { fetchUserUpdates } = useUpdateUserData();
 
   // State to track the current view
   const [currentView, setCurrentView] = useState("default");
@@ -93,12 +93,7 @@ const GroupsContainer = ({ user }) => {
     }
   };
 
-  return (
-    <>
-      <ErrorDisplay error={error} />
-      <div className={styles.groupsContainer}>{renderView()}</div>
-    </>
-  );
+  return <div className={styles.groupsContainer}>{renderView()}</div>;
 };
 
 export default GroupsContainer;

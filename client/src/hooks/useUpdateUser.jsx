@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import userAPI from "../api/userAPI";
-import useUserContext from "../context/useUserContext";
+import { userAPI } from "../api/userAPI";
 import { devLog } from "../utils/errorUtils";
+import useUserContext from "./useUserContext";
 
 /**
  * Fetches user data and then updates user data in context and localStorage.
