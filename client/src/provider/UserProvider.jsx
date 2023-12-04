@@ -99,7 +99,7 @@ const UserProvider = ({ children }) => {
    * Updates user data and localStorage
    * @param {*} newUserData
    */
-  const updateUserData = (newUserData) => {
+  const getDataFromHookAndUpdateUser = (newUserData) => {
     // Use the functional form of setUser to ensure the latest state value
     setUser((prevUser) => {
       const updatedUser = newUserData ? { ...prevUser, ...newUserData } : null;
@@ -127,7 +127,7 @@ const UserProvider = ({ children }) => {
         loginUser,
         user,
         logoutUser,
-        updateUserData,
+        getDataFromHookAndUpdateUser,
         selectedGroup,
         updateSelectedGroup,
         isTyping,

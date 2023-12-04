@@ -188,3 +188,39 @@ export const logoutUser = async (req, res) => {
     return errorHandlerUtils.handleInternalError(res);
   }
 };
+
+/**
+ * Handler for updating users
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const updateUserData = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId).populate({
+      path: "groups",
+      select: "groupId name",
+    });
+
+    if (!user) {
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
+    }
+
+    const userGroups = user.groups || [];
+
+    return res.status(StatusCodes.OK).json({
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email,
+        userId: user._id,
+        groups: userGroups,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
