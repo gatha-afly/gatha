@@ -7,7 +7,6 @@ import MessengerContainer from "../../components/features/Messenger/MessengerCon
 import useUpdateUserData from "../../hooks/useUpdateUser";
 import { useEffect } from "react";
 import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
-import Spinner from "../../components/common/Spinner/Spinner";
 
 /**
  *
@@ -16,7 +15,7 @@ import Spinner from "../../components/common/Spinner/Spinner";
  */
 const MobileMessengerPage = () => {
   // Get user updates, loading, and error from custom hook
-  const { fetchUserUpdates, loading, error } = useUpdateUserData();
+  const { fetchUserUpdates, error } = useUpdateUserData();
   // Update user data on mount
   useEffect(() => {
     fetchUserUpdates();
@@ -29,19 +28,11 @@ const MobileMessengerPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - messenger' />
       <ErrorDisplay error={error} />
-      {loading ? (
-        // Display Spinner while user data is fetched
-        <Spinner />
-      ) : (
-        // Display Messenger once data is loaded
-        <>
-          <h1>gatha - get together</h1>
-          {/* Messenger component */}
-          <MessengerContainer />
-          {/* Navigation icon to go back to the main page */}
-          <ReactIconNavigate route='/main' size={2.5} icon={FaArrowLeft} />
-        </>
-      )}
+      <h1>gatha - get together</h1>
+      {/* Messenger component */}
+      <MessengerContainer />
+      {/* Navigation icon to go back to the main page */}
+      <ReactIconNavigate route='/main' size={2.5} icon={FaArrowLeft} />
     </main>
   );
 };

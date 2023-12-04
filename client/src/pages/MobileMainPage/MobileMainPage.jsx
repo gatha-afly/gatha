@@ -6,7 +6,6 @@ import GroupsContainer from "../../components/features/Groups/GroupsContainer/Gr
 import useUpdateUserData from "../../hooks/useUpdateUser";
 import { useEffect } from "react";
 import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
-import Spinner from "../../components/common/Spinner/Spinner";
 
 /**
  * Mobile version of the main page rendering the GroupsList only that then navigates to the MobileMessengerPage
@@ -15,7 +14,7 @@ const MobileMainPage = () => {
   // Get user from context
   const { user } = useUserContext();
   // Get user updates, loading, and error from custom hook
-  const { fetchUserUpdates, loading, error } = useUpdateUserData();
+  const { fetchUserUpdates, error } = useUpdateUserData();
 
   // Update user data on mount
   useEffect(() => {
@@ -29,18 +28,10 @@ const MobileMainPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - main' />
       <ErrorDisplay error={error} />
-      {loading ? (
-        // Display Spinner while user data is fetched
-        <Spinner />
-      ) : (
-        // Display groups once data is loaded
-        <>
-          <h1>gatha - get together</h1>
-          <div className={styles.groupsList}>
-            <GroupsContainer user={user} />
-          </div>
-        </>
-      )}
+      <h1>gatha - get together</h1>
+      <div className={styles.groupsList}>
+        <GroupsContainer user={user} />
+      </div>
     </main>
   );
 };

@@ -8,24 +8,40 @@ import useUserContext from "../../../../context/useUserContext";
 import ScrollContentToBottomContainer from "../../../common/ScrollContentToBottomContainer/ScrollContentToBottomContainer";
 import IsTypingEffect from "../IsTypingEffect/IsTypingEffect";
 import socket from "../../../../api/socket";
+import useUpdateUserData from "../../../../hooks/useUpdateUser";
+import Spinner from "../../../common/Spinner/Spinner";
+import { devLog } from "../../../../utils/errorUtils";
 
 function RenderMessages({ selectedGroup }) {
+  // Get user from context
   const { user } = useUserContext();
+  // Manage state for group chat messages, loading and errors
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Get user updates and fetch error from custom hook
+  const { fetchUserUpdates, error: fetchUserError } = useUpdateUserData();
+
+  // Update user data on mount
+  useEffect(() => {
+    fetchUserUpdates();
+  }, [fetchUserUpdates]);
 
   useEffect(() => {
-    // Fetch the initial messages when the component mounts
+    // Fetch the messages when on mount
     const fetchMessages = async () => {
       try {
         const response = await userAPI.get(
           `/messages/${selectedGroup.groupId}`
         );
         setMessages(response.data);
-        console.log(response.data);
+        devLog(response.data);
+        setIsLoading(false);
       } catch (error) {
-        console.log(error);
+        devLog(error);
         setError("An error occurred while fetching the group messages.");
+        setIsLoading(false);
       }
     };
 
@@ -58,47 +74,54 @@ function RenderMessages({ selectedGroup }) {
 
   return (
     <>
-      {error ? (
-        <ErrorDisplay error={error} />
+      {isLoading ? (
+        <div className={styles.spinner}>
+          <Spinner />
+        </div>
       ) : (
-        <ScrollContentToBottomContainer>
-          <ul className={styles.messagesContainer}>
-            {messages.map(
-              (msg, index) =>
-                // prevent displaying old messages for newly joined users
-                msg.sender && (
-                  <li
-                    key={index}
-                    className={`${styles.message} ${
-                      msg.sender._id === user.userId
-                        ? styles.senderMessage
-                        : styles.receiverMessage
-                    }`}
-                  >
-                    <div className={styles.sender}>
-                      <>
-                        <UsernameInitials
-                          firstName={msg.sender.firstName}
-                          lastName={msg.sender.lastName}
-                          radius={"2.6"}
-                          fontSize={"1.1"}
-                          borderWidth={"0.4"}
-                        />
-                        <span className={styles.sender}>
-                          {msg.sender.username}
-                        </span>
-                      </>
-                    </div>
-                    <div className={styles.message}>{msg.text}</div>
-                    <div className={styles.date}>
-                      {dateFormatter(new Date(msg.createdAt))}
-                    </div>
-                  </li>
-                )
-            )}
-            <IsTypingEffect />
-          </ul>
-        </ScrollContentToBottomContainer>
+        <>
+          {error ? (
+            <ErrorDisplay error={error} />
+          ) : (
+            <ScrollContentToBottomContainer>
+              <ul className={styles.messagesContainer}>
+                {messages.map(
+                  (msg, index) =>
+                    // prevent displaying old messages for newly joined users
+                    msg.sender && (
+                      <li
+                        key={index}
+                        className={`${styles.message} ${
+                          msg.sender._id === user.userId
+                            ? styles.senderMessage
+                            : styles.receiverMessage
+                        }`}>
+                        <div className={styles.sender}>
+                          <>
+                            <UsernameInitials
+                              firstName={msg.sender.firstName}
+                              lastName={msg.sender.lastName}
+                              radius={"2.6"}
+                              fontSize={"1.1"}
+                              borderWidth={"0.4"}
+                            />
+                            <span className={styles.sender}>
+                              {msg.sender.username}
+                            </span>
+                          </>
+                        </div>
+                        <div className={styles.message}>{msg.text}</div>
+                        <div className={styles.date}>
+                          {dateFormatter(new Date(msg.createdAt))}
+                        </div>
+                      </li>
+                    )
+                )}
+                <IsTypingEffect />
+              </ul>
+            </ScrollContentToBottomContainer>
+          )}
+        </>
       )}
     </>
   );

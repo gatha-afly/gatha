@@ -3,6 +3,7 @@ import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
 import styles from "./UserLogin.module.css";
 import useUserContext from "../../../context/useUserContext";
 import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
+import { devLog } from "../../../utils/errorUtils";
 
 const UserLogin = () => {
   // Access user context and navigation functions
@@ -30,7 +31,7 @@ const UserLogin = () => {
       navigate("/main");
     } catch (error) {
       // Handle login errors and update error state for user feedback
-      console.log(error);
+      devLog(error);
     }
   };
 

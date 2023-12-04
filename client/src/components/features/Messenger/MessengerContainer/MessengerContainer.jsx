@@ -10,8 +10,6 @@ import { FaRegHandPointLeft } from "react-icons/fa6";
 function MessengerContainer() {
   const { selectedGroup } = useUserContext();
 
-  console.log(selectedGroup);
-
   // State to track the current view
   const [currentView, setCurrentView] = useState("default");
 

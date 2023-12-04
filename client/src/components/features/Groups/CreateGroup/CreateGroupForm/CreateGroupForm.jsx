@@ -49,7 +49,6 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
 
       // Fetch and update user data
       fetchUserUpdates();
-
       onDefaultViewClick();
     } catch (error) {
       handleOtherErrors(
@@ -67,9 +66,9 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
       {/* Input fields for group information */}
       <div>
         <input
-          type="text"
-          name="name"
-          placeholder="Group name"
+          type='text'
+          name='name'
+          placeholder='Group name'
           ref={inputRef} // Ref for autofocus
           required
         />
@@ -77,16 +76,16 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
 
       <div>
         <textarea
-          type="text"
-          name="description"
-          placeholder="Group description"
+          type='text'
+          name='description'
+          placeholder='Group description'
           rows={5}
         />
       </div>
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type="submit">create</button>
+      <button type='submit'>create</button>
     </form>
   );
 };

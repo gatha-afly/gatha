@@ -6,6 +6,7 @@ import { IoMdSend } from "react-icons/io";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
 import useUserContext from "../../../../context/useUserContext";
 import socket from "../../../../api/socket";
+import { devLog } from "../../../../utils/errorUtils";
 
 function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");
@@ -15,13 +16,13 @@ function SendMessage({ selectedGroup }) {
 
   useEffect(() => {
     socket.on("typing", ({ user }) => {
-      console.log(`${user} is typing...`);
+      devLog(`${user} is typing...`);
       setTypingUser(user);
       setIsTyping(true);
     });
 
     socket.on("stop_typing", ({ user }) => {
-      console.log(`${user} stopped typing.`);
+      devLog(`${user} stopped typing.`);
       setIsTyping(false);
       setTypingUser("");
     });
@@ -44,7 +45,7 @@ function SendMessage({ selectedGroup }) {
           if (acknowledgment.error) {
             setError(acknowledgment.error);
           } else {
-            console.log("Message sent via send icon");
+            devLog("Message sent via send icon");
             setInput("");
             setError("");
             socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
@@ -58,7 +59,7 @@ function SendMessage({ selectedGroup }) {
     clearTimeout(typingTimeout);
     if (e.key === "Enter") {
       e.preventDefault();
-      console.log("Message sent via Enter button");
+      devLog("Message sent via Enter button");
       sendMessage(e);
       setInput("");
     } else {
@@ -78,9 +79,9 @@ function SendMessage({ selectedGroup }) {
     <form className={styles.sendMessageContainer}>
       <div className={styles.sendMessageLine}>
         <input
-          name="message-input"
-          type="text"
-          placeholder="Message"
+          name='message-input'
+          type='text'
+          placeholder='Message'
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}

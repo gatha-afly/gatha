@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import userAPI from "../api/userAPI";
 import useUserContext from "../context/useUserContext";
+import { devLog } from "../utils/errorUtils";
 
 /**
  * Fetches user data and then updates user data in context and localStorage.
@@ -25,7 +26,7 @@ const useUpdateUserData = () => {
       const updatedUser = response.data.user;
       // Update user data
       updateUser(updatedUser);
-      console.log("User has been updated");
+      devLog("User has been updated");
     } catch (error) {
       console.error("Error fetching user updates:", error);
       setError(error);

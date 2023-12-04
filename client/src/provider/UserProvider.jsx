@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import userContext from "../context/userContext";
 import userAPI from "../api/userAPI";
 import socket from "../api/socket";
+import { devLog, handleServerErrors } from "../utils/errorUtils";
 
 /**
  * UserProvider component that manages user authentication context, providing necessary state variables and functions for user authentication and socket connection.
@@ -53,24 +54,24 @@ const UserProvider = ({ children }) => {
       setUser(userData);
       setLoggedIn(true);
       localStorage.setItem("user", JSON.stringify(userData));
-    } catch (err) {
-      console.log("errors found");
+    } catch (error) {
+      devLog(`Errors found`);
       setLoggedIn(false);
-      console.log(err.response.status);
+      handleServerErrors(error, setError);
 
       // Handle different error scenarios
-      if (err.response && err.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         setError("Incorrect password.");
-      } else if (err.response && err.response.status === 403) {
+      } else if (error.response && error.response.status === 403) {
         setError("You don't have permission to log in.");
-      } else if (err.response && err.response.status === 404) {
+      } else if (error.response && error.response.status === 404) {
         setError("Email address not found. Please register an account.");
       } else {
         setError("An unknown error occurred. Please try again later.");
       }
 
       // Reject the promise with the error
-      return Promise.reject(err);
+      return Promise.reject(error);
     }
   };
 

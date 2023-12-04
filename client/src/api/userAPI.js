@@ -1,4 +1,5 @@
 import axios from "axios";
+import { devLog } from "../utils/errorUtils";
 
 // Set baseURL
 const baseURL =
@@ -19,7 +20,7 @@ const userAPI = axios.create({
 // Intercepts requests
 userAPI.interceptors.request.use(
   (config) => {
-    console.log("A request has been made");
+    devLog("A request has been made");
     return config;
   },
   (error) => {
@@ -30,13 +31,13 @@ userAPI.interceptors.request.use(
 // Intercepts responses
 userAPI.interceptors.response.use(
   (response) => {
-    console.log("A response has been received");
+    devLog("A response has been received");
     return response;
   },
   (error) => {
-    console.log("Error response has been received", error.response);
+    devLog("Error response has been received", error.response);
     if (error.response.status === 401) {
-      console.log("We hit 401, token is not valid anymore");
+      devLog("We hit 401, token is not valid anymore");
     }
     if (error.response.status === 404) {
       return;

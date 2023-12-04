@@ -7,7 +7,6 @@ import MessengerContainer from "../../components/features/Messenger/MessengerCon
 import useUpdateUserData from "../../hooks/useUpdateUser";
 import { useEffect } from "react";
 import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
-import Spinner from "../../components/common/Spinner/Spinner";
 
 /**
  * Desktop version of the main page including both the GroupsList and the Messenger
@@ -16,7 +15,7 @@ const DesktopMainPage = () => {
   // Get user from context
   const { user } = useUserContext();
   // Get user updates, loading, and error from custom hook
-  const { fetchUserUpdates, loading, error } = useUpdateUserData();
+  const { fetchUserUpdates, error } = useUpdateUserData();
 
   // Update user data on mount
   useEffect(() => {
@@ -30,18 +29,11 @@ const DesktopMainPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - main' />
       <ErrorDisplay error={error} />
-      {loading ? (
-        // Display Spinner while user data is fetched
-        <Spinner />
-      ) : (
-        <>
-          <h1>gatha - get together</h1>
-          <div className={styles.messengerNotMobile}>
-            <GroupsContainer user={user} />
-            <MessengerContainer />
-          </div>
-        </>
-      )}
+      <h1>gatha - get together</h1>
+      <div className={styles.messengerNotMobile}>
+        <GroupsContainer user={user} />
+        <MessengerContainer />
+      </div>
     </main>
   );
 };

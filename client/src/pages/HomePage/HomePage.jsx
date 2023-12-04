@@ -19,12 +19,11 @@ const HomePage = () => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"homepage"} />
       {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title="gatha - get together" />
+      <HelmetMetaTagsNetlify title='gatha - get together' />
       <div className={styles.container}>
         <section className={styles.infoContainer}>
           <>
             <h1>
-              {" "}
               Gatha is your brand new chat application to connect to family,
               friends, colleagues and more!
             </h1>
@@ -35,7 +34,7 @@ const HomePage = () => {
             buttonText={"Register now!"}
           />
           <p className={styles.loginCTA}>
-            Already registered? <Link to="/user-login">Login</Link>
+            Already registered? <Link to='/user-login'>Login</Link>
           </p>
         </section>
         <ApplicationImage />

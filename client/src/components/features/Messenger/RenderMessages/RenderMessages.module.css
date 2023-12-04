@@ -1,3 +1,8 @@
+.spinner {
+  display: flex;
+  justify-content: center;
+}
+
 .messagesContainer {
   height: 55vh;
   display: flex;
