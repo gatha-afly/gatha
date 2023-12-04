@@ -39,6 +39,7 @@ const AddUsersToGroupForm = ({ groupId, userId, onRefresh }) => {
       await userAPI.patch(`/groups/add-member/${groupId}/${userId}`, data);
       // Clear and autofocus username field on successful patch
       setUsername("");
+
       inputRef.current.focus();
       // Call refresh function
       onRefresh();

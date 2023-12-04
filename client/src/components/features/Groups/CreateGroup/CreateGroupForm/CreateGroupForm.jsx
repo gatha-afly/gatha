@@ -46,7 +46,10 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
     try {
       // Attempt to register the user with the provided data
       await userAPI.post(`/groups/create-group/${userId}`, data);
-      fetchUserUpdates(); // Fetch and update user data
+
+      // Fetch and update user data
+      fetchUserUpdates();
+
       onDefaultViewClick();
     } catch (error) {
       handleOtherErrors(

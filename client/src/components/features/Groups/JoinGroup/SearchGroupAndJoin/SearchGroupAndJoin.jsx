@@ -7,6 +7,7 @@ import {
 } from "../../../../../utils/errorUtils";
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SearchGroupAndJoin.module.css";
+import useUpdateUserData from "../../../../../hooks/useUpdateUser";
 
 /**
  * Form that allows searching and joining a group via group code. Shows error message if code does not exist in database
@@ -15,8 +16,11 @@ import styles from "./SearchGroupAndJoin.module.css";
  * @returns {JSX.Element} Join group form
  */
 const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
+  //Custom hook for updating user data
+  const { fetchUserUpdates } = useUpdateUserData();
+
   // Get user data form userContext
-  const { user, updateUserData } = useUserContext();
+  const { user } = useUserContext();
   const userId = user.userId;
   // State for errors
   const [error, setError] = useState(null);
@@ -42,14 +46,11 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
 
     try {
       // Attempt to join the group with the provided code
-      const response = await userAPI.patch(
-        `/groups/join-group/${userId}`,
-        data
-      );
+      await userAPI.patch(`/groups/join-group/${userId}`, data);
 
-      // Update state and localStorage
-      const newUserData = response.data.user;
-      updateUserData(newUserData);
+      //Fetch and update user data
+      fetchUserUpdates();
+
       onDefaultViewClick();
     } catch (error) {
       handleOtherErrors(error, setError, "Error joining group", "join-group");
@@ -61,9 +62,9 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
     <form className={styles.joinGroupForm} onSubmit={handleFormSubmit}>
       <div>
         <input
-          type='text'
-          name='code'
-          placeholder='code'
+          type="text"
+          name="code"
+          placeholder="code"
           ref={inputRef} // Ref for autofocus
           required
         />
@@ -71,7 +72,7 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type='submit'>join</button>
+      <button type="submit">join</button>
     </form>
   );
 };
