@@ -7,18 +7,23 @@ import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 import useUserContext from "../../../../../context/useUserContext";
 import styles from "./CreateGroupForm.module.css";
 import userAPI from "../../../../../api/userAPI";
+import useUpdateUserData from "../../../../../hooks/useUpdateUser";
 
 /**
  * Create group form, allowing users to input group information and register a group.
  */
 const CreateGroupForm = ({ onDefaultViewClick }) => {
   // Get user data form userContext
-  const { user, updateUserData } = useUserContext();
+  const { user } = useUserContext();
   const userId = user.userId;
+
   // State for errors
   const [error, setError] = useState(null);
   // Ref for autofocus
   const inputRef = useRef(null);
+
+  //Custom hook for updating user data
+  const { fetchUserUpdates } = useUpdateUserData();
 
   // Autofocus first input field on mount
   useEffect(() => {
@@ -40,13 +45,8 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
 
     try {
       // Attempt to register the user with the provided data
-      const response = await userAPI.post(
-        `/groups/create-group/${userId}`,
-        data
-      );
-      // Update state and localStorage
-      const newUserData = response.data.updatedUser;
-      updateUserData(newUserData);
+      await userAPI.post(`/groups/create-group/${userId}`, data);
+      fetchUserUpdates(); // Fetch and update user data
       onDefaultViewClick();
     } catch (error) {
       handleOtherErrors(
@@ -64,9 +64,9 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
       {/* Input fields for group information */}
       <div>
         <input
-          type='text'
-          name='name'
-          placeholder='Group name'
+          type="text"
+          name="name"
+          placeholder="Group name"
           ref={inputRef} // Ref for autofocus
           required
         />
@@ -74,16 +74,16 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
 
       <div>
         <textarea
-          type='text'
-          name='description'
-          placeholder='Group description'
+          type="text"
+          name="description"
+          placeholder="Group description"
           rows={5}
         />
       </div>
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type='submit'>create</button>
+      <button type="submit">create</button>
     </form>
   );
 };
