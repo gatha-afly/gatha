@@ -65,6 +65,7 @@ function RenderMessages({ selectedGroup }) {
           <ul className={styles.messagesContainer}>
             {messages.map(
               (msg, index) =>
+                // prevent display old messages for newly joined users
                 msg.sender && (
                   <li
                     key={index}
