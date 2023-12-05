@@ -383,34 +383,42 @@ export const getGroupData = async (req, res) => {
  */
 export const getGroupMembers = async (req, res) => {
   try {
-    const { groupId } = req.params;
+    //Check if the user is a group member
+    const { groupId, userId } = req.params;
+    const isMember = await responseHandlerUtils.isUserAlreadyMember(
+      groupId,
+      userId
+    );
+    if (!isMember) {
+      return res
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ Error: "You are not a member of this group." });
+    }
 
     const group = await Group.findById(groupId)
       .populate({
         path: "members",
         select: "username firstName lastName",
       })
-      .populate("admin", "username firstName lastName");
 
     if (!group) {
       return errorHandlerUtils.handleGroupNotFound(res);
     }
 
-    const { members, name, admin } = group;
+    // Check if the user is the admin of the group
+    const isAdmin = userId = group.admin.toString();
 
-    const groupAdmin = {
-      username: admin.username,
-      firstName: admin.firstName,
-      lastName: admin.lastName,
-    };
+    const { members, name} = group;
 
     return res.status(StatusCodes.OK).json({
       groupId,
       groupName: name,
-      groupAdmin,
       groupMembers: members,
+      isAdmin:isAdmin?true:false
+
     });
   } catch (error) {
+    console.log(error.message);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
