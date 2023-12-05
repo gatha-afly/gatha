@@ -34,6 +34,7 @@ const useUpdateUserData = () => {
       // End loading, regardless of success or error
       setLoading(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.userId]);
 
   return { fetchUserUpdates, loading, error };

@@ -5,7 +5,6 @@ import GroupsContainer from "../../components/features/Groups/GroupsContainer/Gr
 import MessengerContainer from "../../components/features/Messenger/MessengerContainer/MessengerContainer";
 import useUpdateUserData from "../../hooks/useUpdateUser";
 import { useEffect } from "react";
-import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
 import useUserContext from "../../hooks/useUserContext";
 
 /**

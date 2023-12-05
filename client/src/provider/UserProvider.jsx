@@ -63,6 +63,7 @@ const UserProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(userData));
     } catch (error) {
       devLog(`Errors found`);
+      devLog(error.response);
       setLoggedIn(false);
       handleServerErrors(error, setError);
 

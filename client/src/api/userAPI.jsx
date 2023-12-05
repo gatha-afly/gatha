@@ -33,18 +33,28 @@ export const APIInterceptors = () => {
   userAPI.interceptors.response.use(
     (response) => {
       devLog("A response has been received");
-
       return response;
     },
     (error) => {
       devLog("Error response has been received", error.response);
-      if (error.response.status === 401) {
+
+      // Exception for user login 401 error
+      if (
+        error.response &&
+        error.response.status === 401 &&
+        error.response.data.error === "Incorrect password."
+      ) {
+        devLog("Ignoring incorrect password 401 in the interceptor");
+        return Promise.reject(error);
+      }
+
+      // Handle other 401 errors
+      if (error.response && error.response.status === 401) {
         devLog("401 error: Token is no longer valid");
         window.location.href = "/user-logout";
       }
-      if (error.response.status === 404) {
-        return;
-      }
+
+      // Handle other errors
       return Promise.reject(error);
     }
   );

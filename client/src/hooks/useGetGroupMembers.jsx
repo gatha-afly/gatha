@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { userAPI } from "../api/userAPI";
 import { handleOtherErrors, handleServerErrors } from "../utils/errorUtils";
+import { devLog } from "../utils/errorUtils";
 
 /**
  * Custom hook to fetch group members based on the provided groupId.
@@ -25,6 +26,8 @@ const useGetGroupMembers = (groupId, refreshTrigger) => {
         setGroupMembers(groupMembers);
         setGroupName(groupName);
         setGroupAdmin(groupAdmin);
+        // Set state variables with the fetched data
+        devLog(response.data);
       } catch (error) {
         // Handle errors if any occur during the API call
         handleServerErrors(error, setError);

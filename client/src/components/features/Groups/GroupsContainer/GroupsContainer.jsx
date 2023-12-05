@@ -6,7 +6,6 @@ import BasicGroupInfo from "../BasicGroupInfo/BasicGroupInfo";
 import CreateGroupContainer from "../CreateGroup/CreateGroupContainer/CreateGroupContainer";
 import { FaRegHandPointDown } from "react-icons/fa6";
 import useUpdateUserData from "../../../../hooks/useUpdateUser";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import useUserContext from "../../../../hooks/useUserContext";
 
 /**
