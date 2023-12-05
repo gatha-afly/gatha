@@ -1,0 +1,10 @@
+.emojiPickerContainer {
+  position: absolute;
+  width: 20rem;
+  left: 0;
+  background-color: white;
+  border: 0.2rem solid var(--color-structure-elements);
+  z-index: 1;
+  border-radius: 1.5rem;
+  bottom: 100%; /* Updated to position it above the input */
+}

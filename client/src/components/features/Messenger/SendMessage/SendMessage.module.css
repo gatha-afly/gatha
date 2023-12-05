@@ -1,3 +1,5 @@
+/* SendMessage.module.css */
+
 .sendMessageContainer input {
   width: 100%;
   margin-right: 0.5rem;
@@ -10,8 +12,23 @@
   display: flex;
   flex-direction: row;
   padding: 0.5rem;
+  position: relative;
 }
 
 .sendMessageButton {
   transform: translateY(-0.7rem);
+}
+
+.emojiButton {
+  position: absolute;
+  right: 5.3rem;
+  font-size: 1.8rem;
+  top: 30%;
+  transform: translateY(-50%);
+  color: var(--color-structure-elements);
+  cursor: pointer;
+}
+
+.emojiButton:hover {
+  color: var(--color-hover);
 }
