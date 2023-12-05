@@ -1,4 +1,3 @@
-// MessageInput.jsx
 import { useState, useEffect } from "react";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SendMessage.module.css";
@@ -34,7 +33,7 @@ function SendMessage({ selectedGroup }) {
   }, [setIsTyping, setTypingUser]);
 
   const sendMessage = (e) => {
-    if (input.trim()) {
+    if (input && input.trim()) {
       socket.emit(
         "send_message",
         {
@@ -42,6 +41,7 @@ function SendMessage({ selectedGroup }) {
           groupId: selectedGroup?.groupId,
         },
         (acknowledgment) => {
+          console.log("Acknowledgment:", acknowledgment);
           if (acknowledgment.error) {
             setError(acknowledgment.error);
           } else {
@@ -54,14 +54,12 @@ function SendMessage({ selectedGroup }) {
       );
     }
   };
-
   const handleKeyDown = (e) => {
     clearTimeout(typingTimeout);
     if (e.key === "Enter") {
       e.preventDefault();
       devLog("Message sent via Enter button");
       sendMessage(e);
-      setInput("");
     } else {
       socket.emit("typing", { groupId: selectedGroup?.groupId });
       typingTimeout = setTimeout(() => {

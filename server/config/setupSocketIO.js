@@ -51,7 +51,7 @@ const setupSocketIO = (io) => {
     });
 
     // Listen for incoming messages from the client
-    socket.on("send_message", async ({ text, groupId }) => {
+    socket.on("send_message", async ({ text, groupId }, acknowledgment) => {
       // console.log(socket.user.id);
 
       const userSendingMessage = {
@@ -69,9 +69,12 @@ const setupSocketIO = (io) => {
       try {
         // Socket.user.id is the id of the connected user
         await sendMessage(io, text, socket.user.id, groupId);
+
+        // Send acknowledgment back to the client indicating success
+        acknowledgment({ success: true });
       } catch (error) {
-        // Display the error to the client
-        socket.emit("error", { message: error.message });
+        // Send acknowledgment back to the client with the error message
+        acknowledgment({ error: error.message });
       }
     });
 
