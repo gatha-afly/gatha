@@ -13,13 +13,30 @@ import { StatusCodes } from "http-status-codes";
  */
 export const getInitialMessages = async (io, socket, groupId) => {
   try {
-    // Fetch the latest messages for the specified group and populate the sender field with usernames.
+    // Fetch the latest messages for the specified group and populate the sender field with desired fields.
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
-      .populate("sender", "-password -groups"); //Exclude the password and groups
+      .populate({
+        path: "sender",
+        select: "id firstName lastName username email",
+      });
 
     // Reverse the order to have the oldest messages first.
-    io.to(socket.id).emit("init", messages.reverse());
+    const formattedMessages = messages.map((message) => ({
+      ...message.toObject(),
+      sender: message.sender
+        ? {
+            id: message.sender.id,
+            firstName: message.sender.firstName,
+            lastName: message.sender.lastName,
+            username: message.sender.username,
+            email: message.sender.email,
+          }
+        : null,
+    }));
+
+    // Emit the formatted messages to the socket
+    io.to(socket.id).emit("init", formattedMessages.reverse());
   } catch (err) {
     console.error(err);
     throw err;
@@ -63,11 +80,25 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
     // Save the new message in messages array of group collection
     await responseHandlerUtils.saveGroupMessage(groupId, newMessage);
 
-    // Populate the sender field before emitting the message to the group.
-    await newMessage.populate("sender", "-password -groups"); //Exclude password and groups
+    // Populate the sender field with additional details before emitting the message to the group.
+    await newMessage.populate({
+      path: "sender",
+      select: "id firstName lastName username email",
+    });
 
     io.to(groupId.toString()).emit("receive_message", {
-      text: newMessage,
+      text: {
+        ...newMessage.toObject(),
+        sender: newMessage.sender
+          ? {
+              id: newMessage.sender.id,
+              firstName: newMessage.sender.firstName,
+              lastName: newMessage.sender.lastName,
+              username: newMessage.sender.username,
+              email: newMessage.sender.email,
+            }
+          : null,
+      },
       groupId: groupId.toString(),
     });
   } catch (error) {
@@ -83,14 +114,36 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
  */
 export const getAllGroupMessage = async (req, res) => {
   try {
+    // Extract groupId from request parameters
     const { groupId } = req.params;
 
+    // Retrieve messages for the specified group, sorted by createdAt, and populate the sender details
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
-      .populate("sender", "-password -groups"); //Exclude the password and groups
+      .populate({
+        path: "sender",
+        select: "id firstName lastName username email",
+      });
 
-    return res.status(StatusCodes.OK).json(messages.reverse());
+    // Format messages and include sender details in the response
+    const formattedMessages = messages.map((message) => ({
+      ...message.toObject(),
+      sender: message.sender
+        ? {
+            id: message.sender.id,
+            firstName: message.sender.firstName,
+            lastName: message.sender.lastName,
+            username: message.sender.username,
+            email: message.sender.email,
+          }
+        : null,
+    }));
+
+    // Respond with the formatted messages in reverse order
+    return res.status(StatusCodes.OK).json(formattedMessages.reverse());
   } catch (error) {
+    // Log and handle internal errors
+    console.error("Error:", error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
