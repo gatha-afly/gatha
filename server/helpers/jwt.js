@@ -11,7 +11,7 @@ export const generateJwt = (userId) => {
   };
 
   const token = jwt.sign(payload, process.env.SECRET_KEY, {
-    expiresIn: "0.05h",
+    expiresIn: "1h",
   });
   return token;
 };

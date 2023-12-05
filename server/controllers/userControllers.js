@@ -61,8 +61,8 @@ export const loginUser = async (req, res) => {
 
     // Check if the user doesn't exist
     if (!user) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "User not found. Please register an account.",
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "Invalid credentials.",
       });
     }
 
@@ -120,7 +120,7 @@ export const loginUser = async (req, res) => {
     } else {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ error: "Your password is incorrect" });
+        .json({ error: "Invalid credentials." });
     }
   } catch (error) {
     console.error(error);

@@ -33,18 +33,24 @@ export const APIInterceptors = () => {
   userAPI.interceptors.response.use(
     (response) => {
       devLog("A response has been received");
-
       return response;
     },
     (error) => {
       devLog("Error response has been received", error.response);
-      if (error.response.status === 401) {
-        devLog("401 error: Token is no longer valid");
-        window.location.href = "/user-logout";
+
+      // Handle 401 errors
+      if (error.response && error.response.status === 401) {
+        if (error.response.data.error === "Invalid credentials.") {
+          // Do nothing for 'Invalid credentials' error
+          devLog("401 interceptor exception: invalid credentials");
+        } else {
+          // Handle other 401 errors
+          devLog("401 interceptor:", error.response.data.error);
+          window.location.href = "/user-logout";
+          return Promise.reject(error);
+        }
       }
-      if (error.response.status === 404) {
-        return;
-      }
+
       return Promise.reject(error);
     }
   );

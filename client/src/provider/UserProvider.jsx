@@ -63,16 +63,15 @@ const UserProvider = ({ children }) => {
       localStorage.setItem("user", JSON.stringify(userData));
     } catch (error) {
       devLog(`Errors found`);
+      devLog(error.response);
       setLoggedIn(false);
       handleServerErrors(error, setError);
 
       // Handle different error scenarios
       if (error.response && error.response.status === 401) {
-        setError("Incorrect password.");
+        setError("Invalid credentials.");
       } else if (error.response && error.response.status === 403) {
         setError("You don't have permission to log in.");
-      } else if (error.response && error.response.status === 404) {
-        setError("Email address not found. Please register an account.");
       } else {
         setError("An unknown error occurred. Please try again later.");
       }

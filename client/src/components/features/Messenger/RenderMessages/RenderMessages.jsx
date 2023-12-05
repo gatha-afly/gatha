@@ -21,7 +21,7 @@ function RenderMessages({ selectedGroup }) {
   const [isLoading, setIsLoading] = useState(true);
 
   // Get user updates and fetch error from custom hook
-  const { fetchUserUpdates, error: fetchUserError } = useUpdateUserData();
+  const { fetchUserUpdates } = useUpdateUserData();
 
   // Update user data on mount
   useEffect(() => {

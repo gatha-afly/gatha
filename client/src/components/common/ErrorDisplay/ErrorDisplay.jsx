@@ -6,20 +6,14 @@ import styles from "./ErrorDisplay.module.css";
  * @param {string | object} error - The error message or error object to display.
  */
 const ErrorDisplay = ({ error }) => {
-  let errorMessage;
-
-  if (typeof error === "string") {
-    errorMessage = error;
-  } else if (error instanceof Error) {
-    // Extract specific information from the error object
-    errorMessage = error.message || "An error occurred";
-  } else {
-    errorMessage = "An error occurred";
+  if (!error) {
+    return null;
   }
 
-  return errorMessage ? (
-    <p className={styles.errorMessage}>{errorMessage}</p>
-  ) : null;
+  const errorMessage =
+    typeof error === "string" ? error : error.message || "An error occurred";
+
+  return <p className={styles.errorMessage}>{errorMessage}</p>;
 };
 
 export default ErrorDisplay;
