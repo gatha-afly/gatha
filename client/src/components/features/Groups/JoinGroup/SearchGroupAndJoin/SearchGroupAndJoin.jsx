@@ -53,11 +53,12 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
         data
       );
       devLog("response from /groups/join-group/:", response.data);
-
+      // Disconnect and reconnect socket connection to enable socket connection in new group
       socket.disconnect();
       socket.connect();
-      //Fetch and update user data
+      // Update user data
       fetchUserUpdates();
+      // Switch to default view
       onDefaultViewClick();
     } catch (error) {
       handleOtherErrors(error, setError, "Error joining group", "join-group");

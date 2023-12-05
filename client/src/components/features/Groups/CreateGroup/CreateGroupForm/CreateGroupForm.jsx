@@ -51,9 +51,8 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
         `/groups/create-group/${userId}`,
         data
       );
-
       devLog("response from /groups/create-group/:", response.data);
-      //
+      // Disconnect and reconnect socket connection to enable socket connection in new group
       socket.disconnect();
       socket.connect();
       // Fetch and update user data
