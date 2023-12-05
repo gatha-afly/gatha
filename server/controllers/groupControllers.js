@@ -376,49 +376,55 @@ export const getGroupData = async (req, res) => {
 };
 
 /**
- * Handler for getting Group members by groupId
+ * Handler for getting Group members by groupId and userId
  * @param {*} req
  * @param {*} res
  * @returns
  */
+
 export const getGroupMembers = async (req, res) => {
   try {
-    //Check if the user is a group member
     const { groupId, userId } = req.params;
-    const isMember = await responseHandlerUtils.isUserAlreadyMember(
-      groupId,
-      userId
-    );
+
+    // Checking if the user is a member of the specified group
+    const isMember = await Group.findOne({
+      _id: groupId,
+      members: userId,
+    });
+
     if (!isMember) {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ Error: "You are not a member of this group." });
+        .json({ error: "You are not a member of this group" });
     }
 
-    const group = await Group.findById(groupId)
-      .populate({
-        path: "members",
-        select: "username firstName lastName",
-      })
+    // Fetching detailed information about the group, including its members
+    const group = await Group.findById(groupId).populate({
+      path: "members",
+      select: "username firstName lastName",
+    });
 
+    // If the specified group is not found, handle the error
     if (!group) {
       return errorHandlerUtils.handleGroupNotFound(res);
     }
 
-    // Check if the user is the admin of the group
-    const isAdmin = userId = group.admin.toString();
+    // Extracting relevant details from the group object
+    const { name, description, admin } = group;
 
-    const { members, name} = group;
+    // Mapping the members of the group to include additional information
+    const members = group.members.map((member) => ({
+      ...member.toObject(),
+      isAdmin: userId === admin.toString(),
+    }));
 
     return res.status(StatusCodes.OK).json({
       groupId,
-      groupName: name,
-      groupMembers: members,
-      isAdmin:isAdmin?true:false
-
+      name,
+      description,
+      members,
     });
   } catch (error) {
-    console.log(error.message);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
