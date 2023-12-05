@@ -1,8 +1,10 @@
 // MessageInput.jsx
 import { useState, useEffect } from "react";
+import Picker from "emoji-picker-react";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SendMessage.module.css";
 import { IoMdSend } from "react-icons/io";
+import { MdEmojiEmotions } from "react-icons/md";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
 import socket from "../../../../api/socket";
 import { devLog } from "../../../../utils/errorUtils";
@@ -79,13 +81,16 @@ function SendMessage({ selectedGroup }) {
     <form className={styles.sendMessageContainer}>
       <div className={styles.sendMessageLine}>
         <input
-          name='message-input'
-          type='text'
-          placeholder='Message'
+          name="message-input"
+          type="text"
+          placeholder="Message"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
         />
+
+        <MdEmojiEmotions className={styles.emojiButton} />
+
         <span className={styles.sendMessageButton}>
           <ReactIconNavigate onClick={sendMessage} size={3} icon={IoMdSend} />
         </span>

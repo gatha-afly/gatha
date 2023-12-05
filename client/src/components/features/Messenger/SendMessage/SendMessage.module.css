@@ -10,8 +10,22 @@
   display: flex;
   flex-direction: row;
   padding: 0.5rem;
+  position: relative; /* Added to make relative positioning work for .emojiButton */
 }
 
 .sendMessageButton {
   transform: translateY(-0.7rem);
+}
+
+.emojiButton {
+  position: absolute;
+  right: 5.3rem;
+  font-size: 1.8rem;
+  top: 30%;
+  transform: translateY(-50%);
+  color: var(--color-structure-elements);
+  cursor: pointer;
+}
+.emojiButton:hover {
+  color: var(--color-hover);
 }
