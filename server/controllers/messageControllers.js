@@ -83,14 +83,34 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
  */
 export const getAllGroupMessage = async (req, res) => {
   try {
+    console.log("Before Mongoose Query");
     const { groupId } = req.params;
 
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
-      .populate("sender", "-password -groups"); //Exclude the password and groups
+      .populate({
+        path: "sender",
+        select: "id username firstname email lastName",
+      });
 
-    return res.status(StatusCodes.OK).json(messages.reverse());
+    console.log("After Mongoose Query");
+
+    const formattedMessages = messages.map((message) => ({
+      ...message.toObject(),
+      sender: message.sender
+        ? {
+            id: message.sender.id,
+            username: message.sender.username,
+            firstname: message.sender.firstname,
+            email: message.sender.email,
+            lastName: message.sender.lastName,
+          }
+        : null,
+    }));
+
+    return res.status(StatusCodes.OK).json(formattedMessages.reverse());
   } catch (error) {
+    console.error("Error:", error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
