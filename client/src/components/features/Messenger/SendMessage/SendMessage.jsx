@@ -18,6 +18,7 @@ function SendMessage({ selectedGroup }) {
   const inputRef = useRef(null);
   let typingTimeout;
 
+  // Set up socket listeners for typing events
   useEffect(() => {
     socket.on("typing", ({ user }) => {
       devLog(`${user} is typing...`);
@@ -31,22 +32,28 @@ function SendMessage({ selectedGroup }) {
       setTypingUser("");
     });
 
+    // Clean up socket listeners when the component unmounts
     return () => {
       socket.off("typing");
       socket.off("stop_typing");
     };
   }, [setIsTyping, setTypingUser]);
 
+  // Handle emoji selection
   useEffect(() => {
     if (chosenEmoji.emoji) {
+      // Append the selected emoji to the current input value
       setInput((prevInput) => prevInput + chosenEmoji.emoji);
       setShowEmojiPicker(false);
+
+      // Focus on the input field after selecting an emoji
       if (inputRef.current) {
         inputRef.current.focus();
       }
     }
   }, [chosenEmoji]);
 
+  // Send a message when the send button is clicked or Enter is pressed
   const sendMessage = (e) => {
     if (input.trim()) {
       socket.emit(
@@ -69,6 +76,7 @@ function SendMessage({ selectedGroup }) {
     }
   };
 
+  // Handle key events in the input field (e.g., Enter key
   const handleKeyDown = (e) => {
     clearTimeout(typingTimeout);
     if (e.key === "Enter") {
@@ -77,6 +85,7 @@ function SendMessage({ selectedGroup }) {
       sendMessage(e);
       setInput("");
     } else {
+      // Notify others that the user is typing
       socket.emit("typing", { groupId: selectedGroup?.groupId });
       typingTimeout = setTimeout(() => {
         socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
