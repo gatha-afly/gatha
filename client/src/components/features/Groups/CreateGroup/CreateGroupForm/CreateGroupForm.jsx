@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
+  devLog,
   handleOtherErrors,
   handleServerErrors,
 } from "../../../../../utils/errorUtils";
@@ -45,7 +46,12 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
 
     try {
       // Attempt to register the user with the provided data
-      await userAPI.post(`/groups/create-group/${userId}`, data);
+      const response = await userAPI.post(
+        `/groups/create-group/${userId}`,
+        data
+      );
+
+      devLog();
 
       // Fetch and update user data
       fetchUserUpdates();

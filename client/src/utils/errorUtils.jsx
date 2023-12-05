@@ -47,11 +47,16 @@ export const handleOtherErrors = (
 /**
  * Utility function to log in development environment only.
  *
- * @param {*} messageOrData - The message or data to be logged.
+ * @param {string} [message="devLog"] - message to be logged.
+ * @param {*} [data] - optional data to be logged.
  * @returns {void}
  */
-export const devLog = (messageOrData) => {
+export const devLog = (message = "devLog", data) => {
   if (process.env.NODE_ENV === "development") {
-    console.log(messageOrData);
+    if (data !== undefined) {
+      console.log(message, data);
+    } else {
+      console.log(message);
+    }
   }
 };
