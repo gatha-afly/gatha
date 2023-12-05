@@ -120,7 +120,7 @@ export const loginUser = async (req, res) => {
     } else {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ error: "Your password is incorrect" });
+        .json({ error: "Incorrect password." });
     }
   } catch (error) {
     console.error(error);
