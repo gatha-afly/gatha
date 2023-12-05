@@ -39,7 +39,7 @@ function SendMessage({ selectedGroup }) {
 
   useEffect(() => {
     if (chosenEmoji.emoji) {
-      setInput(chosenEmoji.emoji);
+      setInput((prevInput) => prevInput + chosenEmoji.emoji);
       setShowEmojiPicker(false);
       if (inputRef.current) {
         inputRef.current.focus();
@@ -86,11 +86,6 @@ function SendMessage({ selectedGroup }) {
 
   const onEmojiClick = (emojiObject) => {
     setChosenEmoji(emojiObject);
-    if (inputRef.current) {
-      setInput((prevInput) => prevInput + emojiObject.emoji);
-      inputRef.current.focus();
-    }
-    setShowEmojiPicker(false);
   };
 
   return (
