@@ -18,7 +18,7 @@ export const getInitialMessages = async (io, socket, groupId) => {
       .sort({ createdAt: -1 })
       .populate({
         path: "sender",
-        select: "id username firstName email lastName",
+        select: "id firstName lastName username email",
       });
 
     // Reverse the order to have the oldest messages first.
@@ -27,10 +27,10 @@ export const getInitialMessages = async (io, socket, groupId) => {
       sender: message.sender
         ? {
             id: message.sender.id,
-            username: message.sender.username,
             firstName: message.sender.firstName,
-            email: message.sender.email,
             lastName: message.sender.lastName,
+            username: message.sender.username,
+            email: message.sender.email,
           }
         : null,
     }));
@@ -83,7 +83,7 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
     // Populate the sender field with additional details before emitting the message to the group.
     await newMessage.populate({
       path: "sender",
-      select: "id username firstName email lastName",
+      select: "id firstName lastName username email",
     });
 
     io.to(groupId.toString()).emit("receive_message", {
@@ -122,7 +122,7 @@ export const getAllGroupMessage = async (req, res) => {
       .sort({ createdAt: -1 })
       .populate({
         path: "sender",
-        select: "id username firstName email lastName",
+        select: "id firstName lastName username email",
       });
 
     // Format messages and include sender details in the response
