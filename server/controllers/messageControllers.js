@@ -13,13 +13,30 @@ import { StatusCodes } from "http-status-codes";
  */
 export const getInitialMessages = async (io, socket, groupId) => {
   try {
-    // Fetch the latest messages for the specified group and populate the sender field with usernames.
+    // Fetch the latest messages for the specified group and populate the sender field with desired fields.
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
-      .populate("sender", "-password -groups"); //Exclude the password and groups
+      .populate({
+        path: "sender",
+        select: "id username firstName email lastName",
+      });
 
     // Reverse the order to have the oldest messages first.
-    io.to(socket.id).emit("init", messages.reverse());
+    const formattedMessages = messages.map((message) => ({
+      ...message.toObject(),
+      sender: message.sender
+        ? {
+            id: message.sender.id,
+            username: message.sender.username,
+            firstName: message.sender.firstName,
+            email: message.sender.email,
+            lastName: message.sender.lastName,
+          }
+        : null,
+    }));
+
+    // Emit the formatted messages to the socket
+    io.to(socket.id).emit("init", formattedMessages.reverse());
   } catch (err) {
     console.error(err);
     throw err;
@@ -83,33 +100,41 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
  */
 export const getAllGroupMessage = async (req, res) => {
   try {
+    // Log before the Mongoose query
     console.log("Before Mongoose Query");
+
+    // Extract groupId from request parameters
     const { groupId } = req.params;
 
+    // Retrieve messages for the specified group, sorted by createdAt, and populate the sender details
     const messages = await Message.find({ group: groupId })
       .sort({ createdAt: -1 })
       .populate({
         path: "sender",
-        select: "id username firstname email lastName",
+        select: "id username firstName email lastName",
       });
 
+    // Log after the Mongoose query
     console.log("After Mongoose Query");
 
+    // Format messages and include sender details in the response
     const formattedMessages = messages.map((message) => ({
       ...message.toObject(),
       sender: message.sender
         ? {
             id: message.sender.id,
-            username: message.sender.username,
-            firstname: message.sender.firstname,
-            email: message.sender.email,
+            firstName: message.sender.firstName,
             lastName: message.sender.lastName,
+            username: message.sender.username,
+            email: message.sender.email,
           }
         : null,
     }));
 
+    // Respond with the formatted messages in reverse order
     return res.status(StatusCodes.OK).json(formattedMessages.reverse());
   } catch (error) {
+    // Log and handle internal errors
     console.error("Error:", error);
     return errorHandlerUtils.handleInternalError(res);
   }
