@@ -1,4 +1,3 @@
-// MessageInput.jsx
 import { useState, useEffect } from "react";
 import Picker from "emoji-picker-react";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
@@ -13,6 +12,8 @@ import useUserContext from "../../../../hooks/useUserContext";
 function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
+  const [chosenEmoji, setChosenEmoji] = useState(null); // Track the chosen emoji
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { setIsTyping, setTypingUser } = useUserContext();
   let typingTimeout;
 
@@ -34,6 +35,14 @@ function SendMessage({ selectedGroup }) {
       socket.off("stop_typing");
     };
   }, [setIsTyping, setTypingUser]);
+
+  useEffect(() => {
+    if (chosenEmoji) {
+      // Handle the chosenEmoji update
+      setInput((prevInput) => prevInput + chosenEmoji.emoji);
+      setShowEmojiPicker(false); // Close emoji picker after selecting an emoji
+    }
+  }, [chosenEmoji]);
 
   const sendMessage = (e) => {
     if (input.trim()) {
@@ -72,10 +81,9 @@ function SendMessage({ selectedGroup }) {
     }
   };
 
-  // Clear input and set isTyping to false when selectedGroup changes
-  useEffect(() => {
-    setInput("");
-  }, [selectedGroup]);
+  const onEmojiClick = (event, emojiObject) => {
+    setChosenEmoji(emojiObject);
+  };
 
   return (
     <form className={styles.sendMessageContainer}>
@@ -89,7 +97,18 @@ function SendMessage({ selectedGroup }) {
           onKeyDown={handleKeyDown}
         />
 
-        <MdEmojiEmotions className={styles.emojiButton} />
+        {/* Emoji button to toggle the emoji picker */}
+        <MdEmojiEmotions
+          className={styles.emojiButton}
+          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+        />
+
+        {/* Emoji picker with positioning */}
+        {showEmojiPicker && (
+          <div className={styles.emojiPickerContainer}>
+            <Picker onEmojiClick={onEmojiClick} />
+          </div>
+        )}
 
         <span className={styles.sendMessageButton}>
           <ReactIconNavigate onClick={sendMessage} size={3} icon={IoMdSend} />
