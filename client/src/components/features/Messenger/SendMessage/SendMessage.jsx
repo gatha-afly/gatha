@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SendMessage.module.css";
 import { IoMdSend } from "react-icons/io";
@@ -11,7 +11,8 @@ function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
   const { setIsTyping, setTypingUser } = useUserContext();
-  let typingTimeout;
+
+  const typingTimeoutRef = useRef(null);
 
   useEffect(() => {
     socket.on("typing", ({ user }) => {
@@ -41,11 +42,10 @@ function SendMessage({ selectedGroup }) {
           groupId: selectedGroup?.groupId,
         },
         (acknowledgment) => {
-          console.log("Acknowledgment:", acknowledgment);
+          devLog("Acknowledgment:", acknowledgment);
           if (acknowledgment.error) {
             setError(acknowledgment.error);
           } else {
-            devLog("Message sent via send icon");
             setInput("");
             setError("");
             socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
@@ -55,15 +55,20 @@ function SendMessage({ selectedGroup }) {
     }
   };
   const handleKeyDown = (e) => {
-    clearTimeout(typingTimeout);
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      devLog("Message sent via Enter button");
       sendMessage(e);
     } else {
-      socket.emit("typing", { groupId: selectedGroup?.groupId });
-      typingTimeout = setTimeout(() => {
-        socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
+      const isInputEmpty = input.trim() === ""; // Check if input is empty
+      if (!isInputEmpty) {
+        socket.emit("typing", { groupId: selectedGroup?.groupId });
+      }
+
+      clearTimeout(typingTimeoutRef.current);
+      typingTimeoutRef.current = setTimeout(() => {
+        if (isInputEmpty) {
+          socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
+        }
       }, 1000);
     }
   };
