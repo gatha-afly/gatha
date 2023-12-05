@@ -22,7 +22,7 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
   // Ref for autofocus
   const inputRef = useRef(null);
 
-  //Custom hook for updating user data
+  //Get fetchUserUpdates function from custom hook
   const { fetchUserUpdates } = useUpdateUserData();
 
   // Autofocus first input field on mount
