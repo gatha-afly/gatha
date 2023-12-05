@@ -390,7 +390,7 @@ export const getGroupMembers = async (req, res) => {
     const isMember = await Group.findOne({
       _id: groupId,
       members: userId,
-    });
+    }).lean();
 
     if (!isMember) {
       return res
@@ -399,10 +399,12 @@ export const getGroupMembers = async (req, res) => {
     }
 
     // Fetching detailed information about the group, including its members
-    const group = await Group.findById(groupId).populate({
-      path: "members",
-      select: "username firstName lastName",
-    });
+    const group = await Group.findById(groupId)
+      .populate({
+        path: "members",
+        select: "username firstName lastName",
+      })
+      .lean();
 
     // If the specified group is not found, handle the error
     if (!group) {
@@ -414,8 +416,10 @@ export const getGroupMembers = async (req, res) => {
 
     // Mapping the members of the group to include additional information
     const members = group.members.map((member) => ({
-      ...member.toObject(),
-      isAdmin: userId === admin.toString(),
+      ...member,
+
+      // checks if a member is the admin or not
+      isAdmin: member._id.toString() === admin.toString() ? true : false,
     }));
 
     return res.status(StatusCodes.OK).json({
