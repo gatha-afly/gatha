@@ -32,14 +32,3 @@
 .emojiButton:hover {
   color: var(--color-hover);
 }
-
-.emojiPickerContainer {
-  position: absolute;
-  bottom: -300px; /* Set initial position off-screen */
-  left: 0;
-  width: 100%;
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 10px;
-  z-index: 1;
-}

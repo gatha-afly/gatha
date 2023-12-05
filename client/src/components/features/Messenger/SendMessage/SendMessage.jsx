@@ -1,7 +1,5 @@
-// SendMessage.js
-
-import { useState, useEffect } from "react";
-import Picker from "emoji-picker-react";
+import React, { useState, useEffect, useRef } from "react";
+import EmojiPicker from "../EmojiPicker/RenderEmojiPicker"; // Updated import path
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SendMessage.module.css";
 import { IoMdSend } from "react-icons/io";
@@ -14,9 +12,10 @@ import useUserContext from "../../../../hooks/useUserContext";
 function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
-  const [chosenEmoji, setChosenEmoji] = useState({}); // Updated initial state
+  const [chosenEmoji, setChosenEmoji] = useState({});
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { setIsTyping, setTypingUser } = useUserContext();
+  const inputRef = useRef(null);
   let typingTimeout;
 
   useEffect(() => {
@@ -40,9 +39,12 @@ function SendMessage({ selectedGroup }) {
 
   useEffect(() => {
     if (chosenEmoji.emoji) {
-      // Check if the emoji is defined
       setInput((prevInput) => prevInput + chosenEmoji.emoji);
+      setChosenEmoji({});
       setShowEmojiPicker(false);
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
     }
   }, [chosenEmoji]);
 
@@ -85,12 +87,18 @@ function SendMessage({ selectedGroup }) {
 
   const onEmojiClick = (event, emojiObject) => {
     setChosenEmoji(emojiObject);
+    if (inputRef.current) {
+      setInput((prevInput) => prevInput + emojiObject.emoji);
+      inputRef.current.focus();
+    }
+    setShowEmojiPicker(false);
   };
 
   return (
     <form className={styles.sendMessageContainer}>
       <div className={styles.sendMessageLine}>
         <input
+          ref={inputRef}
           name="message-input"
           type="text"
           placeholder="Message"
@@ -104,14 +112,7 @@ function SendMessage({ selectedGroup }) {
           onClick={() => setShowEmojiPicker(!showEmojiPicker)}
         />
 
-        {showEmojiPicker && (
-          <div
-            className={styles.emojiPickerContainer}
-            style={{ bottom: showEmojiPicker ? "0" : "-300px" }}
-          >
-            <Picker onEmojiClick={onEmojiClick} />
-          </div>
-        )}
+        {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
 
         <span className={styles.sendMessageButton}>
           <ReactIconNavigate onClick={sendMessage} size={3} icon={IoMdSend} />
