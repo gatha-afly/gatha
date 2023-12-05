@@ -85,7 +85,7 @@ function SendMessage({ selectedGroup }) {
     }
   };
 
-  const onEmojiClick = (event, emojiObject) => {
+  const onEmojiClick = (emojiObject) => {
     setChosenEmoji(emojiObject);
     if (inputRef.current) {
       setInput((prevInput) => prevInput + emojiObject.emoji);
