@@ -85,38 +85,35 @@ function RenderMessages({ selectedGroup }) {
           ) : (
             <ScrollContentToBottomContainer>
               <ul className={styles.messagesContainer}>
-                {messages.map(
-                  (msg, index) =>
-                    // prevent displaying old messages for newly joined users
-                    msg.sender && (
-                      <li
-                        key={index}
-                        className={`${styles.message} ${
-                          msg.sender._id === user.userId
-                            ? styles.senderMessage
-                            : styles.receiverMessage
-                        }`}>
-                        <div className={styles.sender}>
-                          <>
-                            <UsernameInitials
-                              firstName={msg.sender.firstName}
-                              lastName={msg.sender.lastName}
-                              radius={"2.6"}
-                              fontSize={"1.1"}
-                              borderWidth={"0.4"}
-                            />
-                            <span className={styles.sender}>
-                              {msg.sender.username}
-                            </span>
-                          </>
-                        </div>
-                        <div className={styles.message}>{msg.text}</div>
-                        <div className={styles.date}>
-                          {dateFormatter(new Date(msg.createdAt))}
-                        </div>
-                      </li>
-                    )
-                )}
+                {messages.map((msg, index) => (
+                  <li
+                    key={index}
+                    className={`${styles.message} ${
+                      msg.sender?.id === user.userId
+                        ? styles.senderMessage
+                        : styles.receiverMessage
+                    }`}
+                  >
+                    <div className={styles.sender}>
+                      <>
+                        <UsernameInitials
+                          firstName={msg.sender?.firstName}
+                          lastName={msg.sender?.lastName}
+                          radius={"2.6"}
+                          fontSize={"1.1"}
+                          borderWidth={"0.4"}
+                        />
+                        <span className={styles.sender}>
+                          {msg.sender?.username}
+                        </span>
+                      </>
+                    </div>
+                    <div className={styles.message}>{msg.text}</div>
+                    <div className={styles.date}>
+                      {dateFormatter(new Date(msg.createdAt))}
+                    </div>
+                  </li>
+                ))}
                 <IsTypingEffect />
               </ul>
             </ScrollContentToBottomContainer>

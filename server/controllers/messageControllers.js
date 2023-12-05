@@ -80,11 +80,25 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
     // Save the new message in messages array of group collection
     await responseHandlerUtils.saveGroupMessage(groupId, newMessage);
 
-    // Populate the sender field before emitting the message to the group.
-    await newMessage.populate("sender", "-password -groups"); //Exclude password and groups
+    // Populate the sender field with additional details before emitting the message to the group.
+    await newMessage.populate({
+      path: "sender",
+      select: "id username firstName email lastName",
+    });
 
     io.to(groupId.toString()).emit("receive_message", {
-      text: newMessage,
+      text: {
+        ...newMessage.toObject(),
+        sender: newMessage.sender
+          ? {
+              id: newMessage.sender.id,
+              firstName: newMessage.sender.firstName,
+              lastName: newMessage.sender.lastName,
+              username: newMessage.sender.username,
+              email: newMessage.sender.email,
+            }
+          : null,
+      },
       groupId: groupId.toString(),
     });
   } catch (error) {
@@ -100,9 +114,6 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
  */
 export const getAllGroupMessage = async (req, res) => {
   try {
-    // Log before the Mongoose query
-    console.log("Before Mongoose Query");
-
     // Extract groupId from request parameters
     const { groupId } = req.params;
 
@@ -113,9 +124,6 @@ export const getAllGroupMessage = async (req, res) => {
         path: "sender",
         select: "id username firstName email lastName",
       });
-
-    // Log after the Mongoose query
-    console.log("After Mongoose Query");
 
     // Format messages and include sender details in the response
     const formattedMessages = messages.map((message) => ({
