@@ -1,3 +1,5 @@
+// SendMessage.js
+
 import { useState, useEffect } from "react";
 import Picker from "emoji-picker-react";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
@@ -12,7 +14,7 @@ import useUserContext from "../../../../hooks/useUserContext";
 function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
-  const [chosenEmoji, setChosenEmoji] = useState(null); // Track the chosen emoji
+  const [chosenEmoji, setChosenEmoji] = useState({}); // Updated initial state
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const { setIsTyping, setTypingUser } = useUserContext();
   let typingTimeout;
@@ -37,10 +39,10 @@ function SendMessage({ selectedGroup }) {
   }, [setIsTyping, setTypingUser]);
 
   useEffect(() => {
-    if (chosenEmoji) {
-      // Handle the chosenEmoji update
+    if (chosenEmoji.emoji) {
+      // Check if the emoji is defined
       setInput((prevInput) => prevInput + chosenEmoji.emoji);
-      setShowEmojiPicker(false); // Close emoji picker after selecting an emoji
+      setShowEmojiPicker(false);
     }
   }, [chosenEmoji]);
 
@@ -97,15 +99,16 @@ function SendMessage({ selectedGroup }) {
           onKeyDown={handleKeyDown}
         />
 
-        {/* Emoji button to toggle the emoji picker */}
         <MdEmojiEmotions
           className={styles.emojiButton}
           onClick={() => setShowEmojiPicker(!showEmojiPicker)}
         />
 
-        {/* Emoji picker with positioning */}
         {showEmojiPicker && (
-          <div className={styles.emojiPickerContainer}>
+          <div
+            className={styles.emojiPickerContainer}
+            style={{ bottom: showEmojiPicker ? "0" : "-300px" }}
+          >
             <Picker onEmojiClick={onEmojiClick} />
           </div>
         )}

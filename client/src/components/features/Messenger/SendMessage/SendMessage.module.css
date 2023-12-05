@@ -1,3 +1,5 @@
+/* SendMessage.module.css */
+
 .sendMessageContainer input {
   width: 100%;
   margin-right: 0.5rem;
@@ -10,7 +12,7 @@
   display: flex;
   flex-direction: row;
   padding: 0.5rem;
-  position: relative; /* Added to make relative positioning work for .emojiButton */
+  position: relative;
 }
 
 .sendMessageButton {
@@ -26,6 +28,18 @@
   color: var(--color-structure-elements);
   cursor: pointer;
 }
+
 .emojiButton:hover {
   color: var(--color-hover);
+}
+
+.emojiPickerContainer {
+  position: absolute;
+  bottom: -300px; /* Set initial position off-screen */
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
 }
