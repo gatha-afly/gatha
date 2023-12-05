@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./RenderMessages.module.css";
 import { userAPI } from "./../../../../api/userAPI";
 import { dateFormatter } from "./../../../../utils/dateUtils";
@@ -47,30 +47,26 @@ function RenderMessages({ selectedGroup }) {
 
     // Call fetchMessages function to initiate the data fetching
     fetchMessages();
+  }, [selectedGroup.groupId]);
 
-    // Listen for new messages from the server
+  useEffect(() => {
     const handleNewMessage = ({ text: newMessage, groupId }) => {
+      console.log("Received new message:", newMessage);
+      console.log("Selected Group ID:", selectedGroup?.groupId);
+
       if (groupId === selectedGroup?.groupId) {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       }
     };
 
-    // Listen for initialization and new messages
     socket.on("init", handleNewMessage);
     socket.on("receive_message", handleNewMessage);
 
-    // Listen for error events from the server
-    socket.on("error", ({ message }) => {
-      setError(message);
-    });
-
-    // Cleanup function to remove socket event listeners when the component unmounts
     return () => {
       socket.off("init", handleNewMessage);
       socket.off("receive_message", handleNewMessage);
-      socket.off("error");
     };
-  }, [selectedGroup.groupId]);
+  }, [selectedGroup?.groupId]);
 
   return (
     <>
@@ -92,8 +88,7 @@ function RenderMessages({ selectedGroup }) {
                       msg.sender?.id === user.userId
                         ? styles.senderMessage
                         : styles.receiverMessage
-                    }`}
-                  >
+                    }`}>
                     <div className={styles.sender}>
                       <>
                         <UsernameInitials

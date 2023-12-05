@@ -9,6 +9,7 @@ import styles from "./CreateGroupForm.module.css";
 import { userAPI } from "../../../../../api/userAPI";
 import useUpdateUserData from "../../../../../hooks/useUpdateUser";
 import useUserContext from "../../../../../hooks/useUserContext";
+import socket from "../../../../../api/socket";
 
 /**
  * Create group form, allowing users to input group information and register a group.
@@ -51,8 +52,10 @@ const CreateGroupForm = ({ onDefaultViewClick }) => {
         data
       );
 
-      devLog();
-
+      devLog("response from /groups/create-group/:", response.data);
+      //
+      socket.disconnect();
+      socket.connect();
       // Fetch and update user data
       fetchUserUpdates();
       onDefaultViewClick();

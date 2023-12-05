@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { userAPI } from "../../../../../api/userAPI";
 import {
+  devLog,
   handleOtherErrors,
   handleServerErrors,
 } from "../../../../../utils/errorUtils";
@@ -8,6 +9,7 @@ import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SearchGroupAndJoin.module.css";
 import useUpdateUserData from "../../../../../hooks/useUpdateUser";
 import useUserContext from "../../../../../hooks/useUserContext";
+import socket from "../../../../../api/socket";
 
 /**
  * Form that allows searching and joining a group via group code. Shows error message if code does not exist in database
@@ -46,8 +48,14 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
 
     try {
       // Attempt to join the group with the provided code
-      await userAPI.patch(`/groups/join-group/${userId}`, data);
+      const response = await userAPI.patch(
+        `/groups/join-group/${userId}`,
+        data
+      );
+      devLog("response from /groups/join-group/:", response.data);
 
+      socket.disconnect();
+      socket.connect();
       //Fetch and update user data
       fetchUserUpdates();
       onDefaultViewClick();
