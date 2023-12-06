@@ -44,6 +44,36 @@ export const getInitialMessages = async (io, socket, groupId) => {
 };
 
 /**
+ * Handler to retrieve and send the online status of group members to a specific socket
+ * @param {*} io
+ * @param {*} socket
+ * @param {*} groupId
+ */
+export const getUserStatus = async (io, socket, groupId) => {
+  try {
+    // Retrieve group members information, excluding their passwords
+    const groupMembers = await Group.findById(groupId).populate(
+      "members",
+      "_id, is_online"
+    );
+
+    // Filter members who are currently online and extract their user IDs
+    const onlineUsers = groupMembers.members
+      .filter((member) => member.is_online) // Exclude the current socket user
+      .map((member) => member._id.toString());
+
+    // Emit an event to the specified socket with the list of online user IDs
+    io.to(groupId.toString()).emit("get_online_users", {
+      onlineUsers,
+      groupId,
+    });
+  } catch (error) {
+    // Log any errors that occur during the process
+    console.error(error);
+  }
+};
+
+/**
  * Handler for sending a new message within a group
  * @param {*} io
  * @param {*} msg
