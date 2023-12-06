@@ -9,7 +9,6 @@
   font-weight: bold;
 }
 .typing__dot {
-  float: left;
   width: 4px;
   height: 4px;
   margin: 0 2px;
