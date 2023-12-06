@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./GroupAdminBar.module.css";
 import { IoPersonAddSharp } from "react-icons/io5";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
+import useSetActionWhenSelectedGroupChanges from "../../../../hooks/useSetActionWhenSelectedGroupChanges";
 
 /**
  * Bar to host selected group admin related information and functionalities
@@ -10,12 +11,31 @@ import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNaviga
  * @returns {JSX.Element} - The rendered component.
  */
 function GroupAdminBar({ selectedGroup, onAddUserClick }) {
+  const [isGroupCodeVisible, setGroupCodeVisibility] = useState(false);
+
+  const handleCodeClick = () => {
+    setGroupCodeVisibility(!isGroupCodeVisible);
+  };
+
+  const hideGroupCode = () => {
+    setGroupCodeVisibility(false);
+  };
+  // Hide groupCode if selectedGroup changes
+  useSetActionWhenSelectedGroupChanges(selectedGroup, hideGroupCode);
+
   return (
     <div className={styles.barContainer}>
-      {/* Render group code */}
-      <h3 className={styles.groupCode}>
-        Invite code: {selectedGroup.group_code}
-      </h3>
+      {/* Render group code or clickable text based on visibility state */}
+      {isGroupCodeVisible ? (
+        <p className={styles.groupCode} onClick={handleCodeClick}>
+          {selectedGroup.group_code}
+        </p>
+      ) : (
+        <p className={styles.toggleText} onClick={handleCodeClick}>
+          Show invitation code
+        </p>
+      )}
+
       {/* Render button to view add users to group */}
       <ReactIconNavigate
         onClick={onAddUserClick}

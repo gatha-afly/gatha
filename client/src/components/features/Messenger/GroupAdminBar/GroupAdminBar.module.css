@@ -1,10 +1,14 @@
 .barContainer {
   display: flex;
   flex-direction: row;
-  width: 40%;
+  justify-content: space-between;
+  width: 60%;
 }
 
-.groupCode {
+.groupCode,
+.toggleText {
   color: var(--color-text);
   white-space: nowrap;
+  font-weight: 900;
+  cursor: pointer;
 }

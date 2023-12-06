@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import EmojiPicker from "../EmojiPicker/RenderEmojiPicker"; // Updated import path
+import EmojiPicker from "../EmojiPicker/RenderEmojiPicker";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SendMessage.module.css";
 import { IoMdSend } from "react-icons/io";
@@ -105,9 +105,9 @@ function SendMessage({ selectedGroup }) {
       <div className={styles.sendMessageLine}>
         <input
           ref={inputRef}
-          name="message-input"
-          type="text"
-          placeholder="Message"
+          name='message-input'
+          type='text'
+          placeholder='Message'
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}

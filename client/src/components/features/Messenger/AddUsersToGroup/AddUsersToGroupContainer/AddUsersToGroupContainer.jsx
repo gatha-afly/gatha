@@ -9,6 +9,7 @@ import AddUserToGroupForm from "../AddUserToGroupForm/AddUserToGroupForm";
 import styles from "./AddUsersToGroupContainer.module.css";
 import { HiMiniBackspace } from "react-icons/hi2";
 import useUserContext from "../../../../../hooks/useUserContext";
+import useSetActionWhenSelectedGroupChanges from "../../../../../hooks/useSetActionWhenSelectedGroupChanges";
 
 /**
  * Container for adding users to a group.
@@ -17,9 +18,6 @@ import useUserContext from "../../../../../hooks/useUserContext";
  * @returns {JSX.Element} - Rendered component.
  */
 const AddUsersToGroupContainer = ({ onDefaultViewClick }) => {
-  // Create a selectedGroupRef to persist initial selectedGroup.groupId across renders
-  const selectedGroupRef = useRef();
-
   // Get selectedGroup, groupId & userId from userContext
   const { groupId } = useUserContext().selectedGroup;
   const { userId } = useUserContext().user;
@@ -39,21 +37,7 @@ const AddUsersToGroupContainer = ({ onDefaultViewClick }) => {
   };
 
   // Set default view when selectedGroup ID does not match initial groupId
-  useEffect(() => {
-    if (
-      // Check if there is a previous groupID stored in selectedGroupRef.current and if the current group ID (selectedGroup.groupId) is different from the previous one
-      selectedGroupRef.current &&
-      selectedGroup.groupId !== selectedGroupRef.current
-    ) {
-      // Render message default view
-      onDefaultViewClick();
-    }
-  }, [selectedGroup, onDefaultViewClick]);
-
-  // Update ref when selectedGroup changes
-  useEffect(() => {
-    selectedGroupRef.current = selectedGroup.groupId;
-  }, [selectedGroup]);
+  useSetActionWhenSelectedGroupChanges(selectedGroup, onDefaultViewClick);
 
   return (
     <div className={styles.addUsersContainer}>
