@@ -30,6 +30,9 @@ const IsTypingEffect = () => {
           <span className={styles.typingIndicator}>
             {typingUser.username} is typing
           </span>
+          <div className={styles.typing__dot}></div>
+          <div className={styles.typing__dot}></div>
+          <div className={styles.typing__dot}></div>
         </div>
       )}
     </>
