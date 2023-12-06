@@ -1,5 +1,5 @@
-import connectToMongoDB from "./server/config/database.js";
-import User from "./server/models/User.js";
+import connectToMongoDB from "./config/database.js";
+import User from "./models/User.js";
 // Data migration script
 connectToMongoDB().then(async () => {
   try {
