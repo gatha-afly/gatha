@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { RiRadioButtonLine } from "react-icons/ri";
 import styles from "./RenderMessages.module.css";
 import { userAPI } from "./../../../../api/userAPI";
 import { dateFormatter } from "./../../../../utils/dateUtils";
@@ -19,6 +20,7 @@ function RenderMessages({ selectedGroup }) {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   // Get user updates and fetch error from custom hook
   const { fetchUserUpdates } = useUpdateUserData();
@@ -29,6 +31,9 @@ function RenderMessages({ selectedGroup }) {
   }, [fetchUserUpdates]);
 
   useEffect(() => {
+    //Connect the socket
+    socket.connect();
+
     // Fetch the messages when on mount
     const fetchMessages = async () => {
       try {
@@ -59,12 +64,27 @@ function RenderMessages({ selectedGroup }) {
       }
     };
 
+    //Handler for getting online users from socket server
+    const handleOnlineUsers = ({ onlineUsers, groupId }) => {
+      if (groupId === selectedGroup?.groupId) {
+        setOnlineUsers(onlineUsers);
+      }
+
+      console.log("Online user event recieved", onlineUsers);
+    };
+
+    // Listen for initialization and new messages
     socket.on("init", handleNewMessage);
     socket.on("receive_message", handleNewMessage);
+    socket.on("get_online_users", handleOnlineUsers);
 
     return () => {
       socket.off("init", handleNewMessage);
       socket.off("receive_message", handleNewMessage);
+      socket.off("get_online_users", handleOnlineUsers);
+
+      //Disconnect the socket
+      socket.disconnect();
     };
   }, [selectedGroup?.groupId]);
 
@@ -88,7 +108,8 @@ function RenderMessages({ selectedGroup }) {
                       msg.sender?.id === user.userId
                         ? styles.senderMessage
                         : styles.receiverMessage
-                    }`}>
+                    }`}
+                  >
                     <div className={styles.sender}>
                       <>
                         <UsernameInitials
@@ -101,6 +122,26 @@ function RenderMessages({ selectedGroup }) {
                         <span className={styles.sender}>
                           {msg.sender?.username}
                         </span>
+
+                        {/* Online and offline indicator */}
+                        <div className={styles.onlineContainer}>
+                          {msg.sender._id}
+                          {onlineUsers.includes(msg.sender._id) ? (
+                            <div className={styles.online}>
+                              <span>Online</span>
+                              <RiRadioButtonLine
+                                className={styles.onlineIcon}
+                              />
+                            </div>
+                          ) : (
+                            <div className={styles.offline}>
+                              <span>Offline</span>
+                              <RiRadioButtonLine
+                                className={styles.offlineIcon}
+                              />
+                            </div>
+                          )}
+                        </div>
                       </>
                     </div>
                     <div className={styles.message}>{msg.text}</div>
