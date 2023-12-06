@@ -1,5 +1,5 @@
 import React from "react";
-import Picker from "emoji-picker-react"; // Updated import path
+import Picker from "emoji-picker-react";
 import styles from "./EmojiPicker.module.css";
 
 function EmojiPicker({ onEmojiClick }) {
