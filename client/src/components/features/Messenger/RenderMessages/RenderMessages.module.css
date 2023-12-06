@@ -51,24 +51,30 @@
 
 .online {
   font-size: 2rem;
-  color: green;
+  color: var(--color-success);
   display: flex;
   gap: 0.3rem;
 }
 .onlineIcon {
-  color: green;
+  color: var(--color-success);
 }
 span {
   font-size: 1.5rem;
   margin-top: 0;
 }
 .offlineIcon {
-  color: red;
+  color: var(--color-error);
 }
 
 .offline {
   font-size: 2rem;
-  color: red;
+  color: var(--color-error);
   display: flex;
   gap: 0.3rem;
+}
+
+@media only screen and (min-width: 1921px) {
+  .messagesContainer {
+    height: 35vh;
+  }
 }
