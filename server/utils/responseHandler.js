@@ -58,6 +58,28 @@ export const updateGroupMembers = async (groupId, memberId, operation) => {
 };
 
 /**
+ * Utility helper to update the group admin
+ * @param {*} groupId
+ * @param {*} newAdminId
+ * @returns
+ */
+export const updateGroupAdmin = async (groupId, newAdminId) => {
+  try {
+    return await Group.findByIdAndUpdate(
+      groupId,
+      { $addToSet: { admins: newAdminId } }, // Use $addToSet to add newAdminId to the admins array if not already present
+      { new: true }
+    )
+      .populate("members", "username firstName lastName")
+      .populate("admins", "username firstName lastName"); // Update to populate the admins field
+  } catch (error) {
+    throw new Error(
+      "An error occurred while updating the group admins. Please try again later."
+    );
+  }
+};
+
+/**
  * Utility helper to update the user groups
  * @param {*} groupId
  * @param {*} userId

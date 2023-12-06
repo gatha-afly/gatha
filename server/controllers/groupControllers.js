@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import Group from "../models/Group.js";
 import * as responseHandlerUtils from "../utils/responseHandler.js";
 import * as errorHandlerUtils from "../utils/errorHandler.js";
+import User from "../models/User.js";
 
 /***
  * Handler for creating group using userId
@@ -429,6 +430,57 @@ export const getGroupMembers = async (req, res) => {
       members,
     });
   } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ * Handler for assigning user as admin of the group
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const assignUserAsAdmin = async (req, res) => {
+  try {
+    const { groupId, adminId } = req.params;
+    const { username } = req.body;
+
+    // Check if the provided groupId is available in the database
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+
+    // Check if the provided adminId is available in the database
+    // const admin = await responseHandlerUtils.findUserById(adminId);
+    // if (!admin) {
+    //   return errorHandlerUtils.handleUserNotFound(res, "admin ID");
+    // }
+
+    // Check if the provided username is available in the database
+    const newAdmin = await responseHandlerUtils.findUserByUsername(username);
+    if (!newAdmin) {
+      return errorHandlerUtils.handleUserNotFound(res, "username");
+    }
+
+    // Throw a bad request error if the user is already the group admin
+    if (newAdmin._id.toString() === group.admin.toString()) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "The user already has admin rights for this group" });
+    }
+
+    const updatedGroupAdmin = await responseHandlerUtils.updateGroupAdmin(
+      groupId,
+      newAdmin._id
+    );
+
+    return res.status(StatusCodes.OK).json({
+      message: "The new user has been added as a group admin",
+      updatedGroupAdmin,
+    });
+  } catch (error) {
+    console.error(error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
