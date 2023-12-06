@@ -1,15 +1,15 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Custom React hook to perform an action when the selected group changes.
+ * Custom React hook to perform a callback when the selected group changes.
  * @param {Object} selectedGroup - The currently selected group.
- * @param {Function} action - The action to be performed when the selected group changes.
+ * @param {Function} callback - The callback function to be executed when the selected group changes.
  */
-const useSetActionWhenSelectedGroupChanges = (selectedGroup, action) => {
+const useSetCallbackWhenSelectedGroupChanges = (selectedGroup, callback) => {
   // Ref to store the previous selected group ID
   const selectedGroupRef = useRef();
 
-  // Effect to trigger the action when the selected group changes
+  // Effect to trigger the callback when the selected group changes
   useEffect(() => {
     if (
       // Check if there is a previous group ID stored in selectedGroupRef.current
@@ -17,10 +17,10 @@ const useSetActionWhenSelectedGroupChanges = (selectedGroup, action) => {
       selectedGroupRef.current &&
       selectedGroup.groupId !== selectedGroupRef.current
     ) {
-      // Perform the specified action
-      action();
+      // Execute the specified callback
+      callback();
     }
-  }, [selectedGroup, action]);
+  }, [selectedGroup, callback]);
 
   // Effect to update the ref when the selected group changes
   useEffect(() => {
@@ -28,4 +28,4 @@ const useSetActionWhenSelectedGroupChanges = (selectedGroup, action) => {
   }, [selectedGroup]);
 };
 
-export default useSetActionWhenSelectedGroupChanges;
+export default useSetCallbackWhenSelectedGroupChanges;

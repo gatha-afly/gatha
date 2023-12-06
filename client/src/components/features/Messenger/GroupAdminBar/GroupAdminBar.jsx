@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import styles from "./GroupAdminBar.module.css";
 import { IoPersonAddSharp } from "react-icons/io5";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
-import useSetActionWhenSelectedGroupChanges from "../../../../hooks/useSetActionWhenSelectedGroupChanges";
+import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
 /**
- * Bar to host selected group admin related information and functionalities
+ * Bar to host selected group admin relateActiond information and functionalities
  * @param {Object} props - The component props.
  * @param {Object} props.selectedGroup - The currently selected group by the user.
  * @returns {JSX.Element} - The rendered component.
@@ -21,7 +21,7 @@ function GroupAdminBar({ selectedGroup, onAddUserClick }) {
     setGroupCodeVisibility(false);
   };
   // Hide groupCode if selectedGroup changes
-  useSetActionWhenSelectedGroupChanges(selectedGroup, hideGroupCode);
+  useSetCallbackWhenSelectedGroupChanges(selectedGroup, hideGroupCode);
 
   return (
     <div className={styles.barContainer}>

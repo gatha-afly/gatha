@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 import HelmetMetaTagsNetlify from "../../../../common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
@@ -9,7 +9,7 @@ import AddUserToGroupForm from "../AddUserToGroupForm/AddUserToGroupForm";
 import styles from "./AddUsersToGroupContainer.module.css";
 import { HiMiniBackspace } from "react-icons/hi2";
 import useUserContext from "../../../../../hooks/useUserContext";
-import useSetActionWhenSelectedGroupChanges from "../../../../../hooks/useSetActionWhenSelectedGroupChanges";
+import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
 /**
  * Container for adding users to a group.
@@ -37,7 +37,7 @@ const AddUsersToGroupContainer = ({ onDefaultViewClick }) => {
   };
 
   // Set default view when selectedGroup ID does not match initial groupId
-  useSetActionWhenSelectedGroupChanges(selectedGroup, onDefaultViewClick);
+  useSetCallbackWhenSelectedGroupChanges(selectedGroup, onDefaultViewClick);
 
   return (
     <div className={styles.addUsersContainer}>
