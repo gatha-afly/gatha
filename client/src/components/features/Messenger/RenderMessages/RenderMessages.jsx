@@ -25,15 +25,14 @@ function RenderMessages({ selectedGroup }) {
   // Get user updates and fetch error from custom hook
   const { fetchUserUpdates } = useUpdateUserData();
 
+  console.log("Online Users", onlineUsers);
+
   // Update user data on mount
   useEffect(() => {
     fetchUserUpdates();
   }, [fetchUserUpdates]);
 
   useEffect(() => {
-    //Connect the socket
-    socket.connect();
-
     // Fetch the messages when on mount
     const fetchMessages = async () => {
       try {
@@ -84,7 +83,7 @@ function RenderMessages({ selectedGroup }) {
       socket.off("get_online_users", handleOnlineUsers);
 
       //Disconnect the socket
-      socket.disconnect();
+      // socket.disconnect();
     };
   }, [selectedGroup?.groupId]);
 
@@ -125,8 +124,7 @@ function RenderMessages({ selectedGroup }) {
 
                         {/* Online and offline indicator */}
                         <div className={styles.onlineContainer}>
-                          {msg.sender.id}
-                          {onlineUsers.includes(msg.sender.id) ? (
+                          {onlineUsers.includes(msg.sender?.id) ? (
                             <div className={styles.online}>
                               <span>Online</span>
                               <RiRadioButtonLine
