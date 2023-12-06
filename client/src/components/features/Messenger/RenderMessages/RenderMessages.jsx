@@ -125,8 +125,8 @@ function RenderMessages({ selectedGroup }) {
 
                         {/* Online and offline indicator */}
                         <div className={styles.onlineContainer}>
-                          {msg.sender._id}
-                          {onlineUsers.includes(msg.sender._id) ? (
+                          {msg.sender.id}
+                          {onlineUsers.includes(msg.sender.id) ? (
                             <div className={styles.online}>
                               <span>Online</span>
                               <RiRadioButtonLine
