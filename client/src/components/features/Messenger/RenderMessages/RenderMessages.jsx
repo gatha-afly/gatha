@@ -34,6 +34,7 @@ function RenderMessages({ selectedGroup }) {
 
   useEffect(() => {
     // Fetch the messages when on mount
+    socket.connect();
     const fetchMessages = async () => {
       try {
         const response = await userAPI.get(
