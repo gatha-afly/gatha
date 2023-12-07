@@ -91,7 +91,6 @@ const UserProvider = ({ children }) => {
       setLoggedIn(false);
       localStorage.removeItem("user");
       localStorage.removeItem("selectedGroup");
-      localStorage.removeItem("socket");
     } catch (err) {
       setError("An error occurred while logging out.");
       console.error(err.message);
@@ -139,7 +138,8 @@ const UserProvider = ({ children }) => {
         typingUser,
         setTypingUser,
         handleLoggedInChange,
-      }}>
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

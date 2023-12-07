@@ -31,6 +31,7 @@ const groupSchema = new Schema({
   },
   members: [{ type: Schema.Types.ObjectId, ref: "User" }],
   admin: { type: Schema.Types.ObjectId, ref: "User" },
+  groupAdmins: [{ type: Schema.Types.ObjectId, ref: "User" }],
   messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
 });
 const Group = model("Group", groupSchema);
