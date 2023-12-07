@@ -5,6 +5,5 @@ export const validateGroupRules = [
   //Sanitize and validate group name
   body("name")
     .trim()
-    .isAlphanumeric("en-GB", { ignore: " " }) //ignores the spaces
     .customSanitizer((value) => uppercaseFirstLetter(value)),
 ];
