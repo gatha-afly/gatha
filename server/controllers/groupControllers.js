@@ -348,15 +348,15 @@ export const getGroupData = async (req, res) => {
         path: "members",
         select: "username firstName lastName",
       })
-      .populate("admin", "username firstName lastName");
+      .populate("admins", "username firstName lastName");
 
     if (!group) {
       return errorHandlerUtils.handleGroupNotFound(res);
     }
 
-    const { members, name, description, admin, code } = group;
+    const { members, name, description, admins, code } = group;
 
-    const { _id, username, firstName, lastName } = admin;
+    const { _id, username, firstName, lastName } = admins;
     const groupAdmin = { id: _id, username, firstName, lastName };
 
     //The return response if the user is not admin
@@ -364,12 +364,12 @@ export const getGroupData = async (req, res) => {
       groupId,
       name,
       description,
-      admin: groupAdmin,
+      admins: groupAdmin,
       members,
     };
 
     // Convert both userId and group.admin._id to strings for comparison
-    if (String(userId) !== String(group.admin._id)) {
+    if (String(userId) !== String(group.admins._id)) {
       return res.status(StatusCodes.OK).json(commonResponse);
     }
 
