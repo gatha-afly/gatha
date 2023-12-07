@@ -303,25 +303,65 @@ export const leaveGroup = async (req, res) => {
       return errorHandlerUtils.handleUserNotGroupMember(res, groupId);
     }
 
-    // Update the group by removing the user from the members array
-    const updatedGroup = await responseHandlerUtils.updateGroupMembers(
-      groupId,
-      userId,
-      "$pull"
-    );
-    // Update the groups array of the user
-    const updatedUser = await responseHandlerUtils.updateUserGroups(
-      groupId,
-      userId,
-      "$pull"
+    // Fetch detailed information about the group, including its admins
+    const group = await Group.findById(groupId).lean();
+
+    // Check if the user is an admin
+    const isAdmin = group.admins.some(
+      (adminId) => adminId.toString() === userId
     );
 
-    res.status(StatusCodes.OK).json({
-      message: "You have left the group successfully",
-      updatedGroup,
-      updatedUser,
-    });
+    if (isAdmin) {
+      // Check if the user is the only admin
+      if (group.admins.length === 1) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          error:
+            "You are the only admin in the group. Assign someone as admin before leaving.",
+        });
+      }
+
+      // Update the group by removing the user from admins array
+      const updatedGroup = await responseHandlerUtils.updateGroupAdmin(
+        groupId,
+        userId,
+        "$pull"
+      );
+
+      // Update the groups array of the user
+      const updatedUser = await responseHandlerUtils.updateUserGroups(
+        groupId,
+        userId,
+        "$pull"
+      );
+
+      return res.status(StatusCodes.OK).json({
+        message: "You have left the group successfully",
+        updatedGroup,
+        updatedUser,
+      });
+    } else {
+      // If the user is not an admin, update the group by removing the user from the members array
+      const updatedGroup = await responseHandlerUtils.updateGroupMembers(
+        groupId,
+        userId,
+        "$pull"
+      );
+
+      // Update the groups array of the user
+      const updatedUser = await responseHandlerUtils.updateUserGroups(
+        groupId,
+        userId,
+        "$pull"
+      );
+
+      return res.status(StatusCodes.OK).json({
+        message: "You have left the group successfully",
+        updatedGroup,
+        updatedUser,
+      });
+    }
   } catch (error) {
+    console.log(error.message);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
@@ -427,7 +467,7 @@ export const getGroupMembers = async (req, res) => {
     const members = group.members.map((member) => ({
       ...member,
 
-      // checks if a member is an admin or not
+      // checks if a member is an admin and returns true if it is otherwise returns false
       isAdmin: admins.some(
         (adminId) => adminId.toString() === member._id.toString()
       ),
@@ -488,7 +528,8 @@ export const assignUserAsAdmin = async (req, res) => {
 
     const updatedGroupAdmin = await responseHandlerUtils.updateGroupAdmin(
       groupId,
-      newAdmin._id
+      newAdmin._id,
+      "$push"
     );
 
     return res.status(StatusCodes.OK).json({

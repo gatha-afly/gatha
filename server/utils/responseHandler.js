@@ -63,11 +63,11 @@ export const updateGroupMembers = async (groupId, memberId, operation) => {
  * @param {*} newAdminId
  * @returns
  */
-export const updateGroupAdmin = async (groupId, newAdminId) => {
+export const updateGroupAdmin = async (groupId, newAdminId, operation) => {
   try {
     return await Group.findByIdAndUpdate(
       groupId,
-      { $addToSet: { admins: newAdminId } },
+      { [operation]: { admins: newAdminId } },
       { new: true }
     )
       .populate("members", "username firstName lastName")
