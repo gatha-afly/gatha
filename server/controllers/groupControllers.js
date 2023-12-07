@@ -26,7 +26,7 @@ export const createGroup = async (req, res) => {
     const groupData = {
       userId,
       name,
-      admin: userId, // Set userId as group admin
+      admins: userId, // Set userId as group admin
       members: userId,
     };
 
@@ -38,7 +38,7 @@ export const createGroup = async (req, res) => {
     const newGroup = await Group.create(groupData);
 
     // Populate the user details for the admin
-    await newGroup.populate("admin", "username firstName lastName");
+    await newGroup.populate("admins", "username firstName lastName");
 
     const updatedUser = await responseHandlerUtils.updateUserGroups(
       newGroup._id,
@@ -445,35 +445,23 @@ export const assignUserAsAdmin = async (req, res) => {
     const { groupId, adminId } = req.params;
     const { username } = req.body;
 
-    // Check if the provided groupId is available in the database
     const group = await Group.findById(groupId);
     if (!group) {
       return errorHandlerUtils.handleGroupNotFound(res);
     }
 
-    // Check if the provided adminId is available in the database
-    // const admin = await responseHandlerUtils.findUserById(adminId);
-    // if (!admin) {
-    //   return errorHandlerUtils.handleUserNotFound(res, "admin ID");
-    // }
-
-    // Check if the provided username is available in the database
     const newAdmin = await responseHandlerUtils.findUserByUsername(username);
     if (!newAdmin) {
       return errorHandlerUtils.handleUserNotFound(res, "username");
     }
 
-    // Throw a bad request error if the user is already the group admin
     if (newAdmin._id.toString() === group.admin.toString()) {
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: "The user already has admin rights for this group" });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: "The user already has admin rights for this group",
+      });
     }
 
-    const updatedGroupAdmin = await responseHandlerUtils.updateGroupAdmin(
-      groupId,
-      newAdmin._id
-    );
+    const updatedGroupAdmin = await updateGroupAdmin(groupId, newAdmin._id);
 
     return res.status(StatusCodes.OK).json({
       message: "The new user has been added as a group admin",
