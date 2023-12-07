@@ -9,7 +9,7 @@ import socket from "../../../../api/socket";
 import { devLog } from "../../../../utils/errorUtils";
 import useUserContext from "../../../../hooks/useUserContext";
 import { isBigScreen } from "../../../../utils/deviceUtils";
-import useSetStateWhenSelectedGroupChanges from "../../../../hooks/useSetStateWhenSelectedGroupChanges";
+import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
 function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");
@@ -102,7 +102,7 @@ function SendMessage({ selectedGroup }) {
   };
 
   // Clear input field when selects a different group
-  useSetStateWhenSelectedGroupChanges(selectedGroup, () => setInput(""));
+  useSetCallbackWhenSelectedGroupChanges(selectedGroup, () => setInput(""));
 
   return (
     <form className={styles.sendMessageContainer}>

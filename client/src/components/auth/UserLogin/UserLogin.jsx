@@ -30,7 +30,6 @@ const UserLogin = () => {
       // Navigate to the main page on successful login
       navigate("/main");
     } catch (error) {
-      console.log("test");
       // Handle login errors and update error state for user feedback
       devLog(error);
     }

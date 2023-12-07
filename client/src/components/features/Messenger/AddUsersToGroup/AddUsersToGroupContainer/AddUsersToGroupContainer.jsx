@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
-import HelmetMetaTagsNetlify from "../../../../common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
-import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPageRender";
-import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import GroupMemberList from "../../GroupMemberList/GroupMemberList";
 import AddUserToGroupForm from "../AddUserToGroupForm/AddUserToGroupForm";
 import styles from "./AddUsersToGroupContainer.module.css";
-import { HiMiniBackspace } from "react-icons/hi2";
 import useUserContext from "../../../../../hooks/useUserContext";
 import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
@@ -26,10 +22,7 @@ const AddUsersToGroupContainer = ({ onDefaultViewClick }) => {
   const [refreshTrigger, setRefreshTrigger] = useState(false);
 
   // Get group name and user list
-  const { error, groupName, groupMembers } = useGetGroupMembers(
-    groupId,
-    refreshTrigger
-  );
+  const groupMembers = useGetGroupMembers(groupId, refreshTrigger);
 
   // Change refreshTrigger to trigger useGetGroupMembers hook again after a user has been added
   const handleRefresh = () => {
@@ -41,23 +34,13 @@ const AddUsersToGroupContainer = ({ onDefaultViewClick }) => {
 
   return (
     <div className={styles.addUsersContainer}>
-      {/* Track page renders */}
-      <PiratePxPageRender COUNT_IDENTIFIER={"add-user"} />
-      {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title='gatha - add user' />
-      <h1>{groupName}</h1>
+      <h2>add members:</h2>
       <AddUserToGroupForm
         groupId={groupId}
         userId={userId}
         onRefresh={handleRefresh}
       />
-      <ErrorDisplay error={error} />
       {/* Render back button */}
-      <ReactIconNavigate
-        onClick={onDefaultViewClick}
-        size={2.5}
-        icon={HiMiniBackspace}
-      />
       <GroupMemberList groupMembers={groupMembers} />
     </div>
   );

@@ -58,10 +58,12 @@
 .onlineIcon {
   color: var(--color-success);
 }
+
 span {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   margin-top: 0;
 }
+
 .offlineIcon {
   color: var(--color-error);
 }
