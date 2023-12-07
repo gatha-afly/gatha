@@ -325,7 +325,8 @@ export const leaveGroup = async (req, res) => {
 
       // Update the groups array of the user
       await responseHandlerUtils.updateUserGroups(groupId, userId, "$pull");
-      // If the user is not an admin, update the group by removing the user from the members array
+
+      // update the group by removing the user from the members array
       await responseHandlerUtils.updateGroupMembers(groupId, userId, "$pull");
 
       return res.status(StatusCodes.OK).json({
@@ -476,11 +477,13 @@ export const assignUserAsAdmin = async (req, res) => {
     const { groupId, userId } = req.params;
     const { username } = req.body;
 
+    //Checks if the provided group id available in database
     const group = await Group.findById(groupId);
     if (!group) {
       return errorHandlerUtils.handleGroupNotFound(res);
     }
 
+    //Checks if the provided username exists
     const newAdmin = await responseHandlerUtils.findUserByUsername(username);
     if (!newAdmin) {
       return errorHandlerUtils.handleUserNotFound(res, "username");
@@ -491,10 +494,12 @@ export const assignUserAsAdmin = async (req, res) => {
       newAdmin._id
     );
 
+    //checks if the user is a member of the slected group
     if (!isMember) {
       return errorHandlerUtils.handleUserNotGroupMember(res, group.name);
     }
 
+    //checks if the user is already the admin of the group
     if (newAdmin._id.toString() === group.admins.toString()) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         error: "The user is already an admin for this group",
