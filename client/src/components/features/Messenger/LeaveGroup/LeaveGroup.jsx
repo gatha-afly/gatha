@@ -27,8 +27,7 @@ const LeaveGroup = ({ groupId, userId }) => {
       localStorage.removeItem("selectedGroup");
     } catch (error) {
       devLog(error);
-
-      if (error.response.status === 405) {
+      if (error.response.data.code === 405) {
         setError("Assign an admin before leaving the group.");
       }
     } finally {
