@@ -28,7 +28,7 @@ const useUpdateUserData = () => {
       updateUser(updatedUser);
       devLog("User has been updated");
     } catch (error) {
-      console.error("Error fetching user updates:", error);
+      devLog("Error fetching user updates:", error);
       setError(error);
     } finally {
       // End loading, regardless of success or error

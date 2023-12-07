@@ -6,6 +6,8 @@ import GroupSettingBar from "../GroupSettingBar/GroupSettingBar";
 import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
 import { FaRegHandPointLeft } from "react-icons/fa6";
 import useUserContext from "../../../../hooks/useUserContext";
+import GroupRegularUserSettingsContainer from "../GroupRegularUserSettingsContainer/GroupRegularUserSettingsContainer";
+import GroupAdminSettingsContainer from "../GroupAdminSettingsContainer/GroupAdminSettingsContainer";
 
 function MessengerContainer() {
   const { selectedGroup } = useUserContext();
@@ -22,19 +24,30 @@ function MessengerContainer() {
   const handleDefaultViewClick = () => {
     switchView("default");
   };
-  const handleAddUserClick = () => {
-    switchView("addUser");
+
+  const handleRegularUserSettingsClick = () => {
+    switchView("regularUserSettings");
+  };
+
+  const handleAdminUserSettingsClick = () => {
+    switchView("adminUserSettings");
   };
 
   // Function to dynamically render different views based on the current view state
   const renderView = () => {
     switch (currentView) {
-      // Render addUser component with a callback for the default view
-      case "addUser":
+      // Render regular user settings with a callback for the default view
+      case "regularUserSettings":
         return (
-          <AddUsersToGroupContainer
+          <GroupRegularUserSettingsContainer
             onDefaultViewClick={handleDefaultViewClick}
-            selectedGroup={selectedGroup}
+          />
+        );
+      // Render admin user settings with a callback for the default view
+      case "adminUserSettings":
+        return (
+          <GroupAdminSettingsContainer
+            onDefaultViewClick={handleDefaultViewClick}
           />
         );
       default:
@@ -44,7 +57,8 @@ function MessengerContainer() {
             <div className={styles.groupBar}>
               <GroupSettingBar
                 selectedGroup={selectedGroup}
-                onAddUserClick={handleAddUserClick}
+                onAdminSettingsClick={handleAdminUserSettingsClick}
+                onRegularUserSettingsClick={handleRegularUserSettingsClick}
               />
             </div>
             <div className={styles.messages}>

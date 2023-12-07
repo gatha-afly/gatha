@@ -25,7 +25,7 @@ function RenderMessages({ selectedGroup }) {
   // Get user updates and fetch error from custom hook
   const { fetchUserUpdates } = useUpdateUserData();
 
-  console.log("Online Users", onlineUsers);
+  devLog("Online Users", onlineUsers);
 
   // Update user data on mount
   useEffect(() => {
@@ -56,8 +56,8 @@ function RenderMessages({ selectedGroup }) {
 
   useEffect(() => {
     const handleNewMessage = ({ text: newMessage, groupId }) => {
-      console.log("Received new message:", newMessage);
-      console.log("Selected Group ID:", selectedGroup?.groupId);
+      devLog("Received new message:", newMessage);
+      devLog("Selected Group ID:", selectedGroup?.groupId);
 
       if (groupId === selectedGroup?.groupId) {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
@@ -70,7 +70,7 @@ function RenderMessages({ selectedGroup }) {
         setOnlineUsers(onlineUsers);
       }
 
-      console.log("Online user event recieved", onlineUsers);
+      devLog("Online user event received", onlineUsers);
     };
 
     // Listen for initialization and new messages
@@ -108,8 +108,7 @@ function RenderMessages({ selectedGroup }) {
                       msg.sender?.id === user.userId
                         ? styles.senderMessage
                         : styles.receiverMessage
-                    }`}
-                  >
+                    }`}>
                     <div className={styles.sender}>
                       <>
                         <UsernameInitials
@@ -127,14 +126,14 @@ function RenderMessages({ selectedGroup }) {
                         <div className={styles.onlineContainer}>
                           {onlineUsers.includes(msg.sender?.id) ? (
                             <div className={styles.online}>
-                              <span>Online</span>
+                              <span>online</span>
                               <RiRadioButtonLine
                                 className={styles.onlineIcon}
                               />
                             </div>
                           ) : (
                             <div className={styles.offline}>
-                              <span>Offline</span>
+                              <span>offline</span>
                               <RiRadioButtonLine
                                 className={styles.offlineIcon}
                               />

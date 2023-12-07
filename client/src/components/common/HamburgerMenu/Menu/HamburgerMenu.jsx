@@ -37,7 +37,6 @@ const HamburgerMenu = ({ firstName, lastName }) => {
       {menuOpen && (
         <div className={styles.menuItems} onClick={toggleMenu}>
           <Link to='/main'>gatha</Link>
-          <Link to='/user-profile'>profile</Link>
           <Link to='/user-logout'>logout</Link>
         </div>
       )}
