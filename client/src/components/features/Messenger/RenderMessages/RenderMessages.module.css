@@ -27,7 +27,6 @@
 .sender {
   display: flex;
   gap: 0.5rem;
-  /* border: 1px solid blue; */
 }
 
 .senderMessage {
@@ -41,7 +40,7 @@
 }
 
 /* user Status */
-.userStatus {
+.onlineContainer {
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -51,10 +50,33 @@
 }
 
 .online {
-  font-size: 1.6rem;
-  color: green;
+  font-size: 2rem;
+  color: var(--color-success);
+  display: flex;
+  gap: 0.3rem;
 }
+.onlineIcon {
+  color: var(--color-success);
+}
+
+span {
+  font-size: 1.4rem;
+  margin-top: 0;
+}
+
+.offlineIcon {
+  color: var(--color-error);
+}
+
 .offline {
-  font-size: 1.6rem;
-  color: red;
+  font-size: 2rem;
+  color: var(--color-error);
+  display: flex;
+  gap: 0.3rem;
+}
+
+@media only screen and (min-width: 1921px) {
+  .messagesContainer {
+    height: 35vh;
+  }
 }

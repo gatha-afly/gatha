@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { RiRadioButtonLine } from "react-icons/ri";
 import styles from "./RenderMessages.module.css";
 import { userAPI } from "./../../../../api/userAPI";
 import { dateFormatter } from "./../../../../utils/dateUtils";
@@ -19,9 +20,12 @@ function RenderMessages({ selectedGroup }) {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [onlineUsers, setOnlineUsers] = useState([]);
 
   // Get user updates and fetch error from custom hook
   const { fetchUserUpdates } = useUpdateUserData();
+
+  devLog("Online Users", onlineUsers);
 
   // Update user data on mount
   useEffect(() => {
@@ -30,6 +34,7 @@ function RenderMessages({ selectedGroup }) {
 
   useEffect(() => {
     // Fetch the messages when on mount
+    socket.connect();
     const fetchMessages = async () => {
       try {
         const response = await userAPI.get(
@@ -51,20 +56,35 @@ function RenderMessages({ selectedGroup }) {
 
   useEffect(() => {
     const handleNewMessage = ({ text: newMessage, groupId }) => {
-      console.log("Received new message:", newMessage);
-      console.log("Selected Group ID:", selectedGroup?.groupId);
+      devLog("Received new message:", newMessage);
+      devLog("Selected Group ID:", selectedGroup?.groupId);
 
       if (groupId === selectedGroup?.groupId) {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       }
     };
 
+    //Handler for getting online users from socket server
+    const handleOnlineUsers = ({ onlineUsers, groupId }) => {
+      if (groupId === selectedGroup?.groupId) {
+        setOnlineUsers(onlineUsers);
+      }
+
+      devLog("Online user event received", onlineUsers);
+    };
+
+    // Listen for initialization and new messages
     socket.on("init", handleNewMessage);
     socket.on("receive_message", handleNewMessage);
+    socket.on("get_online_users", handleOnlineUsers);
 
     return () => {
       socket.off("init", handleNewMessage);
       socket.off("receive_message", handleNewMessage);
+      socket.off("get_online_users", handleOnlineUsers);
+
+      //Disconnect the socket
+      // socket.disconnect();
     };
   }, [selectedGroup?.groupId]);
 
@@ -101,6 +121,25 @@ function RenderMessages({ selectedGroup }) {
                         <span className={styles.sender}>
                           {msg.sender?.username}
                         </span>
+
+                        {/* Online and offline indicator */}
+                        <div className={styles.onlineContainer}>
+                          {onlineUsers.includes(msg.sender?.id) ? (
+                            <div className={styles.online}>
+                              <span>online</span>
+                              <RiRadioButtonLine
+                                className={styles.onlineIcon}
+                              />
+                            </div>
+                          ) : (
+                            <div className={styles.offline}>
+                              <span>offline</span>
+                              <RiRadioButtonLine
+                                className={styles.offlineIcon}
+                              />
+                            </div>
+                          )}
+                        </div>
                       </>
                     </div>
                     <div className={styles.message}>{msg.text}</div>

@@ -64,7 +64,7 @@ const AddUserToGroupForm = ({ groupId, userId, onRefresh }) => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type='submit'>add user</button>
+      <button type='submit'>add</button>
     </form>
   );
 };

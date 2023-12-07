@@ -8,6 +8,8 @@ import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNaviga
 import socket from "../../../../api/socket";
 import { devLog } from "../../../../utils/errorUtils";
 import useUserContext from "../../../../hooks/useUserContext";
+import { isBigScreen } from "../../../../utils/deviceUtils";
+import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
 function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");
@@ -17,7 +19,6 @@ function SendMessage({ selectedGroup }) {
   const { setIsTyping, setTypingUser } = useUserContext();
 
   const inputRef = useRef(null);
-
   const typingTimeoutRef = useRef(null);
 
   // Set up socket listeners for typing events
@@ -100,6 +101,9 @@ function SendMessage({ selectedGroup }) {
     setChosenEmoji(emojiObject);
   };
 
+  // Clear input field when selects a different group
+  useSetCallbackWhenSelectedGroupChanges(selectedGroup, () => setInput(""));
+
   return (
     <form className={styles.sendMessageContainer}>
       <div className={styles.sendMessageLine}>
@@ -113,10 +117,12 @@ function SendMessage({ selectedGroup }) {
           onKeyDown={handleKeyDown}
         />
 
-        <MdEmojiEmotions
-          className={styles.emojiButton}
-          onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-        />
+        {isBigScreen && (
+          <MdEmojiEmotions
+            className={styles.emojiButton}
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+          />
+        )}
 
         {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
 

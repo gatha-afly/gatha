@@ -8,7 +8,7 @@ const userSchema = new Schema(
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-
+    is_online: { type: Boolean, default: false },
     avatar: {
       imgName: { type: String },
       imgPath: { type: String },
