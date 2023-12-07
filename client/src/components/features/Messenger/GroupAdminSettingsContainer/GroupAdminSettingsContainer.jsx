@@ -11,6 +11,7 @@ import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCall
 import AddUserToGroupForm from "../AddUsersToGroup/AddUserToGroupForm/AddUserToGroupForm";
 import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
 import { devLog } from "../../../../utils/errorUtils";
+import LeaveGroup from "../LeaveGroup/LeaveGroup";
 
 /**
  * Container for rendering admin user group settings
@@ -47,6 +48,8 @@ const GroupAdminSettingsContainer = ({ onDefaultViewClick }) => {
         <h2>group description:</h2>
         <p>{description}</p>
       </div>
+      <LeaveGroup groupId={groupId} userId={userId} />
+
       <AddUsersToGroupContainer onDefaultViewClick={onDefaultViewClick} />
     </div>
   );

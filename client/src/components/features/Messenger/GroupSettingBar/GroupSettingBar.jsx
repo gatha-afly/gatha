@@ -15,10 +15,12 @@ function GroupSettingBar({
   onAdminSettingsClick,
   onRegularUserSettingsClick,
 }) {
+  const { name } = selectedGroup;
+
   return (
     <div className={styles.barContainer}>
       {/* Render group name */}
-      <h2 className={styles.groupName}>group name</h2>
+      <h2 className={styles.groupName}>{name}</h2>
       {/* Render admin bar if user is admin */}
       {selectedGroup.group_code && (
         <ViewGroupCode selectedGroup={selectedGroup} />

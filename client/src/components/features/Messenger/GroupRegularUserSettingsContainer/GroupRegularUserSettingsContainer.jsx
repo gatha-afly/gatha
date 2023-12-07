@@ -9,6 +9,7 @@ import GroupMemberList from "../GroupMemberList/GroupMemberList";
 import useUserContext from "../../../../hooks/useUserContext";
 import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 import { devLog } from "../../../../utils/errorUtils";
+import LeaveGroup from "../LeaveGroup/LeaveGroup";
 
 /**
  * Container for hosting regular user group settings
@@ -31,6 +32,8 @@ const GroupRegularUserSettingsContainer = ({ onDefaultViewClick }) => {
     <div className={styles.regularUserSettingsContainer}>
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"regular-user-settings"} />
+      {/* Render back button */}
+
       <ReactIconNavigate
         onClick={onDefaultViewClick}
         size={2.5}
@@ -44,7 +47,7 @@ const GroupRegularUserSettingsContainer = ({ onDefaultViewClick }) => {
         <h2>group description:</h2>
         <p>{description}</p>
       </div>
-      {/* Render back button */}
+      <LeaveGroup groupId={groupId} userId={userId} />
       <GroupMemberList groupMembers={groupMembers} />
     </div>
   );
