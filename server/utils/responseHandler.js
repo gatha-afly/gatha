@@ -67,11 +67,11 @@ export const updateGroupAdmin = async (groupId, newAdminId) => {
   try {
     return await Group.findByIdAndUpdate(
       groupId,
-      { $addToSet: { admin: newAdminId } },
+      { $addToSet: { admins: newAdminId } },
       { new: true }
     )
       .populate("members", "username firstName lastName")
-      .populate("admin", "username firstName lastName");
+      .populate("admins", "username firstName lastName");
   } catch (error) {
     throw new Error(
       "An error occurred while updating the group admins. Please try again later."
@@ -99,7 +99,9 @@ export const updateUserGroups = async (groupId, userId, operation) => {
         path: "groups",
         select: "groupId name",
       });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /**
