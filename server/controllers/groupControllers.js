@@ -313,9 +313,10 @@ export const leaveGroup = async (req, res) => {
     if (isAdmin) {
       // Check if the user is the only admin
       if (group.admins.length === 1) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
+        return res.status(405).json({
           error:
             "You are the only admin in the group. Assign someone as admin before leaving.",
+          code: 405,
         });
       }
 
@@ -497,12 +498,14 @@ export const assignUserAsAdmin = async (req, res) => {
     if (newAdmin._id.toString() === group.admins.toString()) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         error: "The user is already an admin for this group",
+        code: 406,
       });
     }
 
     if (userId !== group.admins.toString()) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         error: "You are not authorized to assign a new admin for this group",
+        code: 407,
       });
     }
     await responseHandlerUtils.updateGroupAdmin(groupId, newAdmin._id, "$push");

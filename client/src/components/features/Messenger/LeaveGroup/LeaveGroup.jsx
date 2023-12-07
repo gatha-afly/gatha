@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { userAPI } from "../../../../api/userAPI";
 import useUpdateUserData from "../../../../hooks/useUpdateUser";
 import { devLog } from "../../../../utils/errorUtils";
@@ -13,6 +13,7 @@ import styles from "./LeaveGroup.module.css";
 const LeaveGroup = ({ groupId, userId }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { fetchUserUpdates } = useUpdateUserData();
+  const [error, setError] = useState("");
 
   const handleLeaveGroup = async () => {
     try {
@@ -20,10 +21,12 @@ const LeaveGroup = ({ groupId, userId }) => {
         `/groups/leave-group/${groupId}/${userId}`
       );
       devLog(response);
+
       fetchUserUpdates();
       localStorage.removeItem("selectedGroup");
     } catch (error) {
-      console.error("Error leaving group:", error);
+      devLog(error);
+      setError("An unexpected error occurred while leaving the group.");
     } finally {
       setShowConfirmation(false);
     }
