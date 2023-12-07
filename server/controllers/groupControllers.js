@@ -253,14 +253,13 @@ export const joinGroup = async (req, res) => {
     }
 
     // Update the group by adding the user to the members array
-    // Update the group by adding the user to the members array
     const updatedGroup = await responseHandlerUtils.updateGroupMembers(
       group._id, // Update based on group ID
       userId,
       "$addToSet"
     );
 
-    // Adding the users to groups array
+    // Update the groups array of the user
     const updatedUser = await responseHandlerUtils.updateUserGroups(
       group._id,
       userId,
@@ -310,10 +309,17 @@ export const leaveGroup = async (req, res) => {
       userId,
       "$pull"
     );
+    // Update the groups array of the user
+    const updatedUser = await responseHandlerUtils.updateUserGroups(
+      groupId,
+      userId,
+      "$pull"
+    );
 
     res.status(StatusCodes.OK).json({
       message: "You have left the group successfully",
       updatedGroup,
+      updatedUser,
     });
   } catch (error) {
     return errorHandlerUtils.handleInternalError(res);
