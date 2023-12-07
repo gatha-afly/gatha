@@ -427,8 +427,10 @@ export const getGroupMembers = async (req, res) => {
     const members = group.members.map((member) => ({
       ...member,
 
-      // checks if a member is the admin or not
-      isAdmin: member._id.toString() === admins.toString() ? true : false,
+      // checks if a member is an admin or not
+      isAdmin: admins.some(
+        (adminId) => adminId.toString() === member._id.toString()
+      ),
     }));
 
     return res.status(StatusCodes.OK).json({
@@ -450,7 +452,7 @@ export const getGroupMembers = async (req, res) => {
  */
 export const assignUserAsAdmin = async (req, res) => {
   try {
-    const { groupId, adminId } = req.params;
+    const { groupId, userId } = req.params;
     const { username } = req.body;
 
     const group = await Group.findById(groupId);
@@ -463,13 +465,31 @@ export const assignUserAsAdmin = async (req, res) => {
       return errorHandlerUtils.handleUserNotFound(res, "username");
     }
 
-    if (newAdmin._id.toString() === group.admin.toString()) {
+    const isMember = await responseHandlerUtils.isUserAlreadyMember(
+      groupId,
+      newAdmin._id
+    );
+
+    if (!isMember) {
+      return errorHandlerUtils.handleUserNotGroupMember(res, group.name);
+    }
+
+    if (newAdmin._id.toString() === group.admins.toString()) {
       return res.status(StatusCodes.BAD_REQUEST).json({
-        error: "The user already has admin rights for this group",
+        error: "The user is already an admin for this group",
       });
     }
 
-    const updatedGroupAdmin = await updateGroupAdmin(groupId, newAdmin._id);
+    if (userId !== group.admins.toString()) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "You are not authorized to assign a new admin for this group",
+      });
+    }
+
+    const updatedGroupAdmin = await responseHandlerUtils.updateGroupAdmin(
+      groupId,
+      newAdmin._id
+    );
 
     return res.status(StatusCodes.OK).json({
       message: "The new user has been added as a group admin",

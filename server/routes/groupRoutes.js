@@ -51,6 +51,10 @@ router.delete(
   deleteGroupById
 );
 
-router.patch("/add-new-admin/:groupId/:adminIn", assignUserAsAdmin);
+router.patch(
+  "/add-new-admin/:groupId/:userId",
+  isGroupAdminMiddleware,
+  assignUserAsAdmin
+);
 
 export default router;
