@@ -111,9 +111,11 @@ export const addMemberToGroup = async (req, res) => {
       updatedGroup,
     });
   } catch (error) {
+    console.error(error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
+
 /**
  * Handler for removing group members using the groupId and adminId
  * @param {*} req

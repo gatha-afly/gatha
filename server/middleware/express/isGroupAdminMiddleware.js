@@ -20,7 +20,7 @@ export const isGroupAdminMiddleware = async (req, res, next) => {
     }
 
     // Check if the user is the admin of the group
-    if (userId !== group.admin.toString()) {
+    if (userId !== group.admins.toString()) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         error: "Unauthorized",
         message:

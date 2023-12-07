@@ -49,7 +49,7 @@ export const updateGroupMembers = async (groupId, memberId, operation) => {
       { new: true }
     )
       .populate({ path: "members", select: "username firstName lastName" })
-      .populate("admin", "username firstName lastName");
+      .populate("admins", "username firstName lastName");
   } catch (error) {
     throw new Error(
       "An error occurred while updating group members. Please try again later."
