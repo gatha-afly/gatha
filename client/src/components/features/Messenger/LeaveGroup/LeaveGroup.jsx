@@ -3,6 +3,7 @@ import { userAPI } from "../../../../api/userAPI";
 import useUpdateUserData from "../../../../hooks/useUpdateUser";
 import { devLog } from "../../../../utils/errorUtils";
 import styles from "./LeaveGroup.module.css";
+import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 
 /**
  * Component to render a button allowing the user to leave a group.
@@ -26,7 +27,10 @@ const LeaveGroup = ({ groupId, userId }) => {
       localStorage.removeItem("selectedGroup");
     } catch (error) {
       devLog(error);
-      setError("An unexpected error occurred while leaving the group.");
+
+      if (error.response.status === 405) {
+        setError("Assign an admin before leaving the group.");
+      }
     } finally {
       setShowConfirmation(false);
     }
@@ -57,6 +61,7 @@ const LeaveGroup = ({ groupId, userId }) => {
           </div>
         </div>
       )}
+      {error ? <ErrorDisplay error={error} /> : null}
     </div>
   );
 };
