@@ -33,9 +33,6 @@ function MessengerContainer() {
     switchView("adminUserSettings");
   };
 
-  // Render default view when group changes
-  useSetCallbackWhenSelectedGroupChanges(selectedGroup, handleDefaultViewClick);
-
   // Function to dynamically render different views based on the current view state
   const renderView = () => {
     switch (currentView) {
