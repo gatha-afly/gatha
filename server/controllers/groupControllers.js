@@ -496,14 +496,14 @@ export const assignUserAsAdmin = async (req, res) => {
     }
 
     if (newAdmin._id.toString() === group.admins.toString()) {
-      return res.status(StatusCodes.BAD_REQUEST).json({
+      return res.status(406).json({
         error: "The user is already an admin for this group",
         code: 406,
       });
     }
 
     if (userId !== group.admins.toString()) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({
+      return res.status(407).json({
         error: "You are not authorized to assign a new admin for this group",
         code: 407,
       });
