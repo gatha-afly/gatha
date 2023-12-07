@@ -250,7 +250,6 @@ export const joinGroup = async (req, res) => {
     }
 
     // Update the group by adding the user to the members array
-    // Update the group by adding the user to the members array
     const updatedGroup = await responseHandlerUtils.updateGroupMembers(
       group._id, // Update based on group ID
       userId,
@@ -307,7 +306,7 @@ export const leaveGroup = async (req, res) => {
     }
 
     // Check if the user is an admin in the group
-    const isAdmin = group.admin.equals(member._id);
+    const isAdmin = group.admins.includes(member._id);
     if (isAdmin) {
       // Check the number of the admins in the group
       const adminCount = await User.countDocuments({
@@ -372,15 +371,15 @@ export const getGroupData = async (req, res) => {
         path: "members",
         select: "username firstName lastName",
       })
-      .populate("admin", "username firstName lastName");
+      .populate("admins", "username firstName lastName");
 
     if (!group) {
       return errorHandlerUtils.handleGroupNotFound(res);
     }
 
-    const { members, name, description, admin, code } = group;
+    const { members, name, description, admins, code } = group;
 
-    const { _id, username, firstName, lastName } = admin;
+    const { _id, username, firstName, lastName } = admins;
     const groupAdmin = { id: _id, username, firstName, lastName };
 
     //The return response if the user is not admin
@@ -388,7 +387,7 @@ export const getGroupData = async (req, res) => {
       groupId,
       name,
       description,
-      admin: groupAdmin,
+      admins: groupAdmin,
       members,
     };
 
@@ -452,7 +451,7 @@ export const getGroupMembers = async (req, res) => {
       ...member,
 
       // checks if a member is the admin or not
-      isAdmin: member._id.toString() === admin.toString() ? true : false,
+      isAdmin: member._id.toString() === admin._id.toString() ? true : false,
     }));
 
     return res.status(StatusCodes.OK).json({
