@@ -1,3 +1,14 @@
 .confirm {
   background-color: var(color-success);
 }
+
+.abortButton,
+.confirmButton {
+  width: 4rem;
+}
+
+.confirmation {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}

@@ -1,6 +1,17 @@
 .adminUserSettingsContainer {
   display: flex;
   flex-direction: column;
-  align-items: center;
   text-align: center;
+  justify-content: center;
+  overflow-y: scroll;
+}
+
+.adminUserSettingsContainer p {
+  width: 70%;
+  margin: 0 auto;
+  overflow-wrap: break-word;
+}
+
+.groupDescription {
+  font-style: italic;
 }

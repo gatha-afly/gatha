@@ -43,9 +43,9 @@ const GroupRegularUserSettingsContainer = ({ onDefaultViewClick }) => {
         <h2>group name:</h2>
         <p>{name}</p>
       </div>
-      <div className={styles.groupDescription}>
+      <div>
         <h2>group description:</h2>
-        <p>{description}</p>
+        <p className={styles.groupDescription}>{description}</p>
       </div>
       <LeaveGroup groupId={groupId} userId={userId} />
       <GroupMemberList groupMembers={groupMembers} />

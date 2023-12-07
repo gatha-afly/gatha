@@ -11,7 +11,6 @@ import styles from "./LeaveGroup.module.css";
  * @param {Function} onLeaveGroup - Callback function to handle leaving the group.
  */
 const LeaveGroup = ({ groupId, userId }) => {
-  const [loading, setLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { fetchUserUpdates } = useUpdateUserData();
 
@@ -45,18 +44,14 @@ const LeaveGroup = ({ groupId, userId }) => {
       {showConfirmation && (
         <div>
           <p>Are you sure you want to leave the group?</p>
-          <button
-            className={styles.confirm}
-            onClick={handleLeaveGroup}
-            disabled={loading}>
-            Yes
-          </button>
-          <button
-            className={styles.abort}
-            onClick={handleCancelLeave}
-            disabled={loading}>
-            Cancel
-          </button>
+          <div className={styles.confirmation}>
+            <button className={styles.confirmButton} onClick={handleLeaveGroup}>
+              Yes
+            </button>
+            <button className={styles.abortButton} onClick={handleCancelLeave}>
+              No
+            </button>
+          </div>
         </div>
       )}
     </div>
