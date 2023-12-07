@@ -9,6 +9,7 @@ import {
   leaveGroup,
   getGroupData,
   getGroupMembers,
+  assignUserAsAdmin,
 } from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/express/userAuthorization.js";
 import { validator } from "../middleware/express/validator.js";
@@ -48,6 +49,12 @@ router.delete(
   "/delete/:groupId/:userId",
   isGroupAdminMiddleware,
   deleteGroupById
+);
+
+router.patch(
+  "/add-new-admin/:groupId/:userId",
+  isGroupAdminMiddleware,
+  assignUserAsAdmin
 );
 
 export default router;

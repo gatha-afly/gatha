@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import Group from "../models/Group.js";
 import * as responseHandlerUtils from "../utils/responseHandler.js";
 import * as errorHandlerUtils from "../utils/errorHandler.js";
+import User from "../models/User.js";
 
 /***
  * Handler for creating group using userId
@@ -25,7 +26,7 @@ export const createGroup = async (req, res) => {
     const groupData = {
       userId,
       name,
-      admin: userId, // Set userId as group admin
+      admins: userId, // Set userId as group admin
       members: userId,
     };
 
@@ -37,7 +38,7 @@ export const createGroup = async (req, res) => {
     const newGroup = await Group.create(groupData);
 
     // Populate the user details for the admin
-    await newGroup.populate("admin", "username firstName lastName");
+    await newGroup.populate("admins", "username firstName lastName");
 
     const updatedUser = await responseHandlerUtils.updateUserGroups(
       newGroup._id,
@@ -110,9 +111,11 @@ export const addMemberToGroup = async (req, res) => {
       updatedGroup,
     });
   } catch (error) {
+    console.error(error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
+
 /**
  * Handler for removing group members using the groupId and adminId
  * @param {*} req
@@ -250,14 +253,13 @@ export const joinGroup = async (req, res) => {
     }
 
     // Update the group by adding the user to the members array
-    // Update the group by adding the user to the members array
     const updatedGroup = await responseHandlerUtils.updateGroupMembers(
       group._id, // Update based on group ID
       userId,
       "$addToSet"
     );
 
-    // Adding the users to groups array
+    // Update the groups array of the user
     const updatedUser = await responseHandlerUtils.updateUserGroups(
       group._id,
       userId,
@@ -291,12 +293,6 @@ export const leaveGroup = async (req, res) => {
       return errorHandlerUtils.handleUserNotFound(res, "userId");
     }
 
-    //Check if the provided group exists
-    const group = await responseHandlerUtils.findGroupById(groupId);
-    if (!group) {
-      return errorHandlerUtils.handleGroupNotFound(res);
-    }
-
     // Check if the provided userId is a member of the group
     const isMember = await responseHandlerUtils.isUserAlreadyMember(
       groupId,
@@ -306,47 +302,47 @@ export const leaveGroup = async (req, res) => {
       return errorHandlerUtils.handleUserNotGroupMember(res, groupId);
     }
 
-    // Check if the user is an admin in the group
-    const isAdmin = group.admin.equals(member._id);
+    // Fetch detailed information about the group, including its admins
+    const group = await Group.findById(groupId).lean();
+
+    // Check if the user is an admin
+    const isAdmin = group.admins.some(
+      (adminId) => adminId.toString() === userId
+    );
+
     if (isAdmin) {
-      // Check the number of the admins in the group
-      const adminCount = await User.countDocuments({
-        _id: { $in: group.members },
-        isAdmin: true,
-      });
-      // Check if the leaving admin is the only admin
-      if (adminCount < 1) {
+      // Check if the user is the only admin
+      if (group.admins.length === 1) {
         return res.status(StatusCodes.BAD_REQUEST).json({
           error:
-            "Cannot leave the group as you are the only admin. Please assign another admin before leaving.",
+            "You are the only admin in the group. Assign someone as admin before leaving.",
         });
       }
-      if (adminCount > 1) {
-        const updatedGroupAdminLeft =
-          await responseHandlerUtils.updateGroupAdmins(
-            groupId,
-            member._id,
-            "$pull"
-          );
 
-        return res.status(StatusCodes.OK).json({
-          message: "You have left the group successfully.",
-          updatedGroupAdminLeft,
-        });
-      }
+      // Update the group by removing the user from admins array
+      await responseHandlerUtils.updateGroupAdmin(groupId, userId, "$pull");
+
+      // Update the groups array of the user
+      await responseHandlerUtils.updateUserGroups(groupId, userId, "$pull");
+      // If the user is not an admin, update the group by removing the user from the members array
+      await responseHandlerUtils.updateGroupMembers(groupId, userId, "$pull");
+
+      return res.status(StatusCodes.OK).json({
+        message: "You have left the group successfully",
+      });
+    } else {
+      // If the user is not an admin, update the group by removing the user from the members array
+      await responseHandlerUtils.updateGroupMembers(groupId, userId, "$pull");
+
+      // Update the groups array of the user
+      await responseHandlerUtils.updateUserGroups(groupId, userId, "$pull");
+
+      return res.status(StatusCodes.OK).json({
+        message: "You have left the group successfully",
+      });
     }
-
-    // Update the group by removing the user from the members array
-    const updatedGroup = await responseHandlerUtils.updateGroupMembers(
-      groupId,
-      userId,
-      "$pull"
-    );
-    res.status(StatusCodes.OK).json({
-      message: "You have left the group successfully",
-      updatedGroup,
-    });
-  } catch {
+  } catch (error) {
+    console.log(error.message);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
@@ -372,15 +368,15 @@ export const getGroupData = async (req, res) => {
         path: "members",
         select: "username firstName lastName",
       })
-      .populate("admin", "username firstName lastName");
+      .populate("admins", "username firstName lastName");
 
     if (!group) {
       return errorHandlerUtils.handleGroupNotFound(res);
     }
 
-    const { members, name, description, admin, code } = group;
+    const { members, name, description, admins, code } = group;
 
-    const { _id, username, firstName, lastName } = admin;
+    const { _id, username, firstName, lastName } = admins;
     const groupAdmin = { id: _id, username, firstName, lastName };
 
     //The return response if the user is not admin
@@ -388,12 +384,12 @@ export const getGroupData = async (req, res) => {
       groupId,
       name,
       description,
-      admin: groupAdmin,
+      admins: groupAdmin,
       members,
     };
 
     // Convert both userId and group.admin._id to strings for comparison
-    if (String(userId) !== String(group.admin._id)) {
+    if (String(userId) !== String(group.admins._id)) {
       return res.status(StatusCodes.OK).json(commonResponse);
     }
 
@@ -445,14 +441,16 @@ export const getGroupMembers = async (req, res) => {
     }
 
     // Extracting relevant details from the group object
-    const { name, description, admin } = group;
+    const { name, description, admins } = group;
 
     // Mapping the members of the group to include additional information
     const members = group.members.map((member) => ({
       ...member,
 
-      // checks if a member is the admin or not
-      isAdmin: member._id.toString() === admin.toString() ? true : false,
+      // checks if a member is an admin and returns true if it is otherwise returns false
+      isAdmin: admins.some(
+        (adminId) => adminId.toString() === member._id.toString()
+      ),
     }));
 
     return res.status(StatusCodes.OK).json({
@@ -462,6 +460,58 @@ export const getGroupMembers = async (req, res) => {
       members,
     });
   } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ * Handler for assigning user as admin of the group
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const assignUserAsAdmin = async (req, res) => {
+  try {
+    const { groupId, userId } = req.params;
+    const { username } = req.body;
+
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+
+    const newAdmin = await responseHandlerUtils.findUserByUsername(username);
+    if (!newAdmin) {
+      return errorHandlerUtils.handleUserNotFound(res, "username");
+    }
+
+    const isMember = await responseHandlerUtils.isUserAlreadyMember(
+      groupId,
+      newAdmin._id
+    );
+
+    if (!isMember) {
+      return errorHandlerUtils.handleUserNotGroupMember(res, group.name);
+    }
+
+    if (newAdmin._id.toString() === group.admins.toString()) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        error: "The user is already an admin for this group",
+      });
+    }
+
+    if (userId !== group.admins.toString()) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "You are not authorized to assign a new admin for this group",
+      });
+    }
+    await responseHandlerUtils.updateGroupAdmin(groupId, newAdmin._id, "$push");
+
+    return res.status(StatusCodes.OK).json({
+      message: "The new user has been added as a group admin",
+    });
+  } catch (error) {
+    console.error(error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
