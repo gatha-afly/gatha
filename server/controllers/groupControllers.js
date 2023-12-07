@@ -291,14 +291,49 @@ export const leaveGroup = async (req, res) => {
       return errorHandlerUtils.handleUserNotFound(res, "userId");
     }
 
+    //Check if the provided group exists
+    const group = await responseHandlerUtils.findGroupById(groupId);
+    if (!group) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+
     // Check if the provided userId is a member of the group
     const isMember = await responseHandlerUtils.isUserAlreadyMember(
       groupId,
       userId
     );
-
     if (!isMember) {
       return errorHandlerUtils.handleUserNotGroupMember(res, groupId);
+    }
+
+    // Check if the user is an admin in the group
+    const isAdmin = group.admin.equals(member._id);
+    if (isAdmin) {
+      // Check the number of the admins in the group
+      const adminCount = await User.countDocuments({
+        _id: { $in: group.members },
+        isAdmin: true,
+      });
+      // Check if the leaving admin is the only admin
+      if (adminCount < 1) {
+        return res.status(StatusCodes.BAD_REQUEST).json({
+          error:
+            "Cannot leave the group as you are the only admin. Please assign another admin before leaving.",
+        });
+      }
+      if (adminCount > 1) {
+        const updatedGroupAdminLeft =
+          await responseHandlerUtils.updateGroupAdmins(
+            groupId,
+            member._id,
+            "$pull"
+          );
+
+        return res.status(StatusCodes.OK).json({
+          message: "You have left the group successfully.",
+          updatedGroupAdminLeft,
+        });
+      }
     }
 
     // Update the group by removing the user from the members array
@@ -307,16 +342,14 @@ export const leaveGroup = async (req, res) => {
       userId,
       "$pull"
     );
-
     res.status(StatusCodes.OK).json({
       message: "You have left the group successfully",
       updatedGroup,
     });
-  } catch (error) {
+  } catch {
     return errorHandlerUtils.handleInternalError(res);
   }
 };
-
 /**
  *Handler for getting group details
  * @param {*} req

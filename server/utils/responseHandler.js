@@ -19,6 +19,13 @@ export const findUserByUsername = async (username) =>
   User.findOne({ username });
 
 /**
+ * Utility helper to find user by username
+ * @param {*} groupId
+ * @returns
+ */
+export const findGroupById = async (groupId) => Group.findById(groupId);
+
+/**
  * Utility helper to find if a user if already a member of a group
  * @param {*} groupId
  * @param {*} userId
@@ -58,6 +65,27 @@ export const updateGroupMembers = async (groupId, memberId, operation) => {
 };
 
 /**
+ * Utility helper to update the group's admins array
+ * @param {*} groupId
+ * @param {*} adminId
+ * @param {*} operation
+ * @returns
+ */
+export const updateGroupAdmins = async (groupId, adminId, operation) => {
+  try {
+    return await Group.findByIdAndUpdate(
+      groupId,
+      { [operation]: { admin: adminId } },
+      { new: true }
+    ).populate({ path: "admin", select: "username firstName lastName" });
+  } catch (error) {
+    throw new Error(
+      "An error occurred while updating group admins. Please try again later."
+    );
+  }
+};
+
+/**
  * Utility helper to update the user groups
  * @param {*} groupId
  * @param {*} userId
@@ -81,7 +109,7 @@ export const updateUserGroups = async (groupId, userId, operation) => {
 };
 
 /**
- * Utility handler for saving mesages in group collection
+ * Utility handler for saving messages in group collection
  * @param {*} groupId
  * @param {*} message
  * @returns
