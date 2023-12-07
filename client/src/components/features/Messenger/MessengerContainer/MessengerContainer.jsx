@@ -3,11 +3,11 @@ import styles from "./MessengerContainer.module.css";
 import RenderMessages from "../RenderMessages/RenderMessages";
 import SendMessage from "../SendMessage/SendMessage";
 import GroupSettingBar from "../GroupSettingBar/GroupSettingBar";
-import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
 import { FaRegHandPointLeft } from "react-icons/fa6";
 import useUserContext from "../../../../hooks/useUserContext";
 import GroupRegularUserSettingsContainer from "../GroupRegularUserSettingsContainer/GroupRegularUserSettingsContainer";
 import GroupAdminSettingsContainer from "../GroupAdminSettingsContainer/GroupAdminSettingsContainer";
+import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
 function MessengerContainer() {
   const { selectedGroup } = useUserContext();

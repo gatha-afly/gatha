@@ -65,22 +65,23 @@ export const updateGroupMembers = async (groupId, memberId, operation) => {
 };
 
 /**
- * Utility helper to update the group's admins array
+ * Utility helper to update the group admin
  * @param {*} groupId
- * @param {*} adminId
- * @param {*} operation
+ * @param {*} newAdminId
  * @returns
  */
-export const updateGroupAdmins = async (groupId, adminId, operation) => {
+export const updateGroupAdmin = async (groupId, newAdminId, operation) => {
   try {
     return await Group.findByIdAndUpdate(
       groupId,
-      { [operation]: { admin: adminId } },
+      { [operation]: { admins: newAdminId } },
       { new: true }
-    ).populate({ path: "admins", select: "username firstName lastName" });
+    )
+      .populate("members", "username firstName lastName")
+      .populate("admins", "username firstName lastName");
   } catch (error) {
     throw new Error(
-      "An error occurred while updating group admins. Please try again later."
+      "An error occurred while updating the group admins. Please try again later."
     );
   }
 };
@@ -105,7 +106,9 @@ export const updateUserGroups = async (groupId, userId, operation) => {
         path: "groups",
         select: "groupId name",
       });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 /**

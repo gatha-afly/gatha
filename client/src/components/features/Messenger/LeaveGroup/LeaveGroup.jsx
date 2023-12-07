@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { userAPI } from "../../../../api/userAPI";
 import useUpdateUserData from "../../../../hooks/useUpdateUser";
 import { devLog } from "../../../../utils/errorUtils";
 import styles from "./LeaveGroup.module.css";
+import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 
 /**
  * Component to render a button allowing the user to leave a group.
@@ -11,9 +12,9 @@ import styles from "./LeaveGroup.module.css";
  * @param {Function} onLeaveGroup - Callback function to handle leaving the group.
  */
 const LeaveGroup = ({ groupId, userId }) => {
-  const [loading, setLoading] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { fetchUserUpdates } = useUpdateUserData();
+  const [error, setError] = useState("");
 
   const handleLeaveGroup = async () => {
     try {
@@ -21,10 +22,14 @@ const LeaveGroup = ({ groupId, userId }) => {
         `/groups/leave-group/${groupId}/${userId}`
       );
       devLog(response);
+
       fetchUserUpdates();
       localStorage.removeItem("selectedGroup");
     } catch (error) {
-      console.error("Error leaving group:", error);
+      devLog(error);
+      if (error.response.data.code === 405) {
+        setError("Assign an admin before leaving the group.");
+      }
     } finally {
       setShowConfirmation(false);
     }
@@ -45,20 +50,17 @@ const LeaveGroup = ({ groupId, userId }) => {
       {showConfirmation && (
         <div>
           <p>Are you sure you want to leave the group?</p>
-          <button
-            className={styles.confirm}
-            onClick={handleLeaveGroup}
-            disabled={loading}>
-            Yes
-          </button>
-          <button
-            className={styles.abort}
-            onClick={handleCancelLeave}
-            disabled={loading}>
-            Cancel
-          </button>
+          <div className={styles.confirmation}>
+            <button className={styles.confirmButton} onClick={handleLeaveGroup}>
+              Yes
+            </button>
+            <button className={styles.abortButton} onClick={handleCancelLeave}>
+              No
+            </button>
+          </div>
         </div>
       )}
+      {error ? <ErrorDisplay error={error} /> : null}
     </div>
   );
 };

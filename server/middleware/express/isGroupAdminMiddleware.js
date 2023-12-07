@@ -20,10 +20,12 @@ export const isGroupAdminMiddleware = async (req, res, next) => {
     }
 
     // Check if the user is the admin of the group
-    if (userId !== group.admin.toString()) {
-      return res
-        .status(StatusCodes.UNAUTHORIZED)
-        .json({ message: "You are not authorized to perform this action" });
+    if (userId !== group.admins.toString()) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "Unauthorized",
+        message:
+          "You do not have the necessary admin privileges to perform this action.",
+      });
     }
 
     // If the user is the admin, proceed to the next middleware or route handler

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { RiRadioButtonLine } from "react-icons/ri";
 import styles from "./RenderMessages.module.css";
 import { userAPI } from "./../../../../api/userAPI";
@@ -108,7 +108,8 @@ function RenderMessages({ selectedGroup }) {
                       msg.sender?.id === user.userId
                         ? styles.senderMessage
                         : styles.receiverMessage
-                    }`}>
+                    }`}
+                  >
                     <div className={styles.sender}>
                       <>
                         <UsernameInitials
