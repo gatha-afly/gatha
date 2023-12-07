@@ -421,14 +421,14 @@ export const getGroupMembers = async (req, res) => {
     }
 
     // Extracting relevant details from the group object
-    const { name, description, admin } = group;
+    const { name, description, admins } = group;
 
     // Mapping the members of the group to include additional information
     const members = group.members.map((member) => ({
       ...member,
 
       // checks if a member is the admin or not
-      isAdmin: member._id.toString() === admin.toString() ? true : false,
+      isAdmin: member._id.toString() === admins.toString() ? true : false,
     }));
 
     return res.status(StatusCodes.OK).json({
