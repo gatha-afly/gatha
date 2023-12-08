@@ -11,7 +11,7 @@ import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
  * @param {string} userId - ID of the user.
  * @param {Function} onLeaveGroup - Callback function to handle leaving the group.
  */
-const LeaveGroup = ({ groupId, userId }) => {
+const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { fetchUserUpdates } = useUpdateUserData();
   const [error, setError] = useState("");
@@ -22,9 +22,9 @@ const LeaveGroup = ({ groupId, userId }) => {
         `/groups/leave-group/${groupId}/${userId}`
       );
       devLog(response);
-
       fetchUserUpdates();
       localStorage.removeItem("selectedGroup");
+      onDefaultViewClick();
     } catch (error) {
       devLog(error);
       if (error.response.data.code === 405) {

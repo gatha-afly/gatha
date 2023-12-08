@@ -1,12 +1,12 @@
-.adminUserSettingsContainer {
+.settings {
   display: flex;
   flex-direction: column;
   text-align: center;
-  justify-content: center;
+  height: 100%;
   overflow-y: scroll;
 }
 
-.adminUserSettingsContainer p {
+.settings p {
   width: 70%;
   margin: 0 auto;
   overflow-wrap: break-word;

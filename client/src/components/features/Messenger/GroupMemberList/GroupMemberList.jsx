@@ -32,7 +32,7 @@ const GroupMemberList = ({ groupMembers }) => {
               {formattedMember.info}
               {/* Display admin badge if the member is an admin */}
               {formattedMember.isAdmin && (
-                <span className={styles.adminBadge}>admin</span>
+                <span className={styles.adminBadge}>Admin</span>
               )}
             </li>
           ))}

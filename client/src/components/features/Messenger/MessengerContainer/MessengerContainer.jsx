@@ -7,7 +7,7 @@ import { FaRegHandPointLeft } from "react-icons/fa6";
 import useUserContext from "../../../../hooks/useUserContext";
 import GroupRegularUserSettingsContainer from "../GroupRegularUserSettingsContainer/GroupRegularUserSettingsContainer";
 import GroupAdminSettingsContainer from "../GroupAdminSettingsContainer/GroupAdminSettingsContainer";
-import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
+import PiratePxPageRender from "../../../common/PiratePxPageRender/PiratePxPageRender";
 
 function MessengerContainer() {
   const { selectedGroup } = useUserContext();
@@ -54,6 +54,7 @@ function MessengerContainer() {
         // Render default view with the latest messages of the selected group
         return selectedGroup ? (
           <>
+            <PiratePxPageRender COUNT_IDENTIFIER={"messenger"} />
             <div className={styles.groupBar}>
               <GroupSettingBar
                 selectedGroup={selectedGroup}

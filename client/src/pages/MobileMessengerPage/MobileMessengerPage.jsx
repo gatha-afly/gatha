@@ -28,7 +28,6 @@ const MobileMessengerPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - messenger' />
       <ErrorDisplay error={error} />
-      <h1>gatha - get together</h1>
       {/* Messenger component */}
       <MessengerContainer />
       {/* Navigation icon to go back to the main page */}
