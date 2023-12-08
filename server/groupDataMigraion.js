@@ -4,14 +4,15 @@ import Group from "./models/Group.js";
 // Data migration script
 connectToMongoDB().then(async () => {
   try {
-    const updatedGroups = await Group.find({});
+    const updatedGroups = await Group.find({ is_removed: { $exists: true } });
 
     for (const group of updatedGroups) {
-      if (group.hasOwnProperty("is_removed")) {
-        continue;
-      }
+      // Update the is_removed field to undefined
+      await Group.updateOne(
+        { _id: group._id },
+        { $set: { is_removed: undefined } }
+      );
 
-      await Group.updateOne({ is_removed: false });
       console.log("Proceed", group._id);
     }
   } catch (error) {
