@@ -1,25 +1,30 @@
 import { useState } from "react";
-import { userAPI } from "../../../../../api/userAPI";
-import useUpdateUserData from "../../../../../hooks/useUpdateUser";
-import { devLog } from "../../../../../utils/errorUtils";
+import { userAPI } from "../../../../../../api/userAPI";
+import useUpdateUserData from "../../../../../../hooks/useUpdateUser";
+import { devLog } from "../../../../../../utils/errorUtils";
 import styles from "./LeaveGroup.module.css";
-import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
-import useUserContext from "../../../../../hooks/useUserContext";
-import { isMobile } from "../../../../../utils/deviceUtils";
+import ErrorDisplay from "../../../../../common/ErrorDisplay/ErrorDisplay";
+import useUserContext from "../../../../../../hooks/useUserContext";
+import { isMobile } from "../../../../../../utils/deviceUtils";
 import { useNavigate } from "react-router-dom";
+import ConfirmationDialog from "../../../../common/ConfirmationDialog/ConfirmationDialog";
+import useConfirmationDialog from "../../../../../hooks/useConfirmationDialog";
 
 /**
- * Component to render a button allowing the user to leave a group.
+ * Renders a button allowing the user to leave a group.
  * @param {string} groupId - ID of the group.
  * @param {string} userId - ID of the user.
  * @param {Function} onLeaveGroup - Callback function to handle leaving the group.
  */
 const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
   const { deleteSelectedGroup } = useUserContext();
-  const [showConfirmation, setShowConfirmation] = useState(false);
   const { fetchUserUpdates } = useUpdateUserData();
   const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  // Use the useConfirmationDialog hook for ConfirmationDialog component
+  const { showConfirmation, handleShowConfirmation, handleCancelConfirmation } =
+    useConfirmationDialog();
 
   const handleLeaveGroup = async () => {
     try {
@@ -38,35 +43,21 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
         setError(error.response.data.error);
       }
     } finally {
-      setShowConfirmation(false);
+      handleCancelConfirmation();
     }
-  };
-
-  const handleShowConfirmation = () => {
-    setShowConfirmation(true);
-  };
-
-  const handleCancelLeave = () => {
-    setShowConfirmation(false);
   };
 
   return (
     <div className={styles.leaveGroupContainer}>
       <button onClick={handleShowConfirmation}>leave group</button>
-      {showConfirmation && (
-        <div>
-          <p>Are you sure you want to leave the group?</p>
-          <div className={styles.confirmation}>
-            <button className={styles.confirmButton} onClick={handleLeaveGroup}>
-              Yes
-            </button>
-            <button className={styles.abortButton} onClick={handleCancelLeave}>
-              No
-            </button>
-          </div>
-        </div>
-      )}
-      {error ? <ErrorDisplay error={error} /> : null}
+      {/* Render confirmation dialog*/}
+      <ConfirmationDialog
+        showConfirmation={showConfirmation}
+        onConfirm={handleLeaveGroup}
+        onCancel={handleCancelConfirmation}
+        message='Are you sure you want to leave the group?'
+      />
+      {error && <ErrorDisplay error={error} />}
     </div>
   );
 };
