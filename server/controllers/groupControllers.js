@@ -400,7 +400,7 @@ export const getGroupData = async (req, res) => {
 
     // Returns the group if the user is an admin
     return res.status(StatusCodes.OK).json({
-      group_code: code,
+      code: code,
       ...commonResponse,
     });
   } catch (error) {
