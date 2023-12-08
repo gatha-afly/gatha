@@ -198,33 +198,6 @@ export const getAllGroups = async (req, res) => {
 };
 
 /**
- * Handler for deleting groups using groupId
- * @param {*} req
- * @param {*} res
- */
-export const deleteGroupById = async (req, res) => {
-  try {
-    const { groupId, userId } = req.params;
-
-    //Checks if the group is exists on database
-    const group = await Group.findById(groupId);
-    if (!group) {
-      return responseHandlerUtils.handleGroupNotFound(res);
-    }
-
-    if (!deletedGroup) {
-      return errorHandlerUtils.handleGroupNotFound(res);
-    }
-    return res.status(StatusCodes.OK).json({
-      message: "The group has been successfully deleted",
-      deletedGroup,
-    });
-  } catch (error) {
-    return errorHandlerUtils.handleInternalError(res);
-  }
-};
-
-/**
  * Handler for joining a group with provided group code
  * @param {*} req
  * @param {*} res
@@ -313,8 +286,8 @@ export const leaveGroup = async (req, res) => {
     );
 
     if (isAdmin) {
-      // Check if the user is the only admin
-      if (group.admins.length === 1) {
+      // Check if the user is the only admin and not the only group member
+      if (group.admins.length === 1 && group.members.length > 1) {
         return res.status(StatusCodes.FORBIDDEN).json({
           error:
             "You are the only admin in the group. Assign someone as admin before leaving.",

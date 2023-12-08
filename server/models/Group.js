@@ -5,8 +5,7 @@ import { isCodeUnique } from "../helpers/groupHelper.js";
 const groupSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String },
-  is_removed: { type: Boolean, default: false },
-  //Virtual to generate Random group code
+  //Virtual to generate Random groupcode
   code: {
     type: String,
     default: function () {

@@ -4,7 +4,6 @@ import {
   addMemberToGroup,
   removeMemberFromGroup,
   getAllGroups,
-  deleteGroupById,
   joinGroup,
   leaveGroup,
   getGroupData,
@@ -41,11 +40,6 @@ router.patch(
   addMemberToGroup
 );
 router.patch("/remove-member/:groupId/:adminId/:userId", removeMemberFromGroup);
-router.delete(
-  "/delete/:groupId/:userId",
-  isGroupAdminMiddleware,
-  deleteGroupById
-);
 
 router.patch(
   "/add-new-admin/:groupId/:userId",
