@@ -1,18 +1,21 @@
+/* IsTypingEffect.module.css */
 .typingIndicatorContainer {
   margin-left: 1rem;
   display: flex;
-  flex-direction: row;
+  align-items: center;
   gap: 0.3rem;
 }
+
 .typingIndicator {
   color: var(--color-text);
   font-weight: bold;
 }
+
 .typing__dot {
   width: 4px;
   height: 4px;
   margin: 0 2px;
-  color: var(--color-text);
+  background-color: var(--color-text);
   border-radius: 50%;
   opacity: 0;
   animation: loadingFade 1s infinite;

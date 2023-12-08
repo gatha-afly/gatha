@@ -1,15 +1,12 @@
-import React from "react";
 import useUserContext from "../../../../hooks/useUserContext";
 import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
 import styles from "./IsTypingEffect.module.css";
 
 /**
- *
  * Displays an indicator when a user is typing.
  * @component
  * @returns {JSX.Element} The rendered IsTypingEffect component.
  */
-
 const IsTypingEffect = () => {
   // Access the isTyping and typingUser values from the user context
   const { isTyping, typingUser } = useUserContext();
@@ -17,7 +14,7 @@ const IsTypingEffect = () => {
   return (
     // Render IsTypingEffect component only when isTyping is true
     <>
-      {isTyping && (
+      {isTyping && typingUser && (
         <div className={styles.typingIndicatorContainer}>
           <UsernameInitials
             firstName={typingUser.firstName}
