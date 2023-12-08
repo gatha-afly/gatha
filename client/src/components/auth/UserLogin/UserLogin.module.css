@@ -5,22 +5,14 @@
   gap: 0.5rem;
   width: 20rem;
 }
-
-.checkbox {
-  height: 1.4rem;
-  width: 1.4rem;
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-  cursor: pointer;
-}
-
-.showPassword {
+.passwordContainer {
   display: flex;
-  align-items: center;
 }
 
-.showPasswordLabel {
+.togglePasswordIcon {
   cursor: pointer;
+  margin-left: -2rem;
+  margin-top: 0.5rem;
 }
 
 .checkbox:focus {

@@ -4,6 +4,7 @@ import styles from "./UserLogin.module.css";
 import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import { devLog } from "../../../utils/errorUtils";
 import useUserContext from "../../../hooks/useUserContext";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const UserLogin = () => {
   // Access user context and navigation functions
@@ -39,40 +40,33 @@ const UserLogin = () => {
     <form className={styles.loginForm} onSubmit={handleLogin}>
       {/* Email input */}
       <input
-        type='text'
-        placeholder='Email'
-        name='email'
+        type="text"
+        placeholder="Email"
+        name="email"
         required
         className={styles.loginInput}
       />
-      {/* Password input */}
-      <input
-        type={passwordVisible ? "text" : "password"}
-        placeholder='Password'
-        name='password'
-        required
-        className={styles.loginInput}
-      />
-      {/* Show password checkbox */}
-      <div className={styles.showPassword}>
+      {/* Password input with eye icon */}
+      <div className={styles.passwordContainer}>
         <input
-          className={styles.checkbox}
-          type='checkbox'
-          id='passwordVisibility'
-          checked={passwordVisible}
-          onChange={togglePasswordVisibility}
+          type={passwordVisible ? "text" : "password"}
+          placeholder="Password"
+          name="password"
+          required
+          className={styles.loginInputWithIcon}
         />
-        <label
-          className={styles.showPasswordLabel}
-          htmlFor='passwordVisibility'>
-          Show password
-        </label>
+        <span
+          className={styles.togglePasswordIcon}
+          onClick={togglePasswordVisibility}
+        >
+          {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+        </span>
       </div>
       {/* Display error message if present */}
       <ErrorDisplay error={error} />
       {/* Login button */}
 
-      <button type='submit' className={styles.loginButton}>
+      <button type="submit" className={styles.loginButton}>
         Login
       </button>
     </form>
