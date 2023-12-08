@@ -40,7 +40,7 @@ const AddUsersToGroupContainer = ({ onDefaultViewClick }) => {
         onRefresh={handleRefresh}
       />
       {/* Render back button */}
-      <GroupMemberList groupMembers={groupMembers} />
+      <GroupMemberList groupId={groupId} groupMembers={groupMembers} />
     </div>
   );
 };

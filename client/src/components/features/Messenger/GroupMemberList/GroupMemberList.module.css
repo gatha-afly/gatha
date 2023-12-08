@@ -1,8 +1,13 @@
 .renderMembers {
   margin-top: 0.5rem;
-  max-height: 40%;
+  max-height: 50%;
   overflow-x: hidden;
   overflow-y: scroll;
+}
+
+.renderMembers li {
+  display: flex;
+  justify-content: center;
 }
 
 .adminBadge {
@@ -11,6 +16,5 @@
   color: var(--color-body);
   background-color: var(--color-error);
   border-radius: 1rem;
-  padding-left: 0.3rem;
-  padding-right: 0.3rem;
+  padding: 0.1rem 0.4rem;
 }
