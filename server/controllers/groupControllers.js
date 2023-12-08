@@ -452,8 +452,7 @@ export const getGroupMembers = async (req, res) => {
  */
 export const assignUserAsAdmin = async (req, res) => {
   try {
-    const { groupId, userId } = req.params;
-    const { username } = req.body;
+    const { groupId, adminId, userId } = req.params;
 
     //Checks if the provided group id available in database
     const group = await Group.findById(groupId);
@@ -462,7 +461,7 @@ export const assignUserAsAdmin = async (req, res) => {
     }
 
     //Checks if the provided username exists
-    const newAdmin = await responseHandlerUtils.findUserByUsername(username);
+    const newAdmin = await responseHandlerUtils.findUserById(userId);
     if (!newAdmin) {
       return errorHandlerUtils.handleUserNotFound(res, "username");
     }
@@ -472,7 +471,7 @@ export const assignUserAsAdmin = async (req, res) => {
       newAdmin._id
     );
 
-    //checks if the user is a member of the slected group
+    //checks if the user is a member of the selected group
     if (!isMember) {
       return errorHandlerUtils.handleUserNotGroupMember(res, group.name);
     }
@@ -485,7 +484,8 @@ export const assignUserAsAdmin = async (req, res) => {
       });
     }
 
-    if (userId !== group.admins.toString()) {
+    //Checks if the adminId is the admin of the group
+    if (adminId !== group.admins.toString()) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         error: "You are not authorized to assign a new admin for this group",
         code: 407,
