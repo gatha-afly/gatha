@@ -137,7 +137,7 @@ export const sendMessage = async (io, msg, senderId, groupId) => {
 };
 
 /**
- * Handler for gettting all the group messages based on provided groupId
+ * Handler for getting all the group messages based on provided groupId
  * @param {*} req
  * @param {*} res
  * @returns
@@ -200,7 +200,7 @@ export const deleteMessage = async (req, res) => {
       });
     }
 
-    await Message.findByIdAndUpdate(messageId, {isDeleted:true});
+    await Message.findByIdAndUpdate(messageId, { isDeleted: true });
 
     return res.status(StatusCodes.OK).json({
       message: "The target message has been removed",
@@ -210,6 +210,12 @@ export const deleteMessage = async (req, res) => {
   }
 };
 
+/**
+ * Handler for editing message
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
 export const editMessage = async (req, res) => {
   try {
     const { messageId, senderId } = req.params;
