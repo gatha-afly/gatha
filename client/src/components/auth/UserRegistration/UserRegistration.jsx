@@ -73,31 +73,43 @@ const UserRegistration = () => {
       {/* Input fields for user information */}
       <div>
         <input
-          type="text"
-          name="firstName"
-          placeholder="First name"
+          type='text'
+          name='firstName'
+          placeholder='First name'
           ref={inputRef} // Ref for autofocus
           required
         />
       </div>
 
       <div>
-        <input type="text" name="lastName" placeholder="Last name" required />
+        <input type='text' name='lastName' placeholder='Last name' required />
       </div>
 
       <div>
-        <input type="text" name="username" placeholder="Username" required />
+        <input
+          type='text'
+          name='username'
+          placeholder='Username'
+          autoComplete='nope'
+          required
+        />
       </div>
 
       <div>
-        <input type="email" name="email" placeholder="Email" required />
+        <input
+          type='email'
+          name='email'
+          placeholder='Email'
+          autoComplete='email'
+          required
+        />
       </div>
 
       <div>
         <input
           type={passwordVisible ? "text" : "password"}
-          placeholder="Password"
-          name="password"
+          placeholder='Password'
+          name='password'
           required
         />
       </div>
@@ -105,8 +117,8 @@ const UserRegistration = () => {
       <div className={styles.input}>
         <input
           type={passwordVisible ? "text" : "password"}
-          name="confirm-password"
-          placeholder="Confirm password"
+          name='confirm-password'
+          placeholder='Confirm password'
           required
         />
       </div>
@@ -114,15 +126,14 @@ const UserRegistration = () => {
       <div className={styles.showPassword}>
         <input
           className={styles.checkbox}
-          type="checkbox"
-          id="passwordVisibility"
+          type='checkbox'
+          id='passwordVisibility'
           checked={passwordVisible}
           onChange={togglePasswordVisibility}
         />
         <label
           className={styles.showPasswordLabel}
-          htmlFor="passwordVisibility"
-        >
+          htmlFor='passwordVisibility'>
           Show password
         </label>
       </div>
@@ -135,7 +146,7 @@ const UserRegistration = () => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type="submit">Register</button>
+      <button type='submit'>Register</button>
     </form>
   );
 };

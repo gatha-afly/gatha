@@ -22,14 +22,12 @@ function GroupSettingBar({
       {/* Render group name */}
       <h2 className={styles.groupName}>{name}</h2>
       {/* Render admin bar if user is admin */}
-      {selectedGroup.group_code && (
-        <ViewGroupCode selectedGroup={selectedGroup} />
-      )}
+      {selectedGroup.code && <ViewGroupCode selectedGroup={selectedGroup} />}
       {/* Render group settings icon, view admin settings on click if user is admin, else view regular user settings on click*/}
       <div className={styles.settingsIcon}>
         <ReactIconNavigate
           onClick={
-            selectedGroup.group_code
+            selectedGroup.code
               ? onAdminSettingsClick
               : onRegularUserSettingsClick
           }

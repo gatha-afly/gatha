@@ -26,7 +26,7 @@ function ViewGroupCode({ selectedGroup, onAddUserClick }) {
       {/* Render group code or clickable text based on visibility state */}
       {isGroupCodeVisible ? (
         <p className={styles.groupCode} onClick={handleCodeClick}>
-          {selectedGroup.group_code}
+          {selectedGroup.code}
         </p>
       ) : (
         <p className={styles.toggleText} onClick={handleCodeClick}>
