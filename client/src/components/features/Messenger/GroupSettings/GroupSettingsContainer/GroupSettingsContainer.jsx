@@ -39,13 +39,18 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
         size={2.5}
         icon={HiMiniBackspace}
       />
+      <h1>group settings</h1>
       <div className={styles.groupName}>
         <h2>group name:</h2>
         <p>{name}</p>
       </div>
       <div>
         <h2>group description:</h2>
-        <p className={styles.groupDescription}>{description}</p>
+        {description ? (
+          <p className={styles.groupDescription}>{description}</p>
+        ) : (
+          <p>No group description entered.</p>
+        )}{" "}
       </div>
       {userIsGroupAdmin && (
         <div>
