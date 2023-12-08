@@ -40,7 +40,6 @@ router.patch(
   addMemberToGroup
 );
 router.patch("/remove-member/:groupId/:adminId/:userId", removeMemberFromGroup);
-
 router.patch("/add-new-admin/:groupId/:adminId/:userId", assignUserAsAdmin);
 
 export default router;

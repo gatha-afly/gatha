@@ -471,7 +471,7 @@ export const assignUserAsAdmin = async (req, res) => {
       newAdmin._id
     );
 
-    //checks if the user is a member of the slected group
+    //checks if the user is a member of the selected group
     if (!isMember) {
       return errorHandlerUtils.handleUserNotGroupMember(res, group.name);
     }
@@ -484,7 +484,8 @@ export const assignUserAsAdmin = async (req, res) => {
       });
     }
 
-    if (userId !== group.admins.toString()) {
+    //Checks if the adminId is the admin of the group
+    if (adminId !== group.admins.toString()) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         error: "You are not authorized to assign a new admin for this group",
         code: 407,
