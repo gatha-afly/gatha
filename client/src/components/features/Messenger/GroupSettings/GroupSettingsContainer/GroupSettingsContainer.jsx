@@ -3,7 +3,6 @@ import styles from "./GroupSettingsContainer.module.css";
 import { HiMiniBackspace } from "react-icons/hi2";
 import useUserContext from "../../../../../hooks/useUserContext";
 import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPageRender";
-import LeaveGroup from "../RemoveMemberFromGroup/LeaveGroup/LeaveGroup";
 import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { devLog } from "../../../../../utils/errorUtils";
 import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
@@ -11,6 +10,7 @@ import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContaine
 import ViewGroupCode from "../ViewGroupCode/ViewGroupCode";
 import GroupMemberList from "../GroupMemberList/GroupMemberList";
 import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
+import LeaveGroup from "../LeaveGroup/LeaveGroup";
 /**
  * Container for rendering group settings
  * @param {Object} props - Component props.

@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./Confirmation.module.css";
+import React, { useEffect } from "react";
+import styles from "./ConfirmationDialog.module.css";
 
 /**
  * Component to display a confirmation dialog. Additionally, parent component should use useConfirmationDialog custom hook
@@ -9,17 +9,18 @@ import styles from "./Confirmation.module.css";
  * @param {string} props.confirmText - Text for the confirm button.
  * @param {string} props.cancelText - Text for the cancel button.
  * @param {string} props.message - Message to display in the confirmation dialog.
- * @param {string} props.error - Error message, if any.
  * @returns {JSX.Element} - Rendered component.
  */
 const ConfirmationDialog = ({
+  showConfirmation,
   onConfirm,
   onCancel,
   confirmText = "Yes",
   cancelText = "No",
   message,
-}) => {
-  return (
+}) =>
+  // Render the confirmation dialog only if showConfirmation is true
+  showConfirmation && (
     <div className={styles.confirmationContainer}>
       <p className={styles.confirmation}>{message}</p>
       <div className={styles.confirmationButtons}>
@@ -32,6 +33,5 @@ const ConfirmationDialog = ({
       </div>
     </div>
   );
-};
 
 export default ConfirmationDialog;
