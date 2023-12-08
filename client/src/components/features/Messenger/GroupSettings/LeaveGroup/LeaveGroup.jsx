@@ -4,6 +4,7 @@ import useUpdateUserData from "../../../../../hooks/useUpdateUser";
 import { devLog } from "../../../../../utils/errorUtils";
 import styles from "./LeaveGroup.module.css";
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
+import useUserContext from "../../../../../hooks/useUserContext";
 
 /**
  * Component to render a button allowing the user to leave a group.
@@ -12,6 +13,7 @@ import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
  * @param {Function} onLeaveGroup - Callback function to handle leaving the group.
  */
 const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
+  const { deleteSelectedGroup } = useUserContext();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { fetchUserUpdates } = useUpdateUserData();
   const [error, setError] = useState("");
@@ -23,7 +25,7 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
       );
       devLog(response);
       fetchUserUpdates();
-      localStorage.removeItem("selectedGroup");
+      deleteSelectedGroup();
       onDefaultViewClick();
     } catch (error) {
       devLog(error);

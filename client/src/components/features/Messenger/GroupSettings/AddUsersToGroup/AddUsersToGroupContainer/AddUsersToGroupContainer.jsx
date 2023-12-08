@@ -41,13 +41,15 @@ const AddUsersToGroupContainer = ({
         userId={userId}
         onRefresh={handleRefresh}
       />
-      {/* Render back button */}
-      <GroupMemberList
-        groupId={groupId}
-        groupMembers={groupMembers}
-        onRefresh={handleRefresh}
-        userIsGroupAdmin={userIsGroupAdmin}
-      />
+      {/* Render GroupMemberList when fetched */}
+      {groupMembers && (
+        <GroupMemberList
+          groupId={groupId}
+          groupMembers={groupMembers}
+          onRefresh={handleRefresh}
+          userIsGroupAdmin={userIsGroupAdmin}
+        />
+      )}
     </div>
   );
 };

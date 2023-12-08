@@ -119,6 +119,14 @@ const UserProvider = ({ children }) => {
     setSelectedGroup(groupData);
     localStorage.setItem("selectedGroup", JSON.stringify(groupData));
   };
+  /**
+   * Updates selectedGroup and deletes it from local storage
+   * @param {*} newSelectedGroup
+   */
+  const deleteSelectedGroup = () => {
+    setSelectedGroup(null);
+    localStorage.removeItem("selectedGroup");
+  };
 
   // Provide user context to component tree
   return (
@@ -133,13 +141,13 @@ const UserProvider = ({ children }) => {
         updateUser,
         selectedGroup,
         updateSelectedGroup,
+        deleteSelectedGroup,
         isTyping,
         setIsTyping,
         typingUser,
         setTypingUser,
         handleLoggedInChange,
-      }}
-    >
+      }}>
       {children}
     </UserContext.Provider>
   );

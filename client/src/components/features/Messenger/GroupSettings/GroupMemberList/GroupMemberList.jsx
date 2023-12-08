@@ -1,6 +1,7 @@
 import React from "react";
 import useUserContext from "../../../../../hooks/useUserContext";
 import { devLog } from "../../../../../utils/errorUtils";
+import Spinner from "../../../../common/Spinner/Spinner";
 import RemoveMemberFromGroup from "../RemoveMemberFromGroup/RemoveMemberFromGroup";
 import styles from "./GroupMemberList.module.css";
 
@@ -62,8 +63,10 @@ const GroupMemberList = ({
           })}
         </ul>
       ) : (
-        // Display a message if there are no members
-        <p>No members yet.</p>
+        // Hacky: Show spinner while there's no group member
+        <div className={styles.spinner}>
+          <Spinner />
+        </div>
       )}
     </div>
   );
