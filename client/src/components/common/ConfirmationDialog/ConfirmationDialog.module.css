@@ -1,9 +1,17 @@
-.confirmationButtons {
-  width: 4rem;
+.confirmationContainer {
+  display: block;
 }
 
-.confirmation {
+.confirmationButtons {
   display: flex;
   justify-content: center;
   gap: 0.5rem;
+}
+
+.confirmationButtons button {
+  width: 4rem;
+}
+
+.confirmationMessage {
+  white-space: nowrap;
 }

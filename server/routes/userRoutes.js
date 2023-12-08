@@ -13,12 +13,12 @@ import upload from "../config/multer.js";
 
 const router = express.Router();
 
-//Unprotect Routes
+//Unprotected Routes
 router.post("/register", validateUserRules, validator, createUser);
 router.post("/login", loginUser);
 router.get("/logout", logoutUser);
 
-//Protect Routes
+//Protected Routes
 router.use(authorizeUser);
 router.patch(
   "/upload-profile/:userId",

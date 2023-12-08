@@ -22,14 +22,14 @@ const ReactIconNavigate = ({ route, onClick, size, icon: IconComponent }) => {
   };
 
   return (
-    <div className={styles.iconContainer}>
+    <span className={styles.iconContainer}>
       {/* Render the specified React icon component with onClick prop */}
       <IconComponent
         onClick={onClick || navigateToRoute}
         className={styles.customIcon}
         style={{ fontSize: `${size}rem` }}
       />
-    </div>
+    </span>
   );
 };
 

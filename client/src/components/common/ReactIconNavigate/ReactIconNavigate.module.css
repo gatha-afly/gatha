@@ -1,8 +1,5 @@
 /* ReactIconNavigate.module.css */
 
-.iconContainer {
-}
-
 .customIcon {
   cursor: pointer;
   color: var(--color-structure-elements);

@@ -7,9 +7,8 @@
 }
 
 .settings p {
-  width: 70%;
+  width: 100%;
   margin: 0 auto;
-  overflow-wrap: break-word;
 }
 
 .groupDescription {

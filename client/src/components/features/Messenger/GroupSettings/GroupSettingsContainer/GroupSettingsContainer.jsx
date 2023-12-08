@@ -3,7 +3,6 @@ import styles from "./GroupSettingsContainer.module.css";
 import { HiMiniBackspace } from "react-icons/hi2";
 import useUserContext from "../../../../../hooks/useUserContext";
 import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPageRender";
-import LeaveGroup from "../RemoveMemberFromGroup/LeaveGroup/LeaveGroup";
 import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { devLog } from "../../../../../utils/errorUtils";
 import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
@@ -11,6 +10,7 @@ import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContaine
 import ViewGroupCode from "../ViewGroupCode/ViewGroupCode";
 import GroupMemberList from "../GroupMemberList/GroupMemberList";
 import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
+import LeaveGroup from "../LeaveGroup/LeaveGroup";
 /**
  * Container for rendering group settings
  * @param {Object} props - Component props.
@@ -39,13 +39,18 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
         size={2.5}
         icon={HiMiniBackspace}
       />
+      <h1>group settings</h1>
       <div className={styles.groupName}>
         <h2>group name:</h2>
         <p>{name}</p>
       </div>
       <div>
         <h2>group description:</h2>
-        <p className={styles.groupDescription}>{description}</p>
+        {description ? (
+          <p className={styles.groupDescription}>{description}</p>
+        ) : (
+          <p>No group description entered.</p>
+        )}{" "}
       </div>
       {userIsGroupAdmin && (
         <div>
@@ -53,6 +58,12 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
           <ViewGroupCode selectedGroup={selectedGroup} />
         </div>
       )}
+
+      <LeaveGroup
+        groupId={groupId}
+        userId={userId}
+        onDefaultViewClick={onDefaultViewClick}
+      />
 
       {userIsGroupAdmin ? (
         // Render the component to add users to the group only if the user is the group admin
@@ -69,11 +80,6 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
           userIsGroupAdmin={userIsGroupAdmin}
         />
       )}
-      <LeaveGroup
-        groupId={groupId}
-        userId={userId}
-        onDefaultViewClick={onDefaultViewClick}
-      />
     </div>
   );
 };
