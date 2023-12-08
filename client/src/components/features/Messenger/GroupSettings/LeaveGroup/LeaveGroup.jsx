@@ -5,6 +5,8 @@ import { devLog } from "../../../../../utils/errorUtils";
 import styles from "./LeaveGroup.module.css";
 import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 import useUserContext from "../../../../../hooks/useUserContext";
+import { isMobile } from "../../../../../utils/deviceUtils";
+import { useNavigate } from "react-router-dom";
 
 /**
  * Component to render a button allowing the user to leave a group.
@@ -17,6 +19,7 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const { fetchUserUpdates } = useUpdateUserData();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLeaveGroup = async () => {
     try {
@@ -26,7 +29,8 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
       devLog(response);
       fetchUserUpdates();
       deleteSelectedGroup();
-      onDefaultViewClick();
+      // Navigate to main for mobile devices, else set view back to default
+      isMobile ? navigate("/main") : onDefaultViewClick();
     } catch (error) {
       devLog(error);
       // If not allowed status code, display error message from server
