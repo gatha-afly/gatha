@@ -1,18 +1,13 @@
 import React from "react";
 import styles from "./GroupAdminSettingsContainer.module.css";
 import { HiMiniBackspace } from "react-icons/hi2";
-import useGetGroupMembers from "../../../../hooks/useGetGroupMembers";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
-import PiratePxPageRender from "../../../common/PiratePxPageRender/PiratePxPageRender";
-import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
-import GroupMemberList from "../GroupMemberList/GroupMemberList";
 import useUserContext from "../../../../hooks/useUserContext";
 import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
-import AddUserToGroupForm from "../AddUsersToGroup/AddUserToGroupForm/AddUserToGroupForm";
-import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
 import { devLog } from "../../../../utils/errorUtils";
 import LeaveGroup from "../LeaveGroup/LeaveGroup";
-
+import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
+import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
+import PiratePxPageRender from "../../../common/PiratePxPageRender/PiratePxPageRender";
 /**
  * Container for rendering admin user group settings
  * @param {Object} props - Component props.
@@ -31,7 +26,7 @@ const GroupAdminSettingsContainer = ({ onDefaultViewClick }) => {
   useSetCallbackWhenSelectedGroupChanges(selectedGroup, onDefaultViewClick);
 
   return (
-    <div className={styles.adminUserSettingsContainer}>
+    <div className={styles.settings}>
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"admin-user-settings"} />
       {/* Render back button */}
@@ -48,8 +43,11 @@ const GroupAdminSettingsContainer = ({ onDefaultViewClick }) => {
         <h2>group description:</h2>
         <p className={styles.groupDescription}>{description}</p>
       </div>
-      <LeaveGroup groupId={groupId} userId={userId} />
-
+      <LeaveGroup
+        groupId={groupId}
+        userId={userId}
+        onDefaultViewClick={onDefaultViewClick}
+      />
       <AddUsersToGroupContainer onDefaultViewClick={onDefaultViewClick} />
     </div>
   );

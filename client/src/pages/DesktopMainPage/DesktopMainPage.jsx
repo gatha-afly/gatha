@@ -27,7 +27,6 @@ const DesktopMainPage = () => {
       <PiratePxPageRender COUNT_IDENTIFIER={"main"} />
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - main' />
-      <h1>gatha - get together</h1>
       <div className={styles.messengerNotMobile}>
         <GroupsContainer user={user} />
         <MessengerContainer />

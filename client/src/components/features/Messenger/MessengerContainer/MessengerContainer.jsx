@@ -7,7 +7,6 @@ import { FaRegHandPointLeft } from "react-icons/fa6";
 import useUserContext from "../../../../hooks/useUserContext";
 import GroupRegularUserSettingsContainer from "../GroupRegularUserSettingsContainer/GroupRegularUserSettingsContainer";
 import GroupAdminSettingsContainer from "../GroupAdminSettingsContainer/GroupAdminSettingsContainer";
-import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
 function MessengerContainer() {
   const { selectedGroup } = useUserContext();

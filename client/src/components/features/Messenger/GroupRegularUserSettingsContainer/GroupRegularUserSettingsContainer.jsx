@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./GroupRegularUserSettingsContainer.module.css";
 import { HiMiniBackspace } from "react-icons/hi2";
 import useGetGroupMembers from "../../../../hooks/useGetGroupMembers";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import PiratePxPageRender from "../../../common/PiratePxPageRender/PiratePxPageRender";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
 import GroupMemberList from "../GroupMemberList/GroupMemberList";
@@ -29,7 +28,7 @@ const GroupRegularUserSettingsContainer = ({ onDefaultViewClick }) => {
   useSetCallbackWhenSelectedGroupChanges(selectedGroup, onDefaultViewClick);
 
   return (
-    <div className={styles.regularUserSettingsContainer}>
+    <div className={styles.settings}>
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"regular-user-settings"} />
       {/* Render back button */}
