@@ -358,13 +358,13 @@ export const getGroupData = async (req, res) => {
   try {
     const { groupId, userId } = req.params;
 
-    //Find the user by userId
+    // Find the user by userId
     const user = await responseHandlerUtils.findUserById(userId);
     if (!user) {
       return errorHandlerUtils.handleUserNotFound(res, "user ID");
     }
 
-    //Find the group by groupId
+    // Find the group by groupId
     const group = await Group.findById(groupId)
       .populate({
         path: "members",
@@ -378,24 +378,27 @@ export const getGroupData = async (req, res) => {
 
     const { members, name, description, admins, code } = group;
 
-    const { _id, username, firstName, lastName } = admins;
-    const groupAdmin = { id: _id, username, firstName, lastName };
+    // Map admins to the required format
+    const groupAdmins = admins.map((admin) => {
+      const { _id, username, firstName, lastName } = admin;
+      return { id: _id, username, firstName, lastName };
+    });
 
-    //The return response if the user is not admin
+    // The return response if the user is not admin
     const commonResponse = {
       groupId,
       name,
       description,
-      admins: groupAdmin,
+      admins: groupAdmins,
       members,
     };
 
-    // Convert both userId and group.admin._id to strings for comparison
-    if (String(userId) !== String(group.admins._id)) {
+    // Convert both userId and group.admins._id to strings for comparison
+    if (!admins.some((admin) => String(userId) === String(admin._id))) {
       return res.status(StatusCodes.OK).json(commonResponse);
     }
 
-    //Returns the gorup if the user id admin
+    // Returns the group if the user is an admin
     return res.status(StatusCodes.OK).json({
       group_code: code,
       ...commonResponse,
