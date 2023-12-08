@@ -287,7 +287,7 @@ export const leaveGroup = async (req, res) => {
     );
 
     if (isAdmin) {
-      // Check if the user is the only admin
+      // Check if the user is the only admin and not the only group member
       if (group.admins.length === 1 && group.members.length > 1) {
         return res.status(StatusCodes.FORBIDDEN).json({
           error:
