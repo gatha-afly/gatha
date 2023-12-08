@@ -1,7 +1,6 @@
 import React from "react";
-import useUserContext from "../../../../../hooks/useUserContext";
-import { devLog } from "../../../../../utils/errorUtils";
 import Spinner from "../../../../common/Spinner/Spinner";
+import AssignMemberAsAdmin from "../AssignMemberAsAdmin/AssignMemberAsAdmin";
 import RemoveMemberFromGroup from "../RemoveMemberFromGroup/RemoveMemberFromGroup";
 import styles from "./GroupMemberList.module.css";
 
@@ -41,7 +40,7 @@ const GroupMemberList = ({
           {/* Map through formatted members and display in a list */}
           {formattedMembers.map((formattedMember, index) => {
             return (
-              <li key={index}>
+              <p className={styles.member} key={index}>
                 {/* Display member information */}
                 {formattedMember.info}
                 {/* Display admin badge if the member is an admin */}
@@ -50,15 +49,20 @@ const GroupMemberList = ({
                 )}
                 {/* If logged in user is group admin, allow removing non-admin users from group */}
                 {userIsGroupAdmin && !formattedMember.isAdmin && (
-                  <span className={styles.deleteIcon}>
+                  <div className={styles.userActions}>
                     <RemoveMemberFromGroup
                       groupId={groupId}
                       userId={formattedMember.userId}
                       onRefresh={onRefresh}
                     />
-                  </span>
+                    <AssignMemberAsAdmin
+                      groupId={groupId}
+                      userId={formattedMember.userId}
+                      onRefresh={onRefresh}
+                    />
+                  </div>
                 )}
-              </li>
+              </p>
             );
           })}
         </ul>

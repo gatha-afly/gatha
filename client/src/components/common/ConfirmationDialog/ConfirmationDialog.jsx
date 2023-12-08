@@ -22,7 +22,7 @@ const ConfirmationDialog = ({
   // Render the confirmation dialog only if showConfirmation is true
   showConfirmation && (
     <div className={styles.confirmationContainer}>
-      <p className={styles.confirmation}>{message}</p>
+      <p className={styles.confirmationMessage}>{message}</p>
       <div className={styles.confirmationButtons}>
         <button className={styles.confirmButton} onClick={onConfirm}>
           {confirmText}

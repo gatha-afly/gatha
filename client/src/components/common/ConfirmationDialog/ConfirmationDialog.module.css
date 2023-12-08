@@ -1,3 +1,7 @@
+.confirmationContainer {
+  display: block;
+}
+
 .confirmationButtons {
   display: flex;
   justify-content: center;
@@ -6,4 +10,8 @@
 
 .confirmationButtons button {
   width: 4rem;
+}
+
+.confirmationMessage {
+  white-space: nowrap;
 }

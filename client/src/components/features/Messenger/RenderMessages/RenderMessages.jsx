@@ -82,9 +82,6 @@ function RenderMessages({ selectedGroup }) {
       socket.off("init", handleNewMessage);
       socket.off("receive_message", handleNewMessage);
       socket.off("get_online_users", handleOnlineUsers);
-
-      //Disconnect the socket
-      // socket.disconnect();
     };
   }, [selectedGroup?.groupId]);
 
@@ -108,8 +105,7 @@ function RenderMessages({ selectedGroup }) {
                       msg.sender?.id === user.userId
                         ? styles.senderMessage
                         : styles.receiverMessage
-                    }`}
-                  >
+                    }`}>
                     <div className={styles.sender}>
                       <>
                         <UsernameInitials

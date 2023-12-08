@@ -41,10 +41,6 @@ router.patch(
 );
 router.patch("/remove-member/:groupId/:adminId/:userId", removeMemberFromGroup);
 
-router.patch(
-  "/add-new-admin/:groupId/:userId",
-  isGroupAdminMiddleware,
-  assignUserAsAdmin
-);
+router.patch("/add-new-admin/:groupId/:adminId/:userId", assignUserAsAdmin);
 
 export default router;

@@ -452,8 +452,7 @@ export const getGroupMembers = async (req, res) => {
  */
 export const assignUserAsAdmin = async (req, res) => {
   try {
-    const { groupId, userId } = req.params;
-    const { username } = req.body;
+    const { groupId, adminId, userId } = req.params;
 
     //Checks if the provided group id available in database
     const group = await Group.findById(groupId);
@@ -462,9 +461,9 @@ export const assignUserAsAdmin = async (req, res) => {
     }
 
     //Checks if the provided username exists
-    const newAdmin = await responseHandlerUtils.findUserByUsername(username);
+    const newAdmin = await responseHandlerUtils.findUserById(userId);
     if (!newAdmin) {
-      return errorHandlerUtils.handleUserNotFound(res, "username");
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
     }
 
     const isMember = await responseHandlerUtils.isUserAlreadyMember(
