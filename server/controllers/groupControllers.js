@@ -207,8 +207,13 @@ export const getAllGroups = async (req, res) => {
  */
 export const deleteGroupById = async (req, res) => {
   try {
-    const { groupId } = req.params;
-    const deletedGroup = await Group.findByIdAndDelete(groupId);
+    const { groupId, userId } = req.params;
+
+    //Checks if the group is exists on database
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return responseHandlerUtils.handleGroupNotFound(res);
+    }
 
     if (!deletedGroup) {
       return errorHandlerUtils.handleGroupNotFound(res);
