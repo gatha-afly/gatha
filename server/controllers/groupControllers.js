@@ -199,33 +199,6 @@ export const getAllGroups = async (req, res) => {
 };
 
 /**
- * Handler for deleting groups using groupId
- * @param {*} req
- * @param {*} res
- */
-export const deleteGroupById = async (req, res) => {
-  try {
-    const { groupId, userId } = req.params;
-
-    //Checks if the group is exists on database
-    const group = await Group.findById(groupId);
-    if (!group) {
-      return responseHandlerUtils.handleGroupNotFound(res);
-    }
-
-    if (!deletedGroup) {
-      return errorHandlerUtils.handleGroupNotFound(res);
-    }
-    return res.status(StatusCodes.OK).json({
-      message: "The group has been successfully deleted",
-      deletedGroup,
-    });
-  } catch (error) {
-    return errorHandlerUtils.handleInternalError(res);
-  }
-};
-
-/**
  * Handler for joining a group with provided group code
  * @param {*} req
  * @param {*} res
