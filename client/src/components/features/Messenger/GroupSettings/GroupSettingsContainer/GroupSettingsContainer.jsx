@@ -54,6 +54,12 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
         </div>
       )}
 
+      <LeaveGroup
+        groupId={groupId}
+        userId={userId}
+        onDefaultViewClick={onDefaultViewClick}
+      />
+
       {userIsGroupAdmin ? (
         // Render the component to add users to the group only if the user is the group admin
         <AddUsersToGroupContainer
@@ -69,11 +75,6 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
           userIsGroupAdmin={userIsGroupAdmin}
         />
       )}
-      <LeaveGroup
-        groupId={groupId}
-        userId={userId}
-        onDefaultViewClick={onDefaultViewClick}
-      />
     </div>
   );
 };
