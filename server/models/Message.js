@@ -4,6 +4,7 @@ const messageSchema = new Schema(
   {
     sender: { type: Schema.Types.ObjectId, ref: "User" },
     text: { type: String, required: true },
+    isDeleted: { type: Boolean, default: false },
     img: {
       imgName: { type: String },
       imgPath: { type: String },

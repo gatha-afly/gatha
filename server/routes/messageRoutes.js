@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.use(authorizeUser);
 router.get("/:groupId", getAllGroupMessage);
-router.delete("/delete/:messageId/:senderId", deleteMessage);
+router.patch("/delete/:messageId/:senderId", deleteMessage);
 router.patch("/edit/:messageId/:senderId", editMessage);
 
 export default router;

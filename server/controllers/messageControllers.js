@@ -6,7 +6,7 @@ import * as errorHandlerUtils from "../utils/errorHandler.js";
 import { StatusCodes } from "http-status-codes";
 
 /**
- *Handler for gettting the intial message when a user joins or reconnects to a group
+ *Handler for getting the initial message when a user joins or reconnects to a group
  * @param {*} io
  * @param {*} socket
  * @param {*} groupId
@@ -200,7 +200,7 @@ export const deleteMessage = async (req, res) => {
       });
     }
 
-    await Message.findByIdAndDelete(messageId);
+    await Message.findByIdAndUpdate(messageId, {isDeleted:true});
 
     return res.status(StatusCodes.OK).json({
       message: "The target message has been removed",
