@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { userAPI } from "../../../../api/userAPI";
-import useUpdateUserData from "../../../../hooks/useUpdateUser";
-import { devLog } from "../../../../utils/errorUtils";
+import { userAPI } from "../../../../../api/userAPI";
+import useUpdateUserData from "../../../../../hooks/useUpdateUser";
+import { devLog } from "../../../../../utils/errorUtils";
 import styles from "./LeaveGroup.module.css";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
+import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
 
 /**
  * Component to render a button allowing the user to leave a group.
@@ -27,8 +27,9 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
       onDefaultViewClick();
     } catch (error) {
       devLog(error);
+      // If not allowed status code, display error message from server
       if (error.response.data.code === 405) {
-        setError("Assign an admin before leaving the group.");
+        setError(error.response.data.error);
       }
     } finally {
       setShowConfirmation(false);
@@ -44,9 +45,8 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
   };
 
   return (
-    <div>
-      <button onClick={handleShowConfirmation}>Leave Group</button>
-
+    <div className={styles.leaveGroupContainer}>
+      <button onClick={handleShowConfirmation}>leave group</button>
       {showConfirmation && (
         <div>
           <p>Are you sure you want to leave the group?</p>

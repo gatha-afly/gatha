@@ -86,9 +86,8 @@ export const addMemberToGroup = async (req, res) => {
     // Throws an error if the user is already a member of a group
     if (userAlreadyMember) {
       return errorHandlerUtils.handleUserAlreadyGroupMember(
-        res,
+        res
         // Assuming you want to show the username in the error message
-        newMember.username
       );
     }
 

@@ -36,9 +36,9 @@ export const handleInternalError = (res) => {
  * @param {*} res
  * @param {*} groupName
  */
-export const handleUserAlreadyGroupMember = (res, groupName) => {
+export const handleUserAlreadyGroupMember = (res) => {
   res.status(StatusCodes.BAD_REQUEST).json({
-    error: `User is already a member of the group '${groupName}'`,
+    error: `User is already a member of the group`,
   });
 };
 
@@ -47,8 +47,8 @@ export const handleUserAlreadyGroupMember = (res, groupName) => {
  * @param {*} res
  * @param {*} groupName
  */
-export const handleUserNotGroupMember = (res, groupName) => {
+export const handleUserNotGroupMember = (res) => {
   res.status(StatusCodes.BAD_REQUEST).json({
-    error: `User is not a member of the group '${groupName}'`,
+    error: `User is not a member of the group`,
   });
 };

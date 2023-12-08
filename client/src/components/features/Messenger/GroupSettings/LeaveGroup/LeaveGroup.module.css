@@ -1,3 +1,7 @@
+.leaveGroupContainer {
+  margin-top: 1rem;
+}
+
 .confirm {
   background-color: var(color-success);
 }

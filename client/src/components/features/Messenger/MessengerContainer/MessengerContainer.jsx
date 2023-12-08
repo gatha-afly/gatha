@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import styles from "./MessengerContainer.module.css";
 import RenderMessages from "../RenderMessages/RenderMessages";
 import SendMessage from "../SendMessage/SendMessage";
-import GroupSettingBar from "../GroupSettingBar/GroupSettingBar";
+import GroupSettingBar from "../GroupSettings/GroupSettingBar/GroupSettingBar";
 import { FaRegHandPointLeft } from "react-icons/fa6";
 import useUserContext from "../../../../hooks/useUserContext";
-import GroupRegularUserSettingsContainer from "../GroupRegularUserSettingsContainer/GroupRegularUserSettingsContainer";
-import GroupAdminSettingsContainer from "../GroupAdminSettingsContainer/GroupAdminSettingsContainer";
 import PiratePxPageRender from "../../../common/PiratePxPageRender/PiratePxPageRender";
+import GroupSettingsContainer from "../GroupSettings/GroupSettingsContainer/GroupSettingsContainer";
 
 function MessengerContainer() {
   const { selectedGroup } = useUserContext();
@@ -25,30 +24,17 @@ function MessengerContainer() {
     switchView("default");
   };
 
-  const handleRegularUserSettingsClick = () => {
-    switchView("regularUserSettings");
-  };
-
-  const handleAdminUserSettingsClick = () => {
-    switchView("adminUserSettings");
+  const handleGroupSettingsClick = () => {
+    switchView("groupSettings");
   };
 
   // Function to dynamically render different views based on the current view state
   const renderView = () => {
     switch (currentView) {
-      // Render regular user settings with a callback for the default view
-      case "regularUserSettings":
+      // Render group settings with a callback for the default view
+      case "groupSettings":
         return (
-          <GroupRegularUserSettingsContainer
-            onDefaultViewClick={handleDefaultViewClick}
-          />
-        );
-      // Render admin user settings with a callback for the default view
-      case "adminUserSettings":
-        return (
-          <GroupAdminSettingsContainer
-            onDefaultViewClick={handleDefaultViewClick}
-          />
+          <GroupSettingsContainer onDefaultViewClick={handleDefaultViewClick} />
         );
       default:
         // Render default view with the latest messages of the selected group
@@ -58,8 +44,7 @@ function MessengerContainer() {
             <div className={styles.groupBar}>
               <GroupSettingBar
                 selectedGroup={selectedGroup}
-                onAdminSettingsClick={handleAdminUserSettingsClick}
-                onRegularUserSettingsClick={handleRegularUserSettingsClick}
+                onGroupSettingsClick={handleGroupSettingsClick}
               />
             </div>
             <div className={styles.messages}>

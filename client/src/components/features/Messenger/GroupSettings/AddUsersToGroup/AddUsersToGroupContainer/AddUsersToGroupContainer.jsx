@@ -1,21 +1,23 @@
 import React, { useState } from "react";
-import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
-import AddUserToGroupForm from "../AddUserToGroupForm/AddUserToGroupForm";
+import useSetCallbackWhenSelectedGroupChanges from "../../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 import styles from "./AddUsersToGroupContainer.module.css";
-import useUserContext from "../../../../../hooks/useUserContext";
-import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
+import useGetGroupMembers from "../../../../../../hooks/useGetGroupMembers";
+import AddUserToGroupForm from "../AddUserToGroupForm/AddUserToGroupForm";
 import GroupMemberList from "../../GroupMemberList/GroupMemberList";
-
+import useUserContext from "../../../../../../hooks/useUserContext";
 /**
  * Container for adding users to a group.
  * @param {Object} props - Component props.
  * @param {function} props.onDefaultViewClick - Callback to set the default view.
  * @returns {JSX.Element} - Rendered component.
  */
-const AddUsersToGroupContainer = ({ onDefaultViewClick }) => {
+const AddUsersToGroupContainer = ({
+  onDefaultViewClick,
+  groupId,
+  userId,
+  userIsGroupAdmin,
+}) => {
   // Get selectedGroup, groupId & userId from userContext
-  const { groupId } = useUserContext().selectedGroup;
-  const { userId } = useUserContext().user;
   const { selectedGroup } = useUserContext();
   // Set refreshTrigger state to rerender user list
   const [refreshTrigger, setRefreshTrigger] = useState(false);
@@ -44,6 +46,7 @@ const AddUsersToGroupContainer = ({ onDefaultViewClick }) => {
         groupId={groupId}
         groupMembers={groupMembers}
         onRefresh={handleRefresh}
+        userIsGroupAdmin={userIsGroupAdmin}
       />
     </div>
   );

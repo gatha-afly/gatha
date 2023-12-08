@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./ViewGroupCode.module.css";
-import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
+import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
 /**
  * Bar to host selected group admin related information and functionalities
@@ -30,7 +30,7 @@ function ViewGroupCode({ selectedGroup, onAddUserClick }) {
         </p>
       ) : (
         <p className={styles.toggleText} onClick={handleCodeClick}>
-          Show code
+          show code
         </p>
       )}
     </div>

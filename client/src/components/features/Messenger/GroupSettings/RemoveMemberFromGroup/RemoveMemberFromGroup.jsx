@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { userAPI } from "../../../../api/userAPI";
-import { devLog } from "../../../../utils/errorUtils";
+import { userAPI } from "../../../../../api/userAPI";
+import { devLog } from "../../../../../utils/errorUtils";
 import styles from "./RemoveMemberFromGroup.module.css";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
-import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
+import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
+import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { CiCircleRemove } from "react-icons/ci";
-import useUserContext from "../../../../hooks/useUserContext";
+import useUserContext from "../../../../../hooks/useUserContext";
 
 /**
  * Renders a react-icon to remove a user from a group.

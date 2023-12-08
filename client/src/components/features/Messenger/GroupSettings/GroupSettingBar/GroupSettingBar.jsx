@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./GroupSettingBar.module.css";
-import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
+import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { IoSettingsOutline } from "react-icons/io5";
 import ViewGroupCode from "../ViewGroupCode/ViewGroupCode";
 
@@ -10,11 +10,7 @@ import ViewGroupCode from "../ViewGroupCode/ViewGroupCode";
  * @param {Object} props.selectedGroup - The currently selected group by the user.
  * @returns {JSX.Element} - The rendered component.
  */
-function GroupSettingBar({
-  selectedGroup,
-  onAdminSettingsClick,
-  onRegularUserSettingsClick,
-}) {
+function GroupSettingBar({ selectedGroup, onGroupSettingsClick }) {
   const { name } = selectedGroup;
 
   return (
@@ -26,11 +22,7 @@ function GroupSettingBar({
       {/* Render group settings icon, view admin settings on click if user is admin, else view regular user settings on click*/}
       <div className={styles.settingsIcon}>
         <ReactIconNavigate
-          onClick={
-            selectedGroup.code
-              ? onAdminSettingsClick
-              : onRegularUserSettingsClick
-          }
+          onClick={onGroupSettingsClick}
           size={2.5}
           icon={IoSettingsOutline}
         />
