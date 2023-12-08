@@ -54,8 +54,14 @@ export const getUserStatus = async (io, socket, groupId) => {
     // Retrieve group members information, excluding their passwords
     const groupMembers = await Group.findById(groupId).populate(
       "members",
-      "_id, is_online"
+      "_id is_online"
     );
+
+    // Check if groupMembers is null
+    if (!groupMembers) {
+      console.error(`Group with ID ${groupId} not found`);
+      return;
+    }
 
     // Filter members who are currently online and extract their user IDs
     const onlineUsers = groupMembers.members
