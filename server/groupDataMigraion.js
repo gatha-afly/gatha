@@ -5,15 +5,14 @@ import Group from "./models/Group.js";
 connectToMongoDB().then(async () => {
   try {
     const updatedGroups = await Group.find({});
+
     for (const group of updatedGroups) {
-      if (group.hasOwnProperty("admin")) {
+      if (group.hasOwnProperty("is_removed")) {
         continue;
       }
 
-      group.admin = undefined;
-
-      await group.save();
-      console.log("Process", group._id);
+      await Group.updateOne({ is_removed: false });
+      console.log("Proceed", group._id);
     }
   } catch (error) {
     console.log(error);

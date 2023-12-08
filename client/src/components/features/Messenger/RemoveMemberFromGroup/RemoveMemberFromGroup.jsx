@@ -12,7 +12,7 @@ import useUserContext from "../../../../hooks/useUserContext";
  * @param {string} groupId - ID of the group.
  * @param {string} userId - ID of the to be removed user.
  */
-const RemoveMemberFromGroup = ({ groupId, userId }) => {
+const RemoveMemberFromGroup = ({ groupId, userId, onRefresh }) => {
   // State to handle error messages
   const [error, setError] = useState("");
 
@@ -25,9 +25,10 @@ const RemoveMemberFromGroup = ({ groupId, userId }) => {
     try {
       // Make a PATCH request to remove the member from the group
       const response = await userAPI.patch(
-        `/groups/remove-member/${groupId}/${adminId}${userId}`
+        `/groups/remove-member/${groupId}/${adminId}/${userId}`
       );
       devLog(response);
+      onRefresh();
     } catch (error) {
       devLog(error);
       // Set an error message to be displayed

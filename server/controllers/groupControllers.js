@@ -125,8 +125,7 @@ export const addMemberToGroup = async (req, res) => {
 
 export const removeMemberFromGroup = async (req, res) => {
   try {
-    const { groupId } = req.params;
-    const { username } = req.body;
+    const { groupId, adminId, userId } = req.params;
 
     // Check if the provided group ID exists
     const existingGroup = await Group.findById(groupId);
@@ -134,50 +133,49 @@ export const removeMemberFromGroup = async (req, res) => {
       return errorHandlerUtils.handleGroupNotFound(res, groupId);
     }
 
-    // Check if the provided username exists
-    const memberToRemove = await responseHandlerUtils.findUserByUsername(
-      username
-    );
+    // Check if the provided userId exists
+    const memberToRemove = await responseHandlerUtils.findUserById(userId);
     if (!memberToRemove) {
-      return errorHandlerUtils.handleUserNotFound(res, "username");
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
     }
 
     // Check if the user is a member of the group
-    const isMember = await responseHandlerUtils.isUserAlreadyMember(
-      groupId,
-      memberToRemove._id
-    );
-
+    const isMember = existingGroup.members.includes(memberToRemove._id);
     if (!isMember) {
       return errorHandlerUtils.handleUserNotGroupMember(
         res,
-        // Assuming you want to show the username in the error message
-        memberToRemove.username
+        existingGroup.name
       );
     }
 
-    // Update the group by removing the user from the members array
-    const updatedGroup = await responseHandlerUtils.updateGroupMembers(
-      groupId,
-      memberToRemove._id,
-      "$pull"
-    );
+    // Checks if the adminId is actually the admin of the group
+    if (adminId.toString() !== existingGroup.admins.toString()) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "You don't have the admin authorization to remove a member",
+        code: 407,
+      });
+    }
 
-    // Update the array of groups in user object
+    // Update the group by removing the user from the members array
+    await Group.findByIdAndUpdate(groupId, {
+      $pull: { members: memberToRemove._id },
+    });
+
+    // Update the array of groups in the user object
     await responseHandlerUtils.updateUserGroups(
       groupId,
       memberToRemove._id,
       "$pull"
     );
+
     res.status(StatusCodes.OK).json({
       message: "User removed from the group successfully",
-      updatedGroup,
     });
   } catch (error) {
-    return errorHandlerUtils.handleInternalError(res);
+    console.error(error);
+    return errorHandlerUtils.handleInternalError(res, error.message);
   }
 };
-
 /**
  * Handler for getting all the groups
  * @param {*} req
@@ -207,8 +205,13 @@ export const getAllGroups = async (req, res) => {
  */
 export const deleteGroupById = async (req, res) => {
   try {
-    const { groupId } = req.params;
-    const deletedGroup = await Group.findByIdAndDelete(groupId);
+    const { groupId, userId } = req.params;
+
+    //Checks if the group is exists on database
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return responseHandlerUtils.handleGroupNotFound(res);
+    }
 
     if (!deletedGroup) {
       return errorHandlerUtils.handleGroupNotFound(res);

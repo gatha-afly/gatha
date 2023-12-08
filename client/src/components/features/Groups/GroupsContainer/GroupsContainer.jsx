@@ -7,7 +7,6 @@ import CreateGroupContainer from "../CreateGroup/CreateGroupContainer/CreateGrou
 import { FaRegHandPointDown } from "react-icons/fa6";
 import useUpdateUserData from "../../../../hooks/useUpdateUser";
 import useUserContext from "../../../../hooks/useUserContext";
-import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
 /**
  * Manages different views, rendering the group selection, create and join group part of the main application based on the current state.

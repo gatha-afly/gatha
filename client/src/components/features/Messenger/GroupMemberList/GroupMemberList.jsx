@@ -11,20 +11,22 @@ import styles from "./GroupMemberList.module.css";
  * @param {string} groupMembers.groupName - Name of the group.
  * @param {string|null} groupMembers.error - Error message, if any.
  */
-const GroupMemberList = ({ groupMembers, groupId }) => {
+const GroupMemberList = ({ groupMembers, groupId, onRefresh }) => {
   // Get selectedGroup from useUserContext
   const { selectedGroup } = useUserContext();
   // Format members for desired display
-  const formattedMembers = groupMembers.groupMembers.map((member) => {
-    // Generate formatted member information
-    const memberInfo = `${member.firstName} ${member.lastName} (${member.username})`;
+  const formattedMembers = groupMembers.groupMembers
+    .map((member) => {
+      // Generate formatted member information
+      const memberInfo = `${member.firstName} ${member.lastName} (${member.username})`;
 
-    return {
-      info: memberInfo,
-      isAdmin: member.isAdmin,
-      userId: member._id,
-    };
-  });
+      return {
+        info: memberInfo,
+        isAdmin: member.isAdmin,
+        userId: member._id,
+      };
+    })
+    .reverse();
 
   devLog("groupMembers:", groupMembers);
   devLog("FormattedMembers:", formattedMembers);
@@ -55,6 +57,7 @@ const GroupMemberList = ({ groupMembers, groupId }) => {
                     <RemoveMemberFromGroup
                       groupId={groupId}
                       userId={formattedMember.userId}
+                      onRefresh={onRefresh}
                     />
                   </span>
                 )}
