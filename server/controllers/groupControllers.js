@@ -148,7 +148,7 @@ export const removeMemberFromGroup = async (req, res) => {
     }
 
     // Checks if the adminId is actually the admin of the group
-    if (adminId.toString() !== existingGroup.admins.toString()) {
+    if (group.admins.includes(adminId) !== existingGroup.admins.toString()) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         error: "You don't have the admin authorization to remove a member",
         code: 407,
@@ -282,7 +282,7 @@ export const leaveGroup = async (req, res) => {
 
     // Check if the user is an admin
     const isAdmin = group.admins.some(
-      (adminId) => adminId.toString() === userId
+      (adminId) => group.admins.includes(adminId) === userId
     );
 
     if (isAdmin) {
@@ -429,7 +429,7 @@ export const getGroupMembers = async (req, res) => {
 
       // checks if a member is an admin and returns true if it is otherwise returns false
       isAdmin: admins.some(
-        (adminId) => adminId.toString() === member._id.toString()
+        (adminId) => group.admins.includes(adminId) === member._id.toString()
       ),
     }));
 
@@ -472,20 +472,20 @@ export const assignUserAsAdmin = async (req, res) => {
       newAdmin._id
     );
 
-    //checks if the user is a member of the slected group
+    //checks if the user is a member of the selected group
     if (!isMember) {
       return errorHandlerUtils.handleUserNotGroupMember(res, group.name);
     }
 
-    //checks if the user is already the admin of the group
-    if (newAdmin._id.toString() === group.admins.toString()) {
+    //Check if the user is already an admin in the group
+    if (newAdmin._id.toString() === group.admins.includes(newAdmin._id) ) {
       return res.status(StatusCodes.BAD_REQUEST).json({
         error: "The user is already an admin for this group",
         code: 406,
       });
     }
-
-    if (userId !== group.admins.toString()) {
+    //Check if the assigning member is an admin 
+    if (userId !== group.admins.includes(userId)) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         error: "You are not authorized to assign a new admin for this group",
         code: 407,
