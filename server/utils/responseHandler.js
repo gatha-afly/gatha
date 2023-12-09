@@ -1,7 +1,8 @@
-import mongoose from "mongoose";
+import mongoose, { trusted } from "mongoose";
 import Group from "../models/Group.js";
 import User from "../models/User.js";
 import Message from "../models/Message.js";
+import { StatusCodes } from "http-status-codes";
 
 /**
  * Utility helper to find user by user ID
@@ -147,7 +148,7 @@ export const saveGroupMessage = async (groupId, newMember) => {
  * @param {*} senderId
  * @returns
  */
-export const IsSenderOfMessage = async (messageId, senderId) => {
+export const IsSenderOfMessage = async (messageId, senderId, res) => {
   // Validate senderId to ensure it is a valid ObjectId
   if (!mongoose.Types.ObjectId.isValid(senderId)) {
     return res.status(StatusCodes.BAD_REQUEST).json({
@@ -159,4 +160,33 @@ export const IsSenderOfMessage = async (messageId, senderId) => {
     _id: messageId,
     sender: senderId,
   });
+};
+
+/**
+ * Utility Handler to check if a user has admin right or not
+ * @param {*} groupId
+ * @param {*} userId
+ * @param {*} res
+ * @returns
+ */
+export const checkAdminAuthorization = async (groupId, userId, res) => {
+  try {
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: "The group is not found" });
+    }
+
+    if (!group.admins.includes(userId)) {
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "You don't have the admin authorization to remove a member",
+      });
+    }
+  } catch (error) {
+    console.error("Error checking admin authorization:", error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      error: "An error occurred while checking admin authorization",
+    });
+  }
 };

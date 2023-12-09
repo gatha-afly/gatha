@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 import Group from "../models/Group.js";
 import * as responseHandlerUtils from "../utils/responseHandler.js";
 import * as errorHandlerUtils from "../utils/errorHandler.js";
-import User from "../models/User.js";
 
 /***
  * Handler for creating group using userId
@@ -68,7 +67,7 @@ export const createGroup = async (req, res) => {
 
 export const addMemberToGroup = async (req, res) => {
   try {
-    const { groupId } = req.params;
+    const { groupId, userId } = req.params;
     const { username } = req.body;
 
     // Find the user by username
@@ -85,11 +84,11 @@ export const addMemberToGroup = async (req, res) => {
 
     // Throws an error if the user is already a member of a group
     if (userAlreadyMember) {
-      return errorHandlerUtils.handleUserAlreadyGroupMember(
-        res
-        // Assuming you want to show the username in the error message
-      );
+      return errorHandlerUtils.handleUserAlreadyGroupMember(res);
     }
+
+    //Check if the userId is the admin of the group before adding a member
+    await responseHandlerUtils.checkAdminAuthorization(groupId, userId, res);
 
     // Update the group by adding the user to the members array
     const updatedGroup = await responseHandlerUtils.updateGroupMembers(
@@ -127,45 +126,32 @@ export const removeMemberFromGroup = async (req, res) => {
     const { groupId, adminId, userId } = req.params;
 
     // Check if the provided group ID exists
-    const existingGroup = await Group.findById(groupId);
-    if (!existingGroup) {
-      return errorHandlerUtils.handleGroupNotFound(res, groupId);
+    const group = await Group.findById(groupId);
+    if (!group) {
+      return errorHandlerUtils.handleGroupNotFound(res);
     }
 
     // Check if the provided userId exists
-    const memberToRemove = await responseHandlerUtils.findUserById(userId);
-    if (!memberToRemove) {
+    const user = await responseHandlerUtils.findUserById(userId);
+    if (!user) {
       return errorHandlerUtils.handleUserNotFound(res, "user ID");
     }
 
     // Check if the user is a member of the group
-    const isMember = existingGroup.members.includes(memberToRemove._id);
+    const isMember = responseHandlerUtils.isUserAlreadyMember(groupId, userId);
     if (!isMember) {
-      return errorHandlerUtils.handleUserNotGroupMember(
-        res,
-        existingGroup.name
-      );
+      return errorHandlerUtils.handleUserNotGroupMember(res);
     }
 
-    // Checks if the adminId is actually the admin of the group
-    if (group.admins.includes(adminId) !== existingGroup.admins.toString()) {
-      return res.status(StatusCodes.UNAUTHORIZED).json({
-        error: "You don't have the admin authorization to remove a member",
-        code: 407,
-      });
-    }
+    //Checks if the adminId is the admin of the group
+    await responseHandlerUtils.checkAdminAuthorization(groupId, adminId, res);
 
     // Update the group by removing the user from the members array
-    await Group.findByIdAndUpdate(groupId, {
-      $pull: { members: memberToRemove._id },
-    });
+
+    await responseHandlerUtils.updateGroupMembers(groupId, userId, "$pull");
 
     // Update the array of groups in the user object
-    await responseHandlerUtils.updateUserGroups(
-      groupId,
-      memberToRemove._id,
-      "$pull"
-    );
+    await responseHandlerUtils.updateUserGroups(groupId, userId, "$pull");
 
     res.status(StatusCodes.OK).json({
       message: "User removed from the group successfully",

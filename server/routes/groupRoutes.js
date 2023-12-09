@@ -13,7 +13,6 @@ import {
 import { authorizeUser } from "../middleware/express/userAuthorization.js";
 import { validator } from "../middleware/express/validator.js";
 import { validateGroupRules } from "../middleware/express/groupSanitizer.js";
-import { isGroupAdminMiddleware } from "../middleware/express/isGroupAdminMiddleware.js";
 
 const router = express.Router();
 
@@ -34,11 +33,7 @@ router.patch("/join-group/:userId", joinGroup);
 router.patch("/leave-group/:groupId/:userId", leaveGroup);
 
 // Protected endpoint with admin rights
-router.patch(
-  "/add-member/:groupId/:userId",
-  isGroupAdminMiddleware,
-  addMemberToGroup
-);
+router.patch("/add-member/:groupId/:userId", addMemberToGroup);
 router.patch("/remove-member/:groupId/:adminId/:userId", removeMemberFromGroup);
 router.patch("/add-new-admin/:groupId/:adminId/:userId", assignUserAsAdmin);
 
