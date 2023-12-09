@@ -157,7 +157,7 @@ function RenderMessages({ selectedGroup }) {
     Otherwise, render the message text.
   */}
                       {msg.isDeleted ? (
-                        <p>This message has been deleted.</p>
+                        <p className={styles.deletedMessage}>This message has been deleted.</p>
                       ) : (
                         <>{msg.text}</>
                       )}
