@@ -58,8 +58,8 @@ function RenderMessages({ selectedGroup }) {
     // Fetch the messages initially when the component mounts
     fetchMessages();
 
-    // Set up an interval to fetch messages every 30 seconds
-    const intervalId = setInterval(fetchMessages, 10000);
+    // Set up an interval to fetch messages every 60 seconds
+    const intervalId = setInterval(fetchMessages, 60000);
 
     // Clear the interval and disconnect the socket when the component is unmounted
     return () => {
@@ -157,7 +157,9 @@ function RenderMessages({ selectedGroup }) {
     Otherwise, render the message text.
   */}
                       {msg.isDeleted ? (
-                        <p className={styles.deletedMessage}>This message has been deleted.</p>
+                        <p className={styles.deletedMessage}>
+                          This message has been deleted.
+                        </p>
                       ) : (
                         <>{msg.text}</>
                       )}
