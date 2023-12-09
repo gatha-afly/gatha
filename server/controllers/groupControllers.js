@@ -429,7 +429,7 @@ export const getGroupMembers = async (req, res) => {
 
       // checks if a member is an admin and returns true if it is otherwise returns false
       isAdmin: admins.some(
-        (adminId) => group.admins.includes(adminId) === member._id.toString()
+        (adminId) => adminId.toString() === member._id.toString()
       ),
     }));
 
