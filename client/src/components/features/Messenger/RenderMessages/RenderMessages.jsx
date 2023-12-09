@@ -13,6 +13,7 @@ import Spinner from "../../../common/Spinner/Spinner";
 import { devLog } from "../../../../utils/errorUtils";
 import useUserContext from "../../../../hooks/useUserContext";
 import OnlineStatusIndicator from "../OnlineStatusIndicator/OnlineStatusIndicator";
+import DeleteMessage from "../DeleteMessage/DeleteMessage";
 
 function RenderMessages({ selectedGroup }) {
   // Get user from context
@@ -26,7 +27,8 @@ function RenderMessages({ selectedGroup }) {
   // Get user updates and fetch error from custom hook
   const { fetchUserUpdates } = useUpdateUserData();
 
-  devLog("Online Users", onlineUsers);
+  devLog("Online Users:", onlineUsers);
+  devLog("Messages:", messages);
 
   // Update user data on mount
   useEffect(() => {
@@ -119,6 +121,16 @@ function RenderMessages({ selectedGroup }) {
                         <span className={styles.sender}>
                           {msg.sender?.username}
                         </span>
+                        {/*
+  Render DeleteMessage if the sender is the current user
+ and if the message has not been deleted.
+*/}
+                        {msg.sender?.id === user.userId && !msg.isDeleted && (
+                          <DeleteMessage
+                            senderId={user.userId}
+                            messageId={msg._id}
+                          />
+                        )}
 
                         {/* Online and offline indicator */}
                         <div className={styles.onlineContainer}>
@@ -128,7 +140,17 @@ function RenderMessages({ selectedGroup }) {
                         </div>
                       </>
                     </div>
-                    <div className={styles.message}>{msg.text}</div>
+                    <div className={styles.message}>
+                      {/*
+    If message is deleted, display a notification.
+    Otherwise, render the message text.
+  */}
+                      {msg.isDeleted ? (
+                        <p>This message has been deleted.</p>
+                      ) : (
+                        <>{msg.text}</>
+                      )}
+                    </div>{" "}
                     <div className={styles.date}>
                       {dateFormatter(new Date(msg.createdAt))}
                     </div>

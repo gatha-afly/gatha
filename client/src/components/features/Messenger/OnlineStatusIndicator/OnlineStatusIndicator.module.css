@@ -1,12 +1,3 @@
-.onlineContainer {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  font-size: 1.5rem;
-  gap: 0.5rem;
-}
-
 .online {
   font-size: 2rem;
   color: var(--color-success);
