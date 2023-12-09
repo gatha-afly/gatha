@@ -161,27 +161,6 @@ export const removeMemberFromGroup = async (req, res) => {
     return errorHandlerUtils.handleInternalError(res, error.message);
   }
 };
-/**
- * Handler for getting all the groups
- * @param {*} req
- * @param {*} res
- */
-export const getAllGroups = async (req, res) => {
-  try {
-    const groups = await Group.find({});
-
-    //Throws an error if there are not groups in database
-    if (!groups) {
-      return errorHandlerUtils.handleGroupNotFound(res);
-    }
-
-    return res
-      .status(StatusCodes.OK)
-      .json({ message: "List of all groups", groups });
-  } catch (error) {
-    return errorHandlerUtils.handleInternalError(res);
-  }
-};
 
 /**
  * Handler for joining a group with provided group code
