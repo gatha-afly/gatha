@@ -12,6 +12,7 @@ import useUpdateUserData from "../../../../hooks/useUpdateUser";
 import Spinner from "../../../common/Spinner/Spinner";
 import { devLog } from "../../../../utils/errorUtils";
 import useUserContext from "../../../../hooks/useUserContext";
+import OnlineStatusIndicator from "../OnlineStatusIndicator/OnlineStatusIndicator";
 
 function RenderMessages({ selectedGroup }) {
   // Get user from context
@@ -121,21 +122,9 @@ function RenderMessages({ selectedGroup }) {
 
                         {/* Online and offline indicator */}
                         <div className={styles.onlineContainer}>
-                          {onlineUsers.includes(msg.sender?.id) ? (
-                            <div className={styles.online}>
-                              <span>online</span>
-                              <RiRadioButtonLine
-                                className={styles.onlineIcon}
-                              />
-                            </div>
-                          ) : (
-                            <div className={styles.offline}>
-                              <span>offline</span>
-                              <RiRadioButtonLine
-                                className={styles.offlineIcon}
-                              />
-                            </div>
-                          )}
+                          <OnlineStatusIndicator
+                            isOnline={onlineUsers.includes(msg.sender?.id)}
+                          />
                         </div>
                       </>
                     </div>

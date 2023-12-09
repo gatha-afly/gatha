@@ -1,0 +1,34 @@
+.onlineContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  font-size: 1.5rem;
+  gap: 0.5rem;
+}
+
+.online {
+  font-size: 2rem;
+  color: var(--color-success);
+  display: flex;
+  gap: 0.3rem;
+}
+.onlineIcon {
+  color: var(--color-success);
+}
+
+span {
+  font-size: 1.4rem;
+  margin-top: 0;
+}
+
+.offlineIcon {
+  color: var(--color-error);
+}
+
+.offline {
+  font-size: 2rem;
+  color: var(--color-error);
+  display: flex;
+  gap: 0.3rem;
+}
