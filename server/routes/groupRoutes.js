@@ -3,7 +3,6 @@ import {
   createGroup,
   addMemberToGroup,
   removeMemberFromGroup,
-  getAllGroups,
   joinGroup,
   leaveGroup,
   getGroupData,
@@ -26,7 +25,6 @@ router.post(
   createGroup
 );
 
-router.get("/get-groups", getAllGroups);
 router.get("/get-group-data/:groupId/:userId", getGroupData);
 router.get("/get-members/:groupId/:userId", getGroupMembers);
 router.patch("/join-group/:userId", joinGroup);

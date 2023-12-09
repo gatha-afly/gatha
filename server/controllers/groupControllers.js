@@ -246,43 +246,34 @@ export const leaveGroup = async (req, res) => {
     const group = await Group.findById(groupId).lean();
 
     // Check if the user is an admin
-    const isAdmin = group.admins.some(
-      (adminId) => group.admins.includes(adminId) === userId
+    const isAdmin = responseHandlerUtils.checkAdminAuthorization(
+      groupId,
+      userId,
+      res
     );
 
-    if (isAdmin) {
+    if (isAdmin && group.members.length > 1) {
       // Check if the user is the only admin and not the only group member
-      if (group.admins.length === 1 && group.members.length > 1) {
-        return res.status(StatusCodes.FORBIDDEN).json({
-          error:
-            "You are the only admin in the group. Assign someone as admin before leaving.",
-          code: 405,
-        });
-      }
 
-      // Update the group by removing the user from admins array
-      await responseHandlerUtils.updateGroupAdmin(groupId, userId, "$pull");
-
-      // Update the groups array of the user
-      await responseHandlerUtils.updateUserGroups(groupId, userId, "$pull");
-
-      // update the group by removing the user from the members array
-      await responseHandlerUtils.updateGroupMembers(groupId, userId, "$pull");
-
-      return res.status(StatusCodes.OK).json({
-        message: "You have left the group successfully",
-      });
-    } else {
-      // If the user is not an admin, update the group by removing the user from the members array
-      await responseHandlerUtils.updateGroupMembers(groupId, userId, "$pull");
-
-      // Update the groups array of the user
-      await responseHandlerUtils.updateUserGroups(groupId, userId, "$pull");
-
-      return res.status(StatusCodes.OK).json({
-        message: "You have left the group successfully",
+      return res.status(StatusCodes.FORBIDDEN).json({
+        error:
+          "You are the only admin in the group. Assign someone as admin before leaving.",
+        code: 405,
       });
     }
+
+    // Update the group by removing the user from admins array
+    await responseHandlerUtils.updateGroupAdmin(groupId, userId, "$pull");
+
+    // Update the groups array of the user
+    await responseHandlerUtils.updateUserGroups(groupId, userId, "$pull");
+
+    // update the group by removing the user from the members array
+    await responseHandlerUtils.updateGroupMembers(groupId, userId, "$pull");
+
+    return res.status(StatusCodes.OK).json({
+      message: "You have left the group successfully",
+    });
   } catch (error) {
     console.log(error.message);
     return errorHandlerUtils.handleInternalError(res);
