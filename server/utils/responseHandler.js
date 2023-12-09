@@ -184,7 +184,7 @@ export const checkAdminAuthorization = async (groupId, userId, res) => {
       });
     }
   } catch (error) {
-    console.error("Error checking admin authorization:", error);
+    console.log(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: "An error occurred while checking admin authorization",
     });
