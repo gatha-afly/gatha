@@ -13,14 +13,13 @@ import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNaviga
  * @param {Function} props.setIsDeletedCallback - Callback function to update the isDeleted state.
  * @returns {JSX.Element} - Rendered component.
  */
-const DeleteMessage = ({ messageId, senderId, setIsDeletedCallback }) => {
+const DeleteMessage = ({ messageId, senderId }) => {
   const handleDeleteMessage = async () => {
     try {
       const response = await userAPI.patch(
         `/messages/delete/${messageId}/${senderId}`
       );
       // Call the callback to update the state in the parent component, triggering a rerender
-      setIsDeletedCallback();
       devLog("Message deleted successfully", response);
     } catch (error) {
       devLog("Error deleting message:", error);

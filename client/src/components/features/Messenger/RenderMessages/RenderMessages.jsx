@@ -36,8 +36,10 @@ function RenderMessages({ selectedGroup }) {
   }, [fetchUserUpdates]);
 
   useEffect(() => {
-    // Fetch the messages when on mount
+    // Connect to the socket
     socket.connect();
+
+    // Define the fetchMessages function
     const fetchMessages = async () => {
       try {
         const response = await userAPI.get(
@@ -53,8 +55,17 @@ function RenderMessages({ selectedGroup }) {
       }
     };
 
-    // Call fetchMessages function to initiate the data fetching
+    // Fetch the messages initially when the component mounts
     fetchMessages();
+
+    // Set up an interval to fetch messages every 30 seconds
+    const intervalId = setInterval(fetchMessages, 10000);
+
+    // Clear the interval and disconnect the socket when the component is unmounted
+    return () => {
+      clearInterval(intervalId);
+      socket.disconnect();
+    };
   }, [selectedGroup.groupId]);
 
   useEffect(() => {
