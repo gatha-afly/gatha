@@ -244,17 +244,18 @@ export const leaveGroup = async (req, res) => {
 
     // Fetch detailed information about the group, including its admins
     const group = await Group.findById(groupId).lean();
-    console.log("group members", group.members.length);
 
     // Check if the user is an admins
     const groupAdmins = group.admins;
 
-    if (groupAdmins.length === 1 && group.members.length > 1) {
-      return res.status(StatusCodes.FORBIDDEN).json({
-        error:
-          "You are the only admin in the group. Assign someone as admin before leaving.",
-        code: 405,
-      });
+    if (groupAdmins.includes(userId)) {
+      if (groupAdmins.length === 1 && group.members.length > 1) {
+        return res.status(StatusCodes.FORBIDDEN).json({
+          error:
+            "You are the only admin in the group. Assign someone as admin before leaving.",
+          code: 405,
+        });
+      }
     }
 
     // Update the group by removing the user from admins array
