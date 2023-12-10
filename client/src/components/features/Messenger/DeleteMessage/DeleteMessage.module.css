@@ -1,0 +1,13 @@
+.confirmationDialog {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+    box-shadow: 0 0 0.5rem var(--color-shadow);
+    z-index: 100;
+
+}

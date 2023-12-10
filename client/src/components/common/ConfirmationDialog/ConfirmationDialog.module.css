@@ -7,11 +7,9 @@
   justify-content: center;
   gap: 0.5rem;
 }
-
 .confirmationButtons button {
-  width: 4rem;
+  width: 5rem;
 }
-
 .confirmationMessage {
   white-space: nowrap;
 }
