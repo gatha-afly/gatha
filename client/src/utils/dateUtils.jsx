@@ -11,6 +11,6 @@ export const dateFormatter = (date) => {
   } else if (isYesterday(date)) {
     return `Yesterday ${format(date, "h:mm a")}`;
   } else {
-    return format(date, "MM/dd/yyyy h:mm a");
+    return format(date, "dd/MM/yyyy h:mm a");
   }
 };
