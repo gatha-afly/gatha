@@ -53,7 +53,7 @@ const UserLogin = () => {
           placeholder="Password"
           name="password"
           required
-          className={styles.loginInputWithIcon}
+          className={styles.loginInput}
         />
         <span
           className={styles.togglePasswordIcon}

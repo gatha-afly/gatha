@@ -14,13 +14,14 @@
   cursor: pointer;
 }
 
-.showPassword {
+.passwordContainer {
   display: flex;
-  align-items: center;
 }
 
-.showPasswordLabel {
+.togglePasswordIcon {
   cursor: pointer;
+  margin-left: -2rem;
+  margin-top: 0.5rem;
 }
 
 .checkbox:focus {
