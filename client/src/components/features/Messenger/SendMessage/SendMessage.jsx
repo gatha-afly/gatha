@@ -117,10 +117,8 @@ function SendMessage({ selectedGroup }) {
 
       clearTimeout(typingTimeoutRef.current);
       typingTimeoutRef.current = setTimeout(() => {
-        if (isTyping) {
-          socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
-          setIsTyping(false);
-        }
+        socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
+        setIsTyping(false);
       }, 5000);
     }
   };
