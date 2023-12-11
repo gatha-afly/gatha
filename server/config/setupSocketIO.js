@@ -7,9 +7,9 @@ import socketAuthMiddleware from "../middleware/socket/socketAuthMiddleware.js";
 import { isUserAlreadyGroupMember } from "../middleware/socket/isUserAlreadyGroupMember.js";
 import User from "../models/User.js";
 
-//Function to set up Socket.IO
+// Function to set up Socket.IO
 const setupSocketIO = (io) => {
-  //Middleware connects
+  // Middleware connects
   io.use(socketAuthMiddleware, isUserAlreadyGroupMember);
 
   io.on("connection", async (socket) => {
@@ -23,7 +23,7 @@ const setupSocketIO = (io) => {
       socket.join(groupId.toString());
     });
 
-    // Call getInitialMessages once after user joins all groups
+    // Call getInitialMessages once after the user joins all groups
     user.groups.forEach((groupId) => {
       getInitialMessages(io, socket, groupId);
       getUserStatus(io, socket, groupId);
@@ -35,7 +35,9 @@ const setupSocketIO = (io) => {
           lastName: user.lastName,
           username: user.username,
         };
-        socket.to(groupId.toString()).emit("typing", { user: userTyping });
+        socket
+          .to(groupId.toString())
+          .emit("typing", { user: userTyping, groupId: groupId });
       });
 
       // Notify other clients when a user stops typing
@@ -47,7 +49,7 @@ const setupSocketIO = (io) => {
         };
         socket
           .to(groupId.toString())
-          .emit("stop_typing", { user: userStoppedTyping });
+          .emit("stop_typing", { user: userStoppedTyping, groupId: groupId });
       });
     });
 
@@ -55,8 +57,6 @@ const setupSocketIO = (io) => {
 
     // Listen for incoming messages from the client
     socket.on("send_message", async ({ text, groupId }, acknowledgment) => {
-      // console.log(socket.user.id);
-
       const userSendingMessage = {
         firstName: user.firstName,
         lastName: user.lastName,
@@ -82,25 +82,22 @@ const setupSocketIO = (io) => {
     });
 
     // Listen for disconnection events
-    // Listen for disconnection events
     socket.on("disconnect", async () => {
-      const disconnectedUser = await User.findById(socket.user.id);
-
       // On disconnect set the (is_online === false)
-      await User.findByIdAndUpdate(disconnectedUser._id, { is_online: false });
+      await User.findByIdAndUpdate(user._id, { is_online: false });
       console.log("User disconnected");
 
-      disconnectedUser.groups.forEach((groupId) => {
+      user.groups.forEach((groupId) => {
         getUserStatus(io, socket, groupId);
 
         const userStoppedTyping = {
-          firstName: disconnectedUser.firstName,
-          lastName: disconnectedUser.lastName,
-          username: disconnectedUser.username,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
         };
         socket
           .to(groupId.toString())
-          .emit("stop_typing", { user: userStoppedTyping });
+          .emit("stop_typing", { user: userStoppedTyping, groupId: groupId });
       });
     });
   });

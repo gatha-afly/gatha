@@ -44,16 +44,20 @@ function SendMessage({ selectedGroup }) {
 
   // Set up socket listeners for typing events
   useEffect(() => {
-    const handleTyping = ({ user }) => {
-      devLog(`${user} is typing...`);
-      setTypingUser(user);
-      setIsTyping(true);
+    const handleTyping = ({ user, groupId }) => {
+      if (groupId === selectedGroup?.groupId) {
+        devLog(`${user} is typing...`);
+        setTypingUser(user);
+        setIsTyping(true);
+      }
     };
 
-    const handleStopTyping = ({ user }) => {
-      devLog(`${user} stopped typing.`);
-      setIsTyping(false);
-      setTypingUser("");
+    const handleStopTyping = ({ user, groupId }) => {
+      if (groupId === selectedGroup?.groupId) {
+        devLog(`${user} stopped typing.`);
+        setIsTyping(false);
+        setTypingUser("");
+      }
     };
 
     socket.on("typing", handleTyping);
@@ -65,7 +69,7 @@ function SendMessage({ selectedGroup }) {
       socket.off("stop_typing", handleStopTyping);
       clearTimeout(typingTimeoutRef.current);
     };
-  }, [setIsTyping, setTypingUser]);
+  }, [setIsTyping, setTypingUser, selectedGroup?.groupId, typingTimeoutRef]);
 
   // Handle emoji selection
   useEffect(() => {
@@ -141,9 +145,9 @@ function SendMessage({ selectedGroup }) {
           <>
             <input
               ref={inputRef}
-              name='message-input'
-              type='text'
-              placeholder='Message'
+              name="message-input"
+              type="text"
+              placeholder="Message"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -161,8 +165,8 @@ function SendMessage({ selectedGroup }) {
           <>
             <textarea
               ref={inputRef}
-              name='message-input'
-              placeholder='Message'
+              name="message-input"
+              placeholder="Message"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -175,7 +179,8 @@ function SendMessage({ selectedGroup }) {
 
             <div
               ref={emojiPickerContainerRef}
-              onMouseLeave={() => setShowEmojiPicker(false)}>
+              onMouseLeave={() => setShowEmojiPicker(false)}
+            >
               {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
             </div>
             <span className={styles.sendMessageButton}>
