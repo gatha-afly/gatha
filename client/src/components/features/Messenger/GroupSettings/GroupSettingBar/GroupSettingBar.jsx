@@ -30,21 +30,24 @@ function GroupSettingBar({
       {view === "default" && (
         <>
           <h2 className={styles.groupName}>{name}</h2>
-          {/* Render admin bar if user is admin */}
-          {selectedGroup.code && (
-            <ViewGroupCode selectedGroup={selectedGroup} />
-          )}
-          <div className={styles.Icons}>
-            {isMobile && (
+
+          {isMobile && (
+            <span className={styles.mobileHome}>
               <ReactIconNavigate
                 route='/main'
                 size={2.5}
                 icon={MdGroups2}
                 margin={0}
               />
-            )}{" "}
-            {/* Render group settings icon, view admin settings on click if user is admin */}
-            <span className={styles.settingsIcon}>
+            </span>
+          )}
+          <div className={styles.icons}>
+            {selectedGroup.code && (
+              <span className={styles.groupCode}>
+                <ViewGroupCode selectedGroup={selectedGroup} />
+              </span>
+            )}
+            <span className={styles.settings}>
               <ReactIconNavigate
                 onClick={onSettingsClick}
                 size={2.5}

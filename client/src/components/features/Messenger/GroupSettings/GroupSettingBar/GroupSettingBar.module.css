@@ -16,9 +16,15 @@
   overflow-x: hidden;
 }
 
-.settingsIcon {
-  margin-top: 1rem;
-  margin-left: 0.5rem;
+.mobileHome {
+  width: 3rem;
+}
+
+.icons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
 .barContainer h2 {
