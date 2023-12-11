@@ -74,7 +74,12 @@ const AssignMemberAsAdmin = ({
   return (
     <div className={styles.assignMemberContainer}>
       <span className={styles.assignMemberIcon}>
-        <ReactIconNavigate icon={FaUserCog} onClick={onIconClick} size={2.2} />
+        <ReactIconNavigate
+          icon={FaUserCog}
+          onClick={onIconClick}
+          size={2.2}
+          margin={0}
+        />
         {/* Display an error message if there's an error */}
         {error && <ErrorDisplay error={error} />}
       </span>

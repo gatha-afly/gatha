@@ -34,24 +34,26 @@ const DeleteMessage = ({ messageId, senderId, updateIsNotDeleted }) => {
 
   return (
     <>
-      <span className={styles.icon}>
-        <ReactIconNavigate
-          onClick={() => setShowConfirmation(true)}
-          icon={AiOutlineDelete}
-          size={1.7}
-          margin={0.2}
+      <div className={styles.deleteContainer}>
+        <span className={styles.icon}>
+          <ReactIconNavigate
+            onClick={() => setShowConfirmation(true)}
+            icon={AiOutlineDelete}
+            size={1.8}
+            margin={0}
+          />
+        </span>
+        {/* Render the confirmation dialog */}
+        <ConfirmationDialog
+          className={styles.confirmationDialog}
+          showConfirmation={showConfirmation}
+          onConfirm={handleDeleteMessage}
+          onCancel={() => setShowConfirmation(false)}
+          confirmText='delete'
+          cancelText='cancel'
+          buttonTextSize='1.2'
         />
-      </span>
-      {/* Render the confirmation dialog */}
-      <ConfirmationDialog
-        className={styles.confirmationDialog}
-        showConfirmation={showConfirmation}
-        onConfirm={handleDeleteMessage}
-        onCancel={() => setShowConfirmation(false)}
-        confirmText='delete'
-        cancelText='cancel'
-        buttonTextSize='1.2'
-      />
+      </div>
     </>
   );
 };

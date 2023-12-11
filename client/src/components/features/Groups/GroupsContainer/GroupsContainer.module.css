@@ -3,6 +3,8 @@
   background-color: var(--color-body);
   border: 0.2rem solid var(--color-structure-elements);
   border-radius: 1rem;
+  box-shadow: 0 0.4rem 0.8rem var(--color-shadow-dark),
+    0 0.6rem 1.2rem var(--color-shadow-dark);
 }
 
 .groupsList {
@@ -32,9 +34,9 @@
 @media only screen and (max-width: 767px) {
   .groupsContainer {
     /* fallback value for older browsers*/
-    height: 66vh;
-    height: 76svh;
-    width: 90vw;
+    height: 85vh;
+    height: 85svh;
+    width: 98vw;
   }
   .groupContainer {
     overflow-y: scroll;

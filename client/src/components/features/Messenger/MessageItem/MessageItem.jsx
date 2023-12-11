@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { dateFormatter } from "../../../../utils/dateUtils";
-import { devLog } from "../../../../utils/errorUtils";
 import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
 import DeleteMessage from "../DeleteMessage/DeleteMessage";
 import OnlineStatusIndicator from "../OnlineStatusIndicator/OnlineStatusIndicator";
@@ -24,23 +23,17 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
           : styles.receiverMessage
       }`}>
       <div className={styles.sender}>
-        <span className={styles.senderInfo}>
-          <UsernameInitials
-            firstName={msg.sender?.firstName}
-            lastName={msg.sender?.lastName}
-            radius={"2.6"}
-            fontSize={"1.1"}
-            borderWidth={"0.4"}
-          />
-
-          <span className={styles.username}>{msg.sender?.username}</span>
-          {msg.sender?.id === user.userId && !msg.isDeleted && isNotDeleted && (
-            <DeleteMessage
-              senderId={user.userId}
-              messageId={msg._id}
-              updateIsNotDeleted={updateIsNotDeleted}
+        <span className={styles.topBar}>
+          <span className={styles.nameInfo}>
+            <UsernameInitials
+              firstName={msg.sender?.firstName}
+              lastName={msg.sender?.lastName}
+              radius={"2.6"}
+              fontSize={"1.1"}
+              borderWidth={"0.4"}
             />
-          )}
+            <span className={styles.username}>{msg.sender?.username}</span>
+          </span>
         </span>
 
         <div className={styles.onlineContainer}>
@@ -61,9 +54,21 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
           <p>{msg.text}</p>
         )}
       </div>
-      <div className={styles.date}>
-        {dateFormatter(new Date(msg.createdAt))}
-      </div>
+      <span className={styles.bottomBar}>
+        {msg.sender?.id === user.userId && !msg.isDeleted && isNotDeleted && (
+          <span className={styles.delete}>
+            <DeleteMessage
+              senderId={user.userId}
+              messageId={msg._id}
+              updateIsNotDeleted={updateIsNotDeleted}
+            />
+          </span>
+        )}
+        <span className={styles.deleted}></span>
+        <span className={styles.date}>
+          {dateFormatter(new Date(msg.createdAt))}
+        </span>
+      </span>
     </li>
   );
 };

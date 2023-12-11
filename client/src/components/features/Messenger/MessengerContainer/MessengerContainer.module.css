@@ -6,6 +6,8 @@
   background-color: var(--color-body);
   position: relative;
   margin-left: 0.5rem;
+  box-shadow: 0 0.4rem 0.8rem var(--color-shadow-dark),
+    0 0.6rem 1.2rem var(--color-shadow-dark);
 }
 
 .groupBar {
@@ -36,9 +38,9 @@
   .messengerContainer {
     /* fallback value for older browsers*/
     margin-left: 0rem;
-    height: 66vh;
-    height: 76svh;
-    width: 90vw;
+    height: 85vh;
+    height: 85svh;
+    width: 98vw;
   }
 }
 

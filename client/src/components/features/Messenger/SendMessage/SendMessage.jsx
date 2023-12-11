@@ -8,7 +8,7 @@ import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNaviga
 import socket from "../../../../api/socket";
 import { devLog } from "../../../../utils/errorUtils";
 import useUserContext from "../../../../hooks/useUserContext";
-import { isBigScreen } from "../../../../utils/deviceUtils";
+import { isMobile } from "../../../../utils/deviceUtils";
 import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
 function SendMessage({ selectedGroup }) {
@@ -44,16 +44,20 @@ function SendMessage({ selectedGroup }) {
 
   // Set up socket listeners for typing events
   useEffect(() => {
-    const handleTyping = ({ user }) => {
-      devLog(`${user} is typing...`);
-      setTypingUser(user);
-      setIsTyping(true);
+    const handleTyping = ({ user, groupId }) => {
+      if (groupId === selectedGroup?.groupId) {
+        devLog(`${user} is typing...`);
+        setTypingUser(user);
+        setIsTyping(true);
+      }
     };
 
-    const handleStopTyping = ({ user }) => {
-      devLog(`${user} stopped typing.`);
-      setIsTyping(false);
-      setTypingUser("");
+    const handleStopTyping = ({ user, groupId }) => {
+      if (groupId === selectedGroup?.groupId) {
+        devLog(`${user} stopped typing.`);
+        setIsTyping(false);
+        setTypingUser("");
+      }
     };
 
     socket.on("typing", handleTyping);
@@ -65,7 +69,7 @@ function SendMessage({ selectedGroup }) {
       socket.off("stop_typing", handleStopTyping);
       clearTimeout(typingTimeoutRef.current);
     };
-  }, [setIsTyping, setTypingUser]);
+  }, [setIsTyping, setTypingUser, selectedGroup?.groupId, typingTimeoutRef]);
 
   // Handle emoji selection
   useEffect(() => {
@@ -137,39 +141,59 @@ function SendMessage({ selectedGroup }) {
   return (
     <form className={styles.sendMessageContainer}>
       <div className={styles.sendMessageLine}>
-        <textarea
-          ref={inputRef}
-          name='message-input'
-          type='text'
-          placeholder='Message'
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-        />
+        {isMobile ? (
+          <>
+            <input
+              ref={inputRef}
+              name="message-input"
+              type="text"
+              placeholder="Message"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <span className={styles.sendMessageButton}>
+              <ReactIconNavigate
+                onClick={sendMessage}
+                size={2}
+                icon={IoMdSend}
+                margin={0}
+              />
+            </span>
+          </>
+        ) : (
+          <>
+            <textarea
+              ref={inputRef}
+              name="message-input"
+              placeholder="Message"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
 
-        {isBigScreen && (
-          <MdEmojiEmotions
-            className={styles.emojiButton}
-            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-          />
+            <MdEmojiEmotions
+              className={styles.emojiButton}
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            />
+
+            <div
+              ref={emojiPickerContainerRef}
+              onMouseLeave={() => setShowEmojiPicker(false)}
+            >
+              {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
+            </div>
+            <span className={styles.sendMessageButton}>
+              <ReactIconNavigate
+                onClick={sendMessage}
+                size={3}
+                icon={IoMdSend}
+                margin={0}
+              />
+            </span>
+          </>
         )}
-
-        <div
-          ref={emojiPickerContainerRef}
-          onMouseLeave={() => setShowEmojiPicker(false)}>
-          {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
-        </div>
-
-        <span className={styles.sendMessageButton}>
-          <ReactIconNavigate
-            onClick={sendMessage}
-            size={3}
-            icon={IoMdSend}
-            margin={0}
-          />
-        </span>
       </div>
-
       <ErrorDisplay error={error} />
     </form>
   );

@@ -9,6 +9,8 @@
   height: 5rem;
   margin-bottom: 0.5rem;
   cursor: pointer;
+  box-shadow: 0 0.2rem 0.4rem var(--color-shadow-dark),
+    0 0.4rem 0.8rem var(--color-shadow-dark);
 }
 
 .infos {

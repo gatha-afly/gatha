@@ -3,7 +3,10 @@ import styles from "./GroupSettingBar.module.css";
 import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { IoSettingsOutline } from "react-icons/io5";
 import ViewGroupCode from "../ViewGroupCode/ViewGroupCode";
+import { MdGroups2 } from "react-icons/md";
 import { HiMiniBackspace } from "react-icons/hi2";
+
+import { isMobile } from "../../../../../utils/deviceUtils";
 
 /**
  * Bar to host selected group related information and functionalities
@@ -31,15 +34,24 @@ function GroupSettingBar({
           {selectedGroup.code && (
             <ViewGroupCode selectedGroup={selectedGroup} />
           )}
-
-          {/* Render group settings icon, view admin settings on click if user is admin */}
-          <div className={styles.settingsIcon}>
-            <ReactIconNavigate
-              onClick={onSettingsClick}
-              size={2.5}
-              icon={IoSettingsOutline}
-              margin={0}
-            />
+          <div className={styles.Icons}>
+            {isMobile && (
+              <ReactIconNavigate
+                route='/main'
+                size={2.5}
+                icon={MdGroups2}
+                margin={0}
+              />
+            )}{" "}
+            {/* Render group settings icon, view admin settings on click if user is admin */}
+            <span className={styles.settingsIcon}>
+              <ReactIconNavigate
+                onClick={onSettingsClick}
+                size={2.5}
+                icon={IoSettingsOutline}
+                margin={0}
+              />
+            </span>
           </div>
         </>
       )}

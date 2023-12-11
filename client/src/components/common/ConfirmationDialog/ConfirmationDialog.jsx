@@ -25,13 +25,13 @@ const ConfirmationDialog = ({
 }) =>
   // Render the confirmation dialog only if showConfirmation is true
   showConfirmation && (
-    <div className={styles.confirmationContainer}>
+    <span className={styles.confirmationContainer}>
       <p
         className={`${styles.confirmationMessage} ${styles.customTextSize}`}
         style={{ fontSize: `${messageTextSize}rem` }}>
         {message}
       </p>
-      <div className={styles.confirmationButtons}>
+      <span className={styles.confirmationButtons}>
         <button
           className={`${styles.confirmButton} ${styles.buttonWithCustomSize}`}
           style={{ fontSize: `${buttonTextSize}rem` }}
@@ -44,8 +44,8 @@ const ConfirmationDialog = ({
           onClick={onCancel}>
           {cancelText}
         </button>
-      </div>
-    </div>
+      </span>
+    </span>
   );
 
 export default ConfirmationDialog;
