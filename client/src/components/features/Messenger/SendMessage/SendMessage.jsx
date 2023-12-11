@@ -15,9 +15,8 @@ function SendMessage({ selectedGroup }) {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
   const [chosenEmoji, setChosenEmoji] = useState({});
-  const [isInputEmpty, setIsInputEmpty] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const { setIsTyping, setTypingUser } = useUserContext();
+  const { setIsTyping, isTyping, setTypingUser } = useUserContext();
 
   const inputRef = useRef(null);
   const typingTimeoutRef = useRef(null);
@@ -28,14 +27,12 @@ function SendMessage({ selectedGroup }) {
       devLog(`${user} is typing...`);
       setTypingUser(user);
       setIsTyping(true);
-      setIsInputEmpty(false);
     };
 
     const handleStopTyping = ({ user }) => {
       devLog(`${user} stopped typing.`);
       setIsTyping(false);
       setTypingUser("");
-      setIsInputEmpty(true);
     };
 
     socket.on("typing", handleTyping);
@@ -47,7 +44,7 @@ function SendMessage({ selectedGroup }) {
       socket.off("stop_typing", handleStopTyping);
       clearTimeout(typingTimeoutRef.current);
     };
-  }, [setIsTyping, setTypingUser, setIsInputEmpty]);
+  }, [setIsTyping, setTypingUser]);
 
   // Handle emoji selection
   useEffect(() => {
@@ -80,7 +77,7 @@ function SendMessage({ selectedGroup }) {
             setInput("");
             setError("");
             socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
-            setIsInputEmpty(true);
+            setIsTyping(false);
           }
         }
       );
@@ -92,16 +89,15 @@ function SendMessage({ selectedGroup }) {
       e.preventDefault();
       sendMessage(e);
     } else {
-      if (!isInputEmpty) {
+      if (!isTyping) {
         socket.emit("typing", { groupId: selectedGroup?.groupId });
       }
 
       clearTimeout(typingTimeoutRef.current);
       typingTimeoutRef.current = setTimeout(() => {
-        if (isInputEmpty) {
+        if (isTyping) {
           socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
           setIsTyping(false);
-          setIsInputEmpty(false);
         }
       }, 5000);
     }
@@ -116,7 +112,6 @@ function SendMessage({ selectedGroup }) {
     setInput("");
     setIsTyping(false);
     socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
-    setIsInputEmpty(true);
   });
 
   return (
