@@ -34,7 +34,16 @@ function MessengerContainer() {
       // Render group settings with a callback for the default view
       case "groupSettings":
         return (
-          <GroupSettingsContainer onDefaultViewClick={handleDefaultViewClick} />
+          <>
+            <GroupSettingBar
+              selectedGroup={selectedGroup}
+              onBackClick={handleDefaultViewClick}
+              view={"groupSettings"}
+            />
+            <GroupSettingsContainer
+              onDefaultViewClick={handleDefaultViewClick}
+            />
+          </>
         );
       default:
         // Render default view with the latest messages of the selected group
@@ -43,8 +52,9 @@ function MessengerContainer() {
             <PiratePxPageRender COUNT_IDENTIFIER={"messenger"} />
             <div className={styles.groupBar}>
               <GroupSettingBar
+                view={"default"}
                 selectedGroup={selectedGroup}
-                onGroupSettingsClick={handleGroupSettingsClick}
+                onSettingsClick={handleGroupSettingsClick}
               />
             </div>
             <div className={styles.messages}>
