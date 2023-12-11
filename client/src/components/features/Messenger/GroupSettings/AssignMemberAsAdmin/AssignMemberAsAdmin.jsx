@@ -55,6 +55,7 @@ const AssignMemberAsAdmin = ({
     } finally {
       // Close the confirmation dialog regardless of success or failure
       hideConfirmationDialog();
+      onUnlockConfirmation();
     }
   };
 
@@ -62,7 +63,7 @@ const AssignMemberAsAdmin = ({
   const onIconClick = handleIconClick(
     confirmationIsLocked,
     showConfirmationDialog,
-    onUnlockConfirmation
+    onLockConfirmation
   );
 
   const onCancelClick = handleCancelClick(
