@@ -21,6 +21,23 @@ function SendMessage({ selectedGroup }) {
   const inputRef = useRef(null);
   const typingTimeoutRef = useRef(null);
 
+  useEffect(() => {
+    const handleDocumentClick = (e) => {
+      // Close emoji picker if it's open and user clicked outside the emoji picker
+      if (showEmojiPicker && !e.target.closest(`.${styles.emojiButton}`)) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    // Add click event listener to the document body
+    document.body.addEventListener("click", handleDocumentClick);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      document.body.removeEventListener("click", handleDocumentClick);
+    };
+  }, [showEmojiPicker]);
+
   // Set up socket listeners for typing events
   useEffect(() => {
     socket.on("typing", ({ user }) => {
@@ -53,6 +70,7 @@ function SendMessage({ selectedGroup }) {
       if (inputRef.current) {
         inputRef.current.focus();
       }
+      setShowEmojiPicker(false);
     }
   }, [chosenEmoji]);
 
@@ -109,9 +127,9 @@ function SendMessage({ selectedGroup }) {
       <div className={styles.sendMessageLine}>
         <input
           ref={inputRef}
-          name='message-input'
-          type='text'
-          placeholder='Message'
+          name="message-input"
+          type="text"
+          placeholder="Message"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
