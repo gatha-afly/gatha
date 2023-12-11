@@ -141,9 +141,9 @@ function SendMessage({ selectedGroup }) {
           <>
             <input
               ref={inputRef}
-              name='message-input'
-              type='text'
-              placeholder='Message'
+              name="message-input"
+              type="text"
+              placeholder="Message"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -161,8 +161,8 @@ function SendMessage({ selectedGroup }) {
           <>
             <textarea
               ref={inputRef}
-              name='message-input'
-              placeholder='Message'
+              name="message-input"
+              placeholder="Message"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -175,7 +175,8 @@ function SendMessage({ selectedGroup }) {
 
             <div
               ref={emojiPickerContainerRef}
-              onMouseLeave={() => setShowEmojiPicker(false)}>
+              onMouseLeave={() => setShowEmojiPicker(false)}
+            >
               {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
             </div>
             <span className={styles.sendMessageButton}>
