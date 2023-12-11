@@ -1,5 +1,4 @@
 import React from "react";
-import { RiRadioButtonLine } from "react-icons/ri";
 import styles from "./OnlineStatusIndicator.module.css";
 
 /**
@@ -13,10 +12,6 @@ const OnlineStatusIndicator = ({ isOnline }) => {
     // Apply CSS class based on the online status
     <div className={isOnline ? styles.online : styles.offline}>
       <span>{isOnline ? "online" : "offline"}</span>
-      {/* Display the online/offline icon based on status */}
-      <RiRadioButtonLine
-        className={isOnline ? styles.onlineIcon : styles.offlineIcon}
-      />
     </div>
   );
 };
