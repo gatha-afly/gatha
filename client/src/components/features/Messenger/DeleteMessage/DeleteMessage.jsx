@@ -11,19 +11,20 @@ import styles from "./DeleteMessage.module.css";
  * @param {Object} props - Component props.
  * @param {string} props.messageId - The ID of the message to be deleted.
  * @param {string} props.senderId - The ID of the message sender.
- * @param {Function} props.setIsDeletedCallback - Callback function to update the isDeleted state.
+ * @param {Function} props.updateIsDeleted - Callback function to update the isDeleted state in parent component.
  * @returns {JSX.Element} - Rendered component.
  */
-const DeleteMessage = ({ messageId, senderId, setIsDeletedCallback }) => {
+const DeleteMessage = ({ messageId, senderId, updateIsDeleted }) => {
+  // State to manage the visibility of the confirmation dialog
   const [showConfirmation, setShowConfirmation] = useState(false);
   const handleDeleteMessage = async () => {
     try {
       const response = await userAPI.patch(
         `/messages/delete/${messageId}/${senderId}`
       );
-      // Call the callback to update the state in the parent component, triggering a rerender
       devLog("Message deleted successfully", response);
-      setIsDeletedCallback(true);
+      // Update the state in the parent component, triggering a rerender
+      updateIsDeleted();
     } catch (error) {
       devLog("Error deleting message:", error);
     } finally {
@@ -34,6 +35,8 @@ const DeleteMessage = ({ messageId, senderId, setIsDeletedCallback }) => {
   return (
     <>
       <ReactIconNavigate
+            {/* Icon to initiate the deletion process */}
+
         onClick={() => setShowConfirmation(true)}
         icon={AiOutlineDelete}
       />
@@ -43,8 +46,8 @@ const DeleteMessage = ({ messageId, senderId, setIsDeletedCallback }) => {
         showConfirmation={showConfirmation}
         onConfirm={handleDeleteMessage}
         onCancel={() => setShowConfirmation(false)}
-        confirmText="delete"
-        cancelText="cancel"
+        confirmText='delete'
+        cancelText='cancel'
       />
     </>
   );
