@@ -23,22 +23,25 @@ function SendMessage({ selectedGroup }) {
 
   // Set up socket listeners for typing events
   useEffect(() => {
-    socket.on("typing", ({ user }) => {
+    const handleTyping = ({ user }) => {
       devLog(`${user} is typing...`);
       setTypingUser(user);
       setIsTyping(true);
-    });
+    };
 
-    socket.on("stop_typing", ({ user }) => {
+    const handleStopTyping = ({ user }) => {
       devLog(`${user} stopped typing.`);
       setIsTyping(false);
       setTypingUser("");
-    });
+    };
+
+    socket.on("typing", handleTyping);
+    socket.on("stop_typing", handleStopTyping);
 
     // Clean up socket listeners when the component unmounts
     return () => {
-      socket.off("typing");
-      socket.off("stop_typing");
+      socket.off("typing", handleTyping);
+      socket.off("stop_typing", handleStopTyping);
     };
   }, [setIsTyping, setTypingUser]);
 
@@ -90,6 +93,7 @@ function SendMessage({ selectedGroup }) {
 
       clearTimeout(typingTimeoutRef.current);
       typingTimeoutRef.current = setTimeout(() => {
+        setIsTyping(false);
         if (isInputEmpty) {
           socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
         }
@@ -109,9 +113,9 @@ function SendMessage({ selectedGroup }) {
       <div className={styles.sendMessageLine}>
         <input
           ref={inputRef}
-          name='message-input'
-          type='text'
-          placeholder='Message'
+          name="message-input"
+          type="text"
+          placeholder="Message"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}

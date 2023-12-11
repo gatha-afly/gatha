@@ -41,6 +41,18 @@ const setupSocketIO = (io) => {
       socket.to(groupId.toString()).emit("typing", { user: userTyping });
     });
 
+    // Notify other clients when a user stops typing
+    socket.on("stop_typing", ({ groupId }) => {
+      const userStoppedTyping = {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+      };
+      socket
+        .to(groupId.toString())
+        .emit("stop_typing", { user: userStoppedTyping });
+    });
+
     // Listen for incoming messages from the client
     socket.on("send_message", async ({ text, groupId }, acknowledgment) => {
       // console.log(socket.user.id);
