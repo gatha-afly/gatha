@@ -455,3 +455,58 @@ export const assignUserAsAdmin = async (req, res) => {
     return errorHandlerUtils.handleInternalError(res);
   }
 };
+
+/**
+ * Handler for editing the group details
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const editGroupById = async (req, res) => {
+  try {
+    const { groupId } = req.params;
+    const { name, description, avatar, code } = req.body;
+
+    // Find the group by groupId
+    const groupToEdit = await Group.findById(groupId);
+    if (!groupToEdit) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+
+    let updatedFields = {};
+    if (name) updatedFields.name = name;
+    if (description) updatedFields.description = description;
+    if (avatar) updatedFields.avatar = avatar;
+
+    let newCode;
+    if (code) {
+      newCode = await generateUniqueGroupCode(code);
+      updatedFields.code = newCode;
+    }
+
+    // Check if there are fields to update
+    if (Object.keys(updatedFields).length === 0) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        message: "No valid fields provided for update.",
+      });
+    }
+
+    // Update the group
+    const editedGroup = await Group.findByIdAndUpdate(
+      groupId,
+      { $set: updatedFields },
+      { new: true }
+    );
+
+    if (!editedGroup) {
+      return errorHandlerUtils.handleGroupNotFound(res);
+    }
+
+    return res.status(StatusCodes.OK).json({
+      message: "The group has been successfully edited",
+      editedGroup,
+    });
+  } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
