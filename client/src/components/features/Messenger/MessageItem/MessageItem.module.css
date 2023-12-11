@@ -1,9 +1,18 @@
 .messageContainer {
-  width: 70%;
+  width: 75%;
   border-radius: 1rem;
   padding: 0.5rem;
   margin-bottom: 1rem;
   margin-right: 1rem;
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  .messageContainer {
+    padding: 0.5rem;
+    margin-bottom: 0.1rem;
+    margin-right: 0.1rem;
+  }
 }
 
 .message p {
