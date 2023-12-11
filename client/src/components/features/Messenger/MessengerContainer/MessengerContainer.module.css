@@ -34,6 +34,10 @@
     height: 85svh;
     width: 98vw;
   }
+
+  .messages {
+    height: 80%;
+  }
 }
 
 /* Mobile landscape mode*/
