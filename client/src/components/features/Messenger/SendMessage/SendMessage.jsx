@@ -20,19 +20,23 @@ function SendMessage({ selectedGroup }) {
 
   const inputRef = useRef(null);
   const typingTimeoutRef = useRef(null);
+  const emojiPickerContainerRef = useRef(null);
 
   useEffect(() => {
     const handleDocumentClick = (e) => {
-      // Close emoji picker if it's open and user clicked outside the emoji picker
-      if (showEmojiPicker && !e.target.closest(`.${styles.emojiButton}`)) {
+      // Close emoji picker if it's open and user clicked outside the emoji picker container
+      if (
+        showEmojiPicker &&
+        emojiPickerContainerRef.current &&
+        !emojiPickerContainerRef.current.contains(e.target) &&
+        !e.target.closest(`.${styles.emojiButton}`)
+      ) {
         setShowEmojiPicker(false);
       }
     };
 
-    // Add click event listener to the document body
     document.body.addEventListener("click", handleDocumentClick);
 
-    // Cleanup the event listener when the component unmounts
     return () => {
       document.body.removeEventListener("click", handleDocumentClick);
     };
@@ -142,7 +146,12 @@ function SendMessage({ selectedGroup }) {
           />
         )}
 
-        {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
+        <div
+          ref={emojiPickerContainerRef}
+          onMouseLeave={() => setShowEmojiPicker(false)}
+        >
+          {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
+        </div>
 
         <span className={styles.sendMessageButton}>
           <ReactIconNavigate onClick={sendMessage} size={3} icon={IoMdSend} />
