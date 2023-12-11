@@ -1,10 +1,14 @@
-.message {
+.messageContainer {
   width: 70%;
   border-radius: 1rem;
   padding: 0.5rem;
   margin-bottom: 1rem;
-  margin-left: 1rem;
   margin-right: 1rem;
+}
+
+.message p {
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .deletedMessage {

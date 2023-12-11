@@ -129,11 +129,11 @@ function SendMessage({ selectedGroup }) {
   return (
     <form className={styles.sendMessageContainer}>
       <div className={styles.sendMessageLine}>
-        <input
+        <textarea
           ref={inputRef}
-          name="message-input"
-          type="text"
-          placeholder="Message"
+          name='message-input'
+          type='text'
+          placeholder='Message'
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -148,13 +148,17 @@ function SendMessage({ selectedGroup }) {
 
         <div
           ref={emojiPickerContainerRef}
-          onMouseLeave={() => setShowEmojiPicker(false)}
-        >
+          onMouseLeave={() => setShowEmojiPicker(false)}>
           {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
         </div>
 
         <span className={styles.sendMessageButton}>
-          <ReactIconNavigate onClick={sendMessage} size={3} icon={IoMdSend} />
+          <ReactIconNavigate
+            onClick={sendMessage}
+            size={3}
+            icon={IoMdSend}
+            margin={0}
+          />
         </span>
       </div>
 
