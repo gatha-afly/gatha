@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { RiRadioButtonLine } from "react-icons/ri";
 import styles from "./RenderMessages.module.css";
 import { userAPI } from "./../../../../api/userAPI";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
