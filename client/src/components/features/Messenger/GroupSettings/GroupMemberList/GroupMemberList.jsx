@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { devLog } from "../../../../../utils/errorUtils";
 import Spinner from "../../../../common/Spinner/Spinner";
 import AssignMemberAsAdmin from "../AssignMemberAsAdmin/AssignMemberAsAdmin";
 import RemoveMemberFromGroup from "../RemoveMemberFromGroup/RemoveMemberFromGroup";
@@ -17,6 +18,19 @@ const GroupMemberList = ({
   onRefresh,
   userIsGroupAdmin,
 }) => {
+  // State and functions to manage whether confirmation is locked or not, so that only one such message is rendered at a time
+  const [confirmationIsLocked, setConfirmationIsLocked] = useState(false);
+
+  const handleConfirmationLock = () => {
+    setConfirmationIsLocked(true);
+  };
+
+  const handleConfirmationUnlock = () => {
+    setConfirmationIsLocked(false);
+  };
+
+  devLog("confirmation is locked:", confirmationIsLocked);
+
   // Format members for desired display
   const formattedMembers = groupMembers.groupMembers
     .map((member) => {
@@ -45,7 +59,7 @@ const GroupMemberList = ({
                 {formattedMember.info}
                 {/* Display admin badge if the member is an admin */}
                 {formattedMember.isAdmin && (
-                  <span className={styles.adminBadge}>Admin</span>
+                  <span className={styles.adminBadge}>admin</span>
                 )}
                 {/* If logged in user is group admin, allow removing non-admin users from group */}
                 {userIsGroupAdmin && !formattedMember.isAdmin && (
@@ -54,11 +68,17 @@ const GroupMemberList = ({
                       groupId={groupId}
                       userId={formattedMember.userId}
                       onRefresh={onRefresh}
+                      confirmationIsLocked={confirmationIsLocked}
+                      onLockConfirmation={handleConfirmationLock}
+                      onUnlockConfirmation={handleConfirmationUnlock}
                     />
                     <AssignMemberAsAdmin
                       groupId={groupId}
                       userId={formattedMember.userId}
                       onRefresh={onRefresh}
+                      confirmationIsLocked={confirmationIsLocked}
+                      onLockConfirmation={handleConfirmationLock}
+                      onUnlockConfirmation={handleConfirmationUnlock}
                     />
                   </div>
                 )}

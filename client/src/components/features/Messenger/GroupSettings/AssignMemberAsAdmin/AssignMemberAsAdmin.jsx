@@ -8,18 +8,29 @@ import { FaUserCog } from "react-icons/fa";
 import useUserContext from "../../../../../hooks/useUserContext";
 import ConfirmationDialog from "../../../../common/ConfirmationDialog/ConfirmationDialog";
 import useConfirmationDialog from "../../../../../hooks/useConfirmationDialog";
+import {
+  handleCancelClick,
+  handleIconClick,
+} from "../../../../../utils/confirmationUtils";
 
 /**
  * Renders a react-icon to make a user admin of a group.
  * @param {string} groupId - ID of the group.
  * @param {string} userId - ID of the to be removed user.
  */
-const AssignMemberAsAdmin = ({ groupId, userId, onRefresh }) => {
+const AssignMemberAsAdmin = ({
+  groupId,
+  userId,
+  onRefresh,
+  confirmationIsLocked,
+  onLockConfirmation,
+  onUnlockConfirmation,
+}) => {
   // State to handle error messages
   const [error, setError] = useState("");
 
   // Use the useConfirmationDialog hook to manage the confirmation dialog state
-  const { showConfirmation, toggleConfirmationDialog, hideConfirmationDialog } =
+  const { showConfirmation, showConfirmationDialog, hideConfirmationDialog } =
     useConfirmationDialog();
 
   // Get the adminId (= id of the loggedIn user) from the user context
@@ -47,14 +58,22 @@ const AssignMemberAsAdmin = ({ groupId, userId, onRefresh }) => {
     }
   };
 
+  // Use utility functions to update parent confirmationIsLocked state based on on user actions
+  const onIconClick = handleIconClick(
+    confirmationIsLocked,
+    showConfirmationDialog,
+    onUnlockConfirmation
+  );
+
+  const onCancelClick = handleCancelClick(
+    hideConfirmationDialog,
+    onUnlockConfirmation
+  );
+
   return (
     <div className={styles.assignMemberContainer}>
       <span className={styles.assignMemberIcon}>
-        <ReactIconNavigate
-          icon={FaUserCog}
-          onClick={toggleConfirmationDialog}
-          size={2.2}
-        />
+        <ReactIconNavigate icon={FaUserCog} onClick={onIconClick} size={2.2} />
         {/* Display an error message if there's an error */}
         {error && <ErrorDisplay error={error} />}
       </span>
@@ -64,7 +83,7 @@ const AssignMemberAsAdmin = ({ groupId, userId, onRefresh }) => {
         <ConfirmationDialog
           showConfirmation={showConfirmation}
           onConfirm={handleMakeMemberAdmin}
-          onCancel={hideConfirmationDialog}
+          onCancel={onCancelClick}
           message='Assign as admin?'
         />
       </div>
