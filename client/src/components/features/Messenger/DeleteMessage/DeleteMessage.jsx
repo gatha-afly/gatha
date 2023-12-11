@@ -35,7 +35,7 @@ const DeleteMessage = ({ messageId, senderId, updateIsDeleted }) => {
   return (
     <>
       <ReactIconNavigate
-            {/* Icon to initiate the deletion process */}
+        /* Icon to initiate the deletion process */
 
         onClick={() => setShowConfirmation(true)}
         icon={AiOutlineDelete}
@@ -46,8 +46,8 @@ const DeleteMessage = ({ messageId, senderId, updateIsDeleted }) => {
         showConfirmation={showConfirmation}
         onConfirm={handleDeleteMessage}
         onCancel={() => setShowConfirmation(false)}
-        confirmText='delete'
-        cancelText='cancel'
+        confirmText="delete"
+        cancelText="cancel"
       />
     </>
   );
