@@ -27,31 +27,31 @@ const setupSocketIO = (io) => {
     user.groups.forEach((groupId) => {
       getInitialMessages(io, socket, groupId);
       getUserStatus(io, socket, groupId);
+
+      // Notify other clients when a user is typing
+      socket.on("typing", ({ groupId }) => {
+        const userTyping = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+        };
+        socket.to(groupId.toString()).emit("typing", { user: userTyping });
+      });
+
+      // Notify other clients when a user stops typing
+      socket.on("stop_typing", ({ groupId }) => {
+        const userStoppedTyping = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+        };
+        socket
+          .to(groupId.toString())
+          .emit("stop_typing", { user: userStoppedTyping });
+      });
     });
 
     console.log(`User Connected: ${socket.id}`);
-
-    // Notify other clients when a user is typing
-    socket.on("typing", ({ groupId }) => {
-      const userTyping = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.username,
-      };
-      socket.to(groupId.toString()).emit("typing", { user: userTyping });
-    });
-
-    // Notify other clients when a user stops typing
-    socket.on("stop_typing", ({ groupId }) => {
-      const userStoppedTyping = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.username,
-      };
-      socket
-        .to(groupId.toString())
-        .emit("stop_typing", { user: userStoppedTyping });
-    });
 
     // Listen for incoming messages from the client
     socket.on("send_message", async ({ text, groupId }, acknowledgment) => {
