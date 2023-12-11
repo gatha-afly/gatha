@@ -1,8 +1,6 @@
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
-import ReactIconNavigate from "../../components/common/ReactIconNavigate/ReactIconNavigate";
 import styles from "./MobileMessengerPage.module.css";
-import { FaArrowLeft } from "react-icons/fa";
 import MessengerContainer from "../../components/features/Messenger/MessengerContainer/MessengerContainer";
 import useUpdateUserData from "../../hooks/useUpdateUser";
 import { useEffect } from "react";
@@ -28,9 +26,7 @@ const MobileMessengerPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - messenger' />
       <ErrorDisplay error={error} />
-      {/* Messenger component */}
       <MessengerContainer />
-      {/* Navigation icon to go back to the main page */}
     </main>
   );
 };
