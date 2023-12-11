@@ -20,6 +20,27 @@ function SendMessage({ selectedGroup }) {
 
   const inputRef = useRef(null);
   const typingTimeoutRef = useRef(null);
+  const emojiPickerContainerRef = useRef(null);
+
+  useEffect(() => {
+    const handleDocumentClick = (e) => {
+      // Close emoji picker if it's open and user clicked outside the emoji picker container
+      if (
+        showEmojiPicker &&
+        emojiPickerContainerRef.current &&
+        !emojiPickerContainerRef.current.contains(e.target) &&
+        !e.target.closest(`.${styles.emojiButton}`)
+      ) {
+        setShowEmojiPicker(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.body.removeEventListener("click", handleDocumentClick);
+    };
+  }, [showEmojiPicker]);
 
   // Set up socket listeners for typing events
   useEffect(() => {
@@ -57,6 +78,7 @@ function SendMessage({ selectedGroup }) {
       if (inputRef.current) {
         inputRef.current.focus();
       }
+      setShowEmojiPicker(false);
     }
   }, [chosenEmoji]);
 
@@ -134,7 +156,12 @@ function SendMessage({ selectedGroup }) {
           />
         )}
 
-        {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
+        <div
+          ref={emojiPickerContainerRef}
+          onMouseLeave={() => setShowEmojiPicker(false)}
+        >
+          {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
+        </div>
 
         <span className={styles.sendMessageButton}>
           <ReactIconNavigate onClick={sendMessage} size={3} icon={IoMdSend} />

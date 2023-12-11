@@ -14,7 +14,7 @@ import styles from "./DeleteMessage.module.css";
  * @param {Function} props.updateIsDeleted - Callback function to update the isDeleted state in parent component.
  * @returns {JSX.Element} - Rendered component.
  */
-const DeleteMessage = ({ messageId, senderId, updateIsDeleted }) => {
+const DeleteMessage = ({ messageId, senderId, updateIsNotDeleted }) => {
   // State to manage the visibility of the confirmation dialog
   const [showConfirmation, setShowConfirmation] = useState(false);
   const handleDeleteMessage = async () => {
@@ -24,7 +24,7 @@ const DeleteMessage = ({ messageId, senderId, updateIsDeleted }) => {
       );
       devLog("Message deleted successfully", response);
       // Update the state in the parent component, triggering a rerender
-      updateIsDeleted();
+      updateIsNotDeleted();
     } catch (error) {
       devLog("Error deleting message:", error);
     } finally {

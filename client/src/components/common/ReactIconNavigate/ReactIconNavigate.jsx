@@ -31,14 +31,11 @@ const ReactIconNavigate = ({
   };
 
   return (
-    <span className={styles.iconContainer} style={{ margin: `${margin}rem` }}>
-      {/* Render the specified React icon component with onClick prop */}
-      <IconComponent
-        onClick={onClick || navigateToRoute}
-        className={styles.customIcon}
-        style={{ fontSize: `${size}rem` }}
-      />
-    </span>
+    <IconComponent
+      onClick={onClick || navigateToRoute}
+      className={styles.customIcon}
+      style={{ fontSize: `${size}rem`, margin: `${margin}rem` }}
+    />
   );
 };
 
