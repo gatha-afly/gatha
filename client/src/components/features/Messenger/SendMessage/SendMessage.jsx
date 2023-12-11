@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import EmojiPicker from "../EmojiPicker/RenderEmojiPicker";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./SendMessage.module.css";
@@ -42,6 +42,7 @@ function SendMessage({ selectedGroup }) {
     return () => {
       socket.off("typing", handleTyping);
       socket.off("stop_typing", handleStopTyping);
+      clearTimeout(typingTimeoutRef.current);
     };
   }, [setIsTyping, setTypingUser]);
 
@@ -81,6 +82,7 @@ function SendMessage({ selectedGroup }) {
       );
     }
   };
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
@@ -93,11 +95,11 @@ function SendMessage({ selectedGroup }) {
 
       clearTimeout(typingTimeoutRef.current);
       typingTimeoutRef.current = setTimeout(() => {
-        setIsTyping(false);
         if (isInputEmpty) {
           socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
+          setIsTyping(false);
         }
-      }, 1000);
+      }, 100);
     }
   };
 
@@ -106,7 +108,11 @@ function SendMessage({ selectedGroup }) {
   };
 
   // Clear input field when selects a different group
-  useSetCallbackWhenSelectedGroupChanges(selectedGroup, () => setInput(""));
+  useSetCallbackWhenSelectedGroupChanges(selectedGroup, () => {
+    setInput("");
+    setIsTyping(false);
+    socket.emit("stop_typing", { groupId: selectedGroup?.groupId });
+  });
 
   return (
     <form className={styles.sendMessageContainer}>
