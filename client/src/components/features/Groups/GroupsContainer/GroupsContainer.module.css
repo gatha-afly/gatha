@@ -42,6 +42,12 @@
     width: 98vw;
     overflow-y: scroll;
   }
+  .groupBar {
+    height: 8%;
+  }
+  .groupsList {
+    height: 92%;
+  }
 }
 
 /* Mobile landscape mode*/
