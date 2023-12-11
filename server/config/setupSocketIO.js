@@ -35,7 +35,9 @@ const setupSocketIO = (io) => {
           lastName: user.lastName,
           username: user.username,
         };
-        socket.to(groupId.toString()).emit("typing", { user: userTyping });
+        socket
+          .to(groupId.toString())
+          .emit("typing", { user: userTyping, groupId: groupId });
       });
 
       // Notify other clients when a user stops typing
@@ -47,7 +49,7 @@ const setupSocketIO = (io) => {
         };
         socket
           .to(groupId.toString())
-          .emit("stop_typing", { user: userStoppedTyping });
+          .emit("stop_typing", { user: userStoppedTyping, groupId: groupId });
       });
     });
 
@@ -95,7 +97,7 @@ const setupSocketIO = (io) => {
         };
         socket
           .to(groupId.toString())
-          .emit("stop_typing", { user: userStoppedTyping });
+          .emit("stop_typing", { user: userStoppedTyping, groupId: groupId });
       });
     });
   });

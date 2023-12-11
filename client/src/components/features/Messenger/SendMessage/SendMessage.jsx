@@ -44,16 +44,20 @@ function SendMessage({ selectedGroup }) {
 
   // Set up socket listeners for typing events
   useEffect(() => {
-    const handleTyping = ({ user }) => {
-      devLog(`${user} is typing...`);
-      setTypingUser(user);
-      setIsTyping(true);
+    const handleTyping = ({ user, groupId }) => {
+      if (groupId === selectedGroup?.groupId) {
+        devLog(`${user} is typing...`);
+        setTypingUser(user);
+        setIsTyping(true);
+      }
     };
 
-    const handleStopTyping = ({ user }) => {
-      devLog(`${user} stopped typing.`);
-      setIsTyping(false);
-      setTypingUser("");
+    const handleStopTyping = ({ user, groupId }) => {
+      if (groupId === selectedGroup?.groupId) {
+        devLog(`${user} stopped typing.`);
+        setIsTyping(false);
+        setTypingUser("");
+      }
     };
 
     socket.on("typing", handleTyping);
@@ -65,7 +69,7 @@ function SendMessage({ selectedGroup }) {
       socket.off("stop_typing", handleStopTyping);
       clearTimeout(typingTimeoutRef.current);
     };
-  }, [setIsTyping, setTypingUser]);
+  }, [setIsTyping, setTypingUser, selectedGroup?.groupId, typingTimeoutRef]);
 
   // Handle emoji selection
   useEffect(() => {
