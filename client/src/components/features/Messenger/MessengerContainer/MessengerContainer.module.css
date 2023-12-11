@@ -10,17 +10,9 @@
     0 0.6rem 1.2rem var(--color-shadow-dark);
 }
 
-.groupBar {
-  height: 10%;
-}
-
 .messages {
-  height: 79%;
+  height: 83.5%;
   overflow-y: scroll;
-}
-
-.send {
-  height: 8%;
 }
 
 .selectGroup {

@@ -10,11 +10,10 @@
 .groupsList {
   overflow-y: scroll;
   padding: 0.5rem;
-
   position: relative;
   background-color: var(--color-body);
   width: 100%;
-  height: 90%;
+  height: 94%;
 }
 
 .cta {
@@ -27,7 +26,11 @@
 .groupBar {
   border-top: 0.25rem solid var(--color-structure-elements);
   margin-left: 0.5rem;
-  height: 5%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 6%;
 }
 
 /* Mobile*/
@@ -37,10 +40,7 @@
     height: 85vh;
     height: 85svh;
     width: 98vw;
-  }
-  .groupContainer {
     overflow-y: scroll;
-    height: 92%;
   }
 }
 
