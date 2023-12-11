@@ -24,6 +24,7 @@
 
 .groupBar {
   border-top: 0.25rem solid var(--color-structure-elements);
+  margin-left: 0.5rem;
   height: 5%;
 }
 

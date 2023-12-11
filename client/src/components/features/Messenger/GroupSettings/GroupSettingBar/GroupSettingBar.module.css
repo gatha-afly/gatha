@@ -23,3 +23,7 @@
 .backIcon {
   margin-top: 1rem;
 }
+
+.barContainer h2 {
+  color: var(--color-text);
+}
