@@ -43,9 +43,8 @@ const DeleteMessage = ({ messageId, senderId, setIsDeletedCallback }) => {
         showConfirmation={showConfirmation}
         onConfirm={handleDeleteMessage}
         onCancel={() => setShowConfirmation(false)}
-        message="Delete message?"
-        confirmText="yes"
-        cancelText="no"
+        confirmText="delete"
+        cancelText="cancel"
       />
     </>
   );
