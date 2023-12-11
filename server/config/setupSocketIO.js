@@ -27,19 +27,31 @@ const setupSocketIO = (io) => {
     user.groups.forEach((groupId) => {
       getInitialMessages(io, socket, groupId);
       getUserStatus(io, socket, groupId);
+
+      // Notify other clients when a user is typing
+      socket.on("typing", ({ groupId }) => {
+        const userTyping = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+        };
+        socket.to(groupId.toString()).emit("typing", { user: userTyping });
+      });
+
+      // Notify other clients when a user stops typing
+      socket.on("stop_typing", ({ groupId }) => {
+        const userStoppedTyping = {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+        };
+        socket
+          .to(groupId.toString())
+          .emit("stop_typing", { user: userStoppedTyping });
+      });
     });
 
     console.log(`User Connected: ${socket.id}`);
-
-    // Notify other clients when a user is typing
-    socket.on("typing", ({ groupId }) => {
-      const userTyping = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        username: user.username,
-      };
-      socket.to(groupId.toString()).emit("typing", { user: userTyping });
-    });
 
     // Listen for incoming messages from the client
     socket.on("send_message", async ({ text, groupId }, acknowledgment) => {
@@ -70,13 +82,25 @@ const setupSocketIO = (io) => {
     });
 
     // Listen for disconnection events
+    // Listen for disconnection events
     socket.on("disconnect", async () => {
+      const disconnectedUser = await User.findById(socket.user.id);
+
       // On disconnect set the (is_online === false)
-      await User.findByIdAndUpdate(user._id, { is_online: false });
+      await User.findByIdAndUpdate(disconnectedUser._id, { is_online: false });
       console.log("User disconnected");
 
-      user.groups.forEach((groupId) => {
+      disconnectedUser.groups.forEach((groupId) => {
         getUserStatus(io, socket, groupId);
+
+        const userStoppedTyping = {
+          firstName: disconnectedUser.firstName,
+          lastName: disconnectedUser.lastName,
+          username: disconnectedUser.username,
+        };
+        socket
+          .to(groupId.toString())
+          .emit("stop_typing", { user: userStoppedTyping });
       });
     });
   });
