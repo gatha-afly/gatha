@@ -79,6 +79,7 @@ const RemoveMemberFromGroup = ({
           icon={FaUserTimes}
           onClick={onIconClick}
           size={2.2}
+          margin={0}
         />
         {/* Display an error message if there's an error */}
         {error && <ErrorDisplay error={error} />}
