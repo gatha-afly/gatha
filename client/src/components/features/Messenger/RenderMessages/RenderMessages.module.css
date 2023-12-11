@@ -9,46 +9,10 @@
   flex-direction: column;
 }
 
-.message {
-  width: 70%;
-  border-radius: 1rem;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-}
-
-.deletedMessage {
-  font-style: italic;
-}
-
-.date {
-  font-size: 1.1rem;
-  font-weight: 300;
-  text-align: end;
-}
-
-.sender {
-  display: flex;
-  gap: 0.5rem;
-  font-weight: 900;
-}
-
-.senderMessage {
-  background-color: var(--color-main);
-  align-self: flex-end;
-}
-
-.receiverMessage {
-  background-color: var(--color-structure-elements-light);
-  align-self: flex-start;
-}
-
 /* User online status */
 .onlineContainer {
   display: flex;
   justify-content: flex-end;
-  align-items: center;
   width: 100%;
   font-size: 1.5rem;
   gap: 0.5rem;

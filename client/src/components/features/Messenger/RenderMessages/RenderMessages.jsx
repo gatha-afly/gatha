@@ -2,9 +2,7 @@ import { useEffect, useState } from "react";
 import { RiRadioButtonLine } from "react-icons/ri";
 import styles from "./RenderMessages.module.css";
 import { userAPI } from "./../../../../api/userAPI";
-import { dateFormatter } from "./../../../../utils/dateUtils";
 import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
-import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
 import ScrollContentToBottomContainer from "../../../common/ScrollContentToBottomContainer/ScrollContentToBottomContainer";
 import IsTypingEffect from "../IsTypingEffect/IsTypingEffect";
 import socket from "../../../../api/socket";
@@ -12,8 +10,7 @@ import useUpdateUserData from "../../../../hooks/useUpdateUser";
 import Spinner from "../../../common/Spinner/Spinner";
 import { devLog } from "../../../../utils/errorUtils";
 import useUserContext from "../../../../hooks/useUserContext";
-import OnlineStatusIndicator from "../OnlineStatusIndicator/OnlineStatusIndicator";
-import DeleteMessage from "../DeleteMessage/DeleteMessage";
+import MessageItem from "../MessageItem/MessageItem";
 
 function RenderMessages({ selectedGroup }) {
   // Get user from context
@@ -112,62 +109,13 @@ function RenderMessages({ selectedGroup }) {
           ) : (
             <ScrollContentToBottomContainer>
               <ul className={styles.messagesContainer}>
-                {messages.map((msg, index) => (
-                  <li
-                    key={index}
-                    className={`${styles.message} ${
-                      msg.sender?.id === user.userId
-                        ? styles.senderMessage
-                        : styles.receiverMessage
-                    }`}>
-                    <div className={styles.sender}>
-                      <>
-                        <UsernameInitials
-                          firstName={msg.sender?.firstName}
-                          lastName={msg.sender?.lastName}
-                          radius={"2.6"}
-                          fontSize={"1.1"}
-                          borderWidth={"0.4"}
-                        />
-                        <span className={styles.sender}>
-                          {msg.sender?.username}
-                        </span>
-                        {/*
-  Render DeleteMessage if the sender is the current user
- and if the message has not been deleted.
-*/}
-                        {msg.sender?.id === user.userId && !msg.isDeleted && (
-                          <DeleteMessage
-                            senderId={user.userId}
-                            messageId={msg._id}
-                          />
-                        )}
-
-                        {/* Online and offline indicator */}
-                        <div className={styles.onlineContainer}>
-                          <OnlineStatusIndicator
-                            isOnline={onlineUsers.includes(msg.sender?.id)}
-                          />
-                        </div>
-                      </>
-                    </div>
-                    <div className={styles.message}>
-                      {/*
-    If message is deleted, display a notification.
-    Otherwise, render the message text.
-  */}
-                      {msg.isDeleted ? (
-                        <p className={styles.deletedMessage}>
-                          This message has been deleted.
-                        </p>
-                      ) : (
-                        <>{msg.text}</>
-                      )}
-                    </div>{" "}
-                    <div className={styles.date}>
-                      {dateFormatter(new Date(msg.createdAt))}
-                    </div>
-                  </li>
+                {messages.map((msg) => (
+                  <MessageItem
+                    key={msg._id}
+                    msg={msg}
+                    user={user}
+                    onlineUsers={onlineUsers}
+                  />
                 ))}
                 <IsTypingEffect />
               </ul>

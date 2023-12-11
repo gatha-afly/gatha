@@ -10,7 +10,10 @@ import styles from "./OnlineStatusIndicator.module.css";
 const OnlineStatusIndicator = ({ isOnline }) => {
   return (
     // Apply CSS class based on the online status
-    <div className={isOnline ? styles.online : styles.offline}>
+    <div
+      className={`${styles.statusIndicator} ${
+        isOnline ? styles.online : styles.offline
+      }`}>
       <span>{isOnline ? "online" : "offline"}</span>
     </div>
   );
