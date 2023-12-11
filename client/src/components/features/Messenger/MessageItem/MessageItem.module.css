@@ -9,9 +9,8 @@
 /* Mobile*/
 @media only screen and (max-width: 767px) {
   .messageContainer {
-    padding: 0.5rem;
-    margin-bottom: 0.1rem;
-    margin-right: 0.1rem;
+    margin-bottom: 0.5rem;
+    margin-right: 0rem;
   }
 }
 
