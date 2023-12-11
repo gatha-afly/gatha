@@ -5,8 +5,12 @@
 }
 
 .member {
-  border-bottom: 2px dotted var(--color-shadow-dark);
+  border-bottom: 0.2rem solid var(--color-structure-elements-light);
 }
+.info {
+  margin-bottom: 1rem;
+}
+
 .adminBadge {
   margin-left: 0.5rem;
   font-weight: 900;
