@@ -24,14 +24,16 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
       }`}>
       <div className={styles.sender}>
         <span className={styles.topBar}>
-          <UsernameInitials
-            firstName={msg.sender?.firstName}
-            lastName={msg.sender?.lastName}
-            radius={"2.6"}
-            fontSize={"1.1"}
-            borderWidth={"0.4"}
-          />
-          <span className={styles.username}>{msg.sender?.username}</span>
+          <span className={styles.nameInfo}>
+            <UsernameInitials
+              firstName={msg.sender?.firstName}
+              lastName={msg.sender?.lastName}
+              radius={"2.6"}
+              fontSize={"1.1"}
+              borderWidth={"0.4"}
+            />
+            <span className={styles.username}>{msg.sender?.username}</span>
+          </span>
         </span>
 
         <div className={styles.onlineContainer}>
