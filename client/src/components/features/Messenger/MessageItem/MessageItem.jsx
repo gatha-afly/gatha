@@ -25,28 +25,33 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
           : styles.receiverMessage
       }`}>
       <div className={styles.sender}>
-        <UsernameInitials
-          firstName={msg.sender?.firstName}
-          lastName={msg.sender?.lastName}
-          radius={"2.6"}
-          fontSize={"1.1"}
-          borderWidth={"0.4"}
-        />
-        <span className={styles.sender}>{msg.sender?.username}</span>
+        <span className={styles.senderInfo}>
+          <UsernameInitials
+            firstName={msg.sender?.firstName}
+            lastName={msg.sender?.lastName}
+            radius={"2.6"}
+            fontSize={"1.1"}
+            borderWidth={"0.4"}
+          />
+          <span className={styles.username}>{msg.sender?.username}</span>
+          {msg.sender?.id === user.userId && !msg.isDeleted && (
+            <DeleteMessage
+              senderId={user.userId}
+              messageId={msg._id}
+              updateIsDeleted={updateIsDeleted}
+            />
+          )}
+        </span>
 
         <div className={styles.onlineContainer}>
-          <OnlineStatusIndicator
-            isOnline={onlineUsers.includes(msg.sender?.id)}
-          />
+          <span className={styles.onlineStatus}>
+            <OnlineStatusIndicator
+              isOnline={onlineUsers.includes(msg.sender?.id)}
+            />
+          </span>
         </div>
-        {msg.sender?.id === user.userId && !msg.isDeleted && (
-          <DeleteMessage
-            senderId={user.userId}
-            messageId={msg._id}
-            updateIsDeleted={updateIsDeleted}
-          />
-        )}
       </div>
+
       <div className={styles.message}>
         {msg.isDeleted || isDeleted ? (
           <p className={styles.deletedMessage}>
@@ -62,5 +67,4 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
     </li>
   );
 };
-
 export default MessageItem;

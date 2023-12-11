@@ -15,6 +15,16 @@
   display: flex;
   gap: 0.5rem;
   font-weight: 900;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.senderInfo {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  margin-left: 0.5rem;
 }
 
 .date {
