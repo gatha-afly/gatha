@@ -55,9 +55,9 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
         showConfirmation={showConfirmation}
         onConfirm={handleLeaveGroup}
         onCancel={hideConfirmationDialog}
-        message="Are you sure you want to leave the group?"
-        confirmText="yes"
-        cancelText="no"
+        message='Are you sure you want to leave the group?'
+        confirmText='yes'
+        cancelText='no'
       />
       {/* Display an error message if there's an error */}
       {error && <ErrorDisplay error={error} />}
