@@ -38,9 +38,9 @@
   .messengerContainer {
     /* fallback value for older browsers*/
     margin-left: 0rem;
-    height: 66vh;
-    height: 76svh;
-    width: 90vw;
+    height: 85vh;
+    height: 85svh;
+    width: 98vw;
   }
 }
 
