@@ -188,6 +188,32 @@ scrollbar-thumb {
     height: 5vh;
     height: 5svh;
   }
+
+  body {
+    line-height: 1.5;
+    font-size: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+  }
+
+  h2 {
+    font-size: 1.7rem;
+    font-family: "Source Sans 3", sans-serif;
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    font-family: "Source Sans 3", sans-serif;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1.5rem;
+    font-family: "Source Sans 3", sans-serif;
+  }
 }
 
 /* Mobile landscape mode*/

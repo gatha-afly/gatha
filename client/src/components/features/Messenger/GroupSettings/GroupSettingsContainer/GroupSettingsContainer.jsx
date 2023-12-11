@@ -32,7 +32,6 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"user-settings"} />
       {/* Render back button */}
-
       <div className={styles.groupName}>
         <h2>group name:</h2>
         <p>{name}</p>
@@ -46,7 +45,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
         )}
       </div>
       {userIsGroupAdmin && (
-        <div>
+        <div className={styles.groupCode}>
           <h2>group code:</h2>
           <ViewGroupCode selectedGroup={selectedGroup} />
         </div>

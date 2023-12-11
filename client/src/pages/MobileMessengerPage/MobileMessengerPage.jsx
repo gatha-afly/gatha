@@ -31,7 +31,6 @@ const MobileMessengerPage = () => {
       {/* Messenger component */}
       <MessengerContainer />
       {/* Navigation icon to go back to the main page */}
-      <ReactIconNavigate route='/main' size={2.5} icon={FaArrowLeft} />
     </main>
   );
 };

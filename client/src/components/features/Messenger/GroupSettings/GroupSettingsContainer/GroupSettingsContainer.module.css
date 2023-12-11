@@ -14,3 +14,7 @@
 .groupDescription {
   font-style: italic;
 }
+
+.groupCode {
+  align-self: center;
+}
