@@ -6,3 +6,29 @@
 .customIcon:hover {
   color: var(--color-hover);
 }
+
+.iconContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  font-weight: 900;
+  bottom: 95%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--color-hover);
+  color: var(--color-body);
+  border-radius: 1rem;
+  padding: 0.1rem 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.iconContainer:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
