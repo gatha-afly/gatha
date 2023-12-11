@@ -3,14 +3,3 @@
   flex-direction: row;
   justify-content: space-around;
 }
-.groupBar:hover::before {
-  content: attr(data-test);
-  position: absolute;
-  left: 5px;
-  top: calc(100% + 5px);
-  padding: 5px 10px;
-  border-radius: 2px;
-  background: black;
-  color: white;
-  font-size: 0.8em;
-}

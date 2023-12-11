@@ -2,8 +2,6 @@
   position: absolute;
   width: 20rem;
   right: 20rem;
-  background-color: white;
-  z-index: 1;
-  border-radius: 1.5rem;
+  z-index: 999;
   bottom: 100%;
 }

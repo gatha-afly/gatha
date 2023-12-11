@@ -18,7 +18,7 @@ import styles from "./ReactIconNavigate.module.css";
 const ReactIconNavigate = ({
   route,
   onClick,
-  size,
+  size = 2.5,
   icon: IconComponent,
   margin = 0.5,
 }) => {

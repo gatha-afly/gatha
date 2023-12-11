@@ -1,9 +1,7 @@
 import React from "react";
 import styles from "./GroupSettingsContainer.module.css";
-import { HiMiniBackspace } from "react-icons/hi2";
 import useUserContext from "../../../../../hooks/useUserContext";
 import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPageRender";
-import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { devLog } from "../../../../../utils/errorUtils";
 import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
@@ -34,12 +32,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"user-settings"} />
       {/* Render back button */}
-      <ReactIconNavigate
-        onClick={onDefaultViewClick}
-        size={2.5}
-        icon={HiMiniBackspace}
-      />
-      <h1>group settings</h1>
+
       <div className={styles.groupName}>
         <h2>group name:</h2>
         <p>{name}</p>
@@ -50,7 +43,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
           <p className={styles.groupDescription}>{description}</p>
         ) : (
           <p>No group description entered.</p>
-        )}{" "}
+        )}
       </div>
       {userIsGroupAdmin && (
         <div>

@@ -18,7 +18,7 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
   return (
     <li
       key={msg._id}
-      className={`${styles.message} ${
+      className={`${styles.messageContainer} ${
         msg.sender?.id === user.userId
           ? styles.senderMessage
           : styles.receiverMessage
@@ -58,7 +58,7 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
             This message has been deleted.
           </p>
         ) : (
-          <>{msg.text}</>
+          <p>{msg.text}</p>
         )}
       </div>
       <div className={styles.date}>
