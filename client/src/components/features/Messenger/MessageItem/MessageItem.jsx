@@ -24,7 +24,7 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
           : styles.receiverMessage
       }`}>
       <div className={styles.sender}>
-        <span className={styles.senderInfo}>
+        <span className={styles.topBar}>
           <UsernameInitials
             firstName={msg.sender?.firstName}
             lastName={msg.sender?.lastName}
@@ -32,15 +32,7 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
             fontSize={"1.1"}
             borderWidth={"0.4"}
           />
-
           <span className={styles.username}>{msg.sender?.username}</span>
-          {msg.sender?.id === user.userId && !msg.isDeleted && isNotDeleted && (
-            <DeleteMessage
-              senderId={user.userId}
-              messageId={msg._id}
-              updateIsNotDeleted={updateIsNotDeleted}
-            />
-          )}
         </span>
 
         <div className={styles.onlineContainer}>
@@ -61,9 +53,20 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
           <p>{msg.text}</p>
         )}
       </div>
-      <div className={styles.date}>
-        {dateFormatter(new Date(msg.createdAt))}
-      </div>
+      <span className={styles.bottomBar}>
+        {msg.sender?.id === user.userId && !msg.isDeleted && isNotDeleted && (
+          <span className={styles.delete}>
+            <DeleteMessage
+              senderId={user.userId}
+              messageId={msg._id}
+              updateIsNotDeleted={updateIsNotDeleted}
+            />
+          </span>
+        )}
+        <div className={styles.date}>
+          {dateFormatter(new Date(msg.createdAt))}
+        </div>
+      </span>
     </li>
   );
 };

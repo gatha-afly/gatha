@@ -4,13 +4,15 @@
   padding: 0.5rem;
   margin-bottom: 1rem;
   margin-right: 1rem;
+  margin-left: 1rem;
 }
 
 /* Mobile*/
 @media only screen and (max-width: 767px) {
   .messageContainer {
     margin-bottom: 0.5rem;
-    margin-right: 0rem;
+    margin-right: 0.1rem;
+    margin-left: 0.5rem;
   }
 }
 
@@ -30,9 +32,12 @@
   flex-direction: row;
   justify-content: space-between;
 }
-.senderInfo {
+.topBar,
+.bottomBar {
   display: flex;
   align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .username {
