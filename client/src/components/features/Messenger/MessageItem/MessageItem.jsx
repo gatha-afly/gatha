@@ -7,14 +7,13 @@ import OnlineStatusIndicator from "../OnlineStatusIndicator/OnlineStatusIndicato
 import styles from "./MessageItem.module.css";
 
 const MessageItem = ({ msg, user, onlineUsers }) => {
-  // state for isDeleted boolean
-  const [isDeleted, setIsDeleted] = useState(false);
-  // Function to update isDeleted state
-  const updateIsDeleted = () => {
-    setIsDeleted(true);
-  };
+  // state for isNotDeleted
+  const [isNotDeleted, setIsNotDeleted] = useState(true);
 
-  devLog("isDeleted:", msg._id, isDeleted);
+  // Function to update isNotDeleted state
+  const updateIsNotDeleted = () => {
+    setIsNotDeleted(false);
+  };
 
   return (
     <li
@@ -33,12 +32,13 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
             fontSize={"1.1"}
             borderWidth={"0.4"}
           />
+
           <span className={styles.username}>{msg.sender?.username}</span>
-          {msg.sender?.id === user.userId && !msg.isDeleted && (
+          {msg.sender?.id === user.userId && !msg.isDeleted && isNotDeleted && (
             <DeleteMessage
               senderId={user.userId}
               messageId={msg._id}
-              updateIsDeleted={updateIsDeleted}
+              updateIsNotDeleted={updateIsNotDeleted}
             />
           )}
         </span>
@@ -53,7 +53,7 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
       </div>
 
       <div className={styles.message}>
-        {msg.isDeleted || isDeleted ? (
+        {msg.isDeleted || !isNotDeleted ? (
           <p className={styles.deletedMessage}>
             This message has been deleted.
           </p>
