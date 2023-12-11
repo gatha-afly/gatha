@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { dateFormatter } from "../../../../utils/dateUtils";
-import { devLog } from "../../../../utils/errorUtils";
 import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
 import DeleteMessage from "../DeleteMessage/DeleteMessage";
 import OnlineStatusIndicator from "../OnlineStatusIndicator/OnlineStatusIndicator";
@@ -63,9 +62,10 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
             />
           </span>
         )}
-        <div className={styles.date}>
+        <span className={styles.deleted}></span>
+        <span className={styles.date}>
           {dateFormatter(new Date(msg.createdAt))}
-        </div>
+        </span>
       </span>
     </li>
   );
