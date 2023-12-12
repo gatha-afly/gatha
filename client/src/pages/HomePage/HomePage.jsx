@@ -24,8 +24,8 @@ const HomePage = () => {
         <section className={styles.infoContainer}>
           <>
             <h1>
-              Gatha is your brand new chat application to connect to family,
-              friends, colleagues and more!
+              Gatha is your brand-new chat application to connect with family,
+              friends, colleagues, and more.
             </h1>
           </>
           <h2>Create your personal account to get started!</h2>
