@@ -25,7 +25,6 @@
   font-weight: 900;
 }
 
-/* Mobile*/
 @media only screen and (max-width: 767px) {
   .messengerContainer {
     /* fallback value for older browsers*/

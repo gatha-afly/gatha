@@ -216,17 +216,17 @@ scrollbar-thumb {
   }
 }
 
-/* Mobile landscape mode*/
-@media only screen and (max-width: 767px) and (orientation: landscape) {
+/* Firefox mobile with keyboard*/
+@media only screen and (max-height: 500px) {
   header {
     /* fallback value for older browsers*/
-    height: 20vh;
-    height: 20svh;
+    height: 10vh;
+    height: 10svh;
   }
   main {
     padding-top: 0rem;
-    height: 61vh;
-    height: 71svh;
+    height: 71vh;
+    height: 81svh;
   }
   footer {
     height: 9vh;
