@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./MessengerContainer.module.css";
 import RenderMessages from "../RenderMessages/RenderMessages";
 import SendMessage from "../SendMessage/SendMessage";
@@ -8,12 +8,28 @@ import { FaRegHandPointLeft } from "react-icons/fa6";
 import useUserContext from "../../../../hooks/useUserContext";
 import PiratePxPageRender from "../../../common/PiratePxPageRender/PiratePxPageRender";
 import GroupSettingsContainer from "../GroupSettings/GroupSettingsContainer/GroupSettingsContainer";
+import useUpdateUserData from "../../../../hooks/useUpdateUser";
 
 function MessengerContainer() {
   const { selectedGroup } = useUserContext();
-
+  const { fetchUserUpdates } = useUpdateUserData();
   // State to track the current view
   const [currentView, setCurrentView] = useState("default");
+
+  // FetchUserUpdates on mount component
+  useEffect(() => {
+    fetchUserUpdates();
+  }, [fetchUserUpdates]);
+
+  // FetchUserUpdates every 30 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetchUserUpdates();
+    }, 30000);
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, [fetchUserUpdates]);
 
   // Function to switch the current view
   const switchView = (view) => {

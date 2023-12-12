@@ -9,7 +9,7 @@ import useUserContext from "../../../../hooks/useUserContext";
  * Displays basic information about a group.
  * @param {Object} groupData - Data containing information about the group.
  */
-const BasicGroupInfo = ({ userId, groupId, groupName }) => {
+const BasicGroupInfo = ({ userId, groupId, groupName, groupDescription }) => {
   // Get updateSelectedGroup from context
   const { updateSelectedGroup } = useUserContext();
   // Use useNavigate

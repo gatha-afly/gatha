@@ -81,6 +81,7 @@ const GroupsContainer = () => {
                     userId={user.userId}
                     groupId={group._id}
                     groupName={group.name}
+                    groupDescription={group.description}
                   />
                 ))
               ) : (
