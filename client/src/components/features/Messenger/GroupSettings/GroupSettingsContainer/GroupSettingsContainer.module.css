@@ -18,3 +18,15 @@
 .groupCode {
   align-self: center;
 }
+
+.info {
+  cursor: pointer;
+}
+
+.info:hover {
+  color: var(--color-structure-elements);
+}
+
+.icon {
+  margin-left: 0.5rem;
+}

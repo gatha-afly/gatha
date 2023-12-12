@@ -1,0 +1,21 @@
+.inputField {
+  width: 20rem;
+  padding: 0.3rem;
+  /* border: 0.2rem solid var(--color-grey); */
+  border-radius: 0.5rem;
+  text-align: center;
+  outline: none;
+  margin-bottom: 0.5rem;
+}
+
+.button {
+  width: 20rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 0.5rem;
+}
+
+.button:hover {
+  background-color: var(--color-hover);
+  box-shadow: 0 0 0.5rem var(--color-hover);
+}

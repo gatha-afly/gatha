@@ -11,6 +11,9 @@ import LeaveGroup from "../LeaveGroup/LeaveGroup";
 import { userAPI } from "../../../../../api/userAPI";
 import GroupDetailsEditor from "../GroupDetailsEditor/GroupDetailsEditor";
 import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
+import CopyToClipboard from "../../../../common/CopyToClipboard/CopyToClipboard";
+import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
+import { FaEdit } from "react-icons/fa";
 
 /**
  * Container for rendering group settings
@@ -84,7 +87,12 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
                 userId={userId}
               />
             ) : (
-              <p onClick={() => setEditingName(true)}>{name}</p>
+              <p className={styles.info} onClick={() => setEditingName(true)}>
+                {name}
+                <span className={styles.icon}>
+                  <ReactIconNavigate icon={FaEdit} size={1.6} margin={0} />
+                </span>
+              </p>
             )}
           </div>
 
@@ -103,9 +111,12 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
               />
             ) : (
               <p
-                className={styles.groupDescription}
+                className={styles.info}
                 onClick={() => setEditingDescription(true)}>
                 {description ? description : "No group description entered."}
+                <span className={styles.icon}>
+                  <ReactIconNavigate icon={FaEdit} size={1.6} margin={0} />
+                </span>
               </p>
             )}
           </div>
@@ -132,6 +143,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
         <div className={styles.groupCode}>
           <h2>group code:</h2>
           <ViewGroupCode selectedGroup={selectedGroup} />
+          <CopyToClipboard infoToCopy={selectedGroup.code} />
         </div>
       )}
       <LeaveGroup
