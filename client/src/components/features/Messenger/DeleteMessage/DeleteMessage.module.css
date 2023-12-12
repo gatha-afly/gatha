@@ -1,0 +1,10 @@
+.icon {
+  transform: translateY(0.3rem);
+  margin-right: 0.3rem;
+}
+
+.deleteContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

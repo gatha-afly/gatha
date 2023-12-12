@@ -1,0 +1,11 @@
+.removeMemberContainer {
+  display: flex;
+  flex-direction: column;
+  width: 8rem;
+}
+
+.confirmationContainer {
+  display: flex;
+  align-self: center;
+  margin-right: 1rem;
+}

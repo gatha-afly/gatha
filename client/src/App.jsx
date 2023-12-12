@@ -8,13 +8,12 @@ import PageNotFoundPage from "./pages/PageNotFoundPage/PageNotFoundPage";
 import UserRegistrationPage from "./pages/UserRegistrationPage/UserRegistrationPage";
 import UserLoginPage from "./pages/UserLoginPage/UserLoginPage";
 import UserLogoutPage from "./pages/UserLogoutPage/UserLogoutPage";
-import CreateGroupPage from "./pages/CreateGroupPage/CreateGroupPage";
-import MainPage from "./pages/MainPage/MainPage";
-import JoinGroupPage from "./pages/JoinGroupPage/JoinGroupPage";
 import UserProvider from "./provider/UserProvider";
-import ProtectedRoutes from "./utils/ProtectedRoutes";
-import AddUserUponGroupCreationPage from "./pages/AddUserUponGroupCreationPage/AddUserUponGroupCreationPage";
 import UserProfilePage from "./pages/UserProfilePage/UserProfilePage";
+import ProtectedRoutes from "./components/auth/ProtectedRoutes/ProtectedRoutes";
+import MobileMessengerPage from "./pages/MobileMessengerPage/MobileMessengerPage";
+import DesktopMainPage from "./pages/DesktopMainPage/DesktopMainPage";
+import MobileMainPage from "./pages/MobileMainPage/MobileMainPage";
 
 function App() {
   return (
@@ -35,14 +34,21 @@ function App() {
 
             {/* Protected routes */}
             <Route element={<ProtectedRoutes />}>
-              <Route path='/main' element={<MainPage />} />
               <Route
-                path='/add-user/:groupId/:userId'
-                element={<AddUserUponGroupCreationPage />}
+                path='/main'
+                element={
+                  window.innerWidth <= 768 ? (
+                    <MobileMainPage />
+                  ) : (
+                    <DesktopMainPage />
+                  )
+                }
               />
-              <Route path='/create-group' element={<CreateGroupPage />} />
-              <Route path='/join-group' element={<JoinGroupPage />} />
               <Route path='/user-profile' element={<UserProfilePage />} />
+              <Route
+                path='/messenger-mobile'
+                element={<MobileMessengerPage />}
+              />
             </Route>
           </Routes>
           <Footer />

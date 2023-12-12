@@ -5,8 +5,7 @@ import { isCodeUnique } from "../helpers/groupHelper.js";
 const groupSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String },
-
-  //Virtual to generate Random group code
+  //Virtual to generate Random groupcode
   code: {
     type: String,
     default: function () {
@@ -30,7 +29,7 @@ const groupSchema = new Schema({
     imgSize: { type: Number },
   },
   members: [{ type: Schema.Types.ObjectId, ref: "User" }],
-  admin: { type: Schema.Types.ObjectId, ref: "User" },
+  admins: [{ type: Schema.Types.ObjectId, ref: "User" }],
   messages: [{ type: Schema.Types.ObjectId, ref: "Message" }],
 });
 const Group = model("Group", groupSchema);

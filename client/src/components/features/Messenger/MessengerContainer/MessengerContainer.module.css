@@ -1,0 +1,97 @@
+.messengerContainer {
+  padding: 0.5rem;
+  border: 0.2rem solid var(--color-structure-elements);
+  border-radius: 10px;
+  border-radius: 1rem;
+  background-color: var(--color-body);
+  position: relative;
+  margin-left: 0.5rem;
+  box-shadow: 0 0.4rem 0.8rem var(--color-shadow-dark),
+    0 0.6rem 1.2rem var(--color-shadow-dark);
+}
+
+.messages {
+  height: 83.5%;
+  overflow-y: auto;
+}
+
+.selectGroup {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: var(--color-text);
+  font-weight: 900;
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  .messengerContainer {
+    /* fallback value for older browsers*/
+    margin-left: 0rem;
+    height: 85vh;
+    height: 85svh;
+    width: 98vw;
+  }
+
+  .messages {
+    height: 78%;
+  }
+}
+
+/* Mobile landscape mode*/
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  .messengerContainer {
+    /* fallback value for older browsers*/
+    height: 51vh;
+    height: 61svh;
+    width: 60vw;
+  }
+}
+
+/* Tablet*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .messengerContainer {
+    /* fallback value for older browsers*/
+    height: 69vh;
+    height: 79svh;
+    width: 60vw;
+  }
+}
+
+/* Tablet landscape mode*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .messengerContainer {
+    /* fallback value for older browsers*/
+    height: 66vh;
+    height: 76svh;
+    width: 60vw;
+  }
+}
+
+/* Laptop*/
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  .messengerContainer {
+    /* fallback value for older browsers*/
+    height: 76vh;
+    width: 60vw;
+  }
+}
+
+/* Larger Screens */
+@media only screen and (min-width: 1441px) and (max-width: 1920px) {
+  .messengerContainer {
+    /* fallback value for older browsers*/
+    height: 74vh;
+    width: 35vw;
+  }
+}
+
+@media only screen and (min-width: 1921px) {
+  .messengerContainer {
+    /* fallback value for older browsers*/
+    height: 49vh;
+    width: 25vw;
+  }
+}

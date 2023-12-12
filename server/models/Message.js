@@ -2,8 +2,9 @@ import { Schema, model } from "mongoose";
 
 const messageSchema = new Schema(
   {
-    author: { type: Schema.Types.ObjectId, ref: "User" },
-    message: { type: String, required: true },
+    sender: { type: Schema.Types.ObjectId, ref: "User" },
+    text: { type: String, required: true },
+    isDeleted: { type: Boolean, default: false },
     img: {
       imgName: { type: String },
       imgPath: { type: String },
@@ -16,7 +17,6 @@ const messageSchema = new Schema(
       gifType: { type: String },
       gifSize: { type: Number },
     },
-
     group: { type: Schema.Types.ObjectId, ref: "Group" },
   },
   { timestamps: true }

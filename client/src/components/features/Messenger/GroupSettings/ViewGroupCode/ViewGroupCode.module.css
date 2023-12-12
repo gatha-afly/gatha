@@ -1,0 +1,12 @@
+.groupCode,
+.toggleText {
+  color: var(--color-text);
+  white-space: nowrap;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.barContainer {
+  width: 15%;
+  text-align: center;
+}

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import userAPI from "../../../api/userAPI";
+import { userAPI } from "../../../api/userAPI";
 import {
   handleOtherErrors,
   handleServerErrors,
@@ -8,6 +8,7 @@ import {
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
 import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./UserRegistration.module.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 /**
  * UserRegistrationForm Component
@@ -60,7 +61,6 @@ const UserRegistration = () => {
     try {
       // Attempt to register the user with the provided data
       await userAPI.post("/users/register", data);
-
       // Navigate to the login page on successful registration
       navigate("/user-login");
     } catch (error) {
@@ -74,59 +74,68 @@ const UserRegistration = () => {
       {/* Input fields for user information */}
       <div>
         <input
-          type='text'
-          name='firstName'
-          placeholder='First name'
+          type="text"
+          name="firstName"
+          placeholder="First name"
           ref={inputRef} // Ref for autofocus
           required
         />
       </div>
 
       <div>
-        <input type='text' name='lastName' placeholder='Last name' required />
-      </div>
-
-      <div>
-        <input type='text' name='username' placeholder='Username' required />
-      </div>
-
-      <div>
-        <input type='email' name='email' placeholder='Email' required />
+        <input type="text" name="lastName" placeholder="Last name" required />
       </div>
 
       <div>
         <input
-          type={passwordVisible ? "text" : "password"}
-          placeholder='Password'
-          name='password'
+          type="text"
+          name="username"
+          placeholder="Username"
+          autoComplete="nope"
           required
         />
       </div>
 
-      <div className={styles.input}>
+      <div>
         <input
-          type={passwordVisible ? "text" : "password"}
-          name='confirm-password'
-          placeholder='Confirm password'
+          type="email"
+          name="email"
+          placeholder="Email"
+          autoComplete="email"
           required
         />
       </div>
-      {/* Show password checkbox */}
-      <div className={styles.showPassword}>
+      {/* Password input with eye icon */}
+      <div className={styles.passwordContainer}>
         <input
-          className={styles.checkbox}
-          type='checkbox'
-          id='passwordVisibility'
-          checked={passwordVisible}
-          onChange={togglePasswordVisibility}
+          type={passwordVisible ? "text" : "password"}
+          placeholder="Password"
+          name="password"
+          required
         />
-        <label
-          className={styles.showPasswordLabel}
-          htmlFor='passwordVisibility'>
-          Show password
-        </label>
+        <span
+          className={styles.togglePasswordIcon}
+          onClick={togglePasswordVisibility}
+        >
+          {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+        </span>
       </div>
 
+      {/* Password input with eye icon */}
+      <div className={styles.passwordContainer}>
+        <input
+          type={passwordVisible ? "text" : "password"}
+          name="confirm-password"
+          placeholder="Confirm password"
+          required
+        />
+        <span
+          className={styles.togglePasswordIcon}
+          onClick={togglePasswordVisibility}
+        >
+          {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+        </span>
+      </div>
       {/* Display an error message if the passwords do not match */}
       {passwordMismatch && (
         <p className={styles.errorMessage}>Entered passwords do not match.</p>
@@ -135,7 +144,7 @@ const UserRegistration = () => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type='submit'>Register</button>
+      <button type="submit">Register</button>
     </form>
   );
 };

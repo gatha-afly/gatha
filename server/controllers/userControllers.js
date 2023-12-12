@@ -2,8 +2,8 @@ import { StatusCodes } from "http-status-codes";
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
 import { generateJwt } from "../helpers/jwt.js";
-import * as errorHandlerUtils from "../utils/errorHandler.js";
 import * as responseHandlerUtils from "../utils/responseHandler.js";
+import * as errorHandlerUtils from "../utils/errorHandler.js";
 
 /**
  * Handler for creating user
@@ -50,17 +50,19 @@ export const createUser = async (req, res) => {
  */
 export const loginUser = async (req, res) => {
   try {
-    // Find a user with the provided email and populate the 'groups' field
-    // Find a user with the provided email and populate only 'groupId' and 'name' in the 'groups' field
-    const user = await User.findOne({ email: req.body.email }).populate({
+    // Convert the email to lowercase
+    const lowerCaseEmail = req.body.email.toLowerCase();
+
+    // Find a user with the provided lowercase email and populate the 'groups' field
+    const user = await User.findOne({ email: lowerCaseEmail }).populate({
       path: "groups",
-      select: "groupId name",
+      select: "groupId name description",
     });
 
     // Check if the user doesn't exist
     if (!user) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "User not found. Please register an account.",
+      return res.status(StatusCodes.UNAUTHORIZED).json({
+        error: "Invalid credentials.",
       });
     }
 
@@ -85,10 +87,20 @@ export const loginUser = async (req, res) => {
       const token = generateJwt(user._id);
 
       // Set the token as an HTTP-only cookie
-      res.cookie("userToken", token, {
-        httpOnly: true,
-        secure: false, // Set to true in production with HTTPS
-      });
+      // Production environment settings
+      if (process.env.NODE_ENV === "production") {
+        res.cookie("userToken", token, {
+          httpOnly: true,
+          secure: true,
+          sameSite: "None",
+        });
+      } else {
+        // Development environment settings
+        res.cookie("userToken", token, {
+          httpOnly: true,
+          secure: false,
+        });
+      }
 
       // Retrieve user groups from the populated 'groups' field
       const userGroups = user.groups || [];
@@ -108,10 +120,53 @@ export const loginUser = async (req, res) => {
     } else {
       return res
         .status(StatusCodes.UNAUTHORIZED)
-        .json({ error: "Your password is incorrect" });
+        .json({ error: "Invalid credentials." });
     }
   } catch (error) {
     console.error(error);
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ * Handler for uploading user profile
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const updateProfilePicture = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await responseHandlerUtils.findUserById(userId);
+    if (!user) {
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
+    }
+
+    const profileImage = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: {
+          "avatar.imagName": req.file.filename,
+          "avatar.imgPath": req.file.path,
+          "avatar.imagType": req.file.mimetype,
+          "avatar.imgSize": req.file.size,
+        },
+      },
+      { new: true }
+    );
+    if (!profileImage) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .json({ error: "User not found" });
+    }
+
+    return res.status(StatusCodes.OK).json({
+      message: "Your profile image has been uploaded",
+      profileImage,
+    });
+  } catch (error) {
+    console.log(error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
@@ -130,6 +185,42 @@ export const logoutUser = async (req, res) => {
     });
     return res.status(StatusCodes.OK).json({ message: "User logged out!" });
   } catch (error) {
+    return errorHandlerUtils.handleInternalError(res);
+  }
+};
+
+/**
+ * Handler for updating users
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+export const updateUserData = async (req, res) => {
+  const { userId } = req.params;
+  try {
+    const user = await User.findById(userId).populate({
+      path: "groups",
+      select: "groupId name description",
+    });
+
+    if (!user) {
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
+    }
+
+    const userGroups = user.groups || [];
+
+    return res.status(StatusCodes.OK).json({
+      user: {
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email,
+        userId: user._id,
+        groups: userGroups,
+      },
+    });
+  } catch (error) {
+    console.log(error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };

@@ -1,0 +1,107 @@
+.groupsContainer {
+  overflow-y: auto;
+  background-color: var(--color-body);
+  border: 0.2rem solid var(--color-structure-elements);
+  border-radius: 1rem;
+  box-shadow: 0 0.4rem 0.8rem var(--color-shadow-dark),
+    0 0.6rem 1.2rem var(--color-shadow-dark);
+}
+
+.groupsList {
+  overflow-y: auto;
+  padding: 0.5rem;
+  position: relative;
+  background-color: var(--color-body);
+  width: 100%;
+  height: 93%;
+}
+
+.cta {
+  margin-top: 1rem;
+  color: var(--color-text);
+  font-weight: 900;
+  text-align: center;
+}
+
+.groupBar {
+  border-top: 0.25rem solid var(--color-structure-elements);
+  margin: 0rem 0.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 6%;
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  .groupsContainer {
+    /* fallback value for older browsers*/
+    height: 85vh;
+    height: 85svh;
+    width: 98vw;
+    overflow-y: auto;
+  }
+  .groupBar {
+    height: 8%;
+  }
+  .groupsList {
+    height: 92%;
+  }
+}
+
+/* Mobile landscape mode*/
+@media only screen and (max-width: 767px) and (orientation: landscape) {
+  .groupsContainer {
+    /* fallback value for older browsers*/
+    height: 51vh;
+    height: 61svh;
+    width: 25vw;
+  }
+}
+
+/* Tablet*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+  .groupsContainer {
+    /* fallback value for older browsers*/
+    height: 69vh;
+    height: 79svh;
+    width: 60vw;
+  }
+}
+
+/* Tablet landscape mode*/
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  .groupsContainer {
+    /* fallback value for older browsers*/
+    height: 66vh;
+    height: 76svh;
+    width: 25vw;
+  }
+}
+
+/* Laptop*/
+@media only screen and (min-width: 1025px) and (max-width: 1440px) {
+  .groupsContainer {
+    /* fallback value for older browsers*/
+    height: 76vh;
+    width: 20vw;
+  }
+}
+
+/* Larger Screens */
+@media only screen and (min-width: 1441px) and (max-width: 1920px) {
+  .groupsContainer {
+    /* fallback value for older browsers*/
+    height: 74vh;
+    width: 15vw;
+  }
+}
+
+@media only screen and (min-width: 1921px) {
+  .groupsContainer {
+    /* fallback value for older browsers*/
+    height: 49vh;
+    width: 8vw;
+  }
+}

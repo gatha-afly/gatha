@@ -1,6 +1,6 @@
 .hamburgerMenu {
   position: relative;
-  background-color: var(--color-structure-elements);
+  z-index: 999;
 }
 
 .menuIcon {

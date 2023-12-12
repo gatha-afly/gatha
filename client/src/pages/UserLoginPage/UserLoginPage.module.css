@@ -1,0 +1,4 @@
+.container {
+  background-color: var(--color-landingpage);
+  color: var(--color-text);
+}

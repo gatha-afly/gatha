@@ -1,0 +1,27 @@
+.barContainer {
+  width: 100%;
+  border-bottom: 0.25rem solid var(--color-structure-elements);
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.groupName {
+  color: var(--color-text);
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+.mobileHome,
+.backIcon,
+.groupName {
+  height: 10%;
+}
+
+.barContainer h2 {
+  color: var(--color-text);
+}

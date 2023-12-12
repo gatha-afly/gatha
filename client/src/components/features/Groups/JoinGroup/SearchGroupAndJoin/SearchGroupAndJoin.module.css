@@ -1,0 +1,11 @@
+.joinGroupForm {
+  margin-top: 0.5rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.joinGroupForm button {
+  margin: 0 auto;
+}

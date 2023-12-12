@@ -3,19 +3,16 @@ import {
   createGroup,
   addMemberToGroup,
   removeMemberFromGroup,
-  getAllGroups,
-  deleteGroupById,
   joinGroup,
   leaveGroup,
   getGroupData,
   getGroupMembers,
+  assignUserAsAdmin,
   editGroupById,
-  changeGroupCode,
 } from "../controllers/groupControllers.js";
-import { authorizeUser } from "../middleware/userAuthorization.js";
-import { validator } from "../middleware/validator.js";
-import { validateGroupRules } from "../middleware/groupSanitizer.js";
-import { isGroupAdminMiddleware } from "../middleware/isGroupAdminMiddleware.js";
+import { authorizeUser } from "../middleware/express/userAuthorization.js";
+import { validator } from "../middleware/express/validator.js";
+import { validateGroupRules } from "../middleware/express/groupSanitizer.js";
 
 const router = express.Router();
 
@@ -29,38 +26,15 @@ router.post(
   createGroup
 );
 
-router.get("/get-groups", getAllGroups);
 router.get("/get-group-data/:groupId/:userId", getGroupData);
-router.get("/get-members/:groupId", getGroupMembers);
+router.get("/get-members/:groupId/:userId", getGroupMembers);
 router.patch("/join-group/:userId", joinGroup);
 router.patch("/leave-group/:groupId/:userId", leaveGroup);
 
 // Protected endpoint with admin rights
-router.patch(
-  "/add-member/:groupId/:userId",
-  isGroupAdminMiddleware,
-  addMemberToGroup
-);
-router.patch(
-  "/remove-member/:groupId/:userId",
-  isGroupAdminMiddleware,
-  removeMemberFromGroup
-);
-router.delete(
-  "/delete/:groupId/:userId",
-  isGroupAdminMiddleware,
-  deleteGroupById
-);
-router.patch(
-  "/edit-group/:groupId/:userId",
-  isGroupAdminMiddleware,
-  validateGroupRules,
-  editGroupById
-);
-router.patch(
-  "/change-code/:groupId/:userId",
-  isGroupAdminMiddleware,
-  changeGroupCode
-);
+router.patch("/add-member/:groupId/:userId", addMemberToGroup);
+router.patch("/remove-member/:groupId/:adminId/:userId", removeMemberFromGroup);
+router.patch("/add-new-admin/:groupId/:adminId/:userId", assignUserAsAdmin);
+router.patch("/edit-group/:groupId/:userId", editGroupById);
 
 export default router;

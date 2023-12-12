@@ -30,7 +30,7 @@ const UsernameInitials = ({
         style={{
           width: `${radius}rem`,
           height: `${radius}rem`,
-          border: `${borderWidth}rem solid var(--color-main)`,
+          border: `${borderWidth}rem solid var(--color-hover)`,
         }}>
         <p className={styles.initials} style={{ fontSize: `${fontSize}rem` }}>
           {firstInitial + lastInitial}

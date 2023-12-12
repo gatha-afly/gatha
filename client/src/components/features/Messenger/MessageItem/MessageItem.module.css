@@ -1,0 +1,81 @@
+.messageContainer {
+  width: 75%;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  margin-bottom: 0.8rem;
+  box-shadow: 0 0.2rem 0.4rem var(--color-shadow-dark),
+    0 0.4rem 0.8rem var(--color-shadow-dark);
+}
+
+/* First message item only*/
+.messageContainer:first-of-type {
+  margin-top: 0.8rem;
+}
+
+/* Mobile*/
+@media only screen and (max-width: 767px) {
+  .messageContainer {
+    margin-right: 0.2rem;
+    margin-left: 0.2rem;
+    margin-bottom: 0.5rem;
+    width: 90%;
+  }
+  .messageContainer:first-of-type {
+    margin-top: 0.5rem;
+  }
+}
+
+.senderMessage {
+  background-color: var(--color-main);
+  align-self: flex-end;
+}
+
+.receiverMessage {
+  background-color: var(--color-structure-elements-light);
+  align-self: flex-start;
+}
+
+.nameInfo {
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+  max-width: 30rem;
+}
+
+.username {
+  margin-left: 0.5rem;
+}
+
+.message p {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.deletedMessage {
+  font-style: italic;
+}
+
+.sender {
+  display: flex;
+  gap: 0.5rem;
+  font-weight: 900;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+
+.topBar,
+.bottomBar {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.date {
+  font-size: 1.1rem;
+  font-weight: 300;
+}

@@ -1,0 +1,20 @@
+.confirmationContainer {
+  display: block;
+}
+
+.confirmationButtons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.confirmationButtons button {
+  width: fit-content;
+  padding: 0rem 0.5rem;
+  min-height: 1.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.confirmationMessage {
+  white-space: nowrap;
+}

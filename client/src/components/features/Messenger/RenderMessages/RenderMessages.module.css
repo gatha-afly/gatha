@@ -1,0 +1,24 @@
+.spinner {
+  display: flex;
+  justify-content: center;
+}
+
+.messagesContainer {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* User online status */
+.onlineContainer {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+  gap: 0.5rem;
+}
+
+@media only screen and (min-width: 1921px) {
+  .messagesContainer {
+    height: 35vh;
+  }
+}

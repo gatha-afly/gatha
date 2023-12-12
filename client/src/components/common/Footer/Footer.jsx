@@ -1,9 +1,18 @@
+import useUserContext from "../../../hooks/useUserContext";
 import styles from "./Footer.module.css";
 
 const Footer = () => {
+  const { loggedIn } = useUserContext();
+
   return (
-    <footer className={styles.footer}>
-      <p>&copy; {new Date().getFullYear()}</p>
+    <footer
+      className={`${styles.footer} ${
+        loggedIn ? styles.loggedInFooter : styles.notLoggedInFooter
+      }`}>
+      <p>
+        <span className={styles.copyrightSign}>&copy; </span>
+        <span className={styles.year}>{new Date().getFullYear()}</span>
+      </p>
     </footer>
   );
 };

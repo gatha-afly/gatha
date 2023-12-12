@@ -1,0 +1,37 @@
+.sendMessageContainer input {
+  width: 100%;
+  margin-left: 1rem;
+  display: flex;
+}
+
+.sendMessageLine {
+  border-top: 0.25rem solid var(--color-structure-elements);
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  padding: 0.5rem;
+  position: relative;
+}
+
+.sendMessageLine textarea {
+  width: 95%;
+  margin-right: 1rem;
+}
+
+.sendMessageButton {
+  align-self: center;
+}
+
+.emojiButton {
+  position: absolute;
+  right: 5.3rem;
+  font-size: 1.8rem;
+  top: 30%;
+  transform: translateY(-50%);
+  color: var(--color-structure-elements);
+  cursor: pointer;
+}
+
+.emojiButton:hover {
+  color: var(--color-hover);
+}

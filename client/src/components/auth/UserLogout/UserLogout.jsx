@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import useUserContext from "../../../context/useUserContext";
+import useUserContext from "../../../hooks/useUserContext";
+import { devLog } from "../../../utils/errorUtils";
 
 /**
  * Functional component for handling user logout.
@@ -16,9 +17,9 @@ const UserLogout = () => {
     const handleLogout = async () => {
       try {
         await logoutUser();
-        navigate("/");
+        navigate("/user-login");
       } catch (error) {
-        console.error("Logout failed:", error);
+        devLog("Logout failed:", error);
       }
     };
 

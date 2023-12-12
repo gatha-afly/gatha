@@ -1,0 +1,22 @@
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.passwordContainer {
+  display: flex;
+}
+
+.togglePasswordIcon {
+  cursor: pointer;
+  margin-left: -2rem;
+  margin-top: 0.5rem;
+}
+
+.checkbox:focus {
+  outline: none;
+}
+
+.loginForm input {
+  width: 20rem;
+}

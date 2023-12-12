@@ -1,0 +1,33 @@
+.groupInfoContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 0.2rem solid var(--color-structure-elements);
+  border-radius: 1rem;
+  background-color: var(--color-structure-elements-light);
+  width: 100%;
+  height: 5rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 0.2rem 0.4rem var(--color-shadow-dark),
+    0 0.4rem 0.8rem var(--color-shadow-dark);
+}
+
+.infos {
+  margin-right: 0.5rem;
+  overflow-x: hidden;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.infos p {
+  font-size: 1.4rem;
+  padding-left: 0.2rem;
+  white-space: nowrap;
+  font-style: italic;
+}
+
+.initial {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}

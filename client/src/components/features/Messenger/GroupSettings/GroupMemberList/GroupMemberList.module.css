@@ -1,0 +1,31 @@
+.renderMembers {
+  margin-top: 0.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.member {
+  border-bottom: 0.2rem solid var(--color-structure-elements-light);
+}
+.info {
+  margin-bottom: 1rem;
+}
+
+.adminBadge {
+  margin-left: 0.5rem;
+  font-weight: 900;
+  color: var(--color-body);
+  background-color: var(--color-error);
+  border-radius: 1rem;
+  padding: 0.1rem 0.4rem;
+}
+
+.spinner {
+  display: flex;
+  justify-content: center;
+}
+
+.userActions {
+  display: flex;
+  justify-content: center;
+}

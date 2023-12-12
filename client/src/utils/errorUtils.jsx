@@ -43,3 +43,20 @@ export const handleOtherErrors = (
     setError(`${customErrorMessage} Please try again later.`);
   }
 };
+
+/**
+ * Utility function to log in development environment only.
+ *
+ * @param {string} [message="devLog"] - message to be logged.
+ * @param {*} [data] - optional data to be logged.
+ * @returns {void}
+ */
+export const devLog = (message = "devLog", data) => {
+  if (process.env.NODE_ENV === "development") {
+    if (data !== undefined) {
+      console.log(message, data);
+    } else {
+      console.log(message);
+    }
+  }
+};

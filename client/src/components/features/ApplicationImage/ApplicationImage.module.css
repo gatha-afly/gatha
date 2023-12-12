@@ -6,8 +6,6 @@
 
 .container img {
   width: 100%;
-  border-radius: 2rem;
-  box-shadow: 0 0.3rem 0.5rem var(--color-shadow-dark);
 }
 
 /* Mobile*/
@@ -15,7 +13,7 @@
   .container {
     align-items: flex-start;
     justify-content: center;
-    width: 90%;
+    width: 60%;
   }
   .container img {
     width: 100%;

@@ -1,0 +1,7 @@
+.emojiPickerContainer {
+  position: absolute;
+  width: 20rem;
+  right: 20rem;
+  z-index: 999;
+  bottom: 100%;
+}

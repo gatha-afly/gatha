@@ -1,6 +1,10 @@
 import { useState, useEffect } from "react";
-import userAPI from "../api/userAPI";
-import { handleOtherErrors, handleServerErrors } from "../utils/errorUtils";
+import { userAPI } from "../api/userAPI";
+import {
+  devLog,
+  handleOtherErrors,
+  handleServerErrors,
+} from "../utils/errorUtils";
 
 /**
  * Custom hook to fetch group data based on the provided groupId and userId.
@@ -23,6 +27,7 @@ const useGetGroupData = (groupId, userId) => {
 
         // Extract relevant information from the response
         const { data, status } = response;
+        devLog("group data:", response);
         setGroupData({ data, status });
       } catch (error) {
         // Handle errors if any occur during the API call
