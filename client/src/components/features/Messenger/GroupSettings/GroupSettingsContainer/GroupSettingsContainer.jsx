@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./GroupSettingsContainer.module.css";
 import useUserContext from "../../../../../hooks/useUserContext";
 import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPageRender";
@@ -7,8 +7,11 @@ import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetC
 import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
 import ViewGroupCode from "../ViewGroupCode/ViewGroupCode";
 import GroupMemberList from "../GroupMemberList/GroupMemberList";
-import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
 import LeaveGroup from "../LeaveGroup/LeaveGroup";
+import { userAPI } from "../../../../../api/userAPI";
+import GroupDetailsEditor from "../GroupDetailsEditor/GroupDetailsEditor";
+import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
+
 /**
  * Container for rendering group settings
  * @param {Object} props - Component props.
@@ -17,12 +20,45 @@ import LeaveGroup from "../LeaveGroup/LeaveGroup";
  */
 const GroupSettingsContainer = ({ onDefaultViewClick }) => {
   // Get selectedGroup, groupId & userId from userContext
-  const { groupId, name, description } = useUserContext().selectedGroup;
+  const { groupId } = useUserContext().selectedGroup;
   const { userId } = useUserContext().user;
   const { selectedGroup } = useUserContext();
   const userIsGroupAdmin = selectedGroup && selectedGroup.code;
   devLog("selectedGroup:", selectedGroup);
   const groupMembers = useGetGroupMembers(groupId);
+
+  // State for managing editing mode and dynamic data
+  const [editingName, setEditingName] = useState(false);
+  const [editingDescription, setEditingDescription] = useState(false);
+  const [name, setName] = useState(selectedGroup.name);
+  const [description, setDescription] = useState(selectedGroup.description);
+
+  // Function to handle changing group details
+  const handleChangeGroupDetails = async (editedValue, field) => {
+    try {
+      const response = await userAPI.patch(
+        `/groups/edit-group/${groupId}/${userId}`,
+        { [field]: editedValue }
+      );
+
+      // Update the state with the new values from the response
+      if (field === "name") {
+        devLog("response", response);
+        setName(response.data.editedGroup.name);
+        devLog("groupname", name);
+      } else if (field === "description") {
+        setDescription(response.data.editedGroup.description);
+        devLog("description", description);
+      }
+
+      devLog(`Group ${field} updated:`, response);
+    } catch (error) {
+      console.error(`Error updating group ${field}:`, error);
+    } finally {
+      // Exit editing mode
+      field === "name" ? setEditingName(false) : setEditingDescription(false);
+    }
+  };
 
   // Set default view when selectedGroup ID does not match initial groupId
   useSetCallbackWhenSelectedGroupChanges(selectedGroup, onDefaultViewClick);
@@ -31,32 +67,78 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
     <div className={styles.settings}>
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"user-settings"} />
-      {/* Render back button */}
-      <div className={styles.groupName}>
-        <h2>group name:</h2>
-        <p>{name}</p>
-      </div>
-      <div>
-        <h2>group description:</h2>
-        {description ? (
-          <p className={styles.groupDescription}>{description}</p>
-        ) : (
-          <p>No group description entered.</p>
-        )}
-      </div>
+      {/* Render group name and group description based on userIsGroupAdmin */}
+      {userIsGroupAdmin ? (
+        <>
+          {/* Edit group name */}
+          <div className={styles.groupName}>
+            <h2>group name:</h2>
+            {editingName ? (
+              <GroupDetailsEditor
+                value={name}
+                onSave={(editedValue) =>
+                  handleChangeGroupDetails(editedValue, "name")
+                }
+                onCancel={() => setEditingName(false)}
+                groupId={groupId}
+                userId={userId}
+              />
+            ) : (
+              <p onClick={() => setEditingName(true)}>{name}</p>
+            )}
+          </div>
+
+          {/* Edit group description */}
+          <div>
+            <h2>group description:</h2>
+            {editingDescription ? (
+              <GroupDetailsEditor
+                value={description}
+                onSave={(editedValue) =>
+                  handleChangeGroupDetails(editedValue, "description")
+                }
+                onCancel={() => setEditingDescription(false)}
+                groupId={groupId}
+                userId={userId}
+              />
+            ) : (
+              <p
+                className={styles.groupDescription}
+                onClick={() => setEditingDescription(true)}>
+                {description ? description : "No group description entered."}
+              </p>
+            )}
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Display group name without ability to edit */}
+          <div className={styles.groupName}>
+            <h2>group name:</h2>
+            <p>{name}</p>
+          </div>
+
+          {/* Display group description without ability to edit */}
+          <div>
+            <h2>group description:</h2>
+            <p className={styles.groupDescription}>
+              {description ? description : "No group description entered."}
+            </p>
+          </div>
+        </>
+      )}
+
       {userIsGroupAdmin && (
         <div className={styles.groupCode}>
           <h2>group code:</h2>
           <ViewGroupCode selectedGroup={selectedGroup} />
         </div>
       )}
-
       <LeaveGroup
         groupId={groupId}
         userId={userId}
         onDefaultViewClick={onDefaultViewClick}
       />
-
       {userIsGroupAdmin ? (
         // Render the component to add users to the group only if the user is the group admin
         <AddUsersToGroupContainer

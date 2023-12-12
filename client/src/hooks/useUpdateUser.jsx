@@ -25,7 +25,7 @@ const useUpdateUserData = () => {
       const response = await userAPI.get(`users/update/${user.userId}`);
       const updatedUser = response.data.user;
       // Update user data
-      updateUser(updatedUser);
+      updateUser({ ...user, ...updatedUser });
       devLog("User has been updated:", updatedUser);
     } catch (error) {
       devLog("Error fetching user updates:", error);

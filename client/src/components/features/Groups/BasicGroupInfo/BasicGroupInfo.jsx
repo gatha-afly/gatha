@@ -16,7 +16,6 @@ const BasicGroupInfo = ({ userId, groupId }) => {
   const navigate = useNavigate();
   // Fetch group information
   const response = useGetGroupData(groupId, userId);
-
   const { groupData } = response;
   // Destructure groupData and provide default values
   const { data } = groupData || {};

@@ -7,6 +7,7 @@ import CreateGroupContainer from "../CreateGroup/CreateGroupContainer/CreateGrou
 import { FaRegHandPointDown } from "react-icons/fa6";
 import useUpdateUserData from "../../../../hooks/useUpdateUser";
 import useUserContext from "../../../../hooks/useUserContext";
+import { devLog } from "../../../../utils/errorUtils";
 
 /**
  * Manages different views, rendering the group selection, create and join group part of the main application based on the current state.
@@ -15,9 +16,9 @@ import useUserContext from "../../../../hooks/useUserContext";
  * @returns {JSX.Element} The rendered GroupsContainer component.
  */
 
-const GroupsContainer = ({ user }) => {
+const GroupsContainer = () => {
   // Get selectedGroup from context
-  const { selectedGroup } = useUserContext();
+  const { selectedGroup, user } = useUserContext();
   // Get user updates, loading, and error from custom hook
   const { fetchUserUpdates } = useUpdateUserData();
   // State to track the current view and the user's groups
@@ -26,13 +27,21 @@ const GroupsContainer = ({ user }) => {
 
   // Fetch and update user data when the component mounts and when the selected group changes
   useEffect(() => {
-    fetchUserUpdates();
-  }, [fetchUserUpdates, selectedGroup]);
+    const fetchData = async () => {
+      await fetchUserUpdates();
+      // Update user groups after fetchUserUpdates completes
+      setUserGroups(user.groups);
+    };
+
+    fetchData();
+  }, [fetchUserUpdates, selectedGroup, user.groups]);
 
   // Fetch and update user groups when the component mounts and when the groups are updated
   useEffect(() => {
     setUserGroups(user.groups);
   }, [user.groups]);
+
+  devLog("userGroups:", user.groups);
 
   // Function to switch the current view
   const switchView = (view) => {
