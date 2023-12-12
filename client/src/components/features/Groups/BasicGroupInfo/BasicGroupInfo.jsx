@@ -9,7 +9,7 @@ import useUserContext from "../../../../hooks/useUserContext";
  * Displays basic information about a group.
  * @param {Object} groupData - Data containing information about the group.
  */
-const BasicGroupInfo = ({ userId, groupId }) => {
+const BasicGroupInfo = ({ userId, groupId, groupName }) => {
   // Get updateSelectedGroup from context
   const { updateSelectedGroup } = useUserContext();
   // Use useNavigate
@@ -18,17 +18,16 @@ const BasicGroupInfo = ({ userId, groupId }) => {
   const response = useGetGroupData(groupId, userId);
   const { groupData } = response;
   // Destructure groupData and provide default values
-  const { data } = groupData || {};
-  const { name, description } = data || {};
+  const { description } = groupData?.data || {};
 
   const handleClick = () => {
     if (groupData) {
       if (isMobile) {
-        updateSelectedGroup(data);
+        updateSelectedGroup(groupData.data);
         // Navigate to mobile messenger page if device is mobile
         navigate("/messenger-mobile");
       } else {
-        updateSelectedGroup(data);
+        updateSelectedGroup(groupData.data);
       }
     }
   };
@@ -37,7 +36,7 @@ const BasicGroupInfo = ({ userId, groupId }) => {
     <div className={styles.groupInfoContainer} onClick={handleClick}>
       <div className={styles.initial}>
         <GroupnameInitial
-          groupname={name}
+          groupname={groupName}
           radius={3.8}
           fontSize={1.8}
           borderWidth={0.6}
@@ -45,7 +44,7 @@ const BasicGroupInfo = ({ userId, groupId }) => {
       </div>
       {/* Display the group name and description */}
       <div className={styles.infos}>
-        <h2>{name}</h2>
+        <h2>{groupName}</h2>
         <p>{description}</p>
       </div>
     </div>

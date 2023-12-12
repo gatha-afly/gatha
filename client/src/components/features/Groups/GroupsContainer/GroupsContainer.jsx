@@ -29,12 +29,10 @@ const GroupsContainer = () => {
   useEffect(() => {
     const fetchData = async () => {
       await fetchUserUpdates();
-      // Update user groups after fetchUserUpdates completes
-      setUserGroups(user.groups);
     };
 
     fetchData();
-  }, [fetchUserUpdates, selectedGroup, user.groups]);
+  }, [fetchUserUpdates, selectedGroup]);
 
   // Fetch and update user groups when the component mounts and when the groups are updated
   useEffect(() => {
@@ -82,6 +80,7 @@ const GroupsContainer = () => {
                     key={group._id}
                     userId={user.userId}
                     groupId={group._id}
+                    groupName={group.name}
                   />
                 ))
               ) : (
