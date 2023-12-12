@@ -56,7 +56,7 @@ export const loginUser = async (req, res) => {
     // Find a user with the provided lowercase email and populate the 'groups' field
     const user = await User.findOne({ email: lowerCaseEmail }).populate({
       path: "groups",
-      select: "groupId name",
+      select: "groupId name description",
     });
 
     // Check if the user doesn't exist
@@ -200,7 +200,7 @@ export const updateUserData = async (req, res) => {
   try {
     const user = await User.findById(userId).populate({
       path: "groups",
-      select: "groupId name",
+      select: "groupId name description",
     });
 
     if (!user) {
