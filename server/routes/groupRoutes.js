@@ -8,6 +8,7 @@ import {
   getGroupData,
   getGroupMembers,
   assignUserAsAdmin,
+  editGroupById,
 } from "../controllers/groupControllers.js";
 import { authorizeUser } from "../middleware/express/userAuthorization.js";
 import { validator } from "../middleware/express/validator.js";
@@ -34,5 +35,6 @@ router.patch("/leave-group/:groupId/:userId", leaveGroup);
 router.patch("/add-member/:groupId/:userId", addMemberToGroup);
 router.patch("/remove-member/:groupId/:adminId/:userId", removeMemberFromGroup);
 router.patch("/add-new-admin/:groupId/:adminId/:userId", assignUserAsAdmin);
+router.patch("/edit-group/:groupId/:userId", editGroupById);
 
 export default router;

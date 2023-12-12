@@ -1,5 +1,5 @@
-import mongoose, { trusted } from "mongoose";
 import Group from "../models/Group.js";
+import mongoose from "mongoose";
 import User from "../models/User.js";
 import Message from "../models/Message.js";
 import { StatusCodes } from "http-status-codes";

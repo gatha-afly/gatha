@@ -464,25 +464,26 @@ export const assignUserAsAdmin = async (req, res) => {
  */
 export const editGroupById = async (req, res) => {
   try {
-    const { groupId } = req.params;
-    const { name, description, avatar, code } = req.body;
+    const { groupId, userId } = req.params;
+    const { name, description } = req.body;
 
-    // Find the group by groupId
-    const groupToEdit = await Group.findById(groupId);
-    if (!groupToEdit) {
+    const group = await Group.findById(groupId);
+    if (!group) {
       return errorHandlerUtils.handleGroupNotFound(res);
     }
 
-    let updatedFields = {};
+    const user = await responseHandlerUtils.findUserById(userId);
+    if (!user) {
+      return errorHandlerUtils.handleUserNotFound(res, "user ID");
+    }
+
+    await responseHandlerUtils.checkAdminAuthorization(groupId, userId, res);
+
+    const updatedFields = {};
+
+    // Use optional chaining to simplify field assignment
     if (name) updatedFields.name = name;
     if (description) updatedFields.description = description;
-    if (avatar) updatedFields.avatar = avatar;
-
-    let newCode;
-    if (code) {
-      newCode = await generateUniqueGroupCode(code);
-      updatedFields.code = newCode;
-    }
 
     // Check if there are fields to update
     if (Object.keys(updatedFields).length === 0) {
@@ -491,7 +492,6 @@ export const editGroupById = async (req, res) => {
       });
     }
 
-    // Update the group
     const editedGroup = await Group.findByIdAndUpdate(
       groupId,
       { $set: updatedFields },
@@ -507,6 +507,7 @@ export const editGroupById = async (req, res) => {
       editedGroup,
     });
   } catch (error) {
+    console.error(error);
     return errorHandlerUtils.handleInternalError(res);
   }
 };
