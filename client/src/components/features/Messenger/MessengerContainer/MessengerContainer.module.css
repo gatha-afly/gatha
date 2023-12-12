@@ -40,16 +40,6 @@
   }
 }
 
-/* Mobile landscape mode*/
-@media only screen and (max-width: 767px) and (orientation: landscape) {
-  .messengerContainer {
-    /* fallback value for older browsers*/
-    height: 51vh;
-    height: 61svh;
-    width: 60vw;
-  }
-}
-
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   .messengerContainer {
