@@ -142,7 +142,6 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
       {userIsGroupAdmin && (
         <div className={styles.groupCode}>
           <h2>group code:</h2>
-          <ViewGroupCode selectedGroup={selectedGroup} />
           <CopyToClipboard infoToCopy={selectedGroup.code} />
         </div>
       )}

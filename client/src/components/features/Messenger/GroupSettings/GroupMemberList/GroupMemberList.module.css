@@ -5,7 +5,9 @@
 }
 
 .member {
+  width: fit-content !important;
   border-bottom: 0.2rem solid var(--color-structure-elements-light);
+  margin: 0 auto;
 }
 .info {
   margin-bottom: 1rem;

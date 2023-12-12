@@ -31,12 +31,12 @@ const GroupMemberList = ({
 
   devLog("confirmation is locked:", confirmationIsLocked);
 
-  // Format members for desired display
+  // Format members
   const formattedMembers = groupMembers.groupMembers
     .map((member) => {
       // Generate formatted member information
       const memberInfo = `${member.firstName} ${member.lastName} (${member.username})`;
-      // Return an object with formatted member details
+      // Return formatted member details
       return {
         info: memberInfo,
         isAdmin: member.isAdmin,
