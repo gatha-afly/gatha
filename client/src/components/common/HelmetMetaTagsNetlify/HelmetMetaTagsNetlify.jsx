@@ -20,7 +20,7 @@ import { Helmet } from "react-helmet-async";
 function HelmetMetaTagsNetlify({ title, description, image, author }) {
   // Define default values
   const defaultDescription =
-    "Simple private group chat application that allows users to create and join a group, send and receive text messages, images and gifs and have the ability to view the whole group history.";
+    "Gatha is your brand new chat application to connect to family, friends, colleagues and more. Create your personal account to get started!";
   const defaultTitle = "gatha - get together";
   const defaultImage = "https://gatha.netlify.app/metatagdefaultimg.jpeg";
   const defaultUrl = "https://gatha.netlify.app/";
