@@ -13,12 +13,23 @@ import useUserContext from "../../hooks/useUserContext";
 const MobileMainPage = () => {
   // Get user from context
   const { user } = useUserContext();
-  // Get user updates, loading, and error from custom hook
-  const { fetchUserUpdates, error } = useUpdateUserData();
+
+  // Get user updates
+  const { fetchUserUpdates } = useUpdateUserData();
 
   // Update user data on mount
   useEffect(() => {
     fetchUserUpdates();
+  }, [fetchUserUpdates]);
+
+  // FetchUserUpdates every 60 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetchUserUpdates();
+    }, 60000);
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(intervalId);
   }, [fetchUserUpdates]);
 
   return (

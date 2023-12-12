@@ -19,7 +19,7 @@ export const validateUserRules = [
     .trim()
     .isAlphanumeric()
     .isLength({ max: 20 })
-    .withMessage("Username can be maximum 20 characters.")
+    .withMessage("Username can't be longer than 20 characters.")
     //Custom Validator to check if a username already existed
     .custom(async (value) => checkUserExistenceByUsername(value)),
 

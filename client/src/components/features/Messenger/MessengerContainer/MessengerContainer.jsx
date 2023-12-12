@@ -21,16 +21,6 @@ function MessengerContainer() {
     fetchUserUpdates();
   }, [fetchUserUpdates]);
 
-  // FetchUserUpdates every 60 seconds
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      fetchUserUpdates();
-    }, 60000);
-
-    // Clear the interval when the component is unmounted
-    return () => clearInterval(intervalId);
-  }, [fetchUserUpdates]);
-
   // Function to switch the current view
   const switchView = (view) => {
     setCurrentView(view);

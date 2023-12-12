@@ -21,6 +21,16 @@ const DesktopMainPage = () => {
     fetchUserUpdates();
   }, [fetchUserUpdates]);
 
+  // FetchUserUpdates every 60 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      fetchUserUpdates();
+    }, 60000);
+
+    // Clear the interval when the component is unmounted
+    return () => clearInterval(intervalId);
+  }, [fetchUserUpdates]);
+
   return (
     <main className={styles.container}>
       {/* Track page renders */}

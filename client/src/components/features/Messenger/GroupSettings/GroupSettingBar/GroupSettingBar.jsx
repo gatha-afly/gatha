@@ -48,21 +48,15 @@ function GroupSettingBar({
               />
             </span>
           )}
-          <div className={styles.icons}>
-            {selectedGroup.code && (
-              <span className={styles.groupCode}>
-                <ViewGroupCode selectedGroup={selectedGroup} />
-              </span>
-            )}
-            <span className={styles.settings}>
-              <ReactIconNavigate
-                onClick={onSettingsClick}
-                size={2.5}
-                icon={IoSettingsOutline}
-                margin={0}
-              />
-            </span>
-          </div>
+
+          <span className={styles.settings}>
+            <ReactIconNavigate
+              onClick={onSettingsClick}
+              size={2.5}
+              icon={IoSettingsOutline}
+              margin={0}
+            />
+          </span>
         </>
       )}
 
