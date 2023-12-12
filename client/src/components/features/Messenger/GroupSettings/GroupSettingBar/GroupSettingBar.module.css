@@ -12,19 +12,14 @@
 
 .groupName {
   color: var(--color-text);
-  margin-right: 1rem;
+  margin: 0 auto;
   overflow-x: hidden;
 }
 
-.mobileHome {
-  width: 3rem;
-}
-
-.icons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 1rem;
+.mobileHome,
+.backIcon,
+.groupName {
+  height: 10%;
 }
 
 .barContainer h2 {

@@ -2,10 +2,8 @@ import React from "react";
 import styles from "./GroupSettingBar.module.css";
 import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { IoSettingsOutline } from "react-icons/io5";
-import ViewGroupCode from "../ViewGroupCode/ViewGroupCode";
 import { MdGroups2 } from "react-icons/md";
 import { HiMiniBackspace } from "react-icons/hi2";
-
 import { isMobile } from "../../../../../utils/deviceUtils";
 import useGetGroupData from "../../../../../hooks/useGetGroupData";
 import useUserContext from "../../../../../hooks/useUserContext";
@@ -36,18 +34,20 @@ function GroupSettingBar({
       {/* Render content based on the view prop */}
       {view === "default" && (
         <>
-          <h2 className={styles.groupName}>{name}</h2>
-
           {isMobile && (
             <span className={styles.mobileHome}>
               <ReactIconNavigate
                 route='/main'
-                size={2.5}
+                size={2.4}
                 icon={MdGroups2}
                 margin={0}
               />
             </span>
           )}
+
+          <span></span>
+
+          <h2 className={styles.groupName}>{name}</h2>
 
           <span className={styles.settings}>
             <ReactIconNavigate
@@ -66,7 +66,7 @@ function GroupSettingBar({
           <div className={styles.backIcon}>
             <ReactIconNavigate
               onClick={onBackClick}
-              size={2.5}
+              size={2.4}
               icon={HiMiniBackspace}
               margin={0}
             />

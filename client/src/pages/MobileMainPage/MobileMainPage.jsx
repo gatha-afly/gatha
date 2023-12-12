@@ -38,7 +38,6 @@ const MobileMainPage = () => {
       <PiratePxPageRender COUNT_IDENTIFIER={"main-mobile"} />
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - main' />
-      <ErrorDisplay error={error} />
       <div className={styles.groupsList}>
         <GroupsContainer user={user} />
       </div>
