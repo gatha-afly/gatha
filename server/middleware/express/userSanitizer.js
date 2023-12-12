@@ -12,12 +12,14 @@ export const validateUserRules = [
     .trim()
     .isAlpha("en-GB", { ignore: "" }) //ignores the sapces
     .customSanitizer((value) => uppercaseFirstLetter(value))
-    .withMessage("The firstname and lastname shouldn't contain numbers"),
+    .withMessage("The first name and last name shouldn't contain numbers"),
 
   //Sanitizes and validate the username
   body("username")
     .trim()
     .isAlphanumeric()
+    .isLength({ max: 20 })
+    .withMessage("Username can be maximum 20 characters.")
     //Custom Validator to check if a username already existed
     .custom(async (value) => checkUserExistenceByUsername(value)),
 
