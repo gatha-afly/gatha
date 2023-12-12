@@ -1,9 +1,7 @@
 .loginForm {
-  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 20rem;
 }
 .passwordContainer {
   display: flex;
@@ -17,4 +15,8 @@
 
 .checkbox:focus {
   outline: none;
+}
+
+.loginForm input {
+  width: 20rem;
 }

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import UserLogin from "../../components/auth/UserLogin/UserLogin";
+import UserLogin from "../../components/auth/UserLoginForm/UserLoginForm";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useNavigateToMainIfUserIsLoggedIn from "../../hooks/useNavigateToMainIfUserIsLoggedIn";
