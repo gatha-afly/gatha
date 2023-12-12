@@ -1,5 +1,5 @@
 .groupsContainer {
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: var(--color-body);
   border: 0.2rem solid var(--color-structure-elements);
   border-radius: 1rem;
@@ -8,7 +8,7 @@
 }
 
 .groupsList {
-  overflow-y: scroll;
+  overflow-y: auto;
   padding: 0.5rem;
   position: relative;
   background-color: var(--color-body);
@@ -40,7 +40,7 @@
     height: 85vh;
     height: 85svh;
     width: 98vw;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   .groupBar {
     height: 8%;

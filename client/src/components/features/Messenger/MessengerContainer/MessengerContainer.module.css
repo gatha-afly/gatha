@@ -12,7 +12,7 @@
 
 .messages {
   height: 83.5%;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .selectGroup {

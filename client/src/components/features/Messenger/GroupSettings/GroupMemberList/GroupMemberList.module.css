@@ -1,7 +1,7 @@
 .renderMembers {
   margin-top: 0.5rem;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .member {
