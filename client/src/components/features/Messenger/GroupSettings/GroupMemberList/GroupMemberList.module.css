@@ -19,7 +19,9 @@
   color: var(--color-body);
   background-color: var(--color-error);
   border-radius: 1rem;
-  padding: 0.1rem 0.4rem;
+  padding: 0.1rem 0.3rem;
+  box-shadow: 0 0.2rem 0.4rem var(--color-shadow-dark),
+    0 0.3rem 0.6rem var(--color-shadow-dark);
 }
 
 .spinner {

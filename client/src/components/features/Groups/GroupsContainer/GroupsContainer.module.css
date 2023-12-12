@@ -50,16 +50,6 @@
   }
 }
 
-/* Mobile landscape mode*/
-@media only screen and (max-width: 767px) and (orientation: landscape) {
-  .groupsContainer {
-    /* fallback value for older browsers*/
-    height: 51vh;
-    height: 61svh;
-    width: 25vw;
-  }
-}
-
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   .groupsContainer {
