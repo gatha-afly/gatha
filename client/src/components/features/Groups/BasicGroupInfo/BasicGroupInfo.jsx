@@ -14,11 +14,10 @@ const BasicGroupInfo = ({ userId, groupId, groupName, groupDescription }) => {
   const { updateSelectedGroup } = useUserContext();
   // Use useNavigate
   const navigate = useNavigate();
+
   // Fetch group information
   const response = useGetGroupData(groupId, userId);
   const { groupData } = response;
-  // Destructure groupData and provide default values
-  const { description } = groupData?.data || {};
 
   const handleClick = () => {
     if (groupData) {
@@ -45,7 +44,7 @@ const BasicGroupInfo = ({ userId, groupId, groupName, groupDescription }) => {
       {/* Display the group name and description */}
       <div className={styles.infos}>
         <h2>{groupName}</h2>
-        <p>{description}</p>
+        <p>{groupDescription}</p>
       </div>
     </div>
   );

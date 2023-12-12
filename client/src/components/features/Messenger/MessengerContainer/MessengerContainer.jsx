@@ -21,11 +21,11 @@ function MessengerContainer() {
     fetchUserUpdates();
   }, [fetchUserUpdates]);
 
-  // FetchUserUpdates every 30 seconds
+  // FetchUserUpdates every 60 seconds
   useEffect(() => {
     const intervalId = setInterval(() => {
       fetchUserUpdates();
-    }, 30000);
+    }, 60000);
 
     // Clear the interval when the component is unmounted
     return () => clearInterval(intervalId);
