@@ -38,11 +38,3 @@
   background-color: var(--color-body);
   color: var(--color-structure-elements);
 }
-
-/* Hide footer on Firefox mobile with keyboard and other very small screens*/
-@media only screen and (max-height: 500px) {
-  .copyrightSign,
-  .year {
-    display: none;
-  }
-}
