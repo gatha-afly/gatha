@@ -28,18 +28,6 @@ const GroupDetailsEditor = ({ value, onSave, onCancel, maxCharacters }) => {
     await onSave(editedValue);
   };
 
-  const handleChange = (e) => {
-    const inputValue = e.target.value;
-
-    // Check if the editedValue exceeds the maximum character limit
-    if (maxCharacters && inputValue.length > maxCharacters) {
-      setError(`Maximum ${maxCharacters} characters allowed`);
-    } else {
-      setError(null);
-      setEditedValue(inputValue);
-    }
-  };
-
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSave();

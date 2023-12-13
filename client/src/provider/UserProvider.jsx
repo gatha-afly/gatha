@@ -10,8 +10,9 @@ import UserContext from "../context/userContext";
  */
 const UserProvider = ({ children }) => {
   // Retrieve user data from localStorage
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const storedSelectedGroup = JSON.parse(localStorage.getItem("selectedGroup"));
+  const storedUser = JSON.parse(localStorage.getItem("user")) || null;
+  const storedSelectedGroup =
+    JSON.parse(localStorage.getItem("selectedGroup")) || null;
 
   // State variables for user authentication
   const [loggedIn, setLoggedIn] = useState(!!storedUser);
@@ -119,6 +120,37 @@ const UserProvider = ({ children }) => {
     setSelectedGroup(groupData);
     localStorage.setItem("selectedGroup", JSON.stringify(groupData));
   };
+
+  /**
+   * Updates selectedGroup's name and stores it in local storage
+   * @param {string} newName - The new name for the selectedGroup.
+   */
+  const updateSelectedGroupName = (newName) => {
+    setSelectedGroup((prevSelectedGroup) => {
+      const updatedGroup = {
+        ...prevSelectedGroup,
+        name: newName,
+      };
+      localStorage.setItem("selectedGroup", JSON.stringify(updatedGroup));
+      return updatedGroup;
+    });
+  };
+
+  /**
+   * Updates selectedGroup's description and stores it in local storage
+   * @param {string} newDescription - The new description for the selectedGroup.
+   */
+  const updateSelectedGroupDescription = (newDescription) => {
+    setSelectedGroup((prevSelectedGroup) => {
+      const updatedGroup = {
+        ...prevSelectedGroup,
+        description: newDescription,
+      };
+      localStorage.setItem("selectedGroup", JSON.stringify(updatedGroup));
+      return updatedGroup;
+    });
+  };
+
   /**
    * Updates selectedGroup and deletes it from local storage
    * @param {*} newSelectedGroup
@@ -141,6 +173,8 @@ const UserProvider = ({ children }) => {
         updateUser,
         selectedGroup,
         updateSelectedGroup,
+        updateSelectedGroupName,
+        updateSelectedGroupDescription,
         deleteSelectedGroup,
         isTyping,
         setIsTyping,
