@@ -7,6 +7,9 @@
   "license": "ISC",
   "description": "",
   "type": "module",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node server.js"
   },
