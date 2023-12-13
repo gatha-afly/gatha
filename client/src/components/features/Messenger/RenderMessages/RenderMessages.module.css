@@ -22,3 +22,12 @@
     height: 35vh;
   }
 }
+
+/* Firefox mobile with keyboard and other very small screens*/
+@media only screen and (max-height: 500px) {
+  .messagesContainer {
+    /* fallback value for older browsers*/
+    height: 40vh;
+    height: 40svh;
+  }
+}

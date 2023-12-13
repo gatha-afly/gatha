@@ -5,7 +5,6 @@ import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPa
 import { devLog } from "../../../../../utils/errorUtils";
 import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
-import ViewGroupCode from "../ViewGroupCode/ViewGroupCode";
 import GroupMemberList from "../GroupMemberList/GroupMemberList";
 import LeaveGroup from "../LeaveGroup/LeaveGroup";
 import { userAPI } from "../../../../../api/userAPI";
@@ -27,7 +26,6 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
   const { userId } = useUserContext().user;
   const { selectedGroup } = useUserContext();
   const userIsGroupAdmin = selectedGroup && selectedGroup.code;
-  devLog("selectedGroup:", selectedGroup);
   const groupMembers = useGetGroupMembers(groupId);
 
   // State for managing editing mode and dynamic data
@@ -56,12 +54,14 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
 
       devLog(`Group ${field} updated:`, response);
     } catch (error) {
-      console.error(`Error updating group ${field}:`, error);
+      console.log(`Error updating group ${field}:`, error);
     } finally {
       // Exit editing mode
       field === "name" ? setEditingName(false) : setEditingDescription(false);
     }
   };
+
+  devLog("selectedGroup:", selectedGroup);
 
   // Set default view when selectedGroup ID does not match initial groupId
   useSetCallbackWhenSelectedGroupChanges(selectedGroup, onDefaultViewClick);
@@ -85,6 +85,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
                 onCancel={() => setEditingName(false)}
                 groupId={groupId}
                 userId={userId}
+                maxCharacters={20}
               />
             ) : (
               <p className={styles.info} onClick={() => setEditingName(true)}>
@@ -108,6 +109,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
                 onCancel={() => setEditingDescription(false)}
                 groupId={groupId}
                 userId={userId}
+                maxCharacters={100}
               />
             ) : (
               <p
@@ -142,7 +144,6 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
       {userIsGroupAdmin && (
         <div className={styles.groupCode}>
           <h2>group code:</h2>
-          <ViewGroupCode selectedGroup={selectedGroup} />
           <CopyToClipboard infoToCopy={selectedGroup.code} />
         </div>
       )}

@@ -25,13 +25,26 @@
 }
 
 .circle {
-  border: 0.5rem solid var(--color-main);
-  height: 5rem;
-  width: 5rem;
+  border: 0.3rem solid var(--color-main);
+  height: 2rem;
+  width: 2rem;
 }
 
 .initials {
   font-size: 1rem;
+}
+
+/* Firefox mobile with keyboard and other very small screens*/
+@media only screen and (max-height: 500px) {
+  .circle {
+    border: 0.4rem solid var(--color-main);
+    height: 3.5rem;
+    width: 3.5rem;
+  }
+
+  .initials {
+    font-size: 1.8rem;
+  }
 }
 
 /* Mobile*/

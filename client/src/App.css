@@ -216,21 +216,48 @@ scrollbar-thumb {
   }
 }
 
-/* Mobile landscape mode*/
-@media only screen and (max-width: 767px) and (orientation: landscape) {
+/* Firefox mobile with keyboard and very small screens*/
+@media only screen and (max-height: 500px) {
   header {
-    /* fallback value for older browsers*/
-    height: 20vh;
-    height: 20svh;
+    /* fallback value*/
+    height: 10vh;
+    height: 10svh;
   }
   main {
     padding-top: 0rem;
-    height: 61vh;
-    height: 71svh;
+    height: 90vh;
+    height: 90svh;
   }
   footer {
-    height: 9vh;
-    height: 9svh;
+    /* Hide footer */
+    height: 0vh;
+    height: 0svh;
+  }
+
+  body {
+    line-height: 1.3;
+    font-size: 1.3rem;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    font-family: "Source Sans 3", sans-serif;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+    font-family: "Source Sans 3", sans-serif;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 1.3rem;
+    font-family: "Source Sans 3", sans-serif;
   }
 }
 

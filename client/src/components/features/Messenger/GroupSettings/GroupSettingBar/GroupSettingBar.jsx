@@ -5,9 +5,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { MdGroups2 } from "react-icons/md";
 import { HiMiniBackspace } from "react-icons/hi2";
 import { isMobile } from "../../../../../utils/deviceUtils";
-import useGetGroupData from "../../../../../hooks/useGetGroupData";
 import useUserContext from "../../../../../hooks/useUserContext";
-import { devLog } from "../../../../../utils/errorUtils";
 
 /**
  * Bar to host selected group related information and functionalities
@@ -23,11 +21,7 @@ function GroupSettingBar({
   onSettingsClick,
   onBackClick,
 }) {
-  const { groupId } = useUserContext().selectedGroup;
-  const { userId } = useUserContext().user;
-  const response = useGetGroupData(groupId, userId);
-
-  const name = response.groupData?.data?.name || devLog("response:", response);
+  const { name } = useUserContext().selectedGroup;
 
   return (
     <div className={styles.barContainer}>
