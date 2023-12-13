@@ -1,3 +1,11 @@
 .leaveGroupContainer {
   margin-top: 1rem;
+  margin-bottom: 5rem;
+  position: relative;
+}
+.confirmationDialog {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  z-index: 1;
 }
