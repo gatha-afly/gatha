@@ -8,7 +8,6 @@ const io = new Server(httpServer, {
   cors: {
     origin: [
       "http://localhost:3000",
-      "https://client-1anl.onrender.com",
       "https://gatha-dev.netlify.app",
       "https://gatha.netlify.app",
     ],
