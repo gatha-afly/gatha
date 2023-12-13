@@ -114,7 +114,8 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
             ) : (
               <p
                 className={styles.info}
-                onClick={() => setEditingDescription(true)}>
+                onClick={() => setEditingDescription(true)}
+              >
                 {description ? description : "No group description entered."}
                 <span className={styles.icon}>
                   <ReactIconNavigate icon={FaEdit} size={1.6} margin={0} />
