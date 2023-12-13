@@ -10,7 +10,7 @@ MERN stack group chat application utilizing socket.io, enabling bidirectional co
 
 ## Project
 
-Gatha is the final project of our Web Dev class at [DCI](https://digitalcareerinstitute.org/courses/web-development/). Our goal, as a group of 3 students within the 7-week project timeframe, was to deliver a functional chat application that our classmates could use on the day of the final presentation (December 14, 2023).
+Gatha is the final project of our Web Dev class at [DCI](https://digitalcareerinstitute.org/courses/web-development/). Our goal, as a group of 3 students within the 7-week project timeframe, was to deliver a functional chat application that our classmates could use on the day of the final presentation (December 14, 2023). We also aimed at writing DRY, clean and well-documented code.
 
 ## Technologies
 
@@ -31,13 +31,10 @@ Access the application [here](https://gatha.netlify.app/). Optionally, join our 
 
 ## Team
 
-[<img src="https://avatars.githubusercontent.com/u/113168196?v=4" width="100" alt="Yesim Demir" />](https://github.com/besincielement) | [<img src="https://avatars.githubusercontent.com/u/120386826?u=bde7bfb40f3f0b9c80385fd78a5ae6b28bba6ab5&v=4" width="100" alt="Abdulwase Naeemi" />](https://github.com/Naeemi7) | [<img src="https://avatars.githubusercontent.com/u/120386975?v=4" width="100" alt="Felix Schmidt" />](https://github.com/felixschmidt89)
---- | --- | ---
-[Yesim Demir](https://github.com/besincielement) | [Abdulwase Naeemi](https://github.com/Naeemi7) | [Felix Schmidt](https://github.com/felixschmidt89)
-Design Lead & Full-Stack Allrounder | Backend & Socket.io Lead | Frontend Lead & Product Manager
-
-
-
+| [<img src="https://avatars.githubusercontent.com/u/113168196?v=4" width="100" alt="Yesim Demir" />](https://github.com/besincielement) | [<img src="https://avatars.githubusercontent.com/u/120386826?u=bde7bfb40f3f0b9c80385fd78a5ae6b28bba6ab5&v=4" width="100" alt="Abdulwase Naeemi" />](https://github.com/Naeemi7) | [<img src="https://avatars.githubusercontent.com/u/120386975?v=4" width="100" alt="Felix Schmidt" />](https://github.com/felixschmidt89) |
+| -------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| [Yesim Demir](https://github.com/besincielement)                                                                                       | [Abdulwase Naeemi](https://github.com/Naeemi7)                                                                                                                                  | [Felix Schmidt](https://github.com/felixschmidt89)                                                                                       |
+| Design Lead & Full-Stack Allrounder                                                                                                    | Backend & Socket.io Lead                                                                                                                                                        | Frontend Lead & Product Manager                                                                                                          |
 
 ## Key features
 
