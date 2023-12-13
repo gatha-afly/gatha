@@ -30,10 +30,11 @@
   .messengerContainer {
     width: 98vw;
     margin-left: 0rem;
-    height: 85vh;
+    height: 69vh;
+    height: 79svh;
   }
   .messages {
-    height: 78%;
+    height: 72%;
   }
 }
 /* Tablet*/
