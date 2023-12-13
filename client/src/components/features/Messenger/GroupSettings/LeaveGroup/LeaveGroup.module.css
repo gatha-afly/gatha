@@ -5,8 +5,7 @@
 }
 .confirmationDialog {
   position: absolute;
-  top: 100%; /* Adjust this value as needed */
-  left: 0;
+  top: 100%;
   width: 100%;
-  z-index: 1; /* Ensure it appears above other elements */
+  z-index: 1;
 }
