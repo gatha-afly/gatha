@@ -28,10 +28,11 @@
 /* mobile*/
 @media only screen and (max-width: 767px) {
   .messengerContainer {
+    /* fallback value for older browsers*/
+    height: 85vh;
+    height: 85svh;
     width: 98vw;
-    margin-left: 0rem;
-    height: 69vh;
-    height: 79svh;
+    overflow-y: auto;
   }
   .messages {
     height: 72%;
