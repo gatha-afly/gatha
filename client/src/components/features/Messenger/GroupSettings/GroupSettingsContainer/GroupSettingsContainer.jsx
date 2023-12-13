@@ -24,7 +24,11 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
   // Get selectedGroup, groupId & userId from userContext
   const { groupId } = useUserContext().selectedGroup;
   const { userId } = useUserContext().user;
-  const { selectedGroup } = useUserContext();
+  const {
+    selectedGroup,
+    updateSelectedGroupName,
+    updateSelectedGroupDescription,
+  } = useUserContext();
   const userIsGroupAdmin = selectedGroup && selectedGroup.code;
   const groupMembers = useGetGroupMembers(groupId);
 
@@ -46,9 +50,12 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
       if (field === "name") {
         devLog("response", response);
         setName(response.data.editedGroup.name);
+        updateSelectedGroupName(response.data.editedGroup.name);
         devLog("groupname", name);
       } else if (field === "description") {
         setDescription(response.data.editedGroup.description);
+        updateSelectedGroupDescription(response.data.editedGroup.description);
+
         devLog("description", description);
       }
 
