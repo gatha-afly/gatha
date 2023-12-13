@@ -5,7 +5,7 @@ import { devLog } from "../utils/errorUtils";
 const baseURL =
   import.meta.env.MODE === "development"
     ? "http://localhost:3001/api"
-    : import.meta.env.VITE_REACT_APP_API_URL;
+    : import.meta.env.VITE_REACT_APP_BASE_URL;
 
 // Create axios instance
 export const userAPI = axios.create({
