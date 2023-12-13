@@ -25,9 +25,9 @@
 }
 
 .circle {
-  border: 0.5rem solid var(--color-main);
-  height: 5rem;
-  width: 5rem;
+  border: 0.3rem solid var(--color-main);
+  height: 2rem;
+  width: 2rem;
 }
 
 .initials {

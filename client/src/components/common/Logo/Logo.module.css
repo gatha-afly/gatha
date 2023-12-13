@@ -7,7 +7,7 @@
 /* Firefox mobile with keyboard and other very small screens*/
 @media only screen and (max-height: 500px) {
   .logo {
-    width: 4rem;
+    width: 2rem;
   }
 }
 

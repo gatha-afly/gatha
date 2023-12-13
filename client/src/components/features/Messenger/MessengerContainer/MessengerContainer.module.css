@@ -25,35 +25,35 @@
   font-weight: 900;
 }
 
-/* Firefox mobile with keyboard and other very small screens*/
-@media only screen and (max-height: 500px) {
-  .messengerContainer {
-    /* fallback value for older browsers*/
-    margin-left: 0rem;
-    height: 60vh;
-    height: 60svh;
-    width: 98vw;
-  }
-
-  .messages {
-    height: 50%;
-  }
-}
-
+/* mobile*/
 @media only screen and (max-width: 767px) {
   .messengerContainer {
-    /* fallback value for older browsers*/
-    margin-left: 0rem;
-    height: 85vh;
-    height: 85svh;
     width: 98vw;
+    margin-left: 0rem;
   }
 
-  .messages {
-    height: 78%;
+  /* Firefox mobile and very small screens */
+  @media only screen and (max-width: 500px) {
+    .messengerContainer {
+      height: 85vh;
+    }
+
+    .messages {
+      height: 50%;
+    }
+  }
+
+  /* Screens with max-width: 767px */
+  @media only screen and (min-width: 501px) and (max-width: 767px) {
+    .messengerContainer {
+      height: 85vh;
+    }
+
+    .messages {
+      height: 78%;
+    }
   }
 }
-
 /* Tablet*/
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
   .messengerContainer {
