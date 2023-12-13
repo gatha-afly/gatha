@@ -2,7 +2,7 @@
 
 Welcome to Gatha, your cutting-edge chat application that transforms communication into an art form. Crafted with care and powered by the latest technologies, Gatha invites you to embark on a journey of vibrant connections with family, friends, colleagues, and beyond. Simply create your personal account, and let the conversations unfold!
 
-## Key Features
+## 🔑 Key Features
 
 1. **User Authentication:** Create and secure personal accounts with robust authentication.
 2. **Group Chat Creation:** Establish collaborative discussions through group chats.
@@ -17,7 +17,7 @@ Welcome to Gatha, your cutting-edge chat application that transforms communicati
 11. **Emoji Expression:** Enrich conversations with a diverse range of emojis, available on desktop.
 12. **Description Editing:** Keep information current by easily editing group descriptions.
 
-## Technology Used
+## 🚀 Technology Used
 
 ### Client-Side Harmony:
 
@@ -41,7 +41,7 @@ Welcome to Gatha, your cutting-edge chat application that transforms communicati
 - **nanoId:** Generating unique and concise IDs effortlessly.
 - **jwt:** Sealing the bond of trust with JSON Web Tokens.
 
-## Getting Started
+## 🛠️ Getting Started
 
 1. **Clone the Repository:** [gatha]("https://github.com/gatha-afly/gatha")
 2. **Install Dependencies:**
@@ -59,7 +59,7 @@ Welcome to Gatha, your cutting-edge chat application that transforms communicati
      npm install
      ```
 
-### Configuring the Environment
+### 🛠️ Configuring the Environment
 
 1. **Client Configuration:**
 
@@ -70,7 +70,7 @@ Welcome to Gatha, your cutting-edge chat application that transforms communicati
    - Create a `.env` file in the `server` directory.
    - Include configurations for MongoDB connection, JWT secret, etc.
 
-### Running the Application
+### 🚀 Running the Application
 
 1. **Start the client:**
 
@@ -87,7 +87,7 @@ Welcome to Gatha, your cutting-edge chat application that transforms communicati
      ```
    - The `server` will run at `http://localhost:3001`.
 
-### Contributing
+### 🤝 Contributing
 
 Contributions to the Yoga with Sheetal website project are welcome. If you would like to contribute, please follow these steps:
 
@@ -97,7 +97,7 @@ Contributions to the Yoga with Sheetal website project are welcome. If you would
 4. Push to the branch: `git push origin your-branch`
 5. Submit a `pull` request.
 
-## Contributors
+## 🙌 Contributors
 
 The following individuals have contributed to the development of this project:
 
@@ -129,6 +129,6 @@ The following individuals have contributed to the development of this project:
   </tbody>
 </table>
 
-## License
+## 📄 License
 
 The Yoga, Meditation, and Counseling website project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
