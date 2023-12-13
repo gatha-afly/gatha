@@ -33,7 +33,7 @@ const CopyToClipboard = ({ infoToCopy, inputFieldWidth = "fit-content" }) => {
 
       {/* Hidden input field for copying text */}
       <input
-        type="text"
+        type='text'
         value={infoToCopy}
         readOnly
         style={{ position: "absolute", left: "-9999px" }}
