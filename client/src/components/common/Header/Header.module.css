@@ -58,6 +58,13 @@
   border-radius: 1rem;
 }
 
+/* Firefox mobile with keyboard and other very small screens*/
+@media only screen and (max-height: 500px) {
+  .header a {
+    padding: 0.1rem;
+  }
+}
+
 /* Mobile*/
 @media only screen and (max-width: 767px) {
   .header a {

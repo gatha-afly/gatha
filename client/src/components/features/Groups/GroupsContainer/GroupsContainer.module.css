@@ -33,6 +33,23 @@
   height: 6%;
 }
 
+/* Firefox mobile with keyboard and other very small screens*/
+@media only screen and (max-height: 500px) {
+  .groupsContainer {
+    /* fallback value for older browsers*/
+    height: 70vh;
+    height: 70svh;
+    width: 98vw;
+    overflow-y: auto;
+  }
+  .groupBar {
+    height: 20%;
+  }
+  .groupsList {
+    height: 70%;
+  }
+}
+
 /* Mobile*/
 @media only screen and (max-width: 767px) {
   .groupsContainer {

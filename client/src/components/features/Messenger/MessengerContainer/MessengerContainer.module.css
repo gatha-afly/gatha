@@ -25,6 +25,21 @@
   font-weight: 900;
 }
 
+/* Firefox mobile with keyboard and other very small screens*/
+@media only screen and (max-height: 500px) {
+  .messengerContainer {
+    /* fallback value for older browsers*/
+    margin-left: 0rem;
+    height: 60vh;
+    height: 60svh;
+    width: 98vw;
+  }
+
+  .messages {
+    height: 50%;
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .messengerContainer {
     /* fallback value for older browsers*/
