@@ -6,11 +6,11 @@ import {
 } from "../../helpers/userHelper.js";
 
 export const validateUserRules = [
-  //Sanitize and validate the firstname and lastname
+  //Sanitize and validate the first name and last name
 
   body(["firstName", "lastName"])
     .trim()
-    .isAlpha("en-GB", { ignore: "" }) //ignores the sapces
+    .isAlpha("en-GB", { ignore: "" }) //ignores the spaces
     .customSanitizer((value) => uppercaseFirstLetter(value))
     .withMessage("The first name and last name shouldn't contain numbers"),
 

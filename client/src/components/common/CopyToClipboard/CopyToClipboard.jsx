@@ -1,5 +1,7 @@
 import React, { useState, useRef } from "react";
 import styles from "./CopyToClipboard.module.css";
+import ReactIconNavigate from "../../common/ReactIconNavigate/ReactIconNavigate";
+import { FaCopy } from "react-icons/fa";
 
 /**
  * Allows for rendering information and easily copying it to the clipboard, providing an instruction to copy and related feedback to the user
@@ -16,27 +18,27 @@ const CopyToClipboard = ({ infoToCopy, inputFieldWidth = "fit-content" }) => {
     document.execCommand("copy");
     inputRef.current.blur();
     setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
   };
 
   return (
-    <div>
+    <div className={styles.container}>
+      <div className={styles.groupCodeContainer} onClick={handleCopyClick}>
+        <p className={styles.groupCode}>{infoToCopy}</p>
+        <ReactIconNavigate icon={FaCopy} size={1.6} margin={0} />
+      </div>
+
+      {/* Display "Copied!" message when isCopied is true */}
+      {isCopied && <span className={styles.feedbackMessage}>Copied!</span>}
+
+      {/* Hidden input field for copying text */}
       <input
-        className={styles.inputField}
         type='text'
         value={infoToCopy}
-        readOnly // Make the input field read-only
-        style={{ width: inputFieldWidth }}
+        readOnly
+        style={{ position: "absolute", left: "-9999px" }}
         ref={inputRef}
       />
-      <br />
-      <button
-        className={styles.button}
-        onClick={handleCopyClick}
-        disabled={isCopied} // Disable the button if 'isCopied' is true
-      >
-        {/* Display "Copied!" or "Copy to Clipboard" based on 'isCopied' */}
-        {isCopied ? "Copied!" : "Copy to Clipboard"}{" "}
-      </button>
     </div>
   );
 };

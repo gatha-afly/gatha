@@ -51,14 +51,16 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
     <div className={styles.leaveGroupContainer}>
       <button onClick={toggleConfirmationDialog}>Leave group</button>
       {/* Render confirmation dialog*/}
-      <ConfirmationDialog
-        showConfirmation={showConfirmation}
-        onConfirm={handleLeaveGroup}
-        onCancel={hideConfirmationDialog}
-        message='Are you sure you want to leave the group?'
-        confirmText='yes'
-        cancelText='no'
-      />
+      <div className={styles.confirmationDialog}>
+        <ConfirmationDialog
+          showConfirmation={showConfirmation}
+          onConfirm={handleLeaveGroup}
+          onCancel={hideConfirmationDialog}
+          message='Are you sure you want to leave the group?'
+          confirmText='yes'
+          cancelText='no'
+        />
+      </div>
       {/* Display an error message if there's an error */}
       {error && <ErrorDisplay error={error} />}
     </div>

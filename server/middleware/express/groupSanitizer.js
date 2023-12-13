@@ -14,5 +14,5 @@ export const validateGroupRules = [
     .trim()
     .customSanitizer((value) => uppercaseFirstLetter(value))
     .isLength({ max: 100 })
-    .withMessage("Group description must be at most 50 characters long"),
+    .withMessage("Group description can't be longer than 100 characters"),
 ];
