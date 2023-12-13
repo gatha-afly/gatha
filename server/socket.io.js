@@ -6,11 +6,7 @@ import setupSocketIO from "./config/setupSocketIO.js";
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: [
-      "http://localhost:3000",
-      "https://gatha-dev.netlify.app",
-      "https://gatha.netlify.app",
-    ],
+    origin: ["http://localhost:3000", "https://gatha.netlify.app"],
     methods: ["HEAD", "GET", "POST", "PATCH", "DELETE", "PUT"],
     credentials: true,
   },
