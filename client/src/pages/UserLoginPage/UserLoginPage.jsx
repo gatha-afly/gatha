@@ -5,6 +5,12 @@ import PiratePxPageRender from "../../components/common/PiratePxPageRender/Pirat
 import useNavigateToMainIfUserIsLoggedIn from "../../hooks/useNavigateToMainIfUserIsLoggedIn";
 import styles from "./UserLoginPage.module.css";
 
+/**
+ *
+ * Renders the login form and provides a link to the registration page.
+ *
+ * @returns {JSX.Element} The rendered UserLoginPage component.
+ */
 const UserLoginPage = () => {
   // Don't render page for loggedIn users, navigate to main instead.
   const checkComplete = useNavigateToMainIfUserIsLoggedIn();

@@ -26,6 +26,9 @@ const ReactIconNavigate = ({
   tooltip,
   tooltipSize = 2,
 }) => {
+  // State to manage tooltip visibility
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
   // Access navigation function
   const navigate = useNavigate();
 
@@ -34,9 +37,8 @@ const ReactIconNavigate = ({
     navigate(route);
   };
 
-  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-
   return (
+    // Container for the icon with tooltip
     <div
       className={styles.iconContainer}
       onMouseEnter={() => setIsTooltipVisible(true)}
@@ -48,7 +50,7 @@ const ReactIconNavigate = ({
           {tooltip}
         </div>
       )}
-
+      {/* Render React icon  */}
       <IconComponent
         onClick={onClick || navigateToRoute}
         className={styles.customIcon}

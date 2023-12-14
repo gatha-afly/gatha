@@ -4,7 +4,7 @@ import { devLog } from "../utils/errorUtils";
 import useUserContext from "./useUserContext";
 
 /**
- * Fetches user data and then updates user data in context and localStorage.
+ * Fetches user data and then updates user data in context.
  *
  * @returns {Object} An object containing the `fetchUserUpdates` function,
  * loading state, and error state.

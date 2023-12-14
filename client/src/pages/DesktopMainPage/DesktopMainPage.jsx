@@ -21,7 +21,7 @@ const DesktopMainPage = () => {
     fetchUserUpdates();
   }, [fetchUserUpdates]);
 
-  // FetchUserUpdates every 60 seconds
+  // FetchUserUpdates every 60 seconds to keep UI in sync with server
   useEffect(() => {
     const intervalId = setInterval(() => {
       fetchUserUpdates();

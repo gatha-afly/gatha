@@ -12,9 +12,11 @@ const ErrorDisplay = ({ error, remWidth = 20 }) => {
     return null;
   }
 
+  // Determine the error message to display
   const errorMessage =
     typeof error === "string" ? error : error.message || "An error occurred";
 
+  // Style object for setting the width of the error message container
   const style = {
     width: `${remWidth}rem`,
   };

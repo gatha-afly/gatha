@@ -5,6 +5,12 @@ import Logo from "../Logo/Logo";
 import HamburgerMenu from "../HamburgerMenu/Menu/HamburgerMenu";
 import useUserContext from "../../../hooks/useUserContext";
 
+/**
+ * Header Component - Displays the header with a logo, login/logout button, and hamburger menu.
+ *
+ * @component
+ * @returns {JSX.Element} - Returns the JSX element representing the Header.
+ */
 const Header = () => {
   const { loggedIn, user } = useUserContext();
 

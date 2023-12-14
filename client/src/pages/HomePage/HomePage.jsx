@@ -6,6 +6,11 @@ import { Link } from "react-router-dom";
 import ApplicationImage from "../../components/features/ApplicationImage/ApplicationImage";
 import useNavigateToMainIfUserIsLoggedIn from "../../hooks/useNavigateToMainIfUserIsLoggedIn";
 
+/**
+ * Home page of the Gatha application.
+ * Renders information about the chat application and encourages user registration *
+ * @returns {JSX.Element} The rendered home page component.
+ */
 const HomePage = () => {
   // Don't render page for loggedIn users, navigate to main instead.
   const checkComplete = useNavigateToMainIfUserIsLoggedIn();

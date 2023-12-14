@@ -6,6 +6,10 @@
   width: 20rem;
 }
 
+.successMessage {
+  text-align: center;
+}
+
 .checkbox {
   height: 1.4rem;
   width: 1.4rem;

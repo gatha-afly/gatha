@@ -10,6 +10,7 @@ import { useState } from "react";
  * @property {function} hideConfirmationDialog - Function to hide the confirmation dialog.
  */
 const useConfirmationDialog = () => {
+  // State to manage the visibility of the confirmation dialog
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const toggleConfirmationDialog = () => {
@@ -24,6 +25,7 @@ const useConfirmationDialog = () => {
     setShowConfirmation(false);
   };
 
+  // Return the state and functions for managing the confirmation dialog
   return {
     showConfirmation,
     toggleConfirmationDialog,

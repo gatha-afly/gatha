@@ -21,7 +21,7 @@ const GroupnameInitial = ({
 
   return (
     <div className={styles.initialContainer}>
-      {/* Display the initial inside a circle */}
+      {/* Circle element with dynamic styles */}
       <div
         className={styles.circle}
         style={{

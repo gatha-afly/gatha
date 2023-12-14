@@ -5,11 +5,16 @@ import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import { devLog } from "../../../utils/errorUtils";
 import useUserContext from "../../../hooks/useUserContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useState } from "react";
+import Spinner from "../../common/Spinner/Spinner";
 
 const UserLoginForm = () => {
   // Access user context and navigation functions
   const { loginUser, error } = useUserContext();
   const navigate = useNavigate();
+
+  // States for loading
+  const [loading, setLoading] = useState(false);
 
   // Use custom hook for managing password visibility
   const { passwordVisible, togglePasswordVisibility } = usePasswordVisibility();
@@ -17,7 +22,8 @@ const UserLoginForm = () => {
   // Handle form submission
   const handleLogin = async (e) => {
     e.preventDefault();
-
+    // Set loading to true
+    setLoading(true);
     // Extract form data
     const formData = new FormData(e.target);
     const data = {
@@ -28,10 +34,12 @@ const UserLoginForm = () => {
     try {
       // Attempt user login
       await loginUser(data);
+      setLoading(false);
       // Navigate to the main page on successful login
       navigate("/main");
     } catch (error) {
-      // Handle login errors and update error state for user feedback
+      setLoading(false);
+      // Handle login errors
       devLog(error);
     }
   };
@@ -62,12 +70,16 @@ const UserLoginForm = () => {
           {passwordVisible ? <FaEyeSlash /> : <FaEye />}
         </span>
       </div>
-      {/* Display error message if present */}
-      <ErrorDisplay error={error} />
-      {/* Login button */}
-      <button type='submit' className={styles.loginButton}>
-        Login
-      </button>
+      {/* Conditionally render Spinner*/}
+      {loading && <Spinner />}
+      {/* Conditionally render error message received from the server */}
+      {error && <ErrorDisplay error={error} />}
+      {/* Conditionally render Login button */}
+      {!loading && (
+        <button type='submit' className={styles.loginButton}>
+          Login
+        </button>
+      )}
     </form>
   );
 };

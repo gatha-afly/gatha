@@ -8,7 +8,7 @@ import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
 
 /**
  *
- * Renders the messenger interface for mobile devices.
+ * Messenger page for mobile devices.
  * @returns {JSX.Element} - The JSX element representing the mobile messenger page.
  */
 const MobileMessengerPage = () => {
