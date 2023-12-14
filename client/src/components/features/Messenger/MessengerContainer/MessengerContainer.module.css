@@ -9,10 +9,11 @@
     0 0.6rem 1.2rem var(--color-shadow-dark);
   margin-left: 0.5rem;
   margin-right: 0.5rem;
+  overflow-y: auto;
 }
 
 .messages {
-  height: 83.5%;
+  height: 80%;
   overflow-y: auto;
 }
 
@@ -26,6 +27,19 @@
   font-weight: 900;
 }
 
+/* styles for older iPhones */
+@media only screen and (max-width: 320px) {
+  .messengerContainer {
+    /* fallback value for older browsers*/
+    height: 80vh;
+    height: 80svh;
+    width: 98vw;
+  }
+  .messages {
+    height: 60%;
+  }
+}
+
 /* mobile*/
 @media only screen and (max-width: 767px) {
   .messengerContainer {
@@ -33,10 +47,9 @@
     height: 85vh;
     height: 85svh;
     width: 98vw;
-    overflow-y: auto;
   }
   .messages {
-    height: 72%;
+    height: 70%;
   }
 }
 /* Tablet*/

@@ -4,7 +4,6 @@ import PiratePxPageRender from "../../components/common/PiratePxPageRender/Pirat
 import GroupsContainer from "../../components/features/Groups/GroupsContainer/GroupsContainer";
 import useUpdateUserData from "../../hooks/useUpdateUser";
 import { useEffect } from "react";
-import ErrorDisplay from "../../components/common/ErrorDisplay/ErrorDisplay";
 import useUserContext from "../../hooks/useUserContext";
 
 /**
