@@ -2,10 +2,18 @@
 
 MERN stack group chat application utilizing socket.io, enabling bidirectional communication between clients and the server.
 
+### Desktop
+
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
-  <img src="./client/public/logo-with-slogan-w-background.png" alt="App screenshot1" width="200px">
-  <img src="./client/public/app-image2.png" alt="App screenshot2" width="200px">
-    <img src="./client/public/app-image3.png" alt="App screenshot3" width="200px">
+  <img src="./client/public/desktop.png" alt="App screenshot1" width="600px">
+</div>
+
+### Mobile
+
+<div style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+  <img src="./client/public/mobile3.png" alt="App screenshot1" width="200px">
+  <img src="./client/public/mobile2.png" alt="App screenshot2" width="200px">
+  <img src="./client/public/mobile1.png" alt="App screenshot3" width="200px">
 </div>
 
 ## Project

@@ -8,6 +8,7 @@ import {
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
 import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
 import styles from "./UserRegistration.module.css";
+import Spinner from "../../common/Spinner/Spinner";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 /**
@@ -21,8 +22,9 @@ const UserRegistration = () => {
   const navigate = useNavigate();
   // Ref for autofocus
   const inputRef = useRef(null);
-  // States for password mismatch and errors
+  // States for password mismatch, loading and error
   const [passwordMismatch, setPasswordMismatch] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // Use custom hook for managing password visibility
@@ -36,6 +38,8 @@ const UserRegistration = () => {
   // Form submission handler
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    // Set loading to true
+    setLoading(true);
 
     // Extract form data
     const formData = new FormData(e.target);
@@ -64,6 +68,8 @@ const UserRegistration = () => {
       // Navigate to the login page on successful registration
       navigate("/user-login");
     } catch (error) {
+      // Set loading to false
+      setLoading(false);
       handleOtherErrors(error, setError, "Error creating user.", "create-user");
       handleServerErrors(error, setError);
     }
@@ -74,34 +80,34 @@ const UserRegistration = () => {
       {/* Input fields for user information */}
       <div>
         <input
-          type="text"
-          name="firstName"
-          placeholder="First name"
+          type='text'
+          name='firstName'
+          placeholder='First name'
           ref={inputRef} // Ref for autofocus
           required
         />
       </div>
 
       <div>
-        <input type="text" name="lastName" placeholder="Last name" required />
+        <input type='text' name='lastName' placeholder='Last name' required />
       </div>
 
       <div>
         <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          autoComplete="nope"
+          type='text'
+          name='username'
+          placeholder='Username'
+          autoComplete='nope'
           required
         />
       </div>
 
       <div>
         <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          autoComplete="email"
+          type='email'
+          name='email'
+          placeholder='Email'
+          autoComplete='email'
           required
         />
       </div>
@@ -109,14 +115,13 @@ const UserRegistration = () => {
       <div className={styles.passwordContainer}>
         <input
           type={passwordVisible ? "text" : "password"}
-          placeholder="Password"
-          name="password"
+          placeholder='Password'
+          name='password'
           required
         />
         <span
           className={styles.togglePasswordIcon}
-          onClick={togglePasswordVisibility}
-        >
+          onClick={togglePasswordVisibility}>
           {passwordVisible ? <FaEyeSlash /> : <FaEye />}
         </span>
       </div>
@@ -125,14 +130,13 @@ const UserRegistration = () => {
       <div className={styles.passwordContainer}>
         <input
           type={passwordVisible ? "text" : "password"}
-          name="confirm-password"
-          placeholder="Confirm password"
+          name='confirm-password'
+          placeholder='Confirm password'
           required
         />
         <span
           className={styles.togglePasswordIcon}
-          onClick={togglePasswordVisibility}
-        >
+          onClick={togglePasswordVisibility}>
           {passwordVisible ? <FaEyeSlash /> : <FaEye />}
         </span>
       </div>
@@ -141,10 +145,12 @@ const UserRegistration = () => {
         <p className={styles.errorMessage}>Entered passwords do not match.</p>
       )}
 
+      {/* Conditionally render Spinner*/}
+      {loading && <Spinner />}
       {/* Conditionally render error message received from the server */}
-      <ErrorDisplay error={error} />
+      {error && <ErrorDisplay error={error} />}
       {/* Submit button for form submission */}
-      <button type="submit">Register</button>
+      {!loading && <button type='submit'>Register</button>}
     </form>
   );
 };
