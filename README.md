@@ -18,7 +18,7 @@ MERN stack group chat application utilizing socket.io, enabling bidirectional co
 
 ## Project
 
-Gatha is the final project of our Web Dev class at [DCI](https://digitalcareerinstitute.org/courses/web-development/). Our goal, as a group of 3 students within the 7-week project timeframe, was to deliver a functional chat application that our classmates could use on the day of the final presentation (December 14, 2023). We also aimed at writing DRY, clean and well-documented code.
+Gatha is the final project of our Web Dev class at [DCI](https://digitalcareerinstitute.org/courses/web-development/). Our goal, as a group of 3 students within the 7-week project timeframe, was to deliver a functional chat application that our classmates could use on the day of the final presentation (December 14, 2023). We also aimed at writing DRY, clean and well-documented code. As a team, we are proud of the results and have decided to leave the project as is. If you are interested in our presentation slides, you can view them [here](./client/public/Gatha-GetTogetha.pdf)
 
 ## Technologies
 
