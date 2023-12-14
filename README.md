@@ -27,7 +27,7 @@ Gatha is the final project of our Web Dev class at [DCI](https://digitalcareerin
 
 ## Demo
 
-Access the application [here](https://gatha.netlify.app/). Optionally, join our public demo group by entering group code XXXXXXX from within the application.
+Access the application [here](https://gatha.netlify.app/). Optionally, join our public demo group by entering group code 'YAZKQGRY' from within the application.
 
 ## Team
 

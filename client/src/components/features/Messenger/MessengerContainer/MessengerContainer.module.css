@@ -7,6 +7,8 @@
   position: relative;
   box-shadow: 0 0.4rem 0.8rem var(--color-shadow-dark),
     0 0.6rem 1.2rem var(--color-shadow-dark);
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
 }
 
 .messages {
