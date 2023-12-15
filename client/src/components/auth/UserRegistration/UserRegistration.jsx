@@ -78,6 +78,7 @@ const UserRegistration = () => {
     } catch (error) {
       // Set loading to false
       setLoading(false);
+      setRegistrationSuccess(false);
       handleOtherErrors(error, setError, "Error creating user.", "create-user");
       handleServerErrors(error, setError);
     }
