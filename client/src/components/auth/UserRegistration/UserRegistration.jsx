@@ -170,11 +170,14 @@ const UserRegistration = () => {
           </p>
         )}
       </form>
-      {!registrationSuccess && (
-        <p>
-          Already signed up? <Link to='/user-login'>Login</Link>
-        </p>
-      )}
+      {/* Don't render login link while loading and upon successful registration*/}
+
+      {loading ||
+        (!registrationSuccess && !loading && (
+          <p>
+            Already signed up? <Link to='/user-login'>Login</Link>
+          </p>
+        ))}
     </>
   );
 };
