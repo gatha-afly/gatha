@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import UserLogin from "../../components/auth/UserLoginForm/UserLoginForm";
+import UserLoginForm from "../../components/auth/UserLoginForm/UserLoginForm";
 import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
 import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
 import useNavigateToMainIfUserIsLoggedIn from "../../hooks/useNavigateToMainIfUserIsLoggedIn";
@@ -26,10 +25,7 @@ const UserLoginPage = () => {
       {/* Set page title and meta tags */}
       <HelmetMetaTagsNetlify title='gatha - login' />
       <h1>Login</h1>
-      <UserLogin />
-      <p>
-        No account yet? <Link to='/user-registration'>Register</Link>
-      </p>
+      <UserLoginForm />
     </main>
   );
 };

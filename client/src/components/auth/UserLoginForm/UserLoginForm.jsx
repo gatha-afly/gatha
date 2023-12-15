@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
 import styles from "./UserLoginForm.module.css";
 import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
@@ -45,42 +45,49 @@ const UserLoginForm = () => {
   };
 
   return (
-    <form className={styles.loginForm} onSubmit={handleLogin}>
-      {/* Email input */}
-      <input
-        type='text'
-        placeholder='Email'
-        name='email'
-        required
-        className={styles.loginInput}
-      />
-      {/* Password input with eye icon */}
-      <div className={styles.passwordContainer}>
+    <>
+      <form className={styles.loginForm} onSubmit={handleLogin}>
+        {/* Email input */}
         <input
-          type={passwordVisible ? "text" : "password"}
-          placeholder='Password'
-          name='password'
+          type='text'
+          placeholder='Email'
+          name='email'
           required
           className={styles.loginInput}
         />
-        {/* Toggle password visibility icon */}
-        <span
-          className={styles.togglePasswordIcon}
-          onClick={togglePasswordVisibility}>
-          {passwordVisible ? <FaEyeSlash /> : <FaEye />}
-        </span>
-      </div>
-      {/* Conditionally render Spinner*/}
-      {loading && <Spinner />}
-      {/* Conditionally render error message received from the server */}
-      {error && <ErrorDisplay error={error} />}
-      {/* Conditionally render Login button */}
+        {/* Password input with eye icon */}
+        <div className={styles.passwordContainer}>
+          <input
+            type={passwordVisible ? "text" : "password"}
+            placeholder='Password'
+            name='password'
+            required
+            className={styles.loginInput}
+          />
+          {/* Toggle password visibility icon */}
+          <span
+            className={styles.togglePasswordIcon}
+            onClick={togglePasswordVisibility}>
+            {passwordVisible ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+        {/* Conditionally render Spinner*/}
+        {loading && <Spinner />}
+        {/* Conditionally render error message received from the server */}
+        {error && <ErrorDisplay error={error} />}
+        {/* Conditionally render Login button */}
+        {!loading && (
+          <button type='submit' className={styles.loginButton}>
+            Login
+          </button>
+        )}
+      </form>
       {!loading && (
-        <button type='submit' className={styles.loginButton}>
-          Login
-        </button>
+        <p>
+          No account yet? <Link to='/user-registration'>Register</Link>
+        </p>
       )}
-    </form>
+    </>
   );
 };
 

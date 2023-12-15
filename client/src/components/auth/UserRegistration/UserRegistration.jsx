@@ -74,7 +74,7 @@ const UserRegistration = () => {
       // Wait for 5 seconds before navigating to login
       setTimeout(() => {
         navigate("/user-login");
-      }, 5000);
+      }, 4000);
     } catch (error) {
       // Set loading to false
       setLoading(false);
@@ -159,13 +159,14 @@ const UserRegistration = () => {
         {/* Conditionally render error message received from the server */}
         {error && <ErrorDisplay error={error} />}
         {/* Don't render form submission button while loading and upon successful registration*/}
-        {!registrationSuccess && (loading || !loading) && (
-          <button type='submit'>Register</button>
-        )}
+        {loading ||
+          (!registrationSuccess && !loading && (
+            <button type='submit'>Register</button>
+          ))}
         {/* Conditionally render improved success message */}
         {registrationSuccess && (
           <p className={styles.successMessage}>
-            Registration successful. Redirecting you to the login page...
+            Registration successful. Redirecting to login page...
           </p>
         )}
       </form>
