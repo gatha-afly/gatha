@@ -11,6 +11,12 @@ import { devLog } from "../../../../utils/errorUtils";
 import useUserContext from "../../../../hooks/useUserContext";
 import MessageItem from "../MessageItem/MessageItem";
 
+/**
+ * Component for rendering chat messages.
+ * @component
+ * @param {Object} selectedGroup - The selected group information.
+ * @returns {JSX.Element} - The rendered component.
+ */
 function RenderMessages({ selectedGroup }) {
   // Get user from context
   const { user } = useUserContext();
@@ -35,7 +41,7 @@ function RenderMessages({ selectedGroup }) {
     // Connect to the socket
     socket.connect();
 
-    // Define the fetchMessages function
+    // fetchMessages from server
     const fetchMessages = async () => {
       try {
         const response = await userAPI.get(
@@ -54,7 +60,7 @@ function RenderMessages({ selectedGroup }) {
     // Fetch the messages initially when the component mounts
     fetchMessages();
 
-    // Set up an interval to fetch messages every 60 seconds
+    // Set up an interval to fetch messages every 60 seconds (mainly to re-rerender deleted messages)
     const intervalId = setInterval(fetchMessages, 60000);
 
     // Clear the interval and disconnect the socket when the component is unmounted
@@ -65,10 +71,11 @@ function RenderMessages({ selectedGroup }) {
   }, [selectedGroup.groupId]);
 
   useEffect(() => {
+    // Handler for receiving new messages from the socket
     const handleNewMessage = ({ text: newMessage, groupId }) => {
       devLog("Received new message:", newMessage);
       devLog("Selected Group ID:", selectedGroup?.groupId);
-
+      // Check if the received message belongs to the currently selected group
       if (groupId === selectedGroup?.groupId) {
         setMessages((prevMessages) => [...prevMessages, newMessage]);
       }
@@ -83,11 +90,12 @@ function RenderMessages({ selectedGroup }) {
       devLog("Online user event received", onlineUsers);
     };
 
-    // Listen for initialization and new messages
+    // Listen for initialization, new messages and online users
     socket.on("init", handleNewMessage);
     socket.on("receive_message", handleNewMessage);
     socket.on("get_online_users", handleOnlineUsers);
 
+    // Clean up by removing the handlers when the component is unmounted
     return () => {
       socket.off("init", handleNewMessage);
       socket.off("receive_message", handleNewMessage);
@@ -96,16 +104,19 @@ function RenderMessages({ selectedGroup }) {
   }, [selectedGroup?.groupId]);
 
   return (
+    // Render spinner while messages are fetched from the database
     <>
       {isLoading ? (
         <div className={styles.spinner}>
           <Spinner />
         </div>
       ) : (
+        // Render messages or error display once loading is complete
         <>
           {error ? (
             <ErrorDisplay error={error} />
           ) : (
+            // Always render latest message
             <ScrollContentToBottomContainer>
               <ul className={styles.messagesContainer}>
                 {messages.map((msg) => (

@@ -85,7 +85,7 @@ const GroupsContainer = () => {
                   />
                 ))
               ) : (
-                // Display message when there are no or only one group
+                // Display cta message when user has no groups
                 <p className={styles.cta}>
                   To get started, either create or join a group.
                   <div>

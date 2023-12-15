@@ -7,7 +7,7 @@ import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNaviga
 import styles from "./DeleteMessage.module.css";
 
 /**
- * DeleteMessage component for deleting a message.
+ * Component for deleting a message.
  * @param {Object} props - Component props.
  * @param {string} props.messageId - The ID of the message to be deleted.
  * @param {string} props.senderId - The ID of the message sender.
@@ -17,6 +17,7 @@ import styles from "./DeleteMessage.module.css";
 const DeleteMessage = ({ messageId, senderId, updateIsNotDeleted }) => {
   // State to manage the visibility of the confirmation dialog
   const [showConfirmation, setShowConfirmation] = useState(false);
+
   const handleDeleteMessage = async () => {
     try {
       const response = await userAPI.patch(

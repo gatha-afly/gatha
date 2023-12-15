@@ -15,7 +15,8 @@ import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNav
 import { FaEdit } from "react-icons/fa";
 
 /**
- * Container for rendering group settings
+ * Container component for rendering group settings.
+ * @component
  * @param {Object} props - Component props.
  * @param {function} props.onDefaultViewClick - Callback to set the default view.
  * @returns {JSX.Element} - Rendered component.
@@ -38,7 +39,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
   const [name, setName] = useState(selectedGroup.name);
   const [description, setDescription] = useState(selectedGroup.description);
 
-  // Function to handle changing group details
+  // Handles changing group details (name or description) based on the edited field.
   const handleChangeGroupDetails = async (editedValue, field) => {
     try {
       const response = await userAPI.patch(
@@ -46,7 +47,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
         { [field]: editedValue }
       );
 
-      // Update the state with the new values from the response
+      // Update state and context with the new values from the response
       if (field === "name") {
         devLog("response", response);
         setName(response.data.editedGroup.name);
@@ -121,8 +122,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
             ) : (
               <p
                 className={styles.info}
-                onClick={() => setEditingDescription(true)}
-              >
+                onClick={() => setEditingDescription(true)}>
                 {description ? description : "No group description entered."}
                 <span className={styles.icon}>
                   <ReactIconNavigate icon={FaEdit} size={1.6} margin={0} />
@@ -148,7 +148,7 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
           </div>
         </>
       )}
-
+      {/*  Display group code for group admin*/}
       {userIsGroupAdmin && (
         <div className={styles.groupCode}>
           <h2>group code:</h2>

@@ -12,11 +12,15 @@ import { isMobile } from "../../../../../utils/deviceUtils";
 
 /**
  * Renders a button allowing the user to leave a group.
- * @param {string} groupId - ID of the group.
- * @param {string} userId - ID of the user.
- * @param {Function} onLeaveGroup - Callback function to handle leaving the group.
+ * @component
+ * @param {Object} props - Component props.
+ * @param {string} props.groupId - ID of the group.
+ * @param {string} props.userId - ID of the user.
+ * @param {function} props.onDefaultViewClick - Callback to set the default view.
+ * @returns {JSX.Element} - Rendered component.
  */
 const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
+  // Access necessary context and hooks
   const { deleteSelectedGroup } = useUserContext();
   const { fetchUserUpdates } = useUpdateUserData();
   const [error, setError] = useState("");
@@ -25,13 +29,14 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
   // Use the useConfirmationDialog hook for ConfirmationDialog component
   const { showConfirmation, toggleConfirmationDialog, hideConfirmationDialog } =
     useConfirmationDialog();
-
+  // Handles the leave group action, sends a PATCH request to the serve
   const handleLeaveGroup = async () => {
     try {
       const response = await userAPI.patch(
         `/groups/leave-group/${groupId}/${userId}`
       );
       devLog(response);
+      // Update user data and delete selected group from context
       fetchUserUpdates();
       deleteSelectedGroup();
       // Navigate to main for mobile devices, else set view back to default
@@ -49,8 +54,9 @@ const LeaveGroup = ({ groupId, userId, onDefaultViewClick }) => {
 
   return (
     <div className={styles.leaveGroupContainer}>
+      {/* Button to trigger the confirmation dialog */}
       <button onClick={toggleConfirmationDialog}>Leave group</button>
-      {/* Render confirmation dialog*/}
+      {/* Render confirmation dialog */}
       <div className={styles.confirmationDialog}>
         <ConfirmationDialog
           showConfirmation={showConfirmation}

@@ -8,11 +8,13 @@ import { isMobile } from "../../../../../utils/deviceUtils";
 import useUserContext from "../../../../../hooks/useUserContext";
 
 /**
- * Bar to host selected group related information and functionalities
- * @param {Object} props - The component props.
+ * Bar component to display selected group-related information and functionalities.
+ * @component
+ * @param {Object} props - Component props.
  * @param {string} props.view - The current view ("default" or "groupSettings").
  * @param {Object} props.selectedGroup - The currently selected group by the user.
- * @param {Function} props.onGroupSettingsClick - Callback function for handling group settings click.
+ * @param {Function} props.onSettingsClick - Callback function for handling group settings click.
+ * @param {Function} props.onBackClick - Callback function for handling back button click.
  * @returns {JSX.Element} - The rendered component.
  */
 function GroupSettingBar({
@@ -21,6 +23,7 @@ function GroupSettingBar({
   onSettingsClick,
   onBackClick,
 }) {
+  // Extract the name of the selected group from user context
   const { name } = useUserContext().selectedGroup;
 
   return (
@@ -28,6 +31,7 @@ function GroupSettingBar({
       {/* Render content based on the view prop */}
       {view === "default" && (
         <>
+          {/* Render mobile home icon if the device is mobile */}
           {isMobile && (
             <span className={styles.mobileHome}>
               <ReactIconNavigate
@@ -38,11 +42,11 @@ function GroupSettingBar({
               />
             </span>
           )}
-
+          {/* Placeholder correct element alignment */}
           <span></span>
-
+          {/* Display the group name */}
           <h2 className={styles.groupName}>{name}</h2>
-
+          {/* Render settings icon */}
           <span className={styles.settings}>
             <ReactIconNavigate
               onClick={onSettingsClick}
@@ -56,7 +60,9 @@ function GroupSettingBar({
 
       {view === "groupSettings" && (
         <>
+          {/* Display the title for the group settings view */}
           <h2>group settings</h2>
+          {/* Render back icon with callback function for navigating back */}
           <div className={styles.backIcon}>
             <ReactIconNavigate
               onClick={onBackClick}

@@ -13,9 +13,12 @@ import styles from "./GroupDetailsEditor.module.css";
  * @returns {JSX.Element} - The rendered component.
  */
 const GroupDetailsEditor = ({ value, onSave, onCancel, maxCharacters }) => {
+  // State to manage the edited value in the input field
   const [editedValue, setEditedValue] = useState(value);
+  // State to handle error messages
   const [error, setError] = useState(null);
 
+  // save edited details
   const handleSave = async () => {
     // Check if the editedValue is empty
     if (!editedValue.trim()) {
@@ -28,6 +31,9 @@ const GroupDetailsEditor = ({ value, onSave, onCancel, maxCharacters }) => {
     await onSave(editedValue);
   };
 
+  /**
+   * Trigger save action when Enter key is pressed.
+   */
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       handleSave();
@@ -36,6 +42,7 @@ const GroupDetailsEditor = ({ value, onSave, onCancel, maxCharacters }) => {
 
   return (
     <div className={styles.groupDetailsEditor}>
+      {/* Input container for editing group details */}
       <div className={styles.inputContainer}>
         <input
           type='text'
@@ -45,6 +52,7 @@ const GroupDetailsEditor = ({ value, onSave, onCancel, maxCharacters }) => {
           maxLength={maxCharacters}
         />
       </div>
+      {/* Display an error message if there's an error */}
       {error && <ErrorDisplay error={error} />}
       <div className={styles.buttons}>
         <button onClick={handleSave}>Save</button>

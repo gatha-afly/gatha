@@ -6,7 +6,7 @@ import { isMobile } from "../../../../utils/deviceUtils";
 import useUserContext from "../../../../hooks/useUserContext";
 
 /**
- * Displays basic information about a group.
+ * Renders group name and group description, updates selectedGroup upon user click
  * @param {Object} groupData - Data containing information about the group.
  */
 const BasicGroupInfo = ({ userId, groupId, groupName, groupDescription }) => {
@@ -19,6 +19,7 @@ const BasicGroupInfo = ({ userId, groupId, groupName, groupDescription }) => {
   const response = useGetGroupData(groupId, userId);
   const { groupData } = response;
 
+  // Update selectedGroup to render that group in messenger / navigates to mobile messenger if mobile device
   const handleClick = () => {
     if (groupData) {
       if (isMobile) {

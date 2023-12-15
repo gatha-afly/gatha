@@ -5,11 +5,20 @@ import DeleteMessage from "../DeleteMessage/DeleteMessage";
 import OnlineStatusIndicator from "../OnlineStatusIndicator/OnlineStatusIndicator";
 import styles from "./MessageItem.module.css";
 
+/**
+ * Represents an single chat message item.
+ * @component
+ * @param {Object} props - The component props.
+ * @param {Object} props.msg - The message object containing message details.
+ * @param {Object} props.user - The user object representing the current user.
+ * @param {Array} props.onlineUsers - Array of online user IDs.
+ * @returns {JSX.Element} - The rendered component.
+ */
 const MessageItem = ({ msg, user, onlineUsers }) => {
-  // state for isNotDeleted
+  // State to track if the message is not deleted
   const [isNotDeleted, setIsNotDeleted] = useState(true);
 
-  // Function to update isNotDeleted state
+  // Updates the isNotDeleted state, instantly indicating the sender that the message has been deleted.
   const updateIsNotDeleted = () => {
     setIsNotDeleted(false);
   };
@@ -46,6 +55,7 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
       </div>
 
       <div className={styles.message}>
+        {/* Display message text or deleted message notification */}
         {msg.isDeleted || !isNotDeleted ? (
           <p className={styles.deletedMessage}>
             This message has been deleted.
@@ -64,7 +74,9 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
             />
           </span>
         )}
+        {/* Placeholder for correct element alignment*/}
         <span className={styles.deleted}></span>
+        {/* Display message timestamp */}
         <span className={styles.date}>
           {dateFormatter(new Date(msg.createdAt))}
         </span>

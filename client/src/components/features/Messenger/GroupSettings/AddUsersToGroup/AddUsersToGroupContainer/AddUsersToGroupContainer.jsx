@@ -6,9 +6,13 @@ import AddUserToGroupForm from "../AddUserToGroupForm/AddUserToGroupForm";
 import GroupMemberList from "../../GroupMemberList/GroupMemberList";
 import useUserContext from "../../../../../../hooks/useUserContext";
 /**
- * Container for adding users to a group.
+ * Container for group admins for adding users to a group.
+ * @component
  * @param {Object} props - Component props.
  * @param {function} props.onDefaultViewClick - Callback to set the default view.
+ * @param {string} props.groupId - The ID of the group.
+ * @param {string} props.userId - The ID of the user.
+ * @param {boolean} props.userIsGroupAdmin - Indicator whether the user is admin of the group.
  * @returns {JSX.Element} - Rendered component.
  */
 const AddUsersToGroupContainer = ({
@@ -22,7 +26,7 @@ const AddUsersToGroupContainer = ({
   // Set refreshTrigger state to rerender user list
   const [refreshTrigger, setRefreshTrigger] = useState(false);
 
-  // Get group name and user list
+  // Get groupMembers
   const groupMembers = useGetGroupMembers(groupId, refreshTrigger);
 
   // Change refreshTrigger to trigger useGetGroupMembers hook again after a user has been added

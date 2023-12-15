@@ -14,9 +14,15 @@ import {
 } from "../../../../../utils/confirmationUtils";
 
 /**
- * Renders a react-icon to make a user admin of a group.
- * @param {string} groupId - ID of the group.
- * @param {string} userId - ID of the to be removed user.
+ * Renders a react-icon to assign a user as an admin of a group.
+ * @component
+ * @param {Object} props - Component props.
+ * @param {string} props.groupId - ID of the group.
+ * @param {string} props.userId - ID of the user to be assigned as an admin.
+ * @param {function} props.onRefresh - Callback to refresh the component.
+ * @param {boolean} props.confirmationIsLocked - Indicates whether the confirmation dialog in parent component is locked.
+ * @param {function} props.onLockConfirmation - Callback to lock the confirmation dialog.
+ * @param {function} props.onUnlockConfirmation - Callback to unlock the confirmation.
  */
 const AssignMemberAsAdmin = ({
   groupId,

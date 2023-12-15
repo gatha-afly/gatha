@@ -11,13 +11,22 @@ import useUserContext from "../../../../hooks/useUserContext";
 import { isBigScreen } from "../../../../utils/deviceUtils";
 import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 
+/**
+ * Component for sending messages in a chat.
+ * @component
+ * @param {Object} selectedGroup - The selected group information.
+ * @returns {JSX.Element} - The rendered component.
+ */
 function SendMessage({ selectedGroup }) {
+  // State for input text, error messages, selected emoji, and emoji picker visibility
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
   const [chosenEmoji, setChosenEmoji] = useState({});
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  // User context for managing typing indicators
   const { setIsTyping, isTyping, setTypingUser } = useUserContext();
 
+  // Refs for input, typing timeout, and emoji picker container
   const inputRef = useRef(null);
   const typingTimeoutRef = useRef(null);
   const emojiPickerContainerRef = useRef(null);
@@ -109,15 +118,17 @@ function SendMessage({ selectedGroup }) {
       );
     }
   };
-
+  // Handle keydown events in the input field
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       sendMessage(e);
     } else {
+      // Emit typing event if a key is pressed
       if (!isTyping) {
         socket.emit("typing", { groupId: selectedGroup?.groupId });
       }
+      // Clear the typing timeout and set a new one
 
       clearTimeout(typingTimeoutRef.current);
       typingTimeoutRef.current = setTimeout(() => {
@@ -139,6 +150,7 @@ function SendMessage({ selectedGroup }) {
   });
 
   return (
+    // Form for sending messages
     <form className={styles.sendMessageContainer}>
       <div className={styles.sendMessageLine}>
         <textarea
@@ -149,6 +161,7 @@ function SendMessage({ selectedGroup }) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
         />
+        {/* Emoji button and picker for big screens */}
 
         {isBigScreen && (
           <>
@@ -156,6 +169,7 @@ function SendMessage({ selectedGroup }) {
               className={styles.emojiButton}
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
             />
+            {/* Emoji picker container */}
 
             <div
               ref={emojiPickerContainerRef}
@@ -164,6 +178,7 @@ function SendMessage({ selectedGroup }) {
             </div>
           </>
         )}
+        {/* Send button with icon */}
 
         <span className={styles.sendMessageButton}>
           <ReactIconNavigate
@@ -174,7 +189,8 @@ function SendMessage({ selectedGroup }) {
           />
         </span>
       </div>
-      <ErrorDisplay error={error} />
+      {/* Display error message if there is an error  */}
+      {error && <ErrorDisplay error={error} />}
     </form>
   );
 }

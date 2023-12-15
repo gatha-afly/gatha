@@ -10,7 +10,13 @@ import PiratePxPageRender from "../../../common/PiratePxPageRender/PiratePxPageR
 import GroupSettingsContainer from "../GroupSettings/GroupSettingsContainer/GroupSettingsContainer";
 import useUpdateUserData from "../../../../hooks/useUpdateUser";
 
+/**
+ * Container component for displaying the messenger functionality.
+ * @component
+ * @returns {JSX.Element} - The rendered component.
+ */
 function MessengerContainer() {
+  // Access selectedGroup and fetchUserUpdates from user context
   const { selectedGroup } = useUserContext();
   const { fetchUserUpdates } = useUpdateUserData();
   // State to track the current view
@@ -21,7 +27,7 @@ function MessengerContainer() {
     fetchUserUpdates();
   }, [fetchUserUpdates]);
 
-  // Function to switch the current view
+  // Switches the current view based on the provided view parameter.
   const switchView = (view) => {
     setCurrentView(view);
   };
@@ -72,6 +78,7 @@ function MessengerContainer() {
             </div>
           </>
         ) : (
+          // Render a message prompting the user to select a group
           <>
             <div className={styles.selectGroup}>
               <p>Please select a group.</p>

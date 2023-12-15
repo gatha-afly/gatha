@@ -10,6 +10,7 @@ import styles from "./GroupMemberList.module.css";
  * @param {Object} groupMembers - Object containing group information and an array of group members.
  * @param {Array} groupMembers.groupMembers - Array of group members.
  * @param {string} groupMembers.groupName - Name of the group.
+ * @param {boolean} props.userIsGroupAdmin - Indicators whether the logged-in user is group admin.
  * @param {string|null} groupMembers.error - Error message, if any.
  */
 const GroupMemberList = ({
@@ -43,7 +44,7 @@ const GroupMemberList = ({
         userId: member._id,
       };
     })
-    .reverse(); // Reverse the order for descending display
+    .reverse(); // Reverse the order for chronological descending display
 
   return (
     <div className={styles.renderMembers}>

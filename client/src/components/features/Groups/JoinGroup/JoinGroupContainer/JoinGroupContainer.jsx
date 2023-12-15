@@ -21,7 +21,7 @@ const JoinGroupContainer = ({ onDefaultViewClick }) => {
       <PiratePxPageRender COUNT_IDENTIFIER={"join-group"} />
       <h1>Join a group</h1>
       <p className={styles.explanation}>
-        If you've been shared a code to join a group, simply enter it here:
+        If you have been shared a code to join a group, simply enter it here:
       </p>
       <SearchGroupAndJoin onDefaultViewClick={onDefaultViewClick} />
       <ReactIconNavigate

@@ -7,15 +7,13 @@ import { AiOutlineUsergroupAdd } from "react-icons/ai";
 import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
 
 /**
- * GroupsManagementBar Component
  *
- * Bar for managing groups, ie allowing users to create
- * and join groups.
+ * Bar component for managing groups, rendering appropriate views in parent component
  *
  * @component
  * @param {Object} props - The properties passed to the component.
- * @param {Function} props.onCreateGroupClick - Callback function for creating a new group.
- * @param {Function} props.onJoinGroupClick - Callback function for joining an existing group.
+ * @param {Function} props.onCreateGroupClick - Callback function for changing view in parent component to render creating a new group.
+ * @param {Function} props.onJoinGroupClick - Callback function for changing view in parent component to render  joining an existing group.
  * @returns {JSX.Element} The rendered GroupsManagementBar component.
  */
 function GroupsManagementBar({ onCreateGroupClick, onJoinGroupClick }) {
