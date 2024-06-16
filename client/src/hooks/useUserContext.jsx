@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import UserContext from "../context/userContext";
+import UserContext from "@context/userContext";
 
 /**
  * Custom hook to access the UserContext.

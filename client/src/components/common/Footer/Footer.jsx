@@ -1,4 +1,4 @@
-import useUserContext from "../../../hooks/useUserContext";
+import useUserContext from "@hooks/useUserContext";
 import styles from "./Footer.module.css";
 
 /**
@@ -15,13 +15,15 @@ const Footer = () => {
     <footer
       className={`${styles.footer} ${
         loggedIn ? styles.loggedInFooter : styles.notLoggedInFooter
-      }`}>
+      }`}
+    >
       {/* Copyright information linking to GitHub repo */}
       <a
         className={styles.github}
-        href='https://github.com/gatha-afly/gatha'
-        target='_blank'
-        rel='noopener noreferrer'>
+        href="https://github.com/gatha-afly/gatha"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <span className={styles.copyrightSign}>&copy; </span>
         {/* Display the current year dynamically */}
         <span className={styles.year}>{new Date().getFullYear()}</span>

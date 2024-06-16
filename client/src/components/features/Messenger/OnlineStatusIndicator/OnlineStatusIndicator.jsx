@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./OnlineStatusIndicator.module.css";
 
 /**
@@ -13,7 +12,8 @@ const OnlineStatusIndicator = ({ isOnline }) => {
     <div
       className={`${styles.statusIndicator} ${
         isOnline ? styles.online : styles.offline
-      }`}>
+      }`}
+    >
       <span>{isOnline ? "online" : "offline"}</span>
     </div>
   );

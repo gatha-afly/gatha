@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { userAPI } from "../../../../../api/userAPI";
+import styles from "./SearchGroupAndJoin.module.css";
+import { userAPI } from "@api/userAPI";
+import socket from "@api/socket";
 import {
   devLog,
   handleOtherErrors,
   handleServerErrors,
-} from "../../../../../utils/errorUtils";
-import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
-import styles from "./SearchGroupAndJoin.module.css";
-import useUpdateUserData from "../../../../../hooks/useUpdateUser";
-import useUserContext from "../../../../../hooks/useUserContext";
-import socket from "../../../../../api/socket";
+} from "@utils/errorUtils";
+import ErrorDisplay from "@common/ErrorDisplay/ErrorDisplay";
+import useUpdateUserData from "@hooks/useUpdateUser";
+import useUserContext from "@hooks/useUserContext";
 
 /**
  * Form that allows searching and joining a group via group code. Shows error message if code does not exist in database
@@ -70,9 +70,9 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
     <form className={styles.joinGroupForm} onSubmit={handleFormSubmit}>
       <div>
         <input
-          type='text'
-          name='code'
-          placeholder='code'
+          type="text"
+          name="code"
+          placeholder="code"
           ref={inputRef} // Ref for autofocus
           required
         />
@@ -80,7 +80,7 @@ const SearchGroupAndJoin = ({ onDefaultViewClick }) => {
       {/* Conditionally render error message received from the server */}
       <ErrorDisplay error={error} />
       {/* Submit button for form submission */}
-      <button type='submit'>join</button>
+      <button type="submit">join</button>
     </form>
   );
 };

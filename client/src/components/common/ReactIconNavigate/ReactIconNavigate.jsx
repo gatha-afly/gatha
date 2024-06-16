@@ -1,6 +1,4 @@
-// ReactIconNavigate.jsx
-
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ReactIconNavigate.module.css";
 
@@ -42,11 +40,13 @@ const ReactIconNavigate = ({
     <div
       className={styles.iconContainer}
       onMouseEnter={() => setIsTooltipVisible(true)}
-      onMouseLeave={() => setIsTooltipVisible(false)}>
+      onMouseLeave={() => setIsTooltipVisible(false)}
+    >
       {isTooltipVisible && tooltip && (
         <div
           className={styles.tooltip}
-          style={{ fontSize: `${tooltipSize}rem` }}>
+          style={{ fontSize: `${tooltipSize}rem` }}
+        >
           {tooltip}
         </div>
       )}

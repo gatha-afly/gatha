@@ -1,8 +1,8 @@
+import { HiMiniBackspace } from "react-icons/hi2";
 import styles from "./CreateGroupContainer.module.css";
 import CreateGroupForm from "../CreateGroupForm/CreateGroupForm";
-import { HiMiniBackspace } from "react-icons/hi2";
-import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPageRender";
-import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
+import PiratePxPageRender from "@common/PiratePxPageRender/PiratePxPageRender";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
 
 /**
  * Container for creating a new group: It includes the form for creating the group and navigation back to the default view.

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import HamburgerUsernameInitials from "../HamburgerUsernameInitials/HamburgerUsernameInitials";
 import styles from "./HamburgerMenu.module.css";
@@ -29,15 +29,16 @@ const HamburgerMenu = ({ firstName, lastName }) => {
       <div
         className={`${styles.menuIcon} ${menuOpen ? styles.open : ""}`}
         // Show menu when cursor hovers initials
-        onMouseEnter={toggleMenu}>
+        onMouseEnter={toggleMenu}
+      >
         {/* Display user initials */}
         <HamburgerUsernameInitials firstName={firstName} lastName={lastName} />
       </div>
 
       {menuOpen && (
         <div className={styles.menuItems} onClick={toggleMenu}>
-          <Link to='/main'>gatha</Link>
-          <Link to='/user-logout'>logout</Link>
+          <Link to="/main">gatha</Link>
+          <Link to="/user-logout">logout</Link>
         </div>
       )}
     </div>

@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./ConfirmationDialog.module.css";
 
 /**
@@ -28,20 +27,23 @@ const ConfirmationDialog = ({
     <span className={styles.confirmationContainer}>
       <p
         className={`${styles.confirmationMessage} ${styles.customTextSize}`}
-        style={{ fontSize: `${messageTextSize}rem` }}>
+        style={{ fontSize: `${messageTextSize}rem` }}
+      >
         {message}
       </p>
       <span className={styles.confirmationButtons}>
         <button
           className={`${styles.confirmButton} ${styles.buttonWithCustomSize}`}
           style={{ fontSize: `${buttonTextSize}rem` }}
-          onClick={onConfirm}>
+          onClick={onConfirm}
+        >
           {confirmText}
         </button>
         <button
           className={`${styles.cancelButton} ${styles.buttonWithCustomSize}`}
           style={{ fontSize: `${buttonTextSize}rem` }}
-          onClick={onCancel}>
+          onClick={onCancel}
+        >
           {cancelText}
         </button>
       </span>

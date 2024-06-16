@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { FaRegHandPointLeft } from "react-icons/fa6";
 import styles from "./MessengerContainer.module.css";
 import RenderMessages from "../RenderMessages/RenderMessages";
 import SendMessage from "../SendMessage/SendMessage";
 import GroupSettingBar from "../GroupSettings/GroupSettingBar/GroupSettingBar";
-import { FaRegHandPointLeft } from "react-icons/fa6";
-
-import useUserContext from "../../../../hooks/useUserContext";
-import PiratePxPageRender from "../../../common/PiratePxPageRender/PiratePxPageRender";
+import useUserContext from "@hooks/useUserContext";
+import PiratePxPageRender from "@common/PiratePxPageRender/PiratePxPageRender";
 import GroupSettingsContainer from "../GroupSettings/GroupSettingsContainer/GroupSettingsContainer";
-import useUpdateUserData from "../../../../hooks/useUpdateUser";
+import useUpdateUserData from "@hooks/useUpdateUser";
 
 /**
  * Container component for displaying the messenger functionality.

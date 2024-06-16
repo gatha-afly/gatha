@@ -1,6 +1,6 @@
-import useUserContext from "../../../../hooks/useUserContext";
-import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
 import styles from "./IsTypingEffect.module.css";
+import useUserContext from "@hooks/useUserContext";
+import UsernameInitials from "@common/UsernameInitials/UsernameInitials";
 
 /**
  * Displays an indicator when a user is typing.

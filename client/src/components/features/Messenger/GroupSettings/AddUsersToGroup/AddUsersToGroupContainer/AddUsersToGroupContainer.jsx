@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import useSetCallbackWhenSelectedGroupChanges from "../../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
 import styles from "./AddUsersToGroupContainer.module.css";
-import useGetGroupMembers from "../../../../../../hooks/useGetGroupMembers";
+import useSetCallbackWhenSelectedGroupChanges from "@hooks/useSetCallbackWhenSelectedGroupChanges";
+import useGetGroupMembers from "@hooks/useGetGroupMembers";
 import AddUserToGroupForm from "../AddUserToGroupForm/AddUserToGroupForm";
 import GroupMemberList from "../../GroupMemberList/GroupMemberList";
-import useUserContext from "../../../../../../hooks/useUserContext";
+import useUserContext from "@hooks/useUserContext";
 /**
  * Container for group admins for adding users to a group.
  * @component

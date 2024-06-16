@@ -1,4 +1,4 @@
-import UserLogout from "../../components/auth/UserLogout/UserLogout";
+import UserLogout from "@auth/UserLogout/UserLogout";
 
 /**
  * Page component for handling user logout.

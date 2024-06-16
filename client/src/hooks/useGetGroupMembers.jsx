@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { userAPI } from "../api/userAPI";
-import { handleOtherErrors, handleServerErrors } from "../utils/errorUtils";
-import { devLog } from "../utils/errorUtils";
+import { userAPI } from "@api/userAPI";
+import { handleOtherErrors, handleServerErrors } from "@utils/errorUtils";
+import { devLog } from "@utils/errorUtils";
 import useUserContext from "./useUserContext";
 
 /**

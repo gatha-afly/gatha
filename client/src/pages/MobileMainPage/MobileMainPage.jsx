@@ -1,10 +1,10 @@
-import styles from "./MobileMainPage.module.css";
-import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
-import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
-import GroupsContainer from "../../components/features/Groups/GroupsContainer/GroupsContainer";
-import useUpdateUserData from "../../hooks/useUpdateUser";
 import { useEffect } from "react";
-import useUserContext from "../../hooks/useUserContext";
+import styles from "./MobileMainPage.module.css";
+import HelmetMetaTagsNetlify from "@common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import PiratePxPageRender from "@common/PiratePxPageRender/PiratePxPageRender";
+import GroupsContainer from "@features/Groups/GroupsContainer/GroupsContainer";
+import useUpdateUserData from "@hooks/useUpdateUser";
+import useUserContext from "@hooks/useUserContext";
 
 /**
  * Mobile version of the main page rendering the GroupsList only that then navigates to the MobileMessengerPage
@@ -36,7 +36,7 @@ const MobileMainPage = () => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"main-mobile"} />
       {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title='gatha - main' />
+      <HelmetMetaTagsNetlify title="gatha - main" />
       <div className={styles.groupsList}>
         <GroupsContainer user={user} />
       </div>

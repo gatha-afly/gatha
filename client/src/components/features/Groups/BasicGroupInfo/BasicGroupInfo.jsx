@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import useGetGroupData from "../../../../hooks/useGetGroupData";
-import GroupnameInitial from "../../../common/GroupnameInitial/GroupnameInitial";
 import styles from "./BasicGroupInfo.module.css";
-import { isMobile } from "../../../../utils/deviceUtils";
-import useUserContext from "../../../../hooks/useUserContext";
+import useGetGroupData from "@hooks/useGetGroupData";
+import GroupnameInitial from "@common/GroupnameInitial/GroupnameInitial";
+import { isMobile } from "@utils/deviceUtils";
+import useUserContext from "@hooks/useUserContext";
 
 /**
  * Renders group name and group description, updates selectedGroup upon user click

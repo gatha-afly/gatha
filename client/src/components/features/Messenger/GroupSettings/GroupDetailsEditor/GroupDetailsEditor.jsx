@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
+import { useState } from "react";
 import styles from "./GroupDetailsEditor.module.css";
+import ErrorDisplay from "@common/ErrorDisplay/ErrorDisplay";
 
 /**
  * Editable component for group name and description.
@@ -45,7 +45,7 @@ const GroupDetailsEditor = ({ value, onSave, onCancel, maxCharacters }) => {
       {/* Input container for editing group details */}
       <div className={styles.inputContainer}>
         <input
-          type='text'
+          type="text"
           value={editedValue}
           onChange={(e) => setEditedValue(e.target.value)}
           onKeyPress={handleKeyPress}

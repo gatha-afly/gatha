@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
-import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
-import styles from "./UserLoginForm.module.css";
-import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
-import { devLog } from "../../../utils/errorUtils";
-import useUserContext from "../../../hooks/useUserContext";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useState } from "react";
-import Spinner from "../../common/Spinner/Spinner";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import styles from "./UserLoginForm.module.css";
+import usePasswordVisibility from "@hooks/usePasswordVisibility";
+import ErrorDisplay from "@common/ErrorDisplay/ErrorDisplay";
+import { devLog } from "@utils/errorUtils";
+import useUserContext from "@hooks/useUserContext";
+import Spinner from "@common/Spinner/Spinner";
 
 const UserLoginForm = () => {
   // Access user context and navigation functions
@@ -49,9 +49,9 @@ const UserLoginForm = () => {
       <form className={styles.loginForm} onSubmit={handleLogin}>
         {/* Email input */}
         <input
-          type='text'
-          placeholder='Email'
-          name='email'
+          type="text"
+          placeholder="Email"
+          name="email"
           required
           className={styles.loginInput}
         />
@@ -59,15 +59,16 @@ const UserLoginForm = () => {
         <div className={styles.passwordContainer}>
           <input
             type={passwordVisible ? "text" : "password"}
-            placeholder='Password'
-            name='password'
+            placeholder="Password"
+            name="password"
             required
             className={styles.loginInput}
           />
           {/* Toggle password visibility icon */}
           <span
             className={styles.togglePasswordIcon}
-            onClick={togglePasswordVisibility}>
+            onClick={togglePasswordVisibility}
+          >
             {passwordVisible ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
@@ -77,14 +78,14 @@ const UserLoginForm = () => {
         {error && <ErrorDisplay error={error} />}
         {/* Conditionally render Login button */}
         {!loading && (
-          <button type='submit' className={styles.loginButton}>
+          <button type="submit" className={styles.loginButton}>
             Login
           </button>
         )}
       </form>
       {!loading && (
         <p>
-          No account yet? <Link to='/user-registration'>Register</Link>
+          No account yet? <Link to="/user-registration">Register</Link>
         </p>
       )}
     </>

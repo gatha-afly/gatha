@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./PiratePxPageRender.module.css";
 
 // Get piratepx project ID from environment variable
@@ -19,7 +18,7 @@ const PiratePxPageRender = ({ COUNT_IDENTIFIER }) => {
     <img
       className={styles.piratePx}
       src={`https://app.piratepx.com/ship?p=${projectId}&i=${COUNT_IDENTIFIER}`}
-      alt=''
+      alt=""
     />
   );
 };

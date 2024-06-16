@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { FaEdit } from "react-icons/fa";
 import styles from "./GroupSettingsContainer.module.css";
-import useUserContext from "../../../../../hooks/useUserContext";
-import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPageRender";
-import { devLog } from "../../../../../utils/errorUtils";
-import useSetCallbackWhenSelectedGroupChanges from "../../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
+import useUserContext from "@hooks/useUserContext";
+import PiratePxPageRender from "@common/PiratePxPageRender/PiratePxPageRender";
+import { devLog } from "@utils/errorUtils";
+import useSetCallbackWhenSelectedGroupChanges from "@hooks/useSetCallbackWhenSelectedGroupChanges";
 import AddUsersToGroupContainer from "../AddUsersToGroup/AddUsersToGroupContainer/AddUsersToGroupContainer";
 import GroupMemberList from "../GroupMemberList/GroupMemberList";
 import LeaveGroup from "../LeaveGroup/LeaveGroup";
-import { userAPI } from "../../../../../api/userAPI";
+import { userAPI } from "@api/userAPI";
 import GroupDetailsEditor from "../GroupDetailsEditor/GroupDetailsEditor";
-import useGetGroupMembers from "../../../../../hooks/useGetGroupMembers";
-import CopyToClipboard from "../../../../common/CopyToClipboard/CopyToClipboard";
-import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
-import { FaEdit } from "react-icons/fa";
+import useGetGroupMembers from "@hooks/useGetGroupMembers";
+import CopyToClipboard from "@common/CopyToClipboard/CopyToClipboard";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
 
 /**
  * Container component for rendering group settings.
@@ -122,7 +122,8 @@ const GroupSettingsContainer = ({ onDefaultViewClick }) => {
             ) : (
               <p
                 className={styles.info}
-                onClick={() => setEditingDescription(true)}>
+                onClick={() => setEditingDescription(true)}
+              >
                 {description ? description : "No group description entered."}
                 <span className={styles.icon}>
                   <ReactIconNavigate icon={FaEdit} size={1.6} margin={0} />

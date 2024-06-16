@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { devLog } from "../../../../../utils/errorUtils";
-import Spinner from "../../../../common/Spinner/Spinner";
+import { useState } from "react";
+import styles from "./GroupMemberList.module.css";
+import { devLog } from "@utils/errorUtils";
+import Spinner from "@common/Spinner/Spinner";
 import AssignMemberAsAdmin from "../AssignMemberAsAdmin/AssignMemberAsAdmin";
 import RemoveMemberFromGroup from "../RemoveMemberFromGroup/RemoveMemberFromGroup";
-import styles from "./GroupMemberList.module.css";
 
 /**
  * Renders list of group members. If logged in user is group admin, allows removing other non-admin users

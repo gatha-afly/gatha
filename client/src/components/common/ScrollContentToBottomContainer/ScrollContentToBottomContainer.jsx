@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 
 /**
  * Container that automatically scrolls to the bottom when new content is added.

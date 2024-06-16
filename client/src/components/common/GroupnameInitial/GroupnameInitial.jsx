@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./GroupnameInitial.module.css";
 
 /**
@@ -28,7 +27,8 @@ const GroupnameInitial = ({
           width: `${radius}rem`,
           height: `${radius}rem`,
           border: `${borderWidth}rem solid var(--color-structure-elements)`,
-        }}>
+        }}
+      >
         <p className={styles.initial} style={{ fontSize: `${fontSize}rem` }}>
           {initial}
         </p>

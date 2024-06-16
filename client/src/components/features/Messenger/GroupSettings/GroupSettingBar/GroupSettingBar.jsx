@@ -1,11 +1,10 @@
-import React from "react";
-import styles from "./GroupSettingBar.module.css";
-import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { IoSettingsOutline } from "react-icons/io5";
 import { MdGroups2 } from "react-icons/md";
 import { HiMiniBackspace } from "react-icons/hi2";
-import { isMobile } from "../../../../../utils/deviceUtils";
-import useUserContext from "../../../../../hooks/useUserContext";
+import styles from "./GroupSettingBar.module.css";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
+import { isMobile } from "@utils/deviceUtils";
+import useUserContext from "@hooks/useUserContext";
 
 /**
  * Bar component to display selected group-related information and functionalities.
@@ -35,7 +34,7 @@ function GroupSettingBar({
           {isMobile && (
             <span className={styles.mobileHome}>
               <ReactIconNavigate
-                route='/main'
+                route="/main"
                 size={2.4}
                 icon={MdGroups2}
                 margin={0}

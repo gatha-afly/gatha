@@ -1,5 +1,4 @@
-import React from "react";
-import Icon from "../../../../public/spinner.png";
+import Icon from "@public/spinner.png";
 import styles from "./Spinner.module.css";
 
 /**
@@ -13,7 +12,7 @@ const Spinner = ({ width = 4 }) => {
     <div className={styles.spinnerContainer}>
       <img
         src={Icon}
-        alt='loading-spinner'
+        alt="loading-spinner"
         className={styles.spinner}
         style={{ width: `${width}rem`, height: "auto" }}
       />

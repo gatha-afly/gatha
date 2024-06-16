@@ -1,8 +1,8 @@
-import UserRegistration from "../../components/auth/UserRegistration/UserRegistration";
-import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
-import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
-import useNavigateToMainIfUserIsLoggedIn from "../../hooks/useNavigateToMainIfUserIsLoggedIn";
 import styles from "./UserRegistrationPage.module.css";
+import UserRegistration from "@auth/UserRegistration/UserRegistration";
+import HelmetMetaTagsNetlify from "@common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import PiratePxPageRender from "@common/PiratePxPageRender/PiratePxPageRender";
+import useNavigateToMainIfUserIsLoggedIn from "@hooks/useNavigateToMainIfUserIsLoggedIn";
 
 /**
  * Renders the user registration page. Checks if the user is already logged in,
@@ -22,7 +22,7 @@ const UserRegistrationPage = () => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"user-registration"} />
       {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title='gatha - user registration' />
+      <HelmetMetaTagsNetlify title="gatha - user registration" />
       <h1>Registration</h1>
       <UserRegistration />
     </main>

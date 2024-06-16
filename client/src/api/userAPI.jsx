@@ -1,5 +1,5 @@
 import axios from "axios";
-import { devLog } from "../utils/errorUtils";
+import { devLog } from "@utils/errorUtils";
 
 // Set baseURL
 const baseURL =
@@ -17,7 +17,8 @@ export const userAPI = axios.create({
   timeout: 5000,
 });
 
-export const APIInterceptors = () => {
+// Setup interceptors
+export const setupAPIInterceptors = () => {
   // Intercepts requests
   userAPI.interceptors.request.use(
     (config) => {

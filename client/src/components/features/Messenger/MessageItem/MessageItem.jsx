@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { dateFormatter } from "../../../../utils/dateUtils";
-import UsernameInitials from "../../../common/UsernameInitials/UsernameInitials";
+import { useState } from "react";
+import styles from "./MessageItem.module.css";
+import { dateFormatter } from "@utils/dateUtils";
+import UsernameInitials from "@common/UsernameInitials/UsernameInitials";
 import DeleteMessage from "../DeleteMessage/DeleteMessage";
 import OnlineStatusIndicator from "../OnlineStatusIndicator/OnlineStatusIndicator";
-import styles from "./MessageItem.module.css";
 
 /**
  * Represents an single chat message item.
@@ -30,7 +30,8 @@ const MessageItem = ({ msg, user, onlineUsers }) => {
         msg.sender?.id === user.userId
           ? styles.senderMessage
           : styles.receiverMessage
-      }`}>
+      }`}
+    >
       <div className={styles.sender}>
         <span className={styles.topBar}>
           <span className={styles.nameInfo}>

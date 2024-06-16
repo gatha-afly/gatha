@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
+import { FaRegHandPointDown } from "react-icons/fa6";
 import styles from "./GroupsContainer.module.css";
 import JoinGroup from "../JoinGroup/JoinGroupContainer/JoinGroupContainer";
 import GroupsManagementBar from "../../Groups/GroupsManagementBar/GroupsManagementBar";
 import BasicGroupInfo from "../BasicGroupInfo/BasicGroupInfo";
 import CreateGroupContainer from "../CreateGroup/CreateGroupContainer/CreateGroupContainer";
-import { FaRegHandPointDown } from "react-icons/fa6";
-import useUpdateUserData from "../../../../hooks/useUpdateUser";
-import useUserContext from "../../../../hooks/useUserContext";
-import { devLog } from "../../../../utils/errorUtils";
+import useUpdateUserData from "@hooks/useUpdateUser";
+import useUserContext from "@hooks/useUserContext";
+import { devLog } from "@utils/errorUtils";
 
 /**
  * Manages different views, rendering the group selection, create and join group part of the main application based on the current state.

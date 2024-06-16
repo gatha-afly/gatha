@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { userAPI } from "../api/userAPI";
+import { userAPI } from "@api/userAPI";
 import {
   devLog,
   handleOtherErrors,
   handleServerErrors,
-} from "../utils/errorUtils";
+} from "@utils/errorUtils";
 
 /**
  * Custom hook to fetch group data based on the provided groupId and userId.

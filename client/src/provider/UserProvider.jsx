@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { userAPI } from "../api/userAPI";
-import socket from "../api/socket";
-import { devLog, handleServerErrors } from "../utils/errorUtils";
-import UserContext from "../context/userContext";
+import { userAPI } from "@api/userAPI";
+import socket from "@api/socket";
+import { devLog, handleServerErrors } from "@utils/errorUtils";
+import UserContext from "@context/userContext";
 /**
  * UserProvider component that manages user authentication context, providing necessary state variables and functions for user authentication and socket connection.
  *
@@ -181,7 +181,8 @@ const UserProvider = ({ children }) => {
         typingUser,
         setTypingUser,
         handleLoggedInChange,
-      }}>
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

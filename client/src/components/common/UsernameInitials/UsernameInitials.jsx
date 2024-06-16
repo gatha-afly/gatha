@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./UsernameInitials.module.css";
 
 /**
@@ -31,7 +30,8 @@ const UsernameInitials = ({
           width: `${radius}rem`,
           height: `${radius}rem`,
           border: `${borderWidth}rem solid var(--color-hover)`,
-        }}>
+        }}
+      >
         <p className={styles.initials} style={{ fontSize: `${fontSize}rem` }}>
           {firstInitial + lastInitial}
         </p>

@@ -1,17 +1,14 @@
 import { useState } from "react";
-import { userAPI } from "../../../../../api/userAPI";
-import { devLog } from "../../../../../utils/errorUtils";
-import styles from "./RemoveMemberFromGroup.module.css";
-import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
-import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { FaUserTimes } from "react-icons/fa";
-import useUserContext from "../../../../../hooks/useUserContext";
-import ConfirmationDialog from "../../../../common/ConfirmationDialog/ConfirmationDialog";
-import useConfirmationDialog from "../../../../../hooks/useConfirmationDialog";
-import {
-  handleCancelClick,
-  handleIconClick,
-} from "../../../../../utils/confirmationUtils";
+import { userAPI } from "@api/userAPI";
+import { devLog } from "@utils/errorUtils";
+import styles from "./RemoveMemberFromGroup.module.css";
+import ErrorDisplay from "@common/ErrorDisplay/ErrorDisplay";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
+import useUserContext from "@hooks/useUserContext";
+import ConfirmationDialog from "@common/ConfirmationDialog/ConfirmationDialog";
+import useConfirmationDialog from "@hooks/useConfirmationDialog";
+import { handleCancelClick, handleIconClick } from "@utils/confirmationUtils";
 
 /**
  * Renders a react-icon to remove a user from a group.
@@ -90,7 +87,7 @@ const RemoveMemberFromGroup = ({
           showConfirmation={showConfirmation}
           onConfirm={handleRemoveUserFromGroup}
           onCancel={onCancelClick}
-          message='Remove user?'
+          message="Remove user?"
         />
       </div>
     </div>

@@ -1,10 +1,10 @@
-import styles from "./HomePage.module.css";
-import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
-import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
-import NavigateButton from "../../components/common/NavigateButton/NavigateButton";
 import { Link } from "react-router-dom";
-import ApplicationImage from "../../components/features/ApplicationImage/ApplicationImage";
-import useNavigateToMainIfUserIsLoggedIn from "../../hooks/useNavigateToMainIfUserIsLoggedIn";
+import styles from "./HomePage.module.css";
+import HelmetMetaTagsNetlify from "@common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import PiratePxPageRender from "@common/PiratePxPageRender/PiratePxPageRender";
+import NavigateButton from "@common/NavigateButton/NavigateButton";
+import ApplicationImage from "@features/ApplicationImage/ApplicationImage";
+import useNavigateToMainIfUserIsLoggedIn from "@hooks/useNavigateToMainIfUserIsLoggedIn";
 
 /**
  * Home page of the Gatha application.
@@ -24,7 +24,7 @@ const HomePage = () => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"homepage"} />
       {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title='gatha - get together' />
+      <HelmetMetaTagsNetlify title="gatha - get together" />
       <div className={styles.container}>
         <section className={styles.infoContainer}>
           <>
@@ -39,7 +39,7 @@ const HomePage = () => {
             buttonText={"Register now!"}
           />
           <p className={styles.loginCTA}>
-            Already registered? <Link to='/user-login'>Login</Link>
+            Already registered? <Link to="/user-login">Login</Link>
           </p>
         </section>
         <ApplicationImage />

@@ -1,9 +1,8 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 import Logo from "../Logo/Logo";
 import HamburgerMenu from "../HamburgerMenu/Menu/HamburgerMenu";
-import useUserContext from "../../../hooks/useUserContext";
+import useUserContext from "@hooks/useUserContext";
 
 /**
  * Header Component - Displays the header with a logo, login/logout button, and hamburger menu.
@@ -21,7 +20,8 @@ const Header = () => {
     <header
       className={`${styles.header} ${
         loggedIn ? styles.loggedInHeader : styles.notLoggedInHeader
-      }`}>
+      }`}
+    >
       {/* 
         Render the Logo img without background if not logged in,
         and with background if logged in.
@@ -31,7 +31,7 @@ const Header = () => {
       {loggedIn ? (
         <HamburgerMenu firstName={user.firstName} lastName={user.lastName} />
       ) : (
-        <Link to='/user-login' className={styles.Login}>
+        <Link to="/user-login" className={styles.Login}>
           Login
         </Link>
       )}

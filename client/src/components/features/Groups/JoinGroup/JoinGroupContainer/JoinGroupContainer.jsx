@@ -1,8 +1,8 @@
-import SearchGroupAndJoin from "../SearchGroupAndJoin/SearchGroupAndJoin";
-import styles from "./JoinGroupContainer.module.css";
 import { HiMiniBackspace } from "react-icons/hi2";
-import PiratePxPageRender from "../../../../common/PiratePxPageRender/PiratePxPageRender";
-import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
+import styles from "./JoinGroupContainer.module.css";
+import SearchGroupAndJoin from "../SearchGroupAndJoin/SearchGroupAndJoin";
+import PiratePxPageRender from "@common/PiratePxPageRender/PiratePxPageRender";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
 
 /**
  * JoinGroupContainer Component

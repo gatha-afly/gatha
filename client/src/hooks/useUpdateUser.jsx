@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { userAPI } from "../api/userAPI";
-import { devLog } from "../utils/errorUtils";
+import { userAPI } from "@api/userAPI";
+import { devLog } from "@utils/errorUtils";
 import useUserContext from "./useUserContext";
 
 /**

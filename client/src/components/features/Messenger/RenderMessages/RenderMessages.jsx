@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import styles from "./RenderMessages.module.css";
-import { userAPI } from "./../../../../api/userAPI";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
-import ScrollContentToBottomContainer from "../../../common/ScrollContentToBottomContainer/ScrollContentToBottomContainer";
+import { userAPI } from "@api/userAPI";
+import ErrorDisplay from "@common/ErrorDisplay/ErrorDisplay";
+import ScrollContentToBottomContainer from "@common/ScrollContentToBottomContainer/ScrollContentToBottomContainer";
 import IsTypingEffect from "../IsTypingEffect/IsTypingEffect";
-import socket from "../../../../api/socket";
-import useUpdateUserData from "../../../../hooks/useUpdateUser";
-import Spinner from "../../../common/Spinner/Spinner";
-import { devLog } from "../../../../utils/errorUtils";
-import useUserContext from "../../../../hooks/useUserContext";
+import socket from "@api/socket";
+import useUpdateUserData from "@hooks/useUpdateUser";
+import Spinner from "@common/Spinner/Spinner";
+import { devLog } from "@utils/errorUtils";
+import useUserContext from "@hooks/useUserContext";
 import MessageItem from "../MessageItem/MessageItem";
 
 /**

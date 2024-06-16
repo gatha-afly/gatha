@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import EmojiPicker from "../EmojiPicker/RenderEmojiPicker";
-import ErrorDisplay from "../../../common/ErrorDisplay/ErrorDisplay";
-import styles from "./SendMessage.module.css";
+import { useState, useEffect, useRef } from "react";
 import { IoMdSend } from "react-icons/io";
 import { MdEmojiEmotions } from "react-icons/md";
-import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
-import socket from "../../../../api/socket";
-import { devLog } from "../../../../utils/errorUtils";
-import useUserContext from "../../../../hooks/useUserContext";
-import { isBigScreen } from "../../../../utils/deviceUtils";
-import useSetCallbackWhenSelectedGroupChanges from "../../../../hooks/useSetCallbackWhenSelectedGroupChanges";
+import EmojiPicker from "../EmojiPicker/RenderEmojiPicker";
+import ErrorDisplay from "@common/ErrorDisplay/ErrorDisplay";
+import styles from "./SendMessage.module.css";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
+import socket from "@api/socket";
+import { devLog } from "@utils/errorUtils";
+import useUserContext from "@hooks/useUserContext";
+import { isBigScreen } from "@utils/deviceUtils";
+import useSetCallbackWhenSelectedGroupChanges from "@hooks/useSetCallbackWhenSelectedGroupChanges";
 
 /**
  * Component for sending messages in a chat.
@@ -155,8 +155,8 @@ function SendMessage({ selectedGroup }) {
       <div className={styles.sendMessageLine}>
         <textarea
           ref={inputRef}
-          name='message-input'
-          placeholder='Message'
+          name="message-input"
+          placeholder="Message"
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -173,7 +173,8 @@ function SendMessage({ selectedGroup }) {
 
             <div
               ref={emojiPickerContainerRef}
-              onMouseLeave={() => setShowEmojiPicker(false)}>
+              onMouseLeave={() => setShowEmojiPicker(false)}
+            >
               {showEmojiPicker && <EmojiPicker onEmojiClick={onEmojiClick} />}
             </div>
           </>

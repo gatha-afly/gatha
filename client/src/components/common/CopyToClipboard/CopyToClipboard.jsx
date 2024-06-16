@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
-import styles from "./CopyToClipboard.module.css";
-import ReactIconNavigate from "../../common/ReactIconNavigate/ReactIconNavigate";
+import { useState, useRef } from "react";
 import { FaCopy } from "react-icons/fa";
+import styles from "./CopyToClipboard.module.css";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
 
 /**
  * Allows for rendering information and easily copying it to the clipboard, providing an instruction to copy and related feedback to the user
@@ -33,7 +33,7 @@ const CopyToClipboard = ({ infoToCopy, inputFieldWidth = "fit-content" }) => {
 
       {/* Hidden input field for copying text */}
       <input
-        type='text'
+        type="text"
         value={infoToCopy}
         readOnly
         style={{ position: "absolute", left: "-9999px" }}

@@ -1,10 +1,7 @@
-// GroupBar.jsx
-import React from "react";
-import styles from "./GroupsManagementBar.module.css";
 import { LuLink } from "react-icons/lu";
 import { AiOutlineUsergroupAdd } from "react-icons/ai";
-
-import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
+import styles from "./GroupsManagementBar.module.css";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
 
 /**
  *

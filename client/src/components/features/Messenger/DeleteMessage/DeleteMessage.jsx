@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
-import { userAPI } from "../../../../api/userAPI";
-import { devLog } from "../../../../utils/errorUtils";
-import ConfirmationDialog from "../../../common/ConfirmationDialog/ConfirmationDialog";
-import ReactIconNavigate from "../../../common/ReactIconNavigate/ReactIconNavigate";
 import styles from "./DeleteMessage.module.css";
+import { userAPI } from "@api/userAPI";
+import { devLog } from "@utils/errorUtils";
+import ConfirmationDialog from "@common/ConfirmationDialog/ConfirmationDialog";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
 
 /**
  * Component for deleting a message.
@@ -50,9 +50,9 @@ const DeleteMessage = ({ messageId, senderId, updateIsNotDeleted }) => {
           showConfirmation={showConfirmation}
           onConfirm={handleDeleteMessage}
           onCancel={() => setShowConfirmation(false)}
-          confirmText='delete'
-          cancelText='cancel'
-          buttonTextSize='1.2'
+          confirmText="delete"
+          cancelText="cancel"
+          buttonTextSize="1.2"
         />
       </div>
     </>

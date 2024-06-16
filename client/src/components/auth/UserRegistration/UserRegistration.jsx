@@ -1,15 +1,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { userAPI } from "../../../api/userAPI";
-import {
-  handleOtherErrors,
-  handleServerErrors,
-} from "../../../utils/errorUtils";
-import usePasswordVisibility from "../../../hooks/usePasswordVisibility";
-import ErrorDisplay from "../../common/ErrorDisplay/ErrorDisplay";
-import styles from "./UserRegistration.module.css";
-import Spinner from "../../common/Spinner/Spinner";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import styles from "./UserRegistration.module.css";
+import { userAPI } from "@api/userAPI";
+import { handleOtherErrors, handleServerErrors } from "@utils/errorUtils";
+import usePasswordVisibility from "@hooks/usePasswordVisibility";
+import ErrorDisplay from "@common/ErrorDisplay/ErrorDisplay";
+import Spinner from "@common/Spinner/Spinner";
 
 /**
  * UserRegistrationForm Component
@@ -90,34 +87,34 @@ const UserRegistration = () => {
         {/* Input fields for user information */}
         <div>
           <input
-            type='text'
-            name='firstName'
-            placeholder='First name'
+            type="text"
+            name="firstName"
+            placeholder="First name"
             ref={inputRef} // Ref for autofocus
             required
           />
         </div>
 
         <div>
-          <input type='text' name='lastName' placeholder='Last name' required />
+          <input type="text" name="lastName" placeholder="Last name" required />
         </div>
 
         <div>
           <input
-            type='text'
-            name='username'
-            placeholder='Username'
-            autoComplete='nope'
+            type="text"
+            name="username"
+            placeholder="Username"
+            autoComplete="nope"
             required
           />
         </div>
 
         <div>
           <input
-            type='email'
-            name='email'
-            placeholder='Email'
-            autoComplete='email'
+            type="email"
+            name="email"
+            placeholder="Email"
+            autoComplete="email"
             required
           />
         </div>
@@ -125,13 +122,14 @@ const UserRegistration = () => {
         <div className={styles.passwordContainer}>
           <input
             type={passwordVisible ? "text" : "password"}
-            placeholder='Password'
-            name='password'
+            placeholder="Password"
+            name="password"
             required
           />
           <span
             className={styles.togglePasswordIcon}
-            onClick={togglePasswordVisibility}>
+            onClick={togglePasswordVisibility}
+          >
             {passwordVisible ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
@@ -140,13 +138,14 @@ const UserRegistration = () => {
         <div className={styles.passwordContainer}>
           <input
             type={passwordVisible ? "text" : "password"}
-            name='confirm-password'
-            placeholder='Confirm password'
+            name="confirm-password"
+            placeholder="Confirm password"
             required
           />
           <span
             className={styles.togglePasswordIcon}
-            onClick={togglePasswordVisibility}>
+            onClick={togglePasswordVisibility}
+          >
             {passwordVisible ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
@@ -162,7 +161,7 @@ const UserRegistration = () => {
         {/* Don't render form submission button while loading and upon successful registration*/}
         {loading ||
           (!registrationSuccess && !loading && (
-            <button type='submit'>Register</button>
+            <button type="submit">Register</button>
           ))}
         {/* Conditionally render improved success message */}
         {registrationSuccess && (
@@ -176,7 +175,7 @@ const UserRegistration = () => {
       {loading ||
         (!registrationSuccess && !loading && (
           <p>
-            Already signed up? <Link to='/user-login'>Login</Link>
+            Already signed up? <Link to="/user-login">Login</Link>
           </p>
         ))}
     </>

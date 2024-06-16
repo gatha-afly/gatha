@@ -1,17 +1,14 @@
 import { useState } from "react";
-import { userAPI } from "../../../../../api/userAPI";
-import { devLog } from "../../../../../utils/errorUtils";
-import styles from "./AssignMemberAsAdmin.module.css";
-import ErrorDisplay from "../../../../common/ErrorDisplay/ErrorDisplay";
-import ReactIconNavigate from "../../../../common/ReactIconNavigate/ReactIconNavigate";
 import { FaUserCog } from "react-icons/fa";
-import useUserContext from "../../../../../hooks/useUserContext";
-import ConfirmationDialog from "../../../../common/ConfirmationDialog/ConfirmationDialog";
-import useConfirmationDialog from "../../../../../hooks/useConfirmationDialog";
-import {
-  handleCancelClick,
-  handleIconClick,
-} from "../../../../../utils/confirmationUtils";
+import styles from "./AssignMemberAsAdmin.module.css";
+import { userAPI } from "@api/userAPI";
+import { devLog } from "@utils/errorUtils";
+import ErrorDisplay from "@common/ErrorDisplay/ErrorDisplay";
+import ReactIconNavigate from "@common/ReactIconNavigate/ReactIconNavigate";
+import useUserContext from "@hooks/useUserContext";
+import ConfirmationDialog from "@common/ConfirmationDialog/ConfirmationDialog";
+import useConfirmationDialog from "@hooks/useConfirmationDialog";
+import { handleCancelClick, handleIconClick } from "@utils/confirmationUtils";
 
 /**
  * Renders a react-icon to assign a user as an admin of a group.
@@ -96,7 +93,7 @@ const AssignMemberAsAdmin = ({
           showConfirmation={showConfirmation}
           onConfirm={handleMakeMemberAdmin}
           onCancel={onCancelClick}
-          message='Assign as admin?'
+          message="Assign as admin?"
         />
       </div>
     </div>

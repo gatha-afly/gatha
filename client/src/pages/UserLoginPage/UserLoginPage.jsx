@@ -1,8 +1,8 @@
-import UserLoginForm from "../../components/auth/UserLoginForm/UserLoginForm";
-import HelmetMetaTagsNetlify from "../../components/common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
-import PiratePxPageRender from "../../components/common/PiratePxPageRender/PiratePxPageRender";
-import useNavigateToMainIfUserIsLoggedIn from "../../hooks/useNavigateToMainIfUserIsLoggedIn";
 import styles from "./UserLoginPage.module.css";
+import UserLoginForm from "@auth/UserLoginForm/UserLoginForm";
+import HelmetMetaTagsNetlify from "@common/HelmetMetaTagsNetlify/HelmetMetaTagsNetlify";
+import PiratePxPageRender from "@common/PiratePxPageRender/PiratePxPageRender";
+import useNavigateToMainIfUserIsLoggedIn from "@hooks/useNavigateToMainIfUserIsLoggedIn";
 
 /**
  *
@@ -23,7 +23,7 @@ const UserLoginPage = () => {
       {/* Track page renders */}
       <PiratePxPageRender COUNT_IDENTIFIER={"user-login"} />
       {/* Set page title and meta tags */}
-      <HelmetMetaTagsNetlify title='gatha - login' />
+      <HelmetMetaTagsNetlify title="gatha - login" />
       <h1>Login</h1>
       <UserLoginForm />
     </main>

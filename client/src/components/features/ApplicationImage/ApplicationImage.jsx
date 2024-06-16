@@ -1,6 +1,5 @@
-import React from "react";
-import mobileImage from "../../../../public/img-home-medium.webp";
-import desktopImage from "../../../../public/img-home.webp";
+import mobileImage from "@public/img-home-medium.webp";
+import desktopImage from "@public/img-home.webp";
 import style from "./ApplicationImage.module.css";
 
 /**
@@ -18,7 +17,7 @@ const ApplicationImage = () => {
       {/* Display the appropriate image based on the screen width */}
       <img
         src={screenWidth <= 768 ? mobileImage : desktopImage}
-        alt='gatha application'
+        alt="gatha application"
       />
     </div>
   );
